@@ -1,0 +1,50 @@
+{
+  "args": {
+    "batch_size": 128,
+    "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+    "dataset_seed": 8128,
+    "defect_families": "central_mu2,random_noncentral",
+    "device": "cpu",
+    "epochs": 5,
+    "levels": "zero,low,medium,high",
+    "lr": 0.001,
+    "max_test_samples": 1000,
+    "max_train_samples": 3000,
+    "n_models": 4,
+    "rank_lift_branches": 2,
+    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "seeds": "1200,1201,1202,1203,1204,1205,1206,1207,1208,1209",
+    "width": 32
+  },
+  "argv": [
+    "experiments/planted_obstruction_model_merging.py",
+    "--seeds",
+    "1200,1201,1202,1203,1204,1205,1206,1207,1208,1209",
+    "--epochs",
+    "5",
+    "--max-train-samples",
+    "3000",
+    "--max-test-samples",
+    "1000",
+    "--width",
+    "32",
+    "--n-models",
+    "4",
+    "--device",
+    "cpu"
+  ],
+  "environment": {
+    "git_commit": "87096e1",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  }
+}

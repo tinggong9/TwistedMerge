@@ -1,0 +1,15 @@
+stat_type,defect_family,baseline,n_rows,pearson_cycle_vs_degradation,spearman_cycle_vs_degradation,monotone_mean_degradation,mean_degradation_zero,mean_degradation_low,mean_degradation_medium,mean_degradation_high,mean_accuracy,note,c2m3_accuracy_delta_vs_git,rank_lift_accuracy_delta_vs_git,rank_lift_accuracy_delta_vs_c2m3,weight_average_cycle_slope_is_control
+baseline_trend,central_mu2,c2m3_cycle_consistent,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,central_mu2,ensemble_upper_bound,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,central_mu2,git_rebasin_pairwise,40,0.7422595033143737,0.8740967977010555,True,0.0,0.003100000000000003,0.014900000000000014,0.03870000000000001,0.8490249999999999,,,,,
+baseline_trend,central_mu2,oracle_true_alignment,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,central_mu2,twisted_rank_lift_2,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,central_mu2,weight_average,40,-2.310100249960608e-18,0.0,True,0.27969999999999995,0.27969999999999995,0.27969999999999995,0.27969999999999995,0.5835000000000001,,,,,
+baseline_trend,random_noncentral,c2m3_cycle_consistent,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,random_noncentral,ensemble_upper_bound,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,random_noncentral,git_rebasin_pairwise,40,0.6338489041659212,0.6966781073998097,True,0.0,0.005700000000000005,0.013200000000000012,0.019000000000000006,0.8537250000000001,,,,,
+baseline_trend,random_noncentral,oracle_true_alignment,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,random_noncentral,twisted_rank_lift_2,40,,,True,0.0,0.0,0.0,0.0,0.8632,,,,,
+baseline_trend,random_noncentral,weight_average,40,-0.016737706196426377,-0.023723050221707707,True,0.27969999999999995,0.27969999999999995,0.27969999999999995,0.27969999999999995,0.5835000000000001,,,,,
+method_delta,central_mu2,method_delta_summary,40,,,,,,,,,,0.014175000000000007,0.014175000000000007,0.0,weight_average does not use planted alignments
+method_delta,random_noncentral,method_delta_summary,40,,,,,,,,,,0.009475000000000006,0.009475000000000006,0.0,weight_average does not use planted alignments
