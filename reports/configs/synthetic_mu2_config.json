@@ -1,0 +1,41 @@
+{
+  "args": {
+    "dim": 32,
+    "flip_probs": "0.0,0.02,0.05,0.10,0.20,0.30,0.40",
+    "label_noise": 0.02,
+    "model_noise": 0.03,
+    "nodes": 12,
+    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "seed_offset": 1701,
+    "seeds": 12,
+    "test_samples": 512,
+    "val_samples": 256
+  },
+  "argv": [
+    "experiments/synthetic_mu2_obstruction.py"
+  ],
+  "correlations": {
+    "obstruction_vs_naive_failure": 0.5836029634796597,
+    "obstruction_vs_rank_lift_gain": 0.5845169231847183
+  },
+  "environment": {
+    "git_commit": "5a11a14",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "not installed",
+      "torchvision": "not installed"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "outputs": {
+    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/synthetic_mu2_results.csv",
+    "plot": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/plots/synthetic_mu2_obstruction.png",
+    "summary_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/synthetic_mu2_summary.csv",
+    "table": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/tables/synthetic_mu2_summary.tex"
+  }
+}
