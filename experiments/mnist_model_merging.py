@@ -1,55 +1,20 @@
 #!/usr/bin/env python
-"""MNIST model-merging entry point.
-
-This is an intentionally conservative scaffold. It checks that the PyTorch image
-stack is installed, records the planned baseline comparison surface, and exits
-without reporting image-task evidence until training/merging code is added.
-"""
+"""MNIST model-merging entry point."""
 
 from __future__ import annotations
 
-import argparse
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.metrics import capture_environment, save_json  # noqa: E402
+from experiments.model_merging_benchmark import main as benchmark_main  # noqa: E402
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reports-dir", type=Path, default=ROOT / "reports")
-    parser.add_argument("--check-only", action="store_true")
-    args = parser.parse_args()
-    try:
-        import torch  # noqa: F401
-        import torchvision  # noqa: F401
-    except Exception as exc:
-        save_json(
-            args.reports_dir / "configs" / "mnist_model_merging_status.json",
-            {
-                "status": "unsupported",
-                "reason": "PyTorch/torchvision are not installed in this environment.",
-                "error": str(exc),
-                "environment": capture_environment(),
-            },
-        )
-        raise SystemExit(
-            "MNIST experiment not run: install PyTorch/torchvision with `python -m pip install -r requirements.txt`."
-        )
-    save_json(
-        args.reports_dir / "configs" / "mnist_model_merging_status.json",
-        {
-            "status": "scaffolded",
-            "reason": "Dependency check passed, but image-task training/merging is not implemented yet.",
-            "environment": capture_environment(),
-        },
-    )
-    if not args.check_only:
-        raise SystemExit("MNIST experiment scaffold only; no image-task claim generated.")
-    print("MNIST dependency check passed; implementation is scaffolded.")
+    sys.argv = [sys.argv[0], "--datasets", "mnist", *sys.argv[1:]]
+    benchmark_main()
 
 
 if __name__ == "__main__":

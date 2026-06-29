@@ -1,0 +1,9 @@
+setting_id,dataset,architecture,n_models,width,domain_shift,i,j,k,cycle_defect
+mnist_mlp_N3_W8_none,mnist,mlp,3,8,none,0,1,2,0.7905694150420949
+mnist_mlp_N3_W8_input_noise,mnist,mlp,3,8,input_noise,0,1,2,0.8660254037844386
+mnist_mlp_N3_W16_none,mnist,mlp,3,16,none,0,1,2,0.8660254037844385
+mnist_mlp_N3_W16_input_noise,mnist,mlp,3,16,input_noise,0,1,2,0.8660254037844385
+cifar10_cnn_N3_W8_none,cifar10,cnn,3,8,none,0,1,2,0.8660254037844386
+cifar10_cnn_N3_W8_input_noise,cifar10,cnn,3,8,input_noise,0,1,2,0.8660254037844386
+cifar10_cnn_N3_W16_none,cifar10,cnn,3,16,none,0,1,2,0.8660254037844385
+cifar10_cnn_N3_W16_input_noise,cifar10,cnn,3,16,input_noise,0,1,2,0.7905694150420948

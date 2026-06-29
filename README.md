@@ -24,6 +24,7 @@ experiments/
   synthetic_u1_obstruction.py
   synthetic_h2_mu2_obstruction.py
   rank_lift_ablation.py
+  model_merging_benchmark.py
   mnist_model_merging.py
   cifar_model_merging.py
 reports/
@@ -63,6 +64,25 @@ python experiments/rank_lift_ablation.py
 
 Outputs are written under `reports/csv`, `reports/plots`, `reports/tables`, and `reports/configs`.
 
+## Run the Small Model-Merging Benchmark
+
+```bash
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python experiments/model_merging_benchmark.py \
+  --datasets mnist,cifar10 \
+  --model-counts 2,3 \
+  --widths 8,16 \
+  --domain-shifts none,input_noise \
+  --epochs 1 \
+  --max-train-samples 384 \
+  --max-test-samples 256 \
+  --batch-size 128 \
+  --device cpu
+```
+
+Outputs are written to `reports/model_merging_report.md`, `reports/checkpoints/`, `reports/csv/`, and `reports/plots/`.
+
 ## What the Synthetic Experiments Test
 
 ### H^2(mu_2) obstruction on a tetrahedral sphere
@@ -91,7 +111,16 @@ The descended merge phase-synchronizes a single global gauge. The rank-lifted me
 
 ## Baselines To Add Or Wrap
 
-The first implementation intentionally does not vendor external code. These are the intended comparison points:
+`experiments/model_merging_benchmark.py` implements small in-repo MLP/CNN baselines:
+
+- ordinary weight averaging,
+- greedy model soup,
+- Git-Re-Basin-style pairwise permutation alignment,
+- C2M3-style cycle-consistent permutation synchronization,
+- ensemble upper bound,
+- cycle-aware rank-lifted branch ensemble.
+
+The first implementation intentionally does not vendor external code. These are the intended larger comparison points:
 
 - Git Re-Basin: <https://github.com/samuela/git-re-basin>
 - C2M3 cycle-consistent model merging: <https://github.com/crisostomi/cycle-consistent-model-merging>
