@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import combinations, product
-from typing import Callable, Mapping, Sequence
+from typing import Mapping, Sequence
 
 import numpy as np
 
@@ -260,6 +260,43 @@ def lift_mu2_transition(base_alignment: np.ndarray, central_sign_value: int) -> 
     return np.kron(central, base_alignment)
 
 
+def solve_mu2_edge_cochain(
+    alpha: Mapping[Triple, int] | Mapping[Face, int],
+    n_models: int,
+    triples: Sequence[Triple] | None = None,
+) -> dict[IndexPair, int] | None:
+    """Find beta_ij with beta_ij beta_jk beta_ki = alpha_ijk, if possible.
+
+    This is a brute-force solver for small audit examples.  It deliberately
+    returns `None` for non-coboundary face data, which is the distinction we
+    need to keep separate from the H^2(mu_2) obstruction experiment.
+    """
+    if triples is None:
+        triples = list(combinations(range(n_models), 3))
+    edges = list(combinations(range(n_models), 2))
+    for n_negative in range(len(edges) + 1):
+        for negative_edges in combinations(edges, n_negative):
+            negative = set(negative_edges)
+            edge_signs = {edge: (-1 if edge in negative else 1) for edge in edges}
+            matched = True
+            for triple in triples:
+                i, j, k = triple
+                value = (
+                    edge_signs[tuple(sorted((i, j)))]
+                    * edge_signs[tuple(sorted((j, k)))]
+                    * edge_signs[tuple(sorted((k, i)))]
+                )
+                if value != lookup_twist(alpha, triple):
+                    matched = False
+                    break
+            if matched:
+                directed: dict[IndexPair, int] = {}
+                for i, j in product(range(n_models), repeat=2):
+                    directed[(i, j)] = 1 if i == j else edge_signs[tuple(sorted((i, j)))]
+                return directed
+    return None
+
+
 def build_mu2_rank_lifted_model(
     ordinary: VectorModel,
     alpha: Mapping[Triple, int] | Mapping[Face, int] | None,
@@ -359,8 +396,16 @@ class TwistedMerge:
             notes.append("Gauge trivialization failed and defects were not close to a supplied central twist.")
         lifted_maps: dict[IndexPair, np.ndarray] = {}
         if twisted_model is not None and alpha is not None:
-            for pair, matrix in g.items():
-                lifted_maps[pair] = lift_mu2_transition(matrix, 1)
+            edge_central_signs = solve_mu2_edge_cochain(alpha, len(weights), triples)
+            if edge_central_signs is None:
+                notes.append(
+                    "No mu_2 edge cochain realizes the supplied twist; "
+                    "twisted_model is branch-prediction only, not a transition-level lift."
+                )
+            else:
+                for pair, matrix in g.items():
+                    lifted_maps[pair] = lift_mu2_transition(matrix, edge_central_signs[pair])
+                notes.append("Lifted transition maps include a mu_2 edge cochain for the supplied twist.")
         ensemble = [VectorModel(weight=weight, name=f"local_{i}") for i, weight in enumerate(weights)]
         return TwistedMergeResult(
             status=status,

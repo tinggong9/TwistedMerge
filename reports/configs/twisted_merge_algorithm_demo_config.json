@@ -12,7 +12,7 @@
     "experiments/twisted_merge_algorithm_demo.py"
   ],
   "environment": {
-    "git_commit": "d7465ea",
+    "git_commit": "49d3001",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",

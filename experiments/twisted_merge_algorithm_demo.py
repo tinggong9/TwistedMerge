@@ -168,6 +168,9 @@ def write_report(df: pd.DataFrame, args: argparse.Namespace, path: Path) -> None
 
 The lifted transition for a base alignment `G_ij` and a central sign is
 `kron(rho(sign), G_ij)`, so its matrix size is `2r x 2r` for q=2.
+For finite central coboundary twists, the implementation solves for edge signs
+`beta_ij` satisfying `beta_ij beta_jk beta_ki = alpha_ijk` and uses
+`kron(rho(beta_ij), G_ij)` in `lifted_transition_maps`.
 
 ## Commands
 
@@ -211,6 +214,9 @@ The lifted transition for a base alignment `G_ij` and a central sign is
 - The doubled representation absorbs the central sign at the branch/prediction
   level. It does not prove that a nonzero H^2 class became an ordinary untwisted
   vector bundle on the same cover.
+- The separate nonzero H^2 tetrahedral example in
+  `reports/synthetic_obstruction_report.md` remains an obstruction witness, not
+  a case solved by this prototype's edge-cochain lift.
 
 ## Output Files
 
