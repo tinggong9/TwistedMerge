@@ -319,6 +319,40 @@ def permutation_matrix(perm: np.ndarray) -> np.ndarray:
     return p
 
 
+def perturb_permutation(perm: np.ndarray, n_swaps: int, rng: np.random.Generator) -> np.ndarray:
+    """Return a copy of `perm` after deterministic random transpositions."""
+    out = np.asarray(perm, dtype=int).copy()
+    if len(out) < 2 or n_swaps <= 0:
+        return out
+    for _ in range(n_swaps):
+        a, b = rng.choice(len(out), size=2, replace=False)
+        out[a], out[b] = out[b], out[a]
+    return out
+
+
+def inject_pairwise_permutation_noise(
+    pairwise_perms: dict[tuple[int, int], np.ndarray],
+    n_models: int,
+    width: int,
+    swap_fraction: float,
+    seed: int,
+) -> dict[tuple[int, int], np.ndarray]:
+    """Perturb directed pairwise alignments while preserving valid permutations.
+
+    This is a controlled diagnostic intervention, not a model-training effect:
+    it varies cycle defects at fixed trained models so the verification report
+    can separate alignment-score sensitivity from ordinary weight-average
+    degradation.
+    """
+    rng = np.random.default_rng(seed)
+    n_swaps = int(round(max(0.0, swap_fraction) * width))
+    out: dict[tuple[int, int], np.ndarray] = {}
+    for i, j in product(range(n_models), repeat=2):
+        perm = pairwise_perms[(i, j)]
+        out[(i, j)] = np.arange(width) if i == j else perturb_permutation(perm, n_swaps, rng)
+    return out
+
+
 def compute_pairwise_permutations(models: list, architecture: str, loader, device, method: str) -> dict[tuple[int, int], np.ndarray]:
     n = len(models)
     features = None
