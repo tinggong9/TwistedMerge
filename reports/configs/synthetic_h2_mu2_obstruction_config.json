@@ -1,0 +1,33 @@
+{
+  "args": {
+    "ranks": "1,2,4,8",
+    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "samples_per_face": 512,
+    "samples_per_vertex": 512,
+    "seed": 5209,
+    "success_threshold": 0.01
+  },
+  "argv": [
+    "experiments/synthetic_h2_mu2_obstruction.py"
+  ],
+  "environment": {
+    "git_commit": "9e7ddbc",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "not installed",
+      "torchvision": "not installed"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "outputs": {
+    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/synthetic_h2_mu2_obstruction.csv",
+    "obstruction_plot": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/plots/synthetic_h2_mu2_obstruction_vs_failure.png",
+    "rank_plot": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/plots/synthetic_h2_mu2_rank_success.png",
+    "report": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/synthetic_obstruction_report.md"
+  }
+}

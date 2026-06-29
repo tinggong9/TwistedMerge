@@ -22,6 +22,7 @@ src/
 experiments/
   synthetic_mu2_obstruction.py
   synthetic_u1_obstruction.py
+  synthetic_h2_mu2_obstruction.py
   rank_lift_ablation.py
   mnist_model_merging.py
   cifar_model_merging.py
@@ -56,12 +57,17 @@ python -m pip install -r requirements.txt
 source .venv/bin/activate
 python experiments/synthetic_mu2_obstruction.py
 python experiments/synthetic_u1_obstruction.py
+python experiments/synthetic_h2_mu2_obstruction.py
 python experiments/rank_lift_ablation.py
 ```
 
 Outputs are written under `reports/csv`, `reports/plots`, `reports/tables`, and `reports/configs`.
 
 ## What the Synthetic Experiments Test
+
+### H^2(mu_2) obstruction on a tetrahedral sphere
+
+`experiments/synthetic_h2_mu2_obstruction.py` uses the boundary of a tetrahedron, a triangulated 2-sphere with nontrivial `H^2(-, mu_2)`. It constructs a trivial face cocycle and a nontrivial face cocycle with one negative triangle. Pairwise edge alignments are locally exact, while triple-overlap defects carry the prescribed central twist. The report is written to `reports/synthetic_obstruction_report.md`.
 
 ### mu_2 / sign cocycle
 
