@@ -16,6 +16,7 @@ from .alignment import (
     wrap_angle,
 )
 from .metrics import binary_accuracy
+from .twisted_merge_algorithm import TwistedMerge, TwistedMergeConfig, TwistedMergeResult
 
 
 @dataclass(frozen=True)

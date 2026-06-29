@@ -15,6 +15,7 @@ src/
   cocycles.py          # MU(2)/U(1) cocycle generation, obstruction scores, synchronization
   alignment.py         # sign and phase alignment utilities
   twisted_merge.py     # descended/global merge and rank-lifted merge routines
+  twisted_merge_algorithm.py # prototype TwistedMerge algorithm
   synthetic_tasks.py   # reproducible synthetic binary classification tasks
   models.py            # PyTorch model definitions for image experiments
   metrics.py           # accuracy, losses, summaries, environment capture
@@ -23,6 +24,7 @@ experiments/
   synthetic_mu2_obstruction.py
   synthetic_u1_obstruction.py
   synthetic_h2_mu2_obstruction.py
+  twisted_merge_algorithm_demo.py
   rank_lift_ablation.py
   model_merging_benchmark.py
   mnist_model_merging.py
@@ -59,6 +61,7 @@ source .venv/bin/activate
 python experiments/synthetic_mu2_obstruction.py
 python experiments/synthetic_u1_obstruction.py
 python experiments/synthetic_h2_mu2_obstruction.py
+python experiments/twisted_merge_algorithm_demo.py
 python experiments/rank_lift_ablation.py
 ```
 
@@ -88,6 +91,10 @@ Outputs are written to `reports/model_merging_report.md`, `reports/checkpoints/`
 ### H^2(mu_2) obstruction on a tetrahedral sphere
 
 `experiments/synthetic_h2_mu2_obstruction.py` uses the boundary of a tetrahedron, a triangulated 2-sphere with nontrivial `H^2(-, mu_2)`. It constructs a trivial face cocycle and a nontrivial face cocycle with one negative triangle. Pairwise edge alignments are locally exact, while triple-overlap defects carry the prescribed central twist. The report is written to `reports/synthetic_obstruction_report.md`.
+
+### TwistedMerge prototype
+
+`experiments/twisted_merge_algorithm_demo.py` runs the prototype `TwistedMerge` algorithm. It computes triangle defects, tries gauge trivialization, checks whether defects match a finite central `mu_2` twist, and builds a q=2 doubled branch representation with the central sign acting by a 2x2 branch-swap matrix. The report is written to `reports/twisted_merge_algorithm_report.md`.
 
 ### mu_2 / sign cocycle
 
