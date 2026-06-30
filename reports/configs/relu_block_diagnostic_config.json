@@ -1,7 +1,7 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/block_gauge_phase_diagram.py --n-models 3,4,6 --widths 4,8,16",
-  "git_commit": "efb80d8",
-  "dirty_worktree": true,
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/block_gauge_phase_diagram.py --calibration-floor 1e-12",
+  "git_commit": "c784e99",
+  "dirty_worktree": false,
   "synthetic_seeds": 20,
   "n_models": "3,4,6",
   "widths": "4,8,16",
@@ -13,41 +13,53 @@
   "block_train_samples": 2000,
   "block_test_samples": 1000,
   "calibration": {
-    "threshold": 4.476278938830673e-16,
+    "raw_calibrated_threshold": 4.476278938830673e-16,
+    "effective_threshold": 1e-12,
+    "numerical_floor": 1e-12,
+    "threshold": 1e-12,
     "observed_false_positive_rate": 0.0,
     "observed_true_positive_rate": 0.5,
     "policies": [
       {
         "name": "strict",
-        "threshold": 4.476278938830673e-16,
+        "threshold": 1e-12,
         "target_false_positive_rate": 0.0,
         "observed_false_positive_rate": 0.0,
         "observed_true_positive_rate": 0.5,
         "uncertain_band": 0.0,
         "uncertain_rate": 0.0,
         "false_scalar_projective_lift_rate": 0.0,
-        "notes": "zero empirical false positives on supplied negative controls"
+        "raw_calibrated_threshold": 4.476278938830673e-16,
+        "effective_threshold": 1e-12,
+        "numerical_floor": 1e-12,
+        "notes": "zero empirical false positives on supplied negative controls after numerical floor"
       },
       {
         "name": "balanced",
-        "threshold": 4.476278938830673e-16,
+        "threshold": 1e-12,
         "target_false_positive_rate": 0.01,
         "observed_false_positive_rate": 0.0,
         "observed_true_positive_rate": 0.5,
         "uncertain_band": 0.0,
         "uncertain_rate": 0.0,
         "false_scalar_projective_lift_rate": 0.0,
-        "notes": "maximizes positive acceptance subject to empirical FPR <= 0.01"
+        "raw_calibrated_threshold": 4.476278938830673e-16,
+        "effective_threshold": 1e-12,
+        "numerical_floor": 1e-12,
+        "notes": "maximizes positive acceptance subject to empirical FPR <= 0.01 after numerical floor"
       },
       {
         "name": "loose_diagnostic",
-        "threshold": 4.476278938830673e-16,
+        "threshold": 1e-12,
         "target_false_positive_rate": 0.01,
         "observed_false_positive_rate": 0.0,
         "observed_true_positive_rate": 0.5,
         "uncertain_band": 1e-12,
         "uncertain_rate": 0.2,
         "false_scalar_projective_lift_rate": 0.0,
+        "raw_calibrated_threshold": 4.476278938830673e-16,
+        "effective_threshold": 1e-12,
+        "numerical_floor": 1e-12,
         "notes": "near-threshold rows are uncertain rather than accepted/rejected"
       }
     ]
@@ -56,6 +68,7 @@
     "phase": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/block_gauge_phase_diagram.csv",
     "phase_summary": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/block_gauge_phase_diagram_summary.csv",
     "paired_stats": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/block_gauge_phase_diagram_paired_stats.csv",
+    "acceptance_by_noise": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/block_gauge_acceptance_by_noise.csv",
     "learned": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/learned_block_partition_benchmark.csv",
     "block_learning": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/block_compatible_learning_benchmark.csv",
     "relu": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/relu_block_diagnostic_benchmark.csv"
@@ -72,6 +85,6 @@
       "torch": "2.12.1",
       "torchvision": "0.27.1"
     },
-    "git_commit": "efb80d8"
+    "git_commit": "c784e99"
   }
 }
