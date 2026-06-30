@@ -98,7 +98,6 @@ PREDICTION_TARGETS = (
 )
 REGRESSION_PREDICTORS = (
     "mean_cycle_score",
-    "monomial_defect_score",
     "combined_obstruction_score",
     "sync_disagreement",
 )
