@@ -1,0 +1,64 @@
+\section{External Integration Reproducibility Appendix}
+\label{app:external-integration}
+
+This appendix records the official external-code integration attempts for the
+model-merging baselines and Neural Sheaf Diffusion.  The supported claim is
+limited: official integrations are documented; main comparisons remain faithful
+in-repository unless official runs succeeded.  The current artifacts do not
+support the claim that official external code confirms the method.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{p{0.13\linewidth}p{0.18\linewidth}p{0.08\linewidth}p{0.18\linewidth}p{0.12\linewidth}p{0.16\linewidth}p{0.15\linewidth}}
+\hline
+Project & Official repository & License & Attempted environment & Official code ran? & Faithful surrogate or wrapper & Claim boundary \\
+\hline
+Git Re-Basin & \url{https://github.com/samuela/git-re-basin} & MIT & TwistedMerge Python 3.12 / Torch 2.12; no nix; official commit \texttt{ef400982} & No & In-repo Git-ReBasin-style pairwise permutation alignment & No official Git Re-Basin result; no official-code win claim \\
+C2M3 & \url{https://github.com/crisostomi/cycle-consistent-model-merging} & MIT & TwistedMerge Python 3.12 / Torch 2.12; no uv or Python 3.9; official commit \texttt{ea1eca7} & No & In-repo C2M3-style cycle-consistent synchronization & No official C2M3 result; no official-code win claim \\
+Model Soups & \url{https://github.com/mlfoundations/model-soups} & MIT & TwistedMerge Python 3.12 / Torch 2.12; no conda or Python 3.6; official commit \texttt{d5398f1} & No & In-repo greedy and uniform soup baselines & No official Model Soups result; no official-code win claim \\
+Neural Sheaf Diffusion & \url{https://github.com/twitter-research/neural-sheaf-diffusion} & Apache-2.0 & Separate Python 3.9 PyG venv, Torch 1.11, PyG 2.0.4; official commit \texttt{11e21b5} & Yes, tiny Texas smoke run & Non-vendored diagnostic wrapper plus synthetic in-repo sheaf/GNN diagnostic & Official NSD smoke and post-hoc diagnostics only; no GNN or model-merging performance claim \\
+\hline
+\end{tabular}
+\caption{Official external-code integration status.  The model-merging
+official repositories were inspected but did not run on the exact TwistedMerge
+MNIST MLP checkpoints.  Neural Sheaf Diffusion ran only as a tiny optional
+external smoke test in a separate PyG environment.}
+\label{tab:external-integration-status}
+\end{table}
+
+\paragraph{Blocked model-merging official baselines.}
+Git Re-Basin is JAX/Flax/TFDS/W\&B-based and its MNIST MLP scripts expect
+Flax/W\&B artifacts for a deeper Dense(512) architecture.  The current project
+environment lacks the required JAX/Flax stack and has no nix shell available;
+the saved TwistedMerge checkpoints are PyTorch one-hidden-layer MLP state
+dicts.  C2M3 pins Python 3.9.19, Torch 1.13.0, Hydra, PyTorch Lightning,
+TorchMetrics, and W\&B; neither uv nor Python 3.9 is available here, and the
+official MLP configuration does not match the TwistedMerge checkpoint format.
+Model Soups targets CLIP/ViT ImageNet soups in an old conda Python 3.6/Torch
+1.7 stack, not MNIST MLP checkpoints.  Consequently, no official model-merging
+baseline CSV or official comparison table was generated.
+
+\paragraph{Faithful in-repository comparisons.}
+The active comparison layer therefore remains the license-clean in-repository
+surrogates: Git-ReBasin-style pairwise permutation alignment, C2M3-style
+cycle-consistent permutation synchronization, and Model-Soups-style greedy and
+uniform soups.  These are suitable for the paper's current faithful in-repo
+comparison claims, but they are not official-code results.
+
+\paragraph{Neural Sheaf Diffusion.}
+The official Neural Sheaf Diffusion repository was run in a separate Python 3.9
+PyG-compatible environment.  A tiny WebKB Texas BundleSheaf smoke run completed
+with test accuracy \(0.6486\) and best validation accuracy \(0.5254\).
+TwistedMerge then post-processed the official learned transport cache for
+triangle cycle diagnostics.  The unweighted connection cache had 67 triangles
+and mean cycle score about \(3.438\times 10^{-7}\).  The weighted cache score
+near \(0.9997\) includes learned scalar edge weights and is not a pure
+connection obstruction.  A cycle-regularizer attempt was not applied because
+the relevant official cache is detached via \texttt{clone().detach()}.
+
+\paragraph{Claim boundary.}
+This appendix documents what was attempted, what ran, and what remains
+adapter-only or future work.  It does not show that official external code
+confirms TwistedMerge, beats official C2M3/Git Re-Basin/Model Soups, improves
+GNNs through cycle regularization, or supports model-merging claims from NSD.

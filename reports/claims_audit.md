@@ -221,6 +221,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | CIFAR is included as a bounded appendix boundary, not as a broad model-merging win. | Supported limited | `reports/cifar_bridge_boundary_summary.md` and `reports/latex/cifar_bridge_appendix.tex` consolidate the failed CIFAR probe (`0.2480`), bounded rescue gate pass (`0.658333` max individual accuracy), final CIFAR confirmatory run (`0.650620` mean individual max accuracy), descriptive exact channel-gauge deltas, greedy-soup boundary behavior, and bridge-only rotated/colored-MNIST results. |
 | CIFAR confirms the main method. | Not yet supported | `reports/cifar_bridge_boundary_summary.md` explicitly frames CIFAR as an appendix boundary: exact CIFAR channel-gauge gains are tiny/descriptive with intervals crossing zero or touching zero, greedy soup remains the boundary, and bridge datasets are not promoted to CIFAR or general vision claims. |
 
+## External Integration Appendix
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| Official integrations are documented; main comparisons remain faithful in-repo unless official runs succeeded. | Supported | `reports/external_integration_summary.md` and `reports/latex/external_integration_appendix.tex` summarize official Git Re-Basin, C2M3, Model Soups, and Neural Sheaf Diffusion integration status, including repository URLs, licenses, attempted environments, official-run status, blockers, in-repo faithful surrogates or wrappers, and claim boundaries. Git Re-Basin, C2M3, and Model Soups did not produce official baseline metrics; NSD ran only a tiny Texas smoke test and post-hoc diagnostic wrapper. |
+| Official external code confirms the method. | Not yet supported | `reports/external_integration_summary.md` states that no official model-merging baseline ran on the exact TwistedMerge checkpoint set and that official NSD is only an optional smoke test unrelated to TwistedMerge model-merging performance. |
+
 ## Unified Quantitative Obstruction Chain
 
 | Claim | Status | Evidence |
@@ -246,6 +253,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | The CIFAR rescue proves a general CIFAR model-merging win. | Not yet supported | `reports/cifar_rescue_or_no_go_report.md` clears the meaningful base-accuracy gate, but method comparisons are one-setting descriptive rows; no broad or multi-seed CIFAR method-win claim is established. |
 | Positive channel scaling improves CIFAR merging. | Not yet supported | The bounded CIFAR rescue reports `positive_channel_scale` below C2M3-style channel synchronization by `-0.048667` test accuracy. |
 | CIFAR confirms the main method. | Not yet supported | `reports/cifar_bridge_boundary_summary.md` says CIFAR is a bounded appendix boundary, not a broad model-merging win; the final CIFAR exact channel-gauge deltas versus C2M3 are descriptive and the strongest union-soup delta versus greedy soup has a confidence interval touching zero. |
+| Official external code confirms the method. | Not yet supported | `reports/external_integration_summary.md` records that official Git Re-Basin, C2M3, and Model Soups did not run on the exact checkpoint set, and that the official Neural Sheaf Diffusion run was a tiny related smoke test with post-hoc diagnostics rather than a model-merging comparison. |
 | Every merging failure is Brauer/projective. | Not yet supported | `reports/unified_quantitative_obstruction_chain.md` gives explicit counter-accounting: different residual scores govern synchronization degradation, selector gain, detector certification, lift decisions, and dataset gates, and noncentral/permutation/soup cases are not promoted to Brauer/projective failures. |
 | TwistedMerge fully trivializes a nonzero `H^2(mu_2)` class as an ordinary untwisted vector bundle. | Not yet supported | The nonzero tetrahedral `H^2` class is explicitly non-coboundary. Current `TwistedMerge` does not construct an edge-level untwisted descent for it. |
 | The branch-prediction lift is a complete transition-map-level twisted sheaf descent implementation. | Not yet supported | The q=2 branch result is a controlled prediction-level sanity check. It is not a proof of full sheaf-level descent in the non-coboundary case. |
@@ -309,6 +317,8 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |
 | `reports/cifar_bridge_boundary_summary.md` | Concise CIFAR/bridge appendix summary covering the failed CIFAR gate, bounded rescue, final confirmatory run, exact-gauge descriptiveness, greedy-soup boundary, and bridge-only limitations. |
 | `reports/latex/cifar_bridge_appendix.tex` | LaTeX appendix section and compact table for CIFAR and bridge boundary evidence. |
+| `reports/external_integration_summary.md` | Reproducibility appendix summary for official Git Re-Basin, C2M3, Model Soups, and Neural Sheaf Diffusion integration attempts, blockers, surrogates, and claim boundaries. |
+| `reports/latex/external_integration_appendix.tex` | LaTeX appendix section/table documenting official external-code integration status and faithful in-repo comparison boundaries. |
 | `experiments/unified_quantitative_obstruction_chain.py` | Aggregates existing obstruction, detector, gate, selector, model-merging, block-gauge, time-frequency, and optional sheaf/GNN CSV artifacts into one quantitative chain. |
 | `reports/unified_quantitative_obstruction_chain.md` | Unified obstruction-chain report with link tests for cycle scores, validation deltas, operator/projection residuals, period-index decisions, dataset gates, and residual taxonomy. |
 | `reports/csv/unified_quantitative_obstruction_chain.csv` | Row-level normalized obstruction-chain table with aligned residual, detector, lift, gate, validation, and merge-degradation fields. |
