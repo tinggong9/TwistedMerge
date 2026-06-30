@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Iterable
 
 import numpy as np
@@ -33,6 +33,9 @@ class BlockSyncPolicy:
     uncertain_band: float = 0.0
     uncertain_rate: float = 0.0
     false_scalar_projective_lift_rate: float = 0.0
+    raw_calibrated_threshold: float | None = None
+    effective_threshold: float | None = None
+    numerical_floor: float = 0.0
     notes: str = ""
 
 
@@ -112,6 +115,7 @@ def calibrate_block_sync_policies(
     negative_residuals: Iterable[float],
     *,
     loose_band_fraction: float = 0.15,
+    numerical_floor: float = 0.0,
 ) -> list[BlockSyncPolicy]:
     """Return strict, balanced, and loose diagnostic residual policies.
 
@@ -120,6 +124,9 @@ def calibrate_block_sync_policies(
     callers should report uncertain rows instead of converting them into
     accepted block-gauge evidence.
     """
+
+    if numerical_floor < 0.0:
+        raise ValueError("numerical_floor must be nonnegative")
 
     positives = _finite_residuals(positive_residuals)
     negatives = _finite_residuals(negative_residuals)
@@ -133,40 +140,74 @@ def calibrate_block_sync_policies(
         negatives,
         target_false_positive_rate=0.01,
     )
+    strict_threshold = max(float(strict.threshold), float(numerical_floor))
+    balanced_threshold = max(float(balanced.threshold), float(numerical_floor))
+    strict_accepted_positive = int(np.sum(positives <= strict_threshold))
+    strict_accepted_negative = int(np.sum(negatives <= strict_threshold))
+    balanced_accepted_positive = int(np.sum(positives <= balanced_threshold))
+    balanced_accepted_negative = int(np.sum(negatives <= balanced_threshold))
+
     rows = [
         BlockSyncPolicy(
             name="strict",
-            threshold=strict.threshold,
+            threshold=strict_threshold,
             target_false_positive_rate=strict.target_false_positive_rate,
-            observed_false_positive_rate=strict.observed_false_positive_rate,
-            observed_true_positive_rate=strict.observed_true_positive_rate,
-            notes="zero empirical false positives on supplied negative controls",
+            observed_false_positive_rate=float(strict_accepted_negative / len(negatives)),
+            observed_true_positive_rate=float(strict_accepted_positive / len(positives)),
+            raw_calibrated_threshold=float(strict.threshold),
+            effective_threshold=strict_threshold,
+            numerical_floor=float(numerical_floor),
+            notes="zero empirical false positives on supplied negative controls after numerical floor",
         ),
         BlockSyncPolicy(
             name="balanced",
-            threshold=balanced.threshold,
+            threshold=balanced_threshold,
             target_false_positive_rate=balanced.target_false_positive_rate,
-            observed_false_positive_rate=balanced.observed_false_positive_rate,
-            observed_true_positive_rate=balanced.observed_true_positive_rate,
-            notes="maximizes positive acceptance subject to empirical FPR <= 0.01",
+            observed_false_positive_rate=float(balanced_accepted_negative / len(negatives)),
+            observed_true_positive_rate=float(balanced_accepted_positive / len(positives)),
+            raw_calibrated_threshold=float(balanced.threshold),
+            effective_threshold=balanced_threshold,
+            numerical_floor=float(numerical_floor),
+            notes="maximizes positive acceptance subject to empirical FPR <= 0.01 after numerical floor",
         ),
     ]
-    band = max(abs(balanced.threshold) * float(loose_band_fraction), 1e-12)
+    band = max(abs(balanced_threshold) * float(loose_band_fraction), 1e-12)
     all_residuals = np.concatenate([positives, negatives])
-    uncertain_rate = float(np.mean(np.abs(all_residuals - balanced.threshold) <= band))
+    uncertain_rate = float(np.mean(np.abs(all_residuals - balanced_threshold) <= band))
     rows.append(
         BlockSyncPolicy(
             name="loose_diagnostic",
-            threshold=balanced.threshold,
+            threshold=balanced_threshold,
             target_false_positive_rate=balanced.target_false_positive_rate,
-            observed_false_positive_rate=balanced.observed_false_positive_rate,
-            observed_true_positive_rate=balanced.observed_true_positive_rate,
+            observed_false_positive_rate=float(balanced_accepted_negative / len(negatives)),
+            observed_true_positive_rate=float(balanced_accepted_positive / len(positives)),
             uncertain_band=band,
             uncertain_rate=uncertain_rate,
+            raw_calibrated_threshold=float(balanced.threshold),
+            effective_threshold=balanced_threshold,
+            numerical_floor=float(numerical_floor),
             notes="near-threshold rows are uncertain rather than accepted/rejected",
         )
     )
     return rows
+
+
+def apply_calibration_floor(calibration: BlockSyncCalibration, numerical_floor: float) -> BlockSyncCalibration:
+    """Return an acceptance calibration with an explicit numerical floor."""
+
+    if numerical_floor < 0.0:
+        raise ValueError("numerical_floor must be nonnegative")
+    effective_threshold = max(float(calibration.threshold), float(numerical_floor))
+    if effective_threshold == calibration.threshold:
+        return calibration
+    return replace(
+        calibration,
+        threshold=effective_threshold,
+        notes=(
+            f"{calibration.notes}; raw_calibrated_threshold={calibration.threshold:.6g}; "
+            f"effective_threshold={effective_threshold:.6g}; numerical_floor={numerical_floor:.6g}"
+        ),
+    )
 
 
 def apply_block_sync_policy(residual: float, policy: BlockSyncPolicy) -> str:

@@ -32,6 +32,7 @@ from src.block_compatible_merge import (  # noqa: E402
 from src.block_gauge_alignment import BlockPartition  # noqa: E402
 from src.block_sync_calibration import (  # noqa: E402
     BlockSyncCalibration,
+    apply_calibration_floor,
     apply_block_sync_policy,
     calibrate_block_sync_policies,
     calibrate_connection_residual_threshold,
@@ -79,6 +80,31 @@ def git_dirty() -> bool | str:
         return bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip())
     except Exception:
         return "unknown"
+
+
+def run_metadata(args) -> dict[str, object]:
+    command = " ".join([*[f"{k}={os.environ[k]}" for k in ("PYTHONPYCACHEPREFIX", "MPLCONFIGDIR") if os.environ.get(k)], sys.executable, *sys.argv])
+    return {
+        "command": command,
+        "git_commit": git_commit(),
+        "git_worktree_dirty": git_dirty(),
+        "environment": capture_environment(),
+        "config": {
+            "synthetic_seeds": args.synthetic_seeds,
+            "n_models": args.n_models,
+            "widths": args.widths,
+            "block_sizes": args.block_sizes,
+            "noise_levels": args.noise_levels,
+            "calibration_floor": args.calibration_floor,
+            "n_restarts": args.n_restarts,
+            "max_iters": args.max_iters,
+            "tolerance": args.tolerance,
+            "block_learning_seeds": args.block_learning_seeds,
+            "block_train_samples": args.block_train_samples,
+            "block_test_samples": args.block_test_samples,
+            "block_epochs": args.block_epochs,
+        },
+    }
 
 
 def parse_csv(text: str, cast):
@@ -283,6 +309,10 @@ def sync_row(
     )
     policy_decisions = {policy.name: apply_block_sync_policy(optimized.connection_residual, policy) for policy in policies}
     strict_accept = policy_decisions.get("strict") == "accept"
+    strict_policy = next((policy for policy in policies if policy.name == "strict"), None)
+    raw_threshold = getattr(strict_policy, "raw_calibrated_threshold", calibration.threshold)
+    effective_threshold = getattr(strict_policy, "effective_threshold", calibration.threshold)
+    numerical_floor = getattr(strict_policy, "numerical_floor", getattr(args, "calibration_floor", 0.0))
     return {
         "setting_id": f"{family}_N{n_models}_W{width}_B{block_size}_Z{noise_level}_S{seed}",
         "true_family": family,
@@ -305,6 +335,9 @@ def sync_row(
         "optimized_iterations": int(optimized.n_iterations),
         "optimized_converged": bool(optimized.converged),
         "runtime_seconds": runtime,
+        "raw_calibrated_threshold": float(raw_threshold if raw_threshold is not None else calibration.threshold),
+        "effective_threshold": float(effective_threshold if effective_threshold is not None else calibration.threshold),
+        "numerical_floor": float(numerical_floor),
         "calibrated_acceptance_flag": strict_accept,
         "strict_policy_decision": policy_decisions.get("strict", ""),
         "balanced_policy_decision": policy_decisions.get("balanced", ""),
@@ -332,8 +365,13 @@ def build_calibration_controls(args):
         for family in ["noncentral_block_holonomy", "fake_projection_trap", "edge_corrupted_global_gauge"]:
             maps, blocks, _label, _accept = make_family_maps(family, 3, 4, 2, 0.4, seed)
             negatives.append(global_block_spectral_synchronization(maps, blocks, 3, 4).connection_residual)
-    calibration = calibrate_connection_residual_threshold(positives, negatives, target_false_positive_rate=0.0)
-    policies = calibrate_block_sync_policies(positives, negatives)
+    raw_calibration = calibrate_connection_residual_threshold(positives, negatives, target_false_positive_rate=0.0)
+    calibration = apply_calibration_floor(raw_calibration, getattr(args, "calibration_floor", 0.0))
+    policies = calibrate_block_sync_policies(
+        positives,
+        negatives,
+        numerical_floor=getattr(args, "calibration_floor", 0.0),
+    )
     return calibration, policies
 
 
@@ -751,6 +789,48 @@ def summarize_phase(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def acceptance_by_noise(phase: pd.DataFrame, policies) -> pd.DataFrame:
+    rows = []
+    for policy in policies:
+        column = f"{policy.name}_policy_decision"
+        if column not in phase:
+            continue
+        for (family, noise_level), group in phase.groupby(["true_family", "noise_level"], dropna=False):
+            decisions = group[column]
+            accepted = decisions == "accept"
+            scalar = group["observed_scalar_finite_order_candidate"].astype(bool)
+            should_accept_exact = group["true_family"].isin(
+                ["exact_global_block_gauge", "learned_noncontiguous_block_positive_control"]
+            )
+            false_accept = accepted & ~group["should_accept_global_gauge"].astype(bool) & ~scalar
+            false_reject = ~accepted & should_accept_exact
+            rows.append(
+                {
+                    "true_family": family,
+                    "noise_level": noise_level,
+                    "policy": policy.name,
+                    "n_rows": int(len(group)),
+                    "acceptance_rate": float(accepted.mean()),
+                    "false_accept_rate": float(false_accept.mean()),
+                    "false_reject_rate": float(false_reject.mean()),
+                    "scalar_candidate_fraction": float(scalar.mean()),
+                    "mean_spectral_connection_residual": float(group["spectral_connection_residual"].mean()),
+                    "mean_optimized_connection_residual": float(group["optimized_connection_residual"].mean()),
+                    "mean_optimized_improvement": float(group["optimized_improvement_over_spectral"].mean()),
+                    "raw_calibrated_threshold": float(
+                        policy.raw_calibrated_threshold
+                        if policy.raw_calibrated_threshold is not None
+                        else policy.threshold
+                    ),
+                    "effective_threshold": float(
+                        policy.effective_threshold if policy.effective_threshold is not None else policy.threshold
+                    ),
+                    "numerical_floor": float(policy.numerical_floor),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
 def paired_stats(phase: pd.DataFrame, learned: pd.DataFrame, block: pd.DataFrame) -> pd.DataFrame:
     rows = []
     if not phase.empty:
@@ -824,7 +904,13 @@ def policy_table(policies, phase: pd.DataFrame) -> pd.DataFrame:
         rows.append(
             {
                 "policy": policy.name,
-                "threshold": policy.threshold,
+                "raw_calibrated_threshold": float(
+                    policy.raw_calibrated_threshold if policy.raw_calibrated_threshold is not None else policy.threshold
+                ),
+                "effective_threshold": float(
+                    policy.effective_threshold if policy.effective_threshold is not None else policy.threshold
+                ),
+                "numerical_floor": float(policy.numerical_floor),
                 "target_false_positive_rate": policy.target_false_positive_rate,
                 "true_positive_rate": float((accepted & positive).sum() / max(int(positive.sum()), 1)),
                 "false_positive_rate": float((accepted & negative).sum() / max(int(negative.sum()), 1)),
@@ -844,21 +930,21 @@ def claim_table(phase, stats, learned, block, relu) -> pd.DataFrame:
     scalar = phase[phase["true_family"] == "scalar_block_phase_mu2"]
     rows.append(
         {
-            "claim": "strict calibration rejects fake projection traps",
+            "claim": "strict calibration with numerical floor rejects fake projection traps",
             "decision": "Supported" if not strict_fake.empty and (strict_fake["strict_policy_decision"] != "accept").all() else "Supported negative",
             "evidence": "fake rows have zero projected cycle by construction but are rejected when connection residual is large",
         }
     )
     rows.append(
         {
-            "claim": "strict calibration rejects noncentral holonomy",
+            "claim": "strict calibration with numerical floor rejects noncentral block holonomy",
             "decision": "Supported" if not strict_noncentral.empty and (strict_noncentral["strict_policy_decision"] != "accept").all() else "Supported negative",
             "evidence": "noncentral rows are not accepted by strict residual calibration",
         }
     )
     rows.append(
         {
-            "claim": "exact global gauges are accepted",
+            "claim": "exact global block gauges are accepted up to numerical tolerance",
             "decision": "Supported" if not exact.empty and (exact["strict_policy_decision"] == "accept").all() else "Supported descriptive",
             "evidence": "exact rows have near-zero connection residual",
         }
@@ -881,7 +967,7 @@ def claim_table(phase, stats, learned, block, relu) -> pd.DataFrame:
     block_aligned = stats[stats["comparison"] == "optimized_block_gauge_aligned_average_vs_unaligned_weight_average"]
     rows.append(
         {
-            "claim": "block-compatible architecture supports exact capacity-matched block-gauge averaging",
+            "claim": "block-compatible linear-hidden architecture supports exact capacity-matched block-gauge aligned averaging over unaligned averaging",
             "decision": "Supported" if not block_aligned.empty and float(block_aligned.iloc[0]["mean_delta"]) >= 0.0 else "Supported descriptive",
             "evidence": "linear-hidden MNIST benchmark uses exact same-architecture block gauges",
         }
@@ -986,8 +1072,9 @@ def write_report(path: Path, title: str, body: str) -> None:
     path.write_text(body, encoding="utf-8")
 
 
-def write_reports(args, phase, summary, stats, learned, block, relu, policy, claims) -> None:
-    command = " ".join([*[f"{k}={os.environ[k]}" for k in ("PYTHONPYCACHEPREFIX", "MPLCONFIGDIR") if os.environ.get(k)], sys.executable, *sys.argv])
+def write_reports(args, phase, summary, stats, learned, block, relu, policy, claims, noise_summary, metadata) -> None:
+    command = str(metadata["command"])
+    environment = metadata["environment"]
     common = f"""## Exact Command
 
 ```bash
@@ -996,12 +1083,11 @@ def write_reports(args, phase, summary, stats, learned, block, relu, policy, cla
 
 ## Git And Environment
 
-- HEAD: `{git_commit()}`
-- Main worktree dirty at report generation: `{git_dirty()}`
-- Note: this run preserves unrelated dirty files in the main checkout; clean 5(j)(ii) rerun metadata is kept in `reports/optimized_global_block_synchronization_report.md`.
+- HEAD at report-generation start: `{metadata["git_commit"]}`
+- Worktree dirty at report-generation start: `{metadata["git_worktree_dirty"]}`
 
 ```json
-{json.dumps(capture_environment(), indent=2)}
+{json.dumps(environment, indent=2)}
 ```
 """
     phase_report = f"""# Block Gauge Phase Diagram Report
@@ -1021,11 +1107,15 @@ This report is generated by `experiments/block_gauge_phase_diagram.py`.
 
 ## Calibration Policies
 
-{md_table(policy, ["policy", "threshold", "target_false_positive_rate", "true_positive_rate", "false_positive_rate", "uncertain_rate", "false_scalar_projective_lift_rate"], 20)}
+{md_table(policy, ["policy", "raw_calibrated_threshold", "effective_threshold", "numerical_floor", "target_false_positive_rate", "true_positive_rate", "false_positive_rate", "uncertain_rate", "false_scalar_projective_lift_rate"], 20)}
 
 ## Phase Summary
 
 {md_table(summary, ["true_family", "n_rows", "strict_acceptance_rate", "false_accept_rate", "false_reject_rate", "scalar_candidate_fraction", "mean_spectral_connection_residual", "mean_optimized_connection_residual", "mean_optimized_improvement"], 30)}
+
+## Acceptance By Noise
+
+{md_table(noise_summary[noise_summary["policy"] == "strict"], ["true_family", "noise_level", "policy", "n_rows", "acceptance_rate", "false_accept_rate", "false_reject_rate", "scalar_candidate_fraction", "mean_spectral_connection_residual", "mean_optimized_connection_residual", "mean_optimized_improvement"], 80)}
 
 ## Paired Statistics
 
@@ -1096,12 +1186,79 @@ Block rotations are not evaluated as same-architecture ReLU merges. C2M3, positi
 """
     write_report(args.reports_dir / "relu_block_diagnostic_report.md", "relu", relu_report)
 
+    learned_table = learned.groupby("partition_method").agg(
+        n_rows=("seed", "count"),
+        mean_recovery=("block_recovery_accuracy", "mean"),
+        mean_validation_residual=("validation_block_residual", "mean"),
+        mean_delta_vs_contiguous=("delta_validation_residual_vs_contiguous", "mean"),
+    ).reset_index()
+    block_table = block.groupby("method").agg(
+        n_rows=("seed", "count"),
+        mean_accuracy=("accuracy", "mean"),
+        mean_loss=("loss", "mean"),
+        capacity_matched=("capacity_matched", "all"),
+    ).reset_index()
+    relu_table = (
+        relu.groupby(["partition_method", "block_size"]).agg(
+            n_rows=("seed", "count"),
+            scalar_candidate_fraction=("observed_scalar_projective_candidate", "mean"),
+            block_merge_reported=("block_merge_accuracy_reported", "any"),
+            exact_same_architecture_symmetry=("exact_same_architecture_symmetry", "any"),
+        ).reset_index()
+        if not relu.empty
+        else pd.DataFrame()
+    )
+    closure_report = f"""# Block Gauge Branch Closure Report
 
-def write_config(args, calibration, policies, paths) -> None:
+This report is generated by `experiments/block_gauge_phase_diagram.py`.
+
+{common}
+
+## Calibration Before And After Floor
+
+{md_table(policy, ["policy", "raw_calibrated_threshold", "effective_threshold", "numerical_floor", "true_positive_rate", "false_positive_rate", "uncertain_rate", "false_scalar_projective_lift_rate"], 20)}
+
+## Phase-Diagram Claim Outcomes
+
+{md_table(claims, ["claim", "decision", "evidence"], 30)}
+
+## Learned-Block Positive Controls
+
+{md_table(learned_table, ["partition_method", "n_rows", "mean_recovery", "mean_validation_residual", "mean_delta_vs_contiguous"], 20)}
+
+## Block-Compatible Learning
+
+{md_table(block_table, ["method", "n_rows", "mean_accuracy", "mean_loss", "capacity_matched"], 20)}
+
+## ReLU Diagnostic-Only Results
+
+{md_table(relu_table, ["partition_method", "block_size", "n_rows", "scalar_candidate_fraction", "block_merge_reported", "exact_same_architecture_symmetry"], 40)}
+
+## Acceptance By Noise
+
+{md_table(noise_summary[noise_summary["policy"] == "strict"], ["true_family", "noise_level", "n_rows", "acceptance_rate", "false_accept_rate", "false_reject_rate", "scalar_candidate_fraction", "mean_optimized_connection_residual"], 80)}
+
+## Final Claim Decision Table
+
+{md_table(claims, ["claim", "decision", "evidence"], 30)}
+
+## Final Negative Boundaries
+
+- This branch supports block-gauge diagnostics and controlled block-compatible exact merging.
+- It does not support exact ReLU block-orthogonal merging, real Brauer/projective residuals in MNIST, or broad natural model-merging claims.
+- Post-projection cycle score alone is not evidence for descent; connection residual remains the acceptance gate.
+- The exact merge claim is restricted to the linear-hidden identity-activation architecture.
+- ReLU-compatible baselines remain C2M3, positive monomial scaling, greedy soup, and ensemble.
+"""
+    write_report(args.reports_dir / "block_gauge_branch_closure_report.md", "closure", closure_report)
+
+
+def write_config(args, calibration, policies, paths, metadata) -> None:
+    strict_policy = next((policy for policy in policies if policy.name == "strict"), policies[0])
     config = {
-        "command": " ".join([sys.executable, *sys.argv]),
-        "git_commit": git_commit(),
-        "dirty_worktree": git_dirty(),
+        "command": metadata["command"],
+        "git_commit": metadata["git_commit"],
+        "dirty_worktree": metadata["git_worktree_dirty"],
         "synthetic_seeds": args.synthetic_seeds,
         "n_models": args.n_models,
         "widths": args.widths,
@@ -1113,18 +1270,22 @@ def write_config(args, calibration, policies, paths) -> None:
         "block_train_samples": args.block_train_samples,
         "block_test_samples": args.block_test_samples,
         "calibration": {
+            "raw_calibrated_threshold": strict_policy.raw_calibrated_threshold,
+            "effective_threshold": strict_policy.effective_threshold,
+            "numerical_floor": strict_policy.numerical_floor,
             "threshold": calibration.threshold,
             "observed_false_positive_rate": calibration.observed_false_positive_rate,
             "observed_true_positive_rate": calibration.observed_true_positive_rate,
             "policies": [policy.__dict__ for policy in policies],
         },
         "outputs": {key: str(value) for key, value in paths.items()},
-        "environment": capture_environment(),
+        "environment": metadata["environment"],
     }
     for path in [
         args.reports_dir / "configs" / "block_gauge_phase_diagram_config.json",
         args.reports_dir / "configs" / "block_compatible_learning_config.json",
         args.reports_dir / "configs" / "relu_block_diagnostic_config.json",
+        args.reports_dir / "configs" / "block_gauge_branch_closure_config.json",
     ]:
         path.write_text(json.dumps(config, indent=2), encoding="utf-8")
 
@@ -1132,10 +1293,11 @@ def write_config(args, calibration, policies, paths) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--synthetic-seeds", type=int, default=20)
-    parser.add_argument("--n-models", default="3,4")
-    parser.add_argument("--widths", default="4,8")
+    parser.add_argument("--n-models", default="3,4,6")
+    parser.add_argument("--widths", default="4,8,16")
     parser.add_argument("--block-sizes", default="2,4")
     parser.add_argument("--noise-levels", default="0.0,0.01,0.03,0.1,0.2,0.4,0.8")
+    parser.add_argument("--calibration-floor", type=float, default=1e-12)
     parser.add_argument("--n-restarts", type=int, default=1)
     parser.add_argument("--max-iters", type=int, default=10)
     parser.add_argument("--tolerance", type=float, default=1e-6)
@@ -1164,6 +1326,7 @@ def main() -> None:
     csv_dir.mkdir(parents=True, exist_ok=True)
     plot_dir.mkdir(parents=True, exist_ok=True)
     config_dir.mkdir(parents=True, exist_ok=True)
+    metadata = run_metadata(args)
 
     calibration, policies = build_calibration_controls(args)
     phase = phase_diagram_rows(args, calibration, policies)
@@ -1171,6 +1334,7 @@ def main() -> None:
     block = block_compatible_learning_rows(args)
     relu = relu_diagnostic_rows(args)
     summary = summarize_phase(phase)
+    noise_summary = acceptance_by_noise(phase, policies)
     stats = paired_stats(phase, learned, block)
     policy = policy_table(policies, phase)
     claims = claim_table(phase, stats, learned, block, relu)
@@ -1179,6 +1343,7 @@ def main() -> None:
         "phase": csv_dir / "block_gauge_phase_diagram.csv",
         "phase_summary": csv_dir / "block_gauge_phase_diagram_summary.csv",
         "paired_stats": csv_dir / "block_gauge_phase_diagram_paired_stats.csv",
+        "acceptance_by_noise": csv_dir / "block_gauge_acceptance_by_noise.csv",
         "learned": csv_dir / "learned_block_partition_benchmark.csv",
         "block_learning": csv_dir / "block_compatible_learning_benchmark.csv",
         "relu": csv_dir / "relu_block_diagnostic_benchmark.csv",
@@ -1186,17 +1351,19 @@ def main() -> None:
     phase.to_csv(paths["phase"], index=False)
     summary.to_csv(paths["phase_summary"], index=False)
     stats.to_csv(paths["paired_stats"], index=False)
+    noise_summary.to_csv(paths["acceptance_by_noise"], index=False)
     learned.to_csv(paths["learned"], index=False)
     block.to_csv(paths["block_learning"], index=False)
     relu.to_csv(paths["relu"], index=False)
     write_plots(phase, learned, block, relu, plot_dir)
-    write_reports(args, phase, summary, stats, learned, block, relu, policy, claims)
-    write_config(args, calibration, policies, paths)
+    write_reports(args, phase, summary, stats, learned, block, relu, policy, claims, noise_summary, metadata)
+    write_config(args, calibration, policies, paths, metadata)
     for path in paths.values():
         print(f"wrote {path}")
     print(f"wrote {args.reports_dir / 'block_gauge_phase_diagram_report.md'}")
     print(f"wrote {args.reports_dir / 'block_compatible_learning_report.md'}")
     print(f"wrote {args.reports_dir / 'relu_block_diagnostic_report.md'}")
+    print(f"wrote {args.reports_dir / 'block_gauge_branch_closure_report.md'}")
 
 
 if __name__ == "__main__":
