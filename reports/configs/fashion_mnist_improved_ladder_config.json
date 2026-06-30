@@ -1,0 +1,159 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/fashion_mnist_improved_ladder.py --device auto",
+  "git_commit": "eb99783",
+  "dirty_worktree": true,
+  "dataset": "fashion_mnist",
+  "architecture": "mlp_relu",
+  "model_counts": [
+    3,
+    4
+  ],
+  "widths": [
+    32,
+    64,
+    128
+  ],
+  "main_setting": "4:64",
+  "main_seeds": [
+    5200,
+    5201,
+    5202,
+    5203,
+    5204,
+    5205,
+    5206,
+    5207,
+    5208,
+    5209
+  ],
+  "secondary_seeds": [
+    5300,
+    5301,
+    5302,
+    5303,
+    5304
+  ],
+  "seed_plan": [
+    {
+      "n_models": 3,
+      "width": 32,
+      "seeds": [
+        5300,
+        5301,
+        5302,
+        5303,
+        5304
+      ],
+      "role": "secondary"
+    },
+    {
+      "n_models": 3,
+      "width": 64,
+      "seeds": [
+        5300,
+        5301,
+        5302,
+        5303,
+        5304
+      ],
+      "role": "secondary"
+    },
+    {
+      "n_models": 3,
+      "width": 128,
+      "seeds": [
+        5300,
+        5301,
+        5302,
+        5303,
+        5304
+      ],
+      "role": "secondary"
+    },
+    {
+      "n_models": 4,
+      "width": 32,
+      "seeds": [
+        5300,
+        5301,
+        5302,
+        5303,
+        5304
+      ],
+      "role": "secondary"
+    },
+    {
+      "n_models": 4,
+      "width": 64,
+      "seeds": [
+        5200,
+        5201,
+        5202,
+        5203,
+        5204,
+        5205,
+        5206,
+        5207,
+        5208,
+        5209
+      ],
+      "role": "main"
+    },
+    {
+      "n_models": 4,
+      "width": 128,
+      "seeds": [
+        5300,
+        5301,
+        5302,
+        5303,
+        5304
+      ],
+      "role": "secondary"
+    }
+  ],
+  "epochs": 5,
+  "max_train_samples": 12000,
+  "max_test_samples": 5000,
+  "val_fraction": 0.2,
+  "alpha_grid": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.25,
+    1.5
+  ],
+  "tau_grid": [
+    "0.25",
+    "0.5",
+    "1.0",
+    "2.0",
+    "inf"
+  ],
+  "optimization_steps": 30,
+  "optimization_lr": 0.05,
+  "optimization_bound": 1.0,
+  "optimization_l2": 0.001,
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "eb99783"
+  }
+}

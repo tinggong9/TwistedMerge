@@ -168,6 +168,11 @@ def load_dataset(name: str, root: Path, max_train_samples: int, max_test_samples
         train = torchvision.datasets.MNIST(root=root, train=True, download=True, transform=transform)
         test = torchvision.datasets.MNIST(root=root, train=False, download=True, transform=transform)
         spec = DatasetSpec(name="mnist", input_shape=(1, 28, 28))
+    elif name in {"fashion_mnist", "fashion-mnist", "fashionmnist"}:
+        transform = T.ToTensor()
+        train = torchvision.datasets.FashionMNIST(root=root, train=True, download=True, transform=transform)
+        test = torchvision.datasets.FashionMNIST(root=root, train=False, download=True, transform=transform)
+        spec = DatasetSpec(name="fashion_mnist", input_shape=(1, 28, 28))
     elif name == "cifar10":
         transform = T.ToTensor()
         train = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=transform)
@@ -215,6 +220,7 @@ def train_model(model, loader, epochs: int, lr: float, device) -> dict[str, floa
 
 def evaluate_model(model, loader, device) -> dict[str, float]:
     torch, _, _ = require_torch()
+    model.to(device)
     model.eval()
     total_loss = 0.0
     total_correct = 0
