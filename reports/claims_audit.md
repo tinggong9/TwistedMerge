@@ -31,6 +31,10 @@ This file tracks which claims are supported by current repository artifacts and 
 | The detector distinguishes central finite-index projective residuals from noncentral permutation holonomy. | Supported | `tests/test_noncentral_holonomy.py` and `reports/noncentral_holonomy_ladder_report.md` classify clock-shift controls as `central_finite_index_projective` and the `S_3` commutator as `noncentral_permutation_holonomy`. |
 | Controlled `S_3` permutation commutators are noncentral and not Brauer/projective scalar classes. | Supported | `test_s3_commutator_is_noncentral` verifies the `(12),(23)` commutator is a noncentral 3-cycle; `reports/noncentral_vs_brauer_note.tex` records the paper-ready example. |
 | Sampled real MNIST permutation residuals are better described as noncentral permutation holonomy than finite-index scalar twists in the current mined data. | Supported negative result | `reports/noncentral_holonomy_ladder_report.md` samples the ten most finite-index-like real MNIST residual rows and labels all as `noncentral_permutation_holonomy` with `not_brauer_noncentral`. |
+| StructureGroupLadder distinguishes permutation, signed, monomial/projective, block, and GL residual diagnostics. | Supported | `tests/test_structure_group_ladder.py` exercises the ladder levels; `reports/csv/structure_group_ladder_mining.csv` contains one row per level for synthetic controls and real MNIST triangles. |
+| Controlled signed or monomial examples can reveal central `mu_2` or finite-index projective residuals. | Supported | `reports/structure_group_ladder_report.md` reports `signed_mu2_central` as `central_mu2_candidate`, order-3 clock-shift rank 2 as obstructed, and rank 3 as `finite_index_projective_lift`. |
+| Controlled noncentral examples remain noncentral and are not mislabeled as Brauer/projective by the ladder. | Supported | `tests/test_structure_group_ladder.py` checks the `S_3` and GL controls are noncentral; the ladder report labels them `noncentral_permutation_holonomy` and `gl_noncentral_holonomy`. |
+| Real MNIST residuals were tested across the implemented permutation, signed, monomial, and low-rank GL structure levels. | Supported negative result | `reports/csv/structure_group_ladder_summary.csv` reports 50 real MNIST rows per evaluated level, zero central/projective candidates, and block-orthogonal marked `not_evaluated`. |
 
 ## Not Yet Supported
 
@@ -56,7 +60,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | Pure permutation C2M3 residuals are the same as scalar finite-index twists. | Not yet supported | `reports/finite_index_residual_mining_report.md` shows MNIST permutation residuals are generally noncentral and do not pass scalar finite-index thresholds. |
 | Real neural defects are Brauer classes. | Not yet supported | `reports/noncentral_holonomy_ladder_report.md` explicitly separates noncentral permutation holonomy from central Brauer/projective candidates. |
 | Noncentral regular branch lifts are capacity-matched single merged models. | Not yet supported | `src/noncentral_holonomy.py` labels the regular representation construction `noncentral_regular_branch_lift_extra_capacity`; no compression/capacity-matched result is provided. |
-| Enlarging the structure group automatically reveals finite-index torsion in real models. | Not yet supported | The ladder report proposes signed/phase/block gauge mining as a next step but does not show scalar torsion appearing in real MNIST residuals. |
+| Enlarging the structure group automatically reveals finite-index torsion in real models. | Not yet supported | `reports/structure_group_ladder_report.md` tests signed, monomial, and low-rank GL diagnostics on real MNIST and still reports zero central/projective candidates; block-orthogonal real mining is marked `not_evaluated`. |
 
 ## Current Artifact Map
 
@@ -101,3 +105,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/noncentral_holonomy_ladder_report.md` | Report distinguishing central Brauer/projective candidates from noncentral holonomy. |
 | `reports/noncentral_vs_brauer_note.tex` | Paper-ready note on why noncentral permutation holonomy is not a scalar Brauer/projective class. |
 | `reports/csv/noncentral_holonomy_ladder.csv` | Per-example ladder classifications and MNIST residual sample interpretations. |
+| `src/structure_group_ladder.py` | Structure-group ladder diagnostics over permutation, signed, monomial, block, and low-rank GL levels. |
+| `tests/test_structure_group_ladder.py` | Regression tests for C2M3 priority, signed `mu_2`, finite-index projective, noncentral, and real-row no-overclaim behavior. |
+| `experiments/structure_group_ladder_mining.py` | Synthetic controls and MNIST MLP residual re-mining across the implemented ladder levels. |
+| `reports/structure_group_ladder_report.md` | Report for structure-group ladder controls and real MNIST ladder mining. |
+| `reports/csv/structure_group_ladder_mining.csv` | Per-triangle, per-level ladder diagnostics for controls and MNIST. |
+| `reports/csv/structure_group_ladder_summary.csv` | Summary statistics by source and structure-group level. |

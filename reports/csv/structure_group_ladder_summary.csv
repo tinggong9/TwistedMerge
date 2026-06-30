@@ -1,0 +1,11 @@
+source,level,n_rows,mean_centrality_score,min_centrality_score,fraction_central_projective_candidates,fraction_noncentral_holonomy,fraction_not_evaluated,mean_centrality_improvement_from_previous_level,most_common_residual_type,interpretation
+real_mnist,block_orthogonal,50,,,0.0,0.0,1.0,,not_evaluated,not evaluated for this source/level
+real_mnist,low_rank_GL,50,0.6577277669137555,0.481873301092464,0.0,0.96,0.0,-0.23832019832505225,gl_noncentral_holonomy,mostly noncentral holonomy under this tested structure group
+real_mnist,monomial_phase_or_scale,50,0.41940756858870315,0.21148665877834982,0.0,1.0,0.0,0.5285403727845016,noncentral_holonomy,mostly noncentral holonomy under this tested structure group
+real_mnist,permutation,50,0.9479479413732048,0.6614378277661477,0.0,1.0,0.0,,noncentral_permutation_holonomy,mostly noncentral holonomy under this tested structure group
+real_mnist,signed_permutation,50,0.9479479413732048,0.6614378277661477,0.0,1.0,0.0,0.0,signed_noncentral_holonomy,mostly noncentral holonomy under this tested structure group
+synthetic,block_orthogonal,6,8.012457299054945e-17,8.012457299054945e-17,0.0,0.0,0.8333333333333334,,not_evaluated,controlled or diagnostic residual reduction
+synthetic,low_rank_GL,6,1.8027756377319943,1.8027756377319943,0.0,0.16666666666666666,0.8333333333333334,,not_evaluated,controlled or diagnostic residual reduction
+synthetic,monomial_phase_or_scale,6,2.583903469664147e-16,2.583903469664147e-16,0.3333333333333333,0.0,0.6666666666666666,,not_evaluated,controlled or diagnostic residual reduction
+synthetic,permutation,6,0.5,0.0,0.0,0.16666666666666666,0.6666666666666666,,not_evaluated,controlled or diagnostic residual reduction
+synthetic,signed_permutation,6,0.0,0.0,0.16666666666666666,0.0,0.8333333333333334,0.0,not_evaluated,controlled or diagnostic residual reduction
