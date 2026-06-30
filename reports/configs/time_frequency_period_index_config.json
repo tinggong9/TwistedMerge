@@ -50,9 +50,9 @@
       "n_classes": 3
     }
   ],
-  "commit": "e8b6434",
+  "commit": "0bb2de8",
   "environment": {
-    "git_commit": "e8b6434",
+    "git_commit": "0bb2de8",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
