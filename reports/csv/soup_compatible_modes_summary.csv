@@ -1,0 +1,12 @@
+mode,method,n_rows,mean_ingredient_count,mean_accuracy,mean_delta_vs_greedy,capacity_matched_to_weight_average
+independent_seed_models,c2m3_greedy_soup,120,1.05,0.8568683333333332,-0.00037666666666666496,True
+independent_seed_models,global_monomial_greedy_soup,120,1.1083333333333334,0.85685,-0.0003949999999999972,True
+independent_seed_models,greedy_soup,120,1.0,0.857245,0.0,True
+independent_seed_models,monomial_scaled_greedy_soup,120,1.0666666666666667,0.85698,-0.00026499999999999766,True
+independent_seed_models,optimized_monomial_greedy_soup,120,1.025,0.8570308333333334,-0.00021416666666666714,True
+independent_seed_models,shrinkage_monomial_greedy_soup,120,1.0916666666666666,0.8569641666666665,-0.000280833333333332,True
+independent_seed_models,union_candidate_soup,120,2.4916666666666667,0.8565875,-0.000657499999999997,True
+low_lr_finetune_soup,c2m3_greedy_soup,40,1.5,0.8783974999999999,0.0,True
+low_lr_finetune_soup,greedy_soup,40,1.5,0.8783974999999999,0.0,True
+low_lr_finetune_soup,monomial_scaled_greedy_soup,40,1.5,0.878395,-2.4999999999997245e-06,True
+low_lr_finetune_soup,union_candidate_soup,40,3.7,0.878455,5.7499999999990894e-05,True

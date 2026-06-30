@@ -1,0 +1,30 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/greedy_aware_monomial_benchmark.py",
+  "git_commit": "65eed8d",
+  "dirty_worktree": true,
+  "base_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/improved_validated_ladder_merge_benchmark.csv",
+  "epsilon_grid": "0.0,0.0005,0.001,0.002,0.005",
+  "loss_slack_grid": "0.0,0.005,0.01,inf",
+  "selected_epsilon": 0.0,
+  "selected_loss_slack": Infinity,
+  "n_validation": 1000,
+  "skip_low_lr_mode": false,
+  "nested_validation": false,
+  "low_lr_seeds": "1800,1801,1802,1803,1804,1805,1806,1807,1808,1809,1810,1811,1812,1813,1814,1815,1816,1817,1818,1819",
+  "low_lr_widths": "32,64",
+  "low_lr_n_models": 4,
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "65eed8d"
+  }
+}

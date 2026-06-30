@@ -10,7 +10,7 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconf
 
 ## Git State At Report Generation
 
-- HEAD commit: `e8b6434`
+- HEAD commit: `e48ea65`
 - Worktree dirty: `True`
 
 ## Dataset And Grid
@@ -301,6 +301,6 @@ Plot: `reports/plots/improved_validated_ladder_delta_vs_greedy.pdf`.
     "torch": "2.12.1",
     "torchvision": "0.27.1"
   },
-  "git_commit": "e8b6434"
+  "git_commit": "e48ea65"
 }
 ```

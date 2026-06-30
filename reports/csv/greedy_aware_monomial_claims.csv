@@ -1,0 +1,9 @@
+claim,comparison,decision,reason
+greedy_aware_selector_beats_greedy_soup,greedy_aware_selector_vs_greedy_soup,Supported negative,paired mean accuracy delta is not positive
+lower_confidence_selector_beats_greedy_soup,lower_confidence_greedy_aware_selector_vs_greedy_soup,Supported negative,paired mean accuracy delta is not positive
+shrinkage_over_raw_monomial,shrinkage_monomial_scale_vs_monomial_scale,Supported limited,positive paired mean accuracy delta with positive bootstrap CI
+global_over_raw_monomial,global_monomial_scale_vs_monomial_scale,Supported limited,positive paired mean accuracy delta with positive bootstrap CI
+optimized_over_raw_monomial,optimized_monomial_scale_vs_monomial_scale,Supported descriptive,positive mean accuracy delta but confidence interval crosses zero
+union_soup_over_greedy_soup,union_candidate_soup_vs_greedy_soup,Supported negative,paired mean accuracy delta is not positive
+external_baseline_win,,Not supported,no external Git Re-Basin/C2M3/Model Soups code was run
+brauer_projective_real_residual,,Not supported,experiment concerns exact positive monomial ReLU gauges only
