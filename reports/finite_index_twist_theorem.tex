@@ -1,0 +1,45 @@
+\begin{proposition}[Determinant obstruction for a torsion projective pair]
+Let $\zeta$ be a primitive $d$-th root of unity.  Suppose $A,B \in
+\mathrm{GL}_r(\mathbb{C})$ satisfy
+\[
+  A B = \zeta B A .
+\]
+Then $d$ divides $r$.
+\end{proposition}
+
+\begin{proof}
+Taking determinants gives
+\[
+  \det(A)\det(B) = \det(\zeta B A) = \zeta^r \det(B)\det(A).
+\]
+Since $A$ and $B$ are invertible, $\det(A)\det(B) \ne 0$, hence
+$\zeta^r = 1$.  Because $\zeta$ has order $d$, this is equivalent to
+$d \mid r$.
+\end{proof}
+
+\begin{proposition}[Clock-shift construction]
+Let $\zeta$ be a primitive $d$-th root of unity.  Define
+\[
+  U_d = \mathrm{diag}(1,\zeta,\zeta^2,\ldots,\zeta^{d-1})
+\]
+and let $V_d$ be the cyclic shift matrix $V_d e_j=e_{j+1}$ with indices
+modulo $d$.  Then
+\[
+  U_d V_d = \zeta V_d U_d .
+\]
+\end{proposition}
+
+\begin{corollary}
+In this toy projective torsion model, the minimal linearization rank equals
+the order (period/index) $d$.  Ranks that are multiples of $d$ are obtained by
+direct sums of the clock-shift representation.
+\end{corollary}
+
+\paragraph{ML interpretation.}
+The projective transition relation cannot be represented by an ordinary
+rank-$r$ linear feature space unless $d \mid r$.  Passing to a finite-rank
+projective or Morita lift of rank $d$ absorbs the torsion defect in the lifted
+representation.  This does not mean the original cocycle vanishes on the same
+cover, and branch/projective predictors should be labeled as extra-capacity
+unless a capacity-matched merged model is constructed.
+

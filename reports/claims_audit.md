@@ -18,6 +18,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | TwistedMerge++ contains C2M3-style synchronization as the trivial/resolved-residual case. | Supported | `tests/test_twisted_merge_plus.py` checks zero defects select `untwisted_c2m3`; `reports/twisted_merge_plus_report.md` shows C2M3 selected for a C2M3-fixable one-edge permutation outlier. |
 | TwistedMerge++ distinguishes C2M3-fixable permutation noise from central/twist residuals. | Supported | `tests/test_twisted_merge_plus.py` checks one-edge permutation noise is classified as `edge_outlier_or_noise`, while the finite sign residual is classified as `central_coboundary`. |
 | TwistedMerge++ activates lifted maps only for finite central coboundary residuals in the current demo/tests. | Supported | `tests/test_twisted_merge_plus.py` checks the central coboundary case builds nontrivial `rho(beta_ij) tensor G_ij` maps and random/noncentral plus nonzero-H2 cases do not build lifted maps. |
+| Finite torsion/projective defects of order `d` have an explicit rank-`d` absorption in the clock-shift toy model. | Supported | `tests/test_finite_index_twists.py` checks the clock/shift relation, and `reports/csv/finite_index_twist_summary.csv` reports minimal success rank equals `d` for primitive and nonprimitive cases. |
+| Ranks not divisible by the torsion order `d` are excluded by the determinant obstruction in the finite-index toy model. | Supported | `tests/test_finite_index_twists.py` checks determinant rejection for nondivisible ranks; `reports/csv/finite_index_twist_absorption.csv` preserves failed ranks with nonzero residuals. |
+| The finite-index experiment realizes a period/index threshold in a controlled algebraic setting. | Supported | `reports/finite_index_twist_report.md` proves the determinant obstruction and reports success exactly when `d` divides candidate rank `r`. |
 
 ## Not Yet Supported
 
@@ -37,6 +40,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | TwistedMerge++ solves natural model merging. | Not yet supported | The current TwistedMerge++ artifacts test residual classification and selection logic only. Natural MNIST/CIFAR claims remain governed by `reports/model_merging_verification_report.md`. |
 | TwistedMerge++ trivializes a nonzero `H^2(mu_2)` class as an ordinary vector bundle. | Not yet supported | `tests/test_twisted_merge_plus.py` and `reports/twisted_merge_plus_report.md` label the nonzero tetrahedral class as branch-only extra-capacity behavior, not ordinary untwisted descent. |
 | TwistedMerge++ rank-lift gives a capacity-matched single-model improvement. | Not yet supported | The branch path is explicitly labeled `branch_lift_extra_capacity`; no capacity-matched single-model comparison has been run. |
+| Real neural model-merging defects have the exact finite-index clock-shift form. | Not yet supported | `reports/finite_index_twist_report.md` is a controlled algebraic toy experiment, not a learned MNIST/CIFAR defect identification result. |
+| Every torsion cohomology class in the paper's broad setting is trivialized on the original cover. | Not yet supported | The finite-index report says the defect is absorbed by a finite-rank projective/Morita lift and explicitly not that the original class vanishes. |
+| Branch/projective finite-index lift is a capacity-matched single merged model. | Not yet supported | `reports/finite_index_twist_report.md` labels the branch/projective proxy as extra capacity. |
 
 ## Current Artifact Map
 
@@ -58,3 +64,10 @@ This file tracks which claims are supported by current repository artifacts and 
 | `experiments/twisted_merge_plus_demo.py` | Fast synthetic demo/report generator for TwistedMerge++. |
 | `reports/twisted_merge_plus_report.md` | TwistedMerge++ verification report with scenario table and negative-result boundaries. |
 | `reports/csv/twisted_merge_plus_demo.csv` | Per-scenario TwistedMerge++ selector diagnostics. |
+| `src/finite_index_twists.py` | Clock-shift, determinant obstruction, direct-sum lift, and finite torsion metadata utilities. |
+| `tests/test_finite_index_twists.py` | Regression tests for finite-index rank threshold behavior. |
+| `experiments/finite_index_twist_absorption.py` | Finite-index torsion/projective twist absorption experiment generator. |
+| `reports/finite_index_twist_report.md` | Report proving and testing the period/index rank threshold. |
+| `reports/finite_index_twist_theorem.tex` | LaTeX appendix snippet for the determinant obstruction theorem. |
+| `reports/csv/finite_index_twist_absorption.csv` | Per-rank finite-index threshold sweep. |
+| `reports/csv/finite_index_twist_summary.csv` | Per-case finite-index threshold summary. |
