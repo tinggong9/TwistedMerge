@@ -39,9 +39,9 @@
       "k": 3
     }
   ],
-  "commit": "222646d",
+  "commit": "ced2241",
   "environment": {
-    "git_commit": "222646d",
+    "git_commit": "ced2241",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
