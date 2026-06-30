@@ -28,6 +28,28 @@ class BlockAlignmentStats:
     max_block_residual: float
 
 
+@dataclass(frozen=True)
+class BlockPartition:
+    method: str
+    block_size: int
+    blocks: tuple[tuple[int, ...], ...]
+    seed: int | None = None
+    notes: str = ""
+
+    @property
+    def width(self) -> int:
+        return sum(len(block) for block in self.blocks)
+
+    def as_arrays(self) -> list[np.ndarray]:
+        return [np.asarray(block, dtype=int) for block in self.blocks]
+
+    def assignment_string(self) -> str:
+        assignment = np.empty(self.width, dtype=int)
+        for block_idx, block in enumerate(self.blocks):
+            assignment[np.asarray(block, dtype=int)] = block_idx
+        return ",".join(str(int(item)) for item in assignment)
+
+
 def contiguous_blocks(width: int, block_size: int, allow_remainder: bool = True) -> list[np.ndarray]:
     """Return contiguous hidden-unit blocks as integer index arrays."""
 
@@ -48,6 +70,15 @@ def contiguous_blocks(width: int, block_size: int, allow_remainder: bool = True)
     if not blocks:
         raise ValueError("no blocks were produced")
     return blocks
+
+
+def make_contiguous_partition(width: int, block_size: int, allow_remainder: bool = True) -> BlockPartition:
+    return BlockPartition(
+        method="contiguous",
+        block_size=int(block_size),
+        blocks=tuple(tuple(int(item) for item in block) for block in contiguous_blocks(width, block_size, allow_remainder)),
+        notes="contiguous hidden-unit blocks",
+    )
 
 
 def orthogonal_procrustes(
@@ -140,6 +171,79 @@ def estimate_block_orthogonal_alignments(
             max_block_residual=float(np.max(residuals)) if residuals else float("nan"),
         )
 
+    return matrices, stats
+
+
+def induce_model_blocks(
+    reference_blocks: list[np.ndarray],
+    reference_to_model_permutations: Mapping[int, np.ndarray],
+) -> dict[int, list[np.ndarray]]:
+    """Map reference-coordinate blocks into every model's local coordinates."""
+
+    model_blocks: dict[int, list[np.ndarray]] = {}
+    for model_idx, perm in reference_to_model_permutations.items():
+        value = np.asarray(perm, dtype=int)
+        model_blocks[int(model_idx)] = [value[np.asarray(block, dtype=int)] for block in reference_blocks]
+    return model_blocks
+
+
+def estimate_block_orthogonal_alignments_for_model_blocks(
+    model_blocks: Mapping[int, list[np.ndarray]],
+    activations: Mapping[int, np.ndarray],
+    n_models: int,
+    width: int,
+    block_size: int,
+    *,
+    center: bool = True,
+) -> tuple[dict[IndexPair, np.ndarray], dict[IndexPair, BlockAlignmentStats]]:
+    """Estimate block maps when each model has an explicit block assignment."""
+
+    matrices: dict[IndexPair, np.ndarray] = {}
+    stats: dict[IndexPair, BlockAlignmentStats] = {}
+    used_remainder = any(
+        len(block) != int(block_size)
+        for blocks in model_blocks.values()
+        for block in blocks
+    )
+    n_blocks = len(next(iter(model_blocks.values())))
+    for blocks in model_blocks.values():
+        if len(blocks) != n_blocks:
+            raise ValueError("all models must have the same number of blocks")
+
+    for i, j in product(range(n_models), repeat=2):
+        pair = (i, j)
+        if i == j:
+            matrices[pair] = np.eye(width, dtype=complex)
+            stats[pair] = BlockAlignmentStats(
+                pair=pair,
+                block_size=int(block_size),
+                n_blocks=n_blocks,
+                used_remainder_block=used_remainder,
+                mean_block_residual=0.0,
+                max_block_residual=0.0,
+            )
+            continue
+        source_features = np.asarray(activations[i])
+        target_features = np.asarray(activations[j])
+        matrix = np.zeros((width, width), dtype=complex)
+        residuals = []
+        for source_cols, target_cols in zip(model_blocks[i], model_blocks[j], strict=True):
+            transform, residual = orthogonal_procrustes(
+                source_features[:, source_cols],
+                target_features[:, target_cols],
+                center=center,
+            )
+            matrix[np.ix_(source_cols, target_cols)] = transform
+            residuals.append(residual)
+        matrices[pair] = matrix
+        stats[pair] = BlockAlignmentStats(
+            pair=pair,
+            block_size=int(block_size),
+            n_blocks=n_blocks,
+            used_remainder_block=used_remainder,
+            mean_block_residual=float(np.mean(residuals)) if residuals else float("nan"),
+            max_block_residual=float(np.max(residuals)) if residuals else float("nan"),
+        )
     return matrices, stats
 
 

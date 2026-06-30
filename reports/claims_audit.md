@@ -21,6 +21,8 @@ This file tracks which claims are supported by current repository artifacts and 
 | Finite torsion/projective defects of order `d` have an explicit rank-`d` absorption in the clock-shift toy model. | Supported | `tests/test_finite_index_twists.py` checks the clock/shift relation, and `reports/csv/finite_index_twist_summary.csv` reports minimal success rank equals `d` for primitive and nonprimitive cases. |
 | Ranks not divisible by the torsion order `d` are excluded by the determinant obstruction in the finite-index toy model. | Supported | `tests/test_finite_index_twists.py` checks determinant rejection for nondivisible ranks; `reports/csv/finite_index_twist_absorption.csv` preserves failed ranks with nonzero residuals. |
 | The finite-index experiment realizes a period/index threshold in a controlled algebraic setting. | Supported | `reports/finite_index_twist_report.md` proves the determinant obstruction and reports success exactly when `d` divides candidate rank `r`. |
+| The central period-index benchmark realizes controlled examples with period `d` and index `d^k`. | Supported | `tests/test_period_index_central.py` checks the k-pair Heisenberg relations and index growth; `reports/csv/period_index_central_summary.csv` reports minimal success rank equals `d^k`. |
+| Period divisibility alone is not enough in the k-pair central/projective benchmark. | Supported | `tests/test_period_index_central.py` checks `d=3,k=2` ranks `3` and `6` fail while rank `9` succeeds; `reports/period_index_central_report.md` reports the same explicit example. |
 | TwistedMerge++ detects finite-index projective residuals in controlled clock-shift examples. | Supported | `tests/test_twisted_merge_plus_finite_index.py` and `reports/twisted_merge_plus_finite_index_report.md` detect order-3 and order-2 scalar projective phases. |
 | TwistedMerge++ rejects candidate lift ranks not divisible by the detected order. | Supported | `test_order3_insufficient_rank_is_obstructed` checks order `3`, rank `2` is classified as `finite_index_projective_obstructed`; scenario E1 reports the same. |
 | TwistedMerge++ activates a finite-index projective lift when the rank threshold is met. | Supported | `test_order3_sufficient_rank_activates_projective_lift` and scenarios E2-E4 select `finite_index_projective_lift` with near-zero lift residual. |
@@ -47,6 +49,11 @@ This file tracks which claims are supported by current repository artifacts and 
 | Real block-orthogonal diagnostics were evaluated on MNIST MLPs. | Supported | `reports/block_orthogonal_ladder_report.md` and `reports/csv/block_orthogonal_ladder.csv` cover MNIST ReLU MLP, `N=3,4`, widths `16,32`, block sizes `2,4,8`, and five seeds. |
 | In the current real MNIST block-orthogonal run, block gauges do not reduce residual centrality on average and do not produce scalar/projective candidates. | Supported negative result | `reports/csv/block_orthogonal_ladder_summary.csv` reports real block mean centrality improvements from permutation to block of `-0.0050`, `-0.0090`, and `-0.0100`, and central/projective candidate fraction `0.0000` for block sizes `2,4,8`. |
 | Block-orthogonal merge performance was not evaluated for the ReLU MLP run. | Supported negative result | `reports/block_orthogonal_ladder_report.md` labels block-orthogonal rotations as feature-space diagnostics, and `reports/csv/block_orthogonal_ladder.csv` preserves `merge_evaluated = False`. |
+| Global block synchronization recovers planted globally consistent block gauges. | Supported | `tests/test_global_block_synchronization.py` checks exact recovery for planted gauges, and `reports/global_block_synchronization_report.md` reports zero synthetic connection residual for `planted_recoverable_block_rotations`. |
+| Global block synchronization projects block maps to cycle-consistent gauges while preserving an explicit connection-residual honesty check. | Supported descriptive | `reports/csv/global_block_synchronization_summary.csv` reports zero post-projection cycle/centrality for global rows and nonzero real connection residuals, so this is diagnostic projection rather than a proof of exact real-data descent. |
+| Learned block partitions are implemented deterministically for activation-correlation and output-weight similarity choices. | Supported | `tests/test_learned_block_partition.py` checks deterministic clustering and required inputs; `reports/configs/global_block_synchronization_config.json` records enabled partition methods. |
+| The current global/learned block MNIST run finds no scalar finite-order projective candidates. | Supported negative result | `reports/global_block_synchronization_report.md` reports real MNIST central/projective candidate fraction `0.0000` across permutation, monomial, low-rank GL, pairwise block, and global block diagnostic rows. |
+| Learned block partitions do not improve observed pairwise-block centrality over contiguous blocks in the current MNIST run. | Supported negative result | `reports/global_block_synchronization_report.md` states learned partitions do not reduce mean observed pairwise-block centrality versus contiguous; `reports/csv/global_block_synchronization_summary.csv` records contiguous block size 2 mean centrality `0.5155`, lower than activation-correlation `0.6295` and output-weight similarity `0.5478`. |
 
 ## Not Yet Supported
 
@@ -72,6 +79,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | TwistedMerge++ trivializes a nonzero `H^2(mu_2)` class as an ordinary vector bundle. | Not yet supported | `tests/test_twisted_merge_plus.py` and `reports/twisted_merge_plus_report.md` label the nonzero tetrahedral class as branch-only extra-capacity behavior, not ordinary untwisted descent. |
 | TwistedMerge++ rank-lift gives a capacity-matched single-model improvement. | Not yet supported | The branch path is explicitly labeled `branch_lift_extra_capacity`; no capacity-matched single-model comparison has been run. |
 | Real neural model-merging defects have the exact finite-index clock-shift form. | Not yet supported | `reports/finite_index_twist_report.md` is a controlled algebraic toy experiment, not a learned MNIST/CIFAR defect identification result. |
+| Real neural model-merging defects have the higher period-index form `period=d, index=d^k`. | Not yet supported | `reports/period_index_central_report.md` is a controlled finite Heisenberg benchmark and explicitly does not claim MNIST/CIFAR residuals are Brauer/projective classes. |
 | Every torsion cohomology class in the paper's broad setting is trivialized on the original cover. | Not yet supported | The finite-index report says the defect is absorbed by a finite-rank projective/Morita lift and explicitly not that the original class vanishes. |
 | Branch/projective finite-index lift is a capacity-matched single merged model. | Not yet supported | `reports/finite_index_twist_report.md` labels the branch/projective proxy as extra capacity. |
 | Pure permutation C2M3 residuals are the same as scalar finite-index twists. | Not yet supported | `reports/finite_index_residual_mining_report.md` shows MNIST permutation residuals are generally noncentral and do not pass scalar finite-index thresholds. |
@@ -81,6 +89,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | Signed or full-GL transforms are exact single-model merges for ReLU MLPs. | Not yet supported | `reports/structure_group_ladder_merge_report.md` labels signed permutation as `heuristic_relu_not_exact` and low-rank GL as `diagnostic_not_single_model_for_relu`. |
 | Block-orthogonal ReLU transforms are exact single-model symmetries. | Not yet supported | `reports/block_orthogonal_ladder_report.md` explicitly treats block rotations as feature-space diagnostics for ReLU MLPs, not exact parameter symmetries. |
 | Block-orthogonal gauges reveal Brauer/projective classes in real neural residuals. | Not yet supported | `reports/csv/block_orthogonal_ladder_summary.csv` reports zero real central/projective block candidates for all tested block sizes. |
+| Global or learned block synchronization turns real MNIST block gauges into an exact same-architecture ReLU merge. | Not yet supported | `reports/global_block_synchronization_report.md` explicitly marks block-orthogonal rows as diagnostics only and preserves ReLU-compatible accuracy reporting for C2M3 permutation, positive monomial scaling, greedy soup, and ensemble baselines. |
+| Learned block discovery improves real MNIST residual diagnostics over contiguous blocks. | Not yet supported | The current run reports the opposite for observed pairwise-block centrality, so any learned-block improvement claim needs new evidence. |
+| Global block synchronization reveals Brauer/projective classes in real neural residuals. | Not yet supported | The global block run reports zero scalar/projective candidates and uses the connection residual rather than post-projection cycle score as the real-data honesty check. |
 
 ## Current Artifact Map
 
@@ -109,6 +120,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/finite_index_twist_theorem.tex` | LaTeX appendix snippet for the determinant obstruction theorem. |
 | `reports/csv/finite_index_twist_absorption.csv` | Per-rank finite-index threshold sweep. |
 | `reports/csv/finite_index_twist_summary.csv` | Per-case finite-index threshold summary. |
+| `src/period_index_central.py` | k-pair finite Heisenberg central period-index generators, relation checks, and rank-obstruction utilities. |
+| `tests/test_period_index_central.py` | Regression tests for period `d`, index `d^k`, period-only failures, direct-sum lifts, and no same-cover trivialization claim. |
+| `experiments/period_index_central_benchmark.py` | Central period-index benchmark generator over `d=2,3,4` and `k=1,2,3` cases. |
+| `reports/period_index_central_report.md` | Report for controlled central/projective period-index evidence and negative boundaries. |
+| `reports/period_index_central_theorem.tex` | LaTeX theorem snippet for the k-pair finite Heisenberg period-index benchmark. |
+| `reports/csv/period_index_central_benchmark.csv` | Per-rank central period-index threshold sweep. |
+| `reports/csv/period_index_central_summary.csv` | Per-case central period-index summary with period-only obstructed ranks. |
 | `tests/test_twisted_merge_plus_finite_index.py` | Regression tests for TwistedMerge++ finite-index projective classifications. |
 | `experiments/twisted_merge_plus_finite_index_demo.py` | Demo generator for TwistedMerge++ finite-index selector behavior. |
 | `reports/twisted_merge_plus_finite_index_report.md` | Scenario report for finite-index TwistedMerge++ integration. |
@@ -142,6 +160,15 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/block_orthogonal_ladder_report.md` | Report for synthetic block controls and real MNIST block-orthogonal diagnostics. |
 | `reports/csv/block_orthogonal_ladder.csv` | Per-triangle, per-level block-orthogonal ladder rows. |
 | `reports/csv/block_orthogonal_ladder_summary.csv` | Summary by source, block size, and structure-group level. |
+| `src/global_block_synchronization.py` | Connection-Laplacian global block-gauge synchronization and residual diagnostics. |
+| `src/learned_block_partition.py` | Deterministic contiguous, activation-correlation, and output-weight-similarity block partition helpers. |
+| `tests/test_global_block_synchronization.py` | Regression tests for planted global gauges, noisy projection residuals, noncentral holonomy rejection, and scalar block phase detection. |
+| `tests/test_learned_block_partition.py` | Regression tests for deterministic learned block clustering and input validation. |
+| `experiments/global_block_synchronization_experiment.py` | Synthetic controls and MNIST diagnostic experiment for global/learned block synchronization. |
+| `reports/global_block_synchronization_report.md` | Report for synthetic controls, real MNIST global block diagnostics, learned-block comparison, and negative boundaries. |
+| `reports/csv/global_block_synchronization.csv` | Per-setting global block synchronization diagnostics. |
+| `reports/csv/global_block_synchronization_summary.csv` | Grouped diagnostic summary for permutation, monomial, GL, pairwise block, and global block rows. |
+| `reports/configs/global_block_synchronization_config.json` | Saved configuration and environment metadata for the global block synchronization run. |
 | `experiments/validated_ladder_merge_benchmark.py` | Validated MNIST MLP benchmark for C2M3, monomial scaling, validation-selected ladder merge, greedy soup variants, and ensemble. |
 | `reports/validated_ladder_merge_report.md` | Report with paired statistics, selector behavior, residual correlations, and claim decisions for the validated ladder benchmark. |
 | `reports/csv/validated_ladder_merge_benchmark.csv` | Per-setting validated ladder merge benchmark rows. |
