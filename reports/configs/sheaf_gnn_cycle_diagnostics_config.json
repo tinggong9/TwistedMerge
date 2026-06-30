@@ -1,0 +1,28 @@
+{
+  "args": {
+    "avg_degree": 8.0,
+    "cycle_lambda": 0.05,
+    "dropout": 0.2,
+    "epochs": 120,
+    "feature_dim": 16,
+    "feature_noise": 1.25,
+    "heterophily_targets": "0.25,0.55,0.85",
+    "hidden_dim": 24,
+    "lr": 0.01,
+    "min_triangles": 24,
+    "n_nodes": 120,
+    "patience": 35,
+    "seeds": "0,1,2",
+    "sheaf_channels": 12,
+    "weight_decay": 0.0005
+  },
+  "command": "experiments/sheaf_gnn_cycle_diagnostics.py --epochs 120 --seeds 0,1,2 --heterophily-targets 0.25,0.55,0.85",
+  "elapsed_seconds": 3.634366035461426,
+  "git_commit": "9535ed3",
+  "git_dirty": true,
+  "outputs": {
+    "csv": "reports/csv/sheaf_gnn_cycle_diagnostics.csv",
+    "plot": "reports/plots/sheaf_gnn_cycle_vs_accuracy.pdf",
+    "report": "reports/sheaf_gnn_optional_report.md"
+  }
+}

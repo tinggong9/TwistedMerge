@@ -142,6 +142,16 @@ This file tracks which claims are supported by current repository artifacts and 
 | The CNN channel-gauge branch beats greedy soup. | Not yet supported | `reports/fashion_mnist_cnn_ladder_report.md` reports greedy soup mean test accuracy `0.824267`; shrinkage/global channel-scale rows remain below greedy soup, and the greedy-safe selector matches greedy with zero delta. |
 | CNN residuals are Brauer or period-index classes. | Not yet supported | `reports/fashion_mnist_cnn_ladder_report.md` records zero central/projective and finite-index candidate fractions and explicitly does not run a CNN Brauer/period-index detector. |
 
+## Sheaf/GNN Optional Diagnostic
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| A small, license-clean sheaf/GNN feasibility pass documents how Neural Sheaf Diffusion could be used without blocking model-merging experiments. | Supported | `reports/sheaf_gnn_feasibility.md` records the official Neural Sheaf Diffusion datasets, Apache-2.0 license, PyG dependency blocker, learned-map storage path, triangle/cycle measurement plan, and minimal local run. |
+| Cycle inconsistency can be measured as a diagnostic of learned sheaf transports on small synthetic heterophilic graphs. | Supported limited | `reports/sheaf_gnn_optional_report.md` and `reports/csv/sheaf_gnn_cycle_diagnostics.csv` report 18 sheaf rows over target heterophily `0.25,0.55,0.85`, with 42-99 triangles per graph and non-null learned triangle cycle-inconsistency scores. |
+| The optional cycle-regularized sheaf row reduces measured cycle inconsistency in the synthetic smoke run. | Supported descriptive | `reports/sheaf_gnn_optional_report.md` reports mean cycle inconsistency `1.2220` for `rotation_sheaf` versus `0.4597` for `rotation_sheaf_cycle_reg`; this is not a general accuracy claim. |
+| Cycle inconsistency strongly explains heterophily or test accuracy on this run. | Not yet supported | `reports/sheaf_gnn_optional_report.md` reports weak synthetic-run correlations: cycle-vs-test-accuracy Pearson `-0.1139` and heterophily-vs-cycle Pearson `-0.0501`. |
+| The official Neural Sheaf Diffusion baselines were run in TwistedMerge. | Not yet supported | The optional report states the official code was inspected but not run because the current venv lacks `torch_geometric`, `torch_sparse`, and `torch_scatter`. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -194,6 +204,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | Global block synchronization reveals Brauer/projective classes in real neural residuals. | Not yet supported | The global block run reports zero scalar/projective candidates and uses the connection residual rather than post-projection cycle score as the real-data honesty check. |
 | Post-projection block cycle score alone proves descent. | Not yet supported | `reports/block_gauge_phase_diagram_report.md` includes fake projection traps whose projected cycle score is near zero while connection residual remains large and strict calibration rejects the row. |
 | Block-compatible identity/linear results imply natural ReLU or CIFAR block-gauge performance. | Not yet supported | The new block-compatible improvement is restricted to an exact linear-hidden architecture with identity activation; ReLU diagnostics are explicitly marked diagnostic-only. |
+| Twisted sheaf cycle regularization improves GNNs in general. | Not yet supported | `reports/sheaf_gnn_optional_report.md` is a 27-row synthetic smoke test, not an official Neural Sheaf Diffusion run and not a broad real-dataset benchmark. |
 
 ## Current Artifact Map
 
@@ -449,3 +460,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/tables/external_baseline_comparison.tex` | LaTeX summary table for the external-baseline comparison. |
 | `reports/plots/external_baseline_deltas.pdf` | Error-bar plot of paired accuracy deltas versus internal C2M3, greedy soup, and weight average. |
 | `reports/configs/external_baseline_comparison_config.json` | Saved configuration, command, git state, and environment metadata for the external-baseline comparison. |
+| `reports/sheaf_gnn_feasibility.md` | Feasibility report for Neural Sheaf Diffusion integration, supported datasets, dependency status, learned-map storage, and minimal local run. |
+| `experiments/sheaf_gnn_cycle_diagnostics.py` | Self-contained PyTorch synthetic heterophily benchmark with dense GCN, rotation-sheaf GNN, cycle diagnostics, and optional cycle regularizer. |
+| `reports/sheaf_gnn_optional_report.md` | Optional sheaf/GNN diagnostic report with method summaries, heterophily slices, cycle correlations, and unsupported boundaries. |
+| `reports/csv/sheaf_gnn_cycle_diagnostics.csv` | Per-seed synthetic GCN/sheaf rows with test accuracy, heterophily, triangle counts, cycle inconsistency, feature variance, and Dirichlet proxy. |
+| `reports/plots/sheaf_gnn_cycle_vs_accuracy.pdf` | Scatter plot of learned sheaf cycle inconsistency versus test accuracy. |
+| `reports/configs/sheaf_gnn_cycle_diagnostics_config.json` | Saved command, git state, runtime, and output metadata for the optional sheaf/GNN diagnostic run. |
