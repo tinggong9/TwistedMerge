@@ -4,7 +4,7 @@ import numpy as np
 
 from src.finite_index_twists import evaluate_rank_absorption
 from src.model_merging_benchmark import permutation_matrix
-from src.period_index_central import heisenberg_generators, period_index_metadata
+from src.period_index_central import clock_matrix, heisenberg_generators, period_index_metadata, shift_matrix
 from src.period_index_detector import detect_period_index_structure
 from src.twisted_merge_plus import TwistedMergePlus
 
@@ -45,6 +45,17 @@ def s3_noncentral_generators() -> dict[str, np.ndarray]:
     transposition_12 = permutation_matrix(np.array([1, 0, 2]))
     transposition_23 = permutation_matrix(np.array([0, 2, 1]))
     return {"s12": transposition_12, "s23": transposition_23}
+
+
+def mixed_period_generators() -> dict[str, np.ndarray]:
+    identity3 = np.eye(3, dtype=complex)
+    identity4 = np.eye(4, dtype=complex)
+    return {
+        "U3": np.kron(clock_matrix(3), identity4),
+        "V3": np.kron(shift_matrix(3), identity4),
+        "U4": np.kron(identity3, clock_matrix(4)),
+        "V4": np.kron(identity3, shift_matrix(4)),
+    }
 
 
 class TwistedMergePlusPeriodIndexTests(unittest.TestCase):
@@ -125,22 +136,22 @@ class TwistedMergePlusPeriodIndexTests(unittest.TestCase):
         self.assertEqual(detection.decision, "not_central_projective")
 
     def test_unknown_central_projective_not_overclaimed(self):
-        system = heisenberg_generators(3, 2)
-        generators = {"U1": system.U[0], "V1": system.V[0], "U2": system.U[1]}
-        detection = detect_period_index_structure(generators, candidate_rank=3)
+        generators = mixed_period_generators()
+        detection = detect_period_index_structure(generators, candidate_rank=12, max_root_order=4)
 
         self.assertTrue(detection.detected)
-        self.assertEqual(detection.period, 3)
+        self.assertEqual(detection.period, 12)
         self.assertIsNone(detection.index)
         self.assertEqual(detection.decision, "central_projective_index_unknown")
         self.assertFalse(detection.index_divides_rank or False)
 
         result = TwistedMergePlus().run(
-            unresolved_pairwise(system.dimension),
+            unresolved_pairwise(12),
             n_models=3,
-            width=system.dimension,
+            width=12,
             period_index_generators=generators,
-            candidate_lift_rank=3,
+            candidate_lift_rank=12,
+            max_root_order=4,
         )
         self.assertEqual(result.diagnostics.classification, "central_projective_index_unknown")
         self.assertEqual(result.selected_method, "none")
