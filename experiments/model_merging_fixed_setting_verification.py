@@ -2286,7 +2286,7 @@ def main() -> None:
     parser.add_argument("--architecture", default="mlp2", choices=["mlp", "mlp2", "cnn", "small_cnn"])
     parser.add_argument("--model-counts", default="3,4")
     parser.add_argument("--widths", default="128")
-    parser.add_argument("--domain-shifts", default="none")
+    parser.add_argument("--domain-shifts", default="none,input_noise")
     parser.add_argument("--seeds", default="2000:2029")
     parser.add_argument("--epochs", type=int, default=10)
     parser.add_argument("--max-train-samples", type=int, default=10000)
