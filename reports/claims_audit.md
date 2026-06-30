@@ -228,6 +228,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | Different residual scores predict different downstream decisions; a single scalar obstruction does not explain all cases. | Supported descriptive | `reports/unified_quantitative_obstruction_chain.md` aligns 51,895 rows from 19 source families. Link tests show planted cycle score predicts Git-ReBasin-style pairwise degradation (Spearman `0.795903`), validation deltas predict selector gain as a separate selection signal (Spearman `0.552456`), learned-operator error predicts certification negatively (Spearman `-0.835969`), projection residual gates keep accepted false-lift rate at `0`, period-index divisibility matches selected lifts at rate `1.0`, and the block-gauge phase diagram has 12,240 projected-cycle trap rows where connection residual is needed. |
 | Every merging failure is Brauer/projective. | Not yet supported | `reports/unified_quantitative_obstruction_chain.md` explicitly separates permutation synchronization, validation-selected soups, exact positive scale gauges, noncentral diagnostics, projection-gated period-index rows, sheaf diagnostics, and dataset gates; it repeats that the unified chain does not claim every merging failure is Brauer/projective. |
 
+## Paper-Ready Post-35791f7 Synthesis
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| The current paper framing is a mathematical and diagnostic model-merging contribution with limited exact-gauge wins over faithful internal C2M3-style baselines. | Supported synthesis | `reports/results_narrative_after_35791f7.md`, `reports/latex/results_section_after_35791f7.tex`, and `reports/latex/main_claims_table_after_35791f7.tex` synthesize the final CIFAR boundary, bridge expansion, MNIST/Fashion exact-gauge results, residual taxonomy, period-index/time-frequency detectors, block-gauge gate, official-baseline status, and limitations. |
+| The post-35791f7 synthesis supports a broad SOTA, official-baseline, greedy-soup, broad CIFAR, or real-neural Brauer/period-index win. | Not yet supported | The synthesis files explicitly preserve the negative boundaries from the underlying reports: no official external-code metrics were produced, greedy soup remains a boundary baseline, CIFAR exact-gauge effects are descriptive only, and real neural residuals remain non-Brauer/noncentral under tested diagnostics. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -307,6 +314,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/csv/unified_quantitative_obstruction_chain.csv` | Row-level normalized obstruction-chain table with aligned residual, detector, lift, gate, validation, and merge-degradation fields. |
 | `reports/plots/unified_obstruction_chain.pdf` | Four-panel diagnostic plot for planted degradation, selector deltas, operator-error certification, and projection-residual gates. |
 | `reports/latex/quantitative_obstruction_theorem_candidate.tex` | Cautious LaTeX theorem-candidate snippet stating the artifact-scoped multi-residual decision chain. |
+| `reports/results_narrative_after_35791f7.md` | Paper-ready Results and Contributions narrative after the final CIFAR boundary and bridge expansion. |
+| `reports/latex/results_section_after_35791f7.tex` | Paste-ready LaTeX Results and Contributions section preserving the current claim boundaries. |
+| `reports/latex/main_claims_table_after_35791f7.tex` | Paste-ready LaTeX table of supported claims and forbidden overclaims after the final CIFAR run. |
 | `experiments/cifar_or_colored_mnist_feasibility.py` | Rotated-MNIST bridge and gated CIFAR probe feasibility benchmark for small CNN channel-gauge merging. |
 | `reports/cifar_or_colored_mnist_feasibility.md` | Report for bridge/CIFAR accuracy gates, merge method summaries, and plumbing-only boundaries. |
 | `reports/csv/cifar_or_colored_mnist_feasibility.csv` | Per-setting bridge/CIFAR feasibility rows with method metrics, threshold status, and validation-only selector metadata. |
