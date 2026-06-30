@@ -21,6 +21,10 @@ This file tracks which claims are supported by current repository artifacts and 
 | Finite torsion/projective defects of order `d` have an explicit rank-`d` absorption in the clock-shift toy model. | Supported | `tests/test_finite_index_twists.py` checks the clock/shift relation, and `reports/csv/finite_index_twist_summary.csv` reports minimal success rank equals `d` for primitive and nonprimitive cases. |
 | Ranks not divisible by the torsion order `d` are excluded by the determinant obstruction in the finite-index toy model. | Supported | `tests/test_finite_index_twists.py` checks determinant rejection for nondivisible ranks; `reports/csv/finite_index_twist_absorption.csv` preserves failed ranks with nonzero residuals. |
 | The finite-index experiment realizes a period/index threshold in a controlled algebraic setting. | Supported | `reports/finite_index_twist_report.md` proves the determinant obstruction and reports success exactly when `d` divides candidate rank `r`. |
+| TwistedMerge++ detects finite-index projective residuals in controlled clock-shift examples. | Supported | `tests/test_twisted_merge_plus_finite_index.py` and `reports/twisted_merge_plus_finite_index_report.md` detect order-3 and order-2 scalar projective phases. |
+| TwistedMerge++ rejects candidate lift ranks not divisible by the detected order. | Supported | `test_order3_insufficient_rank_is_obstructed` checks order `3`, rank `2` is classified as `finite_index_projective_obstructed`; scenario E1 reports the same. |
+| TwistedMerge++ activates a finite-index projective lift when the rank threshold is met. | Supported | `test_order3_sufficient_rank_activates_projective_lift` and scenarios E2-E4 select `finite_index_projective_lift` with near-zero lift residual. |
+| TwistedMerge++ still gives C2M3/edge-outlier handling priority over finite-index language when synchronization diagnostics explain the issue. | Supported | `test_c2m3_resolved_case_keeps_c2m3_priority` and scenario E6 select `c2m3_cycle_consistent` with no detected finite-index order. |
 
 ## Not Yet Supported
 
@@ -71,3 +75,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/finite_index_twist_theorem.tex` | LaTeX appendix snippet for the determinant obstruction theorem. |
 | `reports/csv/finite_index_twist_absorption.csv` | Per-rank finite-index threshold sweep. |
 | `reports/csv/finite_index_twist_summary.csv` | Per-case finite-index threshold summary. |
+| `tests/test_twisted_merge_plus_finite_index.py` | Regression tests for TwistedMerge++ finite-index projective classifications. |
+| `experiments/twisted_merge_plus_finite_index_demo.py` | Demo generator for TwistedMerge++ finite-index selector behavior. |
+| `reports/twisted_merge_plus_finite_index_report.md` | Scenario report for finite-index TwistedMerge++ integration. |
+| `reports/csv/twisted_merge_plus_finite_index_demo.csv` | Per-scenario finite-index TwistedMerge++ diagnostics. |

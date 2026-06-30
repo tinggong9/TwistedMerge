@@ -16,6 +16,14 @@ from typing import Mapping
 
 import numpy as np
 
+from .finite_index_twists import (
+    commutator_defect_score,
+    determinant_obstruction_allows,
+    direct_sum_lift,
+    finite_torsion_class,
+    root_of_unity,
+    torsion_order,
+)
 from .model_merging_benchmark import (
     compose_perm,
     cycle_score as permutation_cycle_score,
@@ -48,6 +56,22 @@ class TwistedMergePlusConfig:
     edge_outlier_fraction: float = 0.25
     rank_lift_q: int = 2
     allow_branch_lift: bool = True
+    max_root_order: int = 12
+    finite_index_tolerance: float = 1e-6
+
+
+@dataclass(frozen=True)
+class FiniteIndexDiagnostics:
+    root_order_d: int | None
+    root_q: int | None
+    root_exponent_a: int | None
+    root_phase: complex | None
+    centrality_score: float | None
+    phase_residual: float | None
+    rank_divisible_by_order: bool | None
+    recommended_min_lift_rank: int | None
+    determinant_obstruction_allows: bool | None
+    lift_residual: float | None
 
 
 @dataclass(frozen=True)
@@ -64,6 +88,14 @@ class ResidualDiagnostics:
     classification: str
     is_central: bool
     is_coboundary: bool | None
+    finite_index: FiniteIndexDiagnostics | None = None
+    root_order_d: int | None = None
+    root_phase: complex | None = None
+    phase_residual: float | None = None
+    rank_divisible_by_order: bool | None = None
+    recommended_min_lift_rank: int | None = None
+    determinant_obstruction_allows: bool | None = None
+    finite_index_lift_residual: float | None = None
     notes: tuple[str, ...] = ()
 
 
@@ -76,6 +108,7 @@ class TwistedMergePlusResult:
     synced_alignments: dict[IndexPair, Alignment]
     lifted_transition_maps: dict[IndexPair, Alignment]
     edge_central_signs: dict[IndexPair, int] | None
+    finite_index_lift: tuple[np.ndarray, np.ndarray] | None = None
     metrics: dict[str, dict[str, float]] = field(default_factory=dict)
     notes: tuple[str, ...] = ()
 
@@ -128,9 +161,11 @@ def _complete_matrices(
         completed[(i, i)] = eye
     for pair, matrix in pairwise.items():
         i, j = pair
-        arr = np.asarray(matrix, dtype=float)
-        if arr.ndim == 1:
-            arr = permutation_matrix(arr.astype(int))
+        raw = np.asarray(matrix)
+        if raw.ndim == 1:
+            arr = permutation_matrix(raw.astype(int))
+        else:
+            arr = np.asarray(matrix, dtype=complex)
         completed[(i, j)] = arr
         if (j, i) not in completed:
             completed[(j, i)] = np.linalg.pinv(arr)
@@ -212,8 +247,19 @@ def _defect_signs(defects: Mapping[Triple, np.ndarray]) -> dict[Triple, int]:
 def _centrality(defects: Mapping[Triple, np.ndarray]) -> tuple[float, float]:
     if not defects:
         return 0.0, 0.0
-    distances = [_central_distance(matrix)[0] for matrix in defects.values()]
+    distances = [_scalar_centrality(matrix)[0] for matrix in defects.values()]
     return float(np.mean(distances)), float(np.max(distances))
+
+
+def _scalar_centrality(matrix: np.ndarray) -> tuple[float, complex | None]:
+    width = matrix.shape[0]
+    scalar = complex(np.trace(matrix) / max(width, 1))
+    if abs(scalar) <= 1e-12:
+        denom = max(float(np.linalg.norm(np.eye(width), ord="fro")), 1e-12)
+        return float(np.linalg.norm(matrix, ord="fro") / denom), None
+    target = scalar * np.eye(width, dtype=complex)
+    denom = max(float(np.linalg.norm(target, ord="fro")), 1e-12)
+    return float(np.linalg.norm(matrix - target, ord="fro") / denom), scalar / abs(scalar)
 
 
 def _cycle_score_from_defects(defects: Mapping[Triple, np.ndarray]) -> float:
@@ -269,6 +315,59 @@ def _permutation_sync_diagnostics(
     return score, residual, ref, synced, outlier_score, bad_fraction
 
 
+def _estimate_finite_index_diagnostics(
+    defects: Mapping[Triple, np.ndarray],
+    candidate_lift_rank: int,
+    max_root_order: int,
+    tolerance: float,
+) -> FiniteIndexDiagnostics | None:
+    if not defects or candidate_lift_rank <= 0:
+        return None
+    centralities = [_scalar_centrality(matrix)[0] for matrix in defects.values()]
+    centrality_score = float(np.max(centralities)) if centralities else 0.0
+    if centrality_score > tolerance:
+        return None
+
+    best: tuple[float, int, int, complex] | None = None
+    for q in range(2, max_root_order + 1):
+        for exponent in range(1, q):
+            order = torsion_order(q, exponent)
+            if order <= 1:
+                continue
+            root = root_of_unity(q, exponent)
+            residuals = []
+            for matrix in defects.values():
+                target = root * np.eye(matrix.shape[0], dtype=complex)
+                denom = max(float(np.linalg.norm(target, ord="fro")), 1e-12)
+                residuals.append(float(np.linalg.norm(matrix - target, ord="fro") / denom))
+            residual = float(np.max(residuals)) if residuals else float("inf")
+            if best is None or residual < best[0] or (abs(residual - best[0]) <= 1e-12 and order < torsion_order(best[1], best[2])):
+                best = (residual, q, exponent, root)
+    if best is None:
+        return None
+    phase_residual, q, exponent, phase = best
+    if phase_residual > tolerance:
+        return None
+    cls = finite_torsion_class(q, exponent)
+    allowed = determinant_obstruction_allows(cls.order, candidate_lift_rank)
+    lift_residual: float | None = None
+    lift = direct_sum_lift(q, exponent, candidate_lift_rank)
+    if lift is not None:
+        lift_residual = commutator_defect_score(lift[0], lift[1], phase)
+    return FiniteIndexDiagnostics(
+        root_order_d=cls.order,
+        root_q=q,
+        root_exponent_a=exponent,
+        root_phase=phase,
+        centrality_score=centrality_score,
+        phase_residual=phase_residual,
+        rank_divisible_by_order=allowed,
+        recommended_min_lift_rank=cls.expected_index,
+        determinant_obstruction_allows=allowed,
+        lift_residual=lift_residual,
+    )
+
+
 class TwistedMergePlus:
     """Obstruction-aware selector that reduces to C2M3 when residuals vanish."""
 
@@ -283,8 +382,18 @@ class TwistedMergePlus:
         known_alpha: Mapping[Triple, int] | Mapping[Face, int] | None = None,
         triples: list[Triple] | None = None,
         method_metrics: Mapping[str, Mapping[str, float]] | None = None,
+        candidate_lift_rank: int | None = None,
+        max_root_order: int | None = None,
+        finite_index_tolerance: float | None = None,
     ) -> TwistedMergePlusResult:
         actual_width = _infer_width(pairwise_alignments, width)
+        actual_candidate_lift_rank = actual_width if candidate_lift_rank is None else int(candidate_lift_rank)
+        actual_max_root_order = self.config.max_root_order if max_root_order is None else int(max_root_order)
+        actual_finite_index_tolerance = (
+            self.config.finite_index_tolerance
+            if finite_index_tolerance is None
+            else float(finite_index_tolerance)
+        )
         actual_triples = triples or default_triples(n_models)
         is_permutation = _is_permutation_payload(pairwise_alignments)
         notes: list[str] = []
@@ -321,6 +430,16 @@ class TwistedMergePlus:
         classification = "unknown"
         is_central = centrality_score <= self.config.central_tolerance
         is_coboundary: bool | None = None
+        c2m3_explains_residual = (
+            c2m3_residual <= self.config.c2m3_tolerance
+            and cycle_score <= self.config.c2m3_tolerance
+        )
+        finite_index = _estimate_finite_index_diagnostics(
+            defects,
+            actual_candidate_lift_rank,
+            actual_max_root_order,
+            actual_finite_index_tolerance,
+        )
 
         if known_alpha is not None:
             alpha_coboundary = _alpha_is_coboundary(known_alpha, n_models, actual_triples)
@@ -334,14 +453,14 @@ class TwistedMergePlus:
                     notes.append(
                         "Observed pairwise defects do not realize the supplied non-coboundary alpha at transition level."
                     )
-            elif c2m3_residual <= self.config.c2m3_tolerance and alpha_residual is not None and alpha_residual <= self.config.alpha_tolerance:
+            elif c2m3_explains_residual and alpha_residual is not None and alpha_residual <= self.config.alpha_tolerance:
                 classification = "gauge_trivial"
             elif alpha_residual is not None and alpha_residual <= self.config.alpha_tolerance and is_central:
                 classification = "central_coboundary"
             else:
                 classification = "unknown"
                 notes.append("Supplied alpha is coboundary/trivial but does not match the observed defects.")
-        elif c2m3_residual <= self.config.c2m3_tolerance:
+        elif c2m3_explains_residual:
             classification = "gauge_trivial"
             is_coboundary = True
         elif (
@@ -351,9 +470,20 @@ class TwistedMergePlus:
         ):
             classification = "edge_outlier_or_noise"
             is_coboundary = None
+        elif finite_index is not None and finite_index.root_order_d is not None:
+            if finite_index.determinant_obstruction_allows:
+                classification = "finite_index_projective_lift"
+                notes.append(
+                    "Detected a finite scalar projective phase; candidate rank passes the determinant threshold."
+                )
+            else:
+                classification = "finite_index_projective_obstructed"
+                notes.append(
+                    "Detected a finite scalar projective phase, but candidate rank is rejected by the determinant threshold."
+                )
         elif is_central:
             is_coboundary = solve_mu2_edge_cochain(signs, n_models, actual_triples) is not None
-            classification = "central_coboundary" if is_coboundary else "central_non_coboundary_candidate"
+            classification = "central_non_coboundary_candidate"
         elif not is_permutation and max_triangle_residual > self.config.central_tolerance:
             classification = "random_noncentral"
         else:
@@ -371,7 +501,23 @@ class TwistedMergePlus:
                 }
                 notes.append("Built lifted transition maps using rho(beta_ij) tensor G_ij.")
 
-        status, selected_method, reason = self._select(classification, lifted_transition_maps, alpha_residual)
+        finite_index_lift: tuple[np.ndarray, np.ndarray] | None = None
+        if classification == "finite_index_projective_lift" and finite_index is not None:
+            finite_index_lift = direct_sum_lift(
+                finite_index.root_q or finite_index.root_order_d or 1,
+                finite_index.root_exponent_a or 1,
+                actual_candidate_lift_rank,
+            )
+            if finite_index_lift is not None:
+                notes.append("Built/referenced a clock-shift direct-sum finite-index projective lift.")
+
+        status, selected_method, reason = self._select(
+            classification,
+            lifted_transition_maps,
+            alpha_residual,
+            finite_index,
+            finite_index_lift,
+        )
         diagnostics = ResidualDiagnostics(
             cycle_score=cycle_score,
             c2m3_residual=c2m3_residual,
@@ -385,6 +531,14 @@ class TwistedMergePlus:
             classification=classification,
             is_central=is_central,
             is_coboundary=is_coboundary,
+            finite_index=finite_index,
+            root_order_d=finite_index.root_order_d if finite_index else None,
+            root_phase=finite_index.root_phase if finite_index else None,
+            phase_residual=finite_index.phase_residual if finite_index else None,
+            rank_divisible_by_order=finite_index.rank_divisible_by_order if finite_index else None,
+            recommended_min_lift_rank=finite_index.recommended_min_lift_rank if finite_index else None,
+            determinant_obstruction_allows=finite_index.determinant_obstruction_allows if finite_index else None,
+            finite_index_lift_residual=finite_index.lift_residual if finite_index else None,
             notes=tuple(notes),
         )
         return TwistedMergePlusResult(
@@ -395,6 +549,7 @@ class TwistedMergePlus:
             synced_alignments=synced_alignments,
             lifted_transition_maps=lifted_transition_maps,
             edge_central_signs=edge_central_signs,
+            finite_index_lift=finite_index_lift,
             metrics={key: dict(value) for key, value in (method_metrics or {}).items()},
             notes=tuple(notes),
         )
@@ -404,6 +559,8 @@ class TwistedMergePlus:
         classification: str,
         lifted_transition_maps: Mapping[IndexPair, np.ndarray],
         alpha_residual: float | None,
+        finite_index: FiniteIndexDiagnostics | None,
+        finite_index_lift: tuple[np.ndarray, np.ndarray] | None,
     ) -> tuple[str, str, str]:
         if classification in {"gauge_trivial", "edge_outlier_or_noise"}:
             return (
@@ -428,6 +585,27 @@ class TwistedMergePlus:
                 "failed",
                 "none",
                 "Central coboundary was detected but no edge cochain/lifted maps were constructed.",
+            )
+        if classification == "finite_index_projective_obstructed":
+            order = "unknown" if finite_index is None else finite_index.root_order_d
+            rank = "unknown" if finite_index is None else finite_index.recommended_min_lift_rank
+            return (
+                "finite_index_projective_obstructed",
+                "none",
+                f"Finite-index projective residual detected with order {order}, but the candidate rank "
+                f"fails the determinant threshold; recommended minimum lift rank is {rank}.",
+            )
+        if classification == "finite_index_projective_lift":
+            if finite_index_lift is None:
+                return (
+                    "failed",
+                    "none",
+                    "Finite-index threshold passed, but no clock-shift/direct-sum lift was constructed.",
+                )
+            return (
+                "finite_index_projective_lift",
+                "finite_index_projective_lift",
+                "Finite scalar projective residual is absorbed by a finite-rank projective/Morita lift.",
             )
         if classification == "central_non_coboundary_candidate":
             if self.config.allow_branch_lift and self.config.rank_lift_q >= 2:
@@ -462,12 +640,16 @@ def pseudocode() -> str:
   2. Run C2M3-style synchronization. If residual is small, return untwisted_c2m3.
   3. Compute triangle defects c_ijk = g_ij g_jk g_ki.
   4. Classify the residual: gauge_trivial, edge_outlier_or_noise,
-     central_coboundary, central_non_coboundary_candidate,
+     central_coboundary, finite_index_projective_obstructed,
+     finite_index_projective_lift, central_non_coboundary_candidate,
      random_noncentral, or unknown.
   5. For random/noncentral residuals, refuse twist language.
   6. For a finite central coboundary, solve beta with delta beta = alpha and
      build lifted maps rho(beta_ij) tensor G_ij.
-  7. For a central non-coboundary candidate, allow only a branch/rank-lift
+  7. For a finite scalar projective phase, estimate its root order d and use
+     the determinant threshold d | candidate_rank before constructing a
+     clock-shift/direct-sum projective/Morita lift.
+  8. For a central non-coboundary candidate, allow only a branch/rank-lift
      prediction prototype and label it extra capacity.
-  8. Report ordinary, C2M3, lifted, branch, and ensemble metrics without
+  9. Report ordinary, C2M3, lifted, branch, and ensemble metrics without
      claiming a win unless validation supports it."""
