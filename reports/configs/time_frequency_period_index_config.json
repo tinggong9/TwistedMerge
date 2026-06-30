@@ -1,0 +1,79 @@
+{
+  "argv": [
+    "experiments/time_frequency_period_index_benchmark.py"
+  ],
+  "cases": [
+    {
+      "candidate_ranks": [
+        2,
+        4
+      ],
+      "d": 2,
+      "expected_index": 4,
+      "expected_period": 2,
+      "k": 2,
+      "n_classes": 3
+    },
+    {
+      "candidate_ranks": [
+        2,
+        4,
+        8
+      ],
+      "d": 2,
+      "expected_index": 8,
+      "expected_period": 2,
+      "k": 3,
+      "n_classes": 3
+    },
+    {
+      "candidate_ranks": [
+        3,
+        6,
+        9
+      ],
+      "d": 3,
+      "expected_index": 9,
+      "expected_period": 3,
+      "k": 2,
+      "n_classes": 3
+    },
+    {
+      "candidate_ranks": [
+        2,
+        4
+      ],
+      "d": 4,
+      "expected_index": 4,
+      "expected_period": 4,
+      "k": 1,
+      "n_classes": 3
+    }
+  ],
+  "commit": "e8b6434",
+  "environment": {
+    "git_commit": "e8b6434",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "level_2_learned_model_chart": "not_evaluated",
+  "noise_levels": [
+    0.0,
+    0.01,
+    0.05
+  ],
+  "scope_note": "Finite time-frequency operators provide a natural known-operator chart benchmark for central projective period-index detection.  This is not a MNIST/CIFAR residual claim, and learned model chart transitions are not certified by this module.",
+  "seeds": 10,
+  "test_samples": 1000,
+  "train_samples": 2000,
+  "validation_samples": 500
+}
