@@ -1,0 +1,8 @@
+comparison,n_pairs,mean_delta,ci_low,ci_high,wins,ties,losses,metric
+optimized_vs_spectral_connection_residual,16380,0.012450003862994833,0.011923455345764495,0.012981130226961542,4117,12263,0,spectral_residual_minus_optimized_residual
+global_activation_correlation_vs_contiguous_validation_residual,20,-0.2857142857142857,-0.2857142857142857,-0.2857142857142857,20,0,0,candidate_residual_minus_contiguous_residual
+global_output_weight_similarity_vs_contiguous_validation_residual,20,-0.2857142857142857,-0.2857142857142857,-0.2857142857142857,20,0,0,candidate_residual_minus_contiguous_residual
+residual_greedy_blocks_vs_contiguous_validation_residual,20,-0.2857142857142857,-0.2857142857142857,-0.2857142857142857,20,0,0,candidate_residual_minus_contiguous_residual
+validation_selected_blocks_vs_contiguous_validation_residual,20,-0.2857142857142857,-0.2857142857142857,-0.2857142857142857,20,0,0,candidate_residual_minus_contiguous_residual
+optimized_block_gauge_aligned_average_vs_unaligned_weight_average,20,0.19160000000000005,0.1611,0.21985000000000002,20,0,0,accuracy_delta
+optimized_block_gauge_aligned_average_vs_greedy_soup,20,-0.0005500000000000005,-0.0016500000000000015,0.0,0,19,1,accuracy_delta

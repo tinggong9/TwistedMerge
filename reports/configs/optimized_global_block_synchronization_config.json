@@ -1,7 +1,7 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/optimized_global_block_synchronization.py",
-  "git_commit": "0c88e71",
-  "git_worktree_dirty": true,
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/optimized_global_block_synchronization.py --reports-dir /Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+  "git_commit": "efb80d8",
+  "git_worktree_dirty": false,
   "settings": {
     "max_order": 12,
     "n_restarts": 20,
@@ -29,6 +29,6 @@
       "torch": "2.12.1",
       "torchvision": "0.27.1"
     },
-    "git_commit": "0c88e71"
+    "git_commit": "efb80d8"
   }
 }

@@ -23,6 +23,19 @@ class BlockSyncCalibration:
     notes: str = ""
 
 
+@dataclass(frozen=True)
+class BlockSyncPolicy:
+    name: str
+    threshold: float
+    target_false_positive_rate: float
+    observed_false_positive_rate: float
+    observed_true_positive_rate: float
+    uncertain_band: float = 0.0
+    uncertain_rate: float = 0.0
+    false_scalar_projective_lift_rate: float = 0.0
+    notes: str = ""
+
+
 def _finite_residuals(values: Iterable[float]) -> np.ndarray:
     arr = np.asarray(list(values), dtype=float)
     arr = arr[np.isfinite(arr)]
@@ -92,6 +105,75 @@ def calibrate_connection_residual_threshold(
         accepted_negative_count=accepted_negative,
         notes="threshold selected on controlled positive/negative residuals",
     )
+
+
+def calibrate_block_sync_policies(
+    positive_residuals: Iterable[float],
+    negative_residuals: Iterable[float],
+    *,
+    loose_band_fraction: float = 0.15,
+) -> list[BlockSyncPolicy]:
+    """Return strict, balanced, and loose diagnostic residual policies.
+
+    The strict and balanced policies are acceptance policies.  The loose policy
+    keeps the same balanced threshold but adds an uncertainty band around it;
+    callers should report uncertain rows instead of converting them into
+    accepted block-gauge evidence.
+    """
+
+    positives = _finite_residuals(positive_residuals)
+    negatives = _finite_residuals(negative_residuals)
+    strict = calibrate_connection_residual_threshold(
+        positives,
+        negatives,
+        target_false_positive_rate=0.0,
+    )
+    balanced = calibrate_connection_residual_threshold(
+        positives,
+        negatives,
+        target_false_positive_rate=0.01,
+    )
+    rows = [
+        BlockSyncPolicy(
+            name="strict",
+            threshold=strict.threshold,
+            target_false_positive_rate=strict.target_false_positive_rate,
+            observed_false_positive_rate=strict.observed_false_positive_rate,
+            observed_true_positive_rate=strict.observed_true_positive_rate,
+            notes="zero empirical false positives on supplied negative controls",
+        ),
+        BlockSyncPolicy(
+            name="balanced",
+            threshold=balanced.threshold,
+            target_false_positive_rate=balanced.target_false_positive_rate,
+            observed_false_positive_rate=balanced.observed_false_positive_rate,
+            observed_true_positive_rate=balanced.observed_true_positive_rate,
+            notes="maximizes positive acceptance subject to empirical FPR <= 0.01",
+        ),
+    ]
+    band = max(abs(balanced.threshold) * float(loose_band_fraction), 1e-12)
+    all_residuals = np.concatenate([positives, negatives])
+    uncertain_rate = float(np.mean(np.abs(all_residuals - balanced.threshold) <= band))
+    rows.append(
+        BlockSyncPolicy(
+            name="loose_diagnostic",
+            threshold=balanced.threshold,
+            target_false_positive_rate=balanced.target_false_positive_rate,
+            observed_false_positive_rate=balanced.observed_false_positive_rate,
+            observed_true_positive_rate=balanced.observed_true_positive_rate,
+            uncertain_band=band,
+            uncertain_rate=uncertain_rate,
+            notes="near-threshold rows are uncertain rather than accepted/rejected",
+        )
+    )
+    return rows
+
+
+def apply_block_sync_policy(residual: float, policy: BlockSyncPolicy) -> str:
+    value = float(residual)
+    if policy.uncertain_band > 0.0 and abs(value - policy.threshold) <= policy.uncertain_band:
+        return "uncertain"
+    return "accept" if value <= policy.threshold else "reject"
 
 
 def connection_residual_value(result_or_residual: GlobalBlockSyncResult | float) -> float:
