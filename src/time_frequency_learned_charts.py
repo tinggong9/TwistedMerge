@@ -19,6 +19,11 @@ from .time_frequency_benchmark import (
 LIFT_METHOD = "period_index_projective_morita_lift"
 CALIBRATED_TOLERANCE = 3e-4
 CALIBRATED_CONFIDENCE_MARGIN = 0.25
+DENOISED_CHART_SCOPE_NOTE = (
+    "Denoised learned-chart recoveries may improve noisy paired map estimates, "
+    "but lift selection still requires robust period-index certification and "
+    "candidate-rank divisibility by the certified index."
+)
 
 
 @dataclass(frozen=True)
