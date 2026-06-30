@@ -214,6 +214,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | `cifar_branch_closed_for_current_paper` / CIFAR branch closed for current paper | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records final bounded CIFAR run completed; base gate passes, exact channel gauges are descriptive only, union soup CI touches zero, and the report closes CIFAR as an appendix boundary. |
 | `cifar_residuals_are_brauer_or_period_index` / CIFAR residuals are Brauer or period-index | Not yet supported | `reports/cifar_final_channel_gauge_confirmatory_report.md` records this run records channel residual diagnostics but does not find or certify Brauer/period-index CIFAR residual classes. |
 
+## CIFAR And Bridge Appendix
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| CIFAR is included as a bounded appendix boundary, not as a broad model-merging win. | Supported limited | `reports/cifar_bridge_boundary_summary.md` and `reports/latex/cifar_bridge_appendix.tex` consolidate the failed CIFAR probe (`0.2480`), bounded rescue gate pass (`0.658333` max individual accuracy), final CIFAR confirmatory run (`0.650620` mean individual max accuracy), descriptive exact channel-gauge deltas, greedy-soup boundary behavior, and bridge-only rotated/colored-MNIST results. |
+| CIFAR confirms the main method. | Not yet supported | `reports/cifar_bridge_boundary_summary.md` explicitly frames CIFAR as an appendix boundary: exact CIFAR channel-gauge gains are tiny/descriptive with intervals crossing zero or touching zero, greedy soup remains the boundary, and bridge datasets are not promoted to CIFAR or general vision claims. |
+
 ## Unified Quantitative Obstruction Chain
 
 | Claim | Status | Evidence |
@@ -231,6 +238,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | The expanded rotated/colored-MNIST bridge run proves CIFAR or general vision performance. | Not yet supported | `reports/bridge_dataset_channel_gauge_expansion.md` covers MNIST-derived bridge datasets only; it does not evaluate CIFAR and explicitly forbids promoting the bridge result to CIFAR/general-vision claims. |
 | The CIFAR rescue proves a general CIFAR model-merging win. | Not yet supported | `reports/cifar_rescue_or_no_go_report.md` clears the meaningful base-accuracy gate, but method comparisons are one-setting descriptive rows; no broad or multi-seed CIFAR method-win claim is established. |
 | Positive channel scaling improves CIFAR merging. | Not yet supported | The bounded CIFAR rescue reports `positive_channel_scale` below C2M3-style channel synchronization by `-0.048667` test accuracy. |
+| CIFAR confirms the main method. | Not yet supported | `reports/cifar_bridge_boundary_summary.md` says CIFAR is a bounded appendix boundary, not a broad model-merging win; the final CIFAR exact channel-gauge deltas versus C2M3 are descriptive and the strongest union-soup delta versus greedy soup has a confidence interval touching zero. |
 | Every merging failure is Brauer/projective. | Not yet supported | `reports/unified_quantitative_obstruction_chain.md` gives explicit counter-accounting: different residual scores govern synchronization degradation, selector gain, detector certification, lift decisions, and dataset gates, and noncentral/permutation/soup cases are not promoted to Brauer/projective failures. |
 | TwistedMerge fully trivializes a nonzero `H^2(mu_2)` class as an ordinary untwisted vector bundle. | Not yet supported | The nonzero tetrahedral `H^2` class is explicitly non-coboundary. Current `TwistedMerge` does not construct an edge-level untwisted descent for it. |
 | The branch-prediction lift is a complete transition-map-level twisted sheaf descent implementation. | Not yet supported | The q=2 branch result is a controlled prediction-level sanity check. It is not a proof of full sheaf-level descent in the non-coboundary case. |
@@ -292,6 +300,8 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/model_merging_verification_report.md` | Fixed-`N`, repeated-seed MNIST model-merging verification report. |
 | `reports/csv/model_merging_verification.csv` | Per-baseline rows for observed and injected-alignment verification settings. |
 | `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |
+| `reports/cifar_bridge_boundary_summary.md` | Concise CIFAR/bridge appendix summary covering the failed CIFAR gate, bounded rescue, final confirmatory run, exact-gauge descriptiveness, greedy-soup boundary, and bridge-only limitations. |
+| `reports/latex/cifar_bridge_appendix.tex` | LaTeX appendix section and compact table for CIFAR and bridge boundary evidence. |
 | `experiments/unified_quantitative_obstruction_chain.py` | Aggregates existing obstruction, detector, gate, selector, model-merging, block-gauge, time-frequency, and optional sheaf/GNN CSV artifacts into one quantitative chain. |
 | `reports/unified_quantitative_obstruction_chain.md` | Unified obstruction-chain report with link tests for cycle scores, validation deltas, operator/projection residuals, period-index decisions, dataset gates, and residual taxonomy. |
 | `reports/csv/unified_quantitative_obstruction_chain.csv` | Row-level normalized obstruction-chain table with aligned residual, detector, lift, gate, validation, and merge-degradation fields. |

@@ -1,0 +1,70 @@
+\section{CIFAR and Bridge Boundary Appendix}
+\label{app:cifar-bridge-boundary}
+
+This appendix records CIFAR and bridge-dataset evidence as a boundary result.
+It supports the limited claim that CIFAR is included as a bounded appendix
+boundary, not as a broad model-merging win.  It does not support the claim that
+CIFAR confirms the main method.
+
+\paragraph{CIFAR gate chronology.}
+The first CIFAR-10 gate failed: the initial probe reached test accuracy
+\(0.2480\), below the \(0.45\) plumbing threshold and the \(0.60\)
+meaningful-claim threshold.  A bounded rescue with a larger no-BatchNorm
+two-convolution ReLU CNN, normalized inputs, longer training, and random
+crop/flip augmentation cleared the base gate with max individual accuracy
+\(0.658333\) on the merge setting.  This allowed diagnostics, but not a broad
+method-win claim because the rescue had only one merge setting.
+
+\paragraph{Final CIFAR result.}
+The final confirmatory CIFAR run used the rescued no-BatchNorm architecture over
+five seeds.  The base gate passed: mean individual max accuracy was \(0.650620\)
+and the minimum setting max was \(0.646400\).  Exact channel gauges remained
+descriptive.  Optimized channel scaling was only \(+0.000540\) versus
+C2M3-style channel synchronization, with confidence interval
+\([-0.000880,0.002740]\); shrinkage and global channel scaling were similarly
+small and had intervals crossing zero.  Greedy soup remained the boundary:
+greedy soup reached mean test accuracy \(0.648000\), C2M3-style channel
+synchronization reached \(0.464420\), and the greedy-safe selector tied greedy
+soup.  The union candidate soup was \(+0.000440\) over greedy soup with a
+confidence interval touching zero.  The ensemble upper bound was higher but is
+extra-capacity.
+
+\paragraph{Bridge datasets.}
+Rotated-MNIST and colored-MNIST are bridge datasets only.  They support checking
+whether the C2M3-versus-greedy boundary pattern persists under simple
+MNIST-derived shifts.  In the expanded bridge run, greedy soup beat C2M3-style
+channel synchronization by \(+0.084724\) overall with confidence interval
+\([0.063629,0.103986]\).  In the main rotated-25 \(N=3\) 10-seed setting, the
+delta was \(+0.089670\), with confidence interval
+\([0.067857,0.112412]\).  These results cannot be promoted to CIFAR or general
+vision claims.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\begin{tabular}{p{0.16\linewidth}p{0.18\linewidth}p{0.11\linewidth}p{0.18\linewidth}p{0.18\linewidth}p{0.13\linewidth}}
+\hline
+Dataset / stage & Architecture & Base acc. & Strongest C2M3 delta & Strongest greedy-soup delta & Claim status \\
+\hline
+CIFAR failed probe & small CNN probe & \(0.248000\) & N/A & N/A & below plumbing \\
+CIFAR bounded rescue & no-BN two-conv CNN & \(0.658333\) & \(+0.171333\) greedy & \(0.000000\) selector tie & descriptive diagnostics \\
+CIFAR final & no-BN two-conv CNN & \(0.650620\) & \(+0.000540\) exact scale & \(+0.000440\) union soup; selector tie & appendix boundary \\
+Rotated-MNIST bridge & no-BN small CNN & \(0.924583\) & \(+0.087917\) greedy & \(0.000000\) selector tie & bridge only \\
+Rotated/colored bridge & no-BN small CNN & \(0.928694\) & \(+0.084724\) greedy & \(0.000000\) selector tie & bridge only \\
+\hline
+\end{tabular}
+\caption{CIFAR and bridge summary.  Deltas are test-accuracy deltas versus
+C2M3-style channel synchronization or permutation and versus greedy soup where
+merge rows exist.  On CIFAR final, the strongest capacity-matched delta versus
+greedy soup is only \(+0.000440\) for the union candidate soup, with an interval
+touching zero; the greedy-safe selector ties greedy soup.}
+\label{tab:cifar-bridge-boundary}
+\end{table}
+
+\paragraph{Claim boundary.}
+Exact channel permutations and positive scales are exact ReLU
+reparameterizations for the no-BatchNorm CNNs used here, but exactness of the
+gauge does not imply an accuracy win after averaging independently trained
+checkpoints.  CIFAR is therefore included as a concise appendix boundary.  It is
+not evidence that CIFAR confirms the main method, and bridge datasets do not
+imply CIFAR or general vision performance.
