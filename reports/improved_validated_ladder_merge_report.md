@@ -10,7 +10,7 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconf
 
 ## Git State At Report Generation
 
-- HEAD commit: `927ee5e`
+- HEAD commit: `e8b6434`
 - Worktree dirty: `True`
 
 ## Dataset And Grid
@@ -23,7 +23,7 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconf
 - Epochs: `3`
 - Train samples before validation split: `5000`
 - Validation fraction: `0.2`
-- Test samples: `1000` (`0` means full dataset)
+- Test samples: `0` (`0` means full dataset)
 - Alpha grid: `0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.25,1.5`
 - Tau grid: `0.25,0.5,1.0,2.0,inf`
 - Optimization steps: `30`
@@ -56,157 +56,157 @@ All method choices are made using validation accuracy/loss only. Test metrics ar
 
 | method | n_rows | n_seeds | mean_accuracy | accuracy_standard_error | mean_loss | mean_merge_degradation | mean_accuracy_delta_vs_c2m3 | mean_accuracy_delta_vs_greedy_soup | symmetry_status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| c2m3_greedy_soup | 120 | 20 | 0.8475 | 0.0021 | 0.6675 | 0.0039 | 0.0417 | -0.0002 | exact_relu_permutation_soup |
-| c2m3_permutation | 120 | 20 | 0.8059 | 0.0053 | 0.8824 | 0.0456 | 0.0000 | -0.0419 | exact_relu_permutation_symmetry |
-| ensemble_upper_bound | 120 | 20 | 0.8550 | 0.0016 | 0.6453 | -0.0035 | 0.0491 | 0.0072 | extra_capacity_ensemble |
-| global_monomial_greedy_soup | 120 | 20 | 0.8479 | 0.0021 | 0.6712 | 0.0036 | 0.0420 | 0.0001 | global_exact_relu_positive_scale_soup |
-| global_monomial_scale | 120 | 20 | 0.8196 | 0.0041 | 0.8639 | 0.0319 | 0.0137 | -0.0282 | validation_selected_global_exact_relu_positive_scale |
-| greedy_soup | 120 | 20 | 0.8478 | 0.0021 | 0.6615 | 0.0037 | 0.0419 | 0.0000 | ordinary_single_model_soup |
-| improved_validated_selector | 120 | 20 | 0.8470 | 0.0021 | 0.6869 | 0.0045 | 0.0411 | -0.0008 | validation_selected_single_model_or_soup |
-| monomial_scale | 120 | 20 | 0.8117 | 0.0050 | 0.8706 | 0.0397 | 0.0059 | -0.0360 | exact_relu_positive_scale_symmetry |
-| monomial_scaled_greedy_soup | 120 | 20 | 0.8476 | 0.0021 | 0.6669 | 0.0038 | 0.0417 | -0.0001 | exact_relu_positive_scale_soup |
-| optimized_monomial_greedy_soup | 120 | 20 | 0.8478 | 0.0021 | 0.6618 | 0.0036 | 0.0419 | 0.0000 | optimized_exact_relu_positive_scale_soup |
-| optimized_monomial_scale | 120 | 20 | 0.8107 | 0.0047 | 0.7043 | 0.0407 | 0.0049 | -0.0370 | validation_optimized_exact_relu_positive_scale |
-| shrinkage_monomial_greedy_soup | 120 | 20 | 0.8477 | 0.0021 | 0.6689 | 0.0038 | 0.0418 | -0.0001 | exact_relu_positive_scale_soup |
-| shrinkage_monomial_scale | 120 | 20 | 0.8196 | 0.0041 | 0.8617 | 0.0318 | 0.0137 | -0.0281 | validation_selected_exact_relu_positive_scale |
-| union_candidate_soup | 120 | 20 | 0.8473 | 0.0021 | 0.6792 | 0.0042 | 0.0414 | -0.0005 | validation_selected_union_candidate_single_model_soup |
-| validated_ladder_selector | 120 | 20 | 0.8147 | 0.0045 | 0.8701 | 0.0368 | 0.0088 | -0.0331 | validation_selected_exact_relu_single_model |
-| weight_average | 120 | 20 | 0.6543 | 0.0109 | 1.5174 | 0.1971 | -0.1516 | -0.1935 | ordinary_unaligned_single_model |
+| c2m3_greedy_soup | 120 | 20 | 0.8569 | 0.0020 | 0.6506 | 0.0020 | 0.0450 | -0.0004 | exact_relu_permutation_soup |
+| c2m3_permutation | 120 | 20 | 0.8119 | 0.0051 | 0.8653 | 0.0469 | 0.0000 | -0.0454 | exact_relu_permutation_symmetry |
+| ensemble_upper_bound | 120 | 20 | 0.8650 | 0.0015 | 0.6278 | -0.0062 | 0.0531 | 0.0078 | extra_capacity_ensemble |
+| global_monomial_greedy_soup | 120 | 20 | 0.8569 | 0.0020 | 0.6545 | 0.0020 | 0.0450 | -0.0004 | global_exact_relu_positive_scale_soup |
+| global_monomial_scale | 120 | 20 | 0.8269 | 0.0039 | 0.8468 | 0.0319 | 0.0150 | -0.0304 | validation_selected_global_exact_relu_positive_scale |
+| greedy_soup | 120 | 20 | 0.8572 | 0.0020 | 0.6444 | 0.0016 | 0.0454 | 0.0000 | ordinary_single_model_soup |
+| improved_validated_selector | 120 | 20 | 0.8557 | 0.0020 | 0.6706 | 0.0031 | 0.0438 | -0.0015 | validation_selected_single_model_or_soup |
+| monomial_scale | 120 | 20 | 0.8197 | 0.0048 | 0.8531 | 0.0391 | 0.0078 | -0.0375 | exact_relu_positive_scale_symmetry |
+| monomial_scaled_greedy_soup | 120 | 20 | 0.8570 | 0.0020 | 0.6500 | 0.0018 | 0.0451 | -0.0003 | exact_relu_positive_scale_soup |
+| optimized_monomial_greedy_soup | 120 | 20 | 0.8570 | 0.0020 | 0.6450 | 0.0018 | 0.0451 | -0.0002 | optimized_exact_relu_positive_scale_soup |
+| optimized_monomial_scale | 120 | 20 | 0.8206 | 0.0044 | 0.6857 | 0.0382 | 0.0087 | -0.0366 | validation_optimized_exact_relu_positive_scale |
+| shrinkage_monomial_greedy_soup | 120 | 20 | 0.8570 | 0.0020 | 0.6522 | 0.0019 | 0.0451 | -0.0003 | exact_relu_positive_scale_soup |
+| shrinkage_monomial_scale | 120 | 20 | 0.8268 | 0.0039 | 0.8446 | 0.0321 | 0.0149 | -0.0305 | validation_selected_exact_relu_positive_scale |
+| union_candidate_soup | 120 | 20 | 0.8566 | 0.0020 | 0.6623 | 0.0022 | 0.0447 | -0.0007 | validation_selected_union_candidate_single_model_soup |
+| validated_ladder_selector | 120 | 20 | 0.8220 | 0.0044 | 0.8527 | 0.0369 | 0.0101 | -0.0353 | validation_selected_exact_relu_single_model |
+| weight_average | 120 | 20 | 0.6663 | 0.0110 | 1.5042 | 0.1926 | -0.1456 | -0.1910 | ordinary_unaligned_single_model |
 
 ## Fixed-Setting Performance
 
 | n_models | width | method | n_seeds | mean_accuracy | mean_accuracy_delta_vs_c2m3 | mean_accuracy_delta_vs_greedy_soup |
 | --- | --- | --- | --- | --- | --- | --- |
-| 3 | 16 | c2m3_greedy_soup | 20 | 0.8181 | 0.0784 | 0.0000 |
-| 3 | 16 | c2m3_permutation | 20 | 0.7397 | 0.0000 | -0.0784 |
-| 3 | 16 | ensemble_upper_bound | 20 | 0.8329 | 0.0932 | 0.0148 |
-| 3 | 16 | global_monomial_greedy_soup | 20 | 0.8184 | 0.0786 | 0.0003 |
-| 3 | 16 | global_monomial_scale | 20 | 0.7675 | 0.0278 | -0.0506 |
-| 3 | 16 | greedy_soup | 20 | 0.8181 | 0.0784 | 0.0000 |
-| 3 | 16 | improved_validated_selector | 20 | 0.8177 | 0.0780 | -0.0004 |
-| 3 | 16 | monomial_scale | 20 | 0.7574 | 0.0177 | -0.0607 |
-| 3 | 16 | monomial_scaled_greedy_soup | 20 | 0.8181 | 0.0784 | 0.0000 |
-| 3 | 16 | optimized_monomial_greedy_soup | 20 | 0.8181 | 0.0784 | 0.0000 |
-| 3 | 16 | optimized_monomial_scale | 20 | 0.7449 | 0.0052 | -0.0732 |
-| 3 | 16 | shrinkage_monomial_greedy_soup | 20 | 0.8181 | 0.0784 | 0.0000 |
-| 3 | 16 | shrinkage_monomial_scale | 20 | 0.7673 | 0.0277 | -0.0507 |
-| 3 | 16 | union_candidate_soup | 20 | 0.8175 | 0.0778 | -0.0006 |
-| 3 | 16 | validated_ladder_selector | 20 | 0.7624 | 0.0227 | -0.0557 |
-| 3 | 16 | weight_average | 20 | 0.5444 | -0.1953 | -0.2737 |
-| 3 | 32 | c2m3_greedy_soup | 20 | 0.8530 | 0.0309 | 0.0006 |
-| 3 | 32 | c2m3_permutation | 20 | 0.8221 | 0.0000 | -0.0303 |
-| 3 | 32 | ensemble_upper_bound | 20 | 0.8569 | 0.0348 | 0.0045 |
-| 3 | 32 | global_monomial_greedy_soup | 20 | 0.8530 | 0.0308 | 0.0006 |
-| 3 | 32 | global_monomial_scale | 20 | 0.8312 | 0.0090 | -0.0213 |
-| 3 | 32 | greedy_soup | 20 | 0.8524 | 0.0303 | 0.0000 |
-| 3 | 32 | improved_validated_selector | 20 | 0.8508 | 0.0286 | -0.0017 |
-| 3 | 32 | monomial_scale | 20 | 0.8277 | 0.0056 | -0.0247 |
-| 3 | 32 | monomial_scaled_greedy_soup | 20 | 0.8525 | 0.0303 | 0.0001 |
-| 3 | 32 | optimized_monomial_greedy_soup | 20 | 0.8524 | 0.0303 | 0.0000 |
-| 3 | 32 | optimized_monomial_scale | 20 | 0.8292 | 0.0070 | -0.0233 |
-| 3 | 32 | shrinkage_monomial_greedy_soup | 20 | 0.8527 | 0.0305 | 0.0002 |
-| 3 | 32 | shrinkage_monomial_scale | 20 | 0.8313 | 0.0092 | -0.0211 |
-| 3 | 32 | union_candidate_soup | 20 | 0.8514 | 0.0292 | -0.0011 |
-| 3 | 32 | validated_ladder_selector | 20 | 0.8286 | 0.0064 | -0.0239 |
-| 3 | 32 | weight_average | 20 | 0.7156 | -0.1065 | -0.1368 |
-| 3 | 64 | c2m3_greedy_soup | 20 | 0.8703 | 0.0092 | -0.0008 |
-| 3 | 64 | c2m3_permutation | 20 | 0.8612 | 0.0000 | -0.0099 |
-| 3 | 64 | ensemble_upper_bound | 20 | 0.8733 | 0.0122 | 0.0023 |
-| 3 | 64 | global_monomial_greedy_soup | 20 | 0.8706 | 0.0094 | -0.0006 |
-| 3 | 64 | global_monomial_scale | 20 | 0.8638 | 0.0026 | -0.0073 |
-| 3 | 64 | greedy_soup | 20 | 0.8711 | 0.0099 | 0.0000 |
-| 3 | 64 | improved_validated_selector | 20 | 0.8694 | 0.0082 | -0.0018 |
-| 3 | 64 | monomial_scale | 20 | 0.8641 | 0.0029 | -0.0070 |
-| 3 | 64 | monomial_scaled_greedy_soup | 20 | 0.8707 | 0.0095 | -0.0005 |
-| 3 | 64 | optimized_monomial_greedy_soup | 20 | 0.8708 | 0.0096 | -0.0003 |
-| 3 | 64 | optimized_monomial_scale | 20 | 0.8607 | -0.0006 | -0.0105 |
-| 3 | 64 | shrinkage_monomial_greedy_soup | 20 | 0.8703 | 0.0091 | -0.0009 |
-| 3 | 64 | shrinkage_monomial_scale | 20 | 0.8635 | 0.0024 | -0.0076 |
-| 3 | 64 | union_candidate_soup | 20 | 0.8706 | 0.0094 | -0.0005 |
-| 3 | 64 | validated_ladder_selector | 20 | 0.8636 | 0.0024 | -0.0075 |
-| 3 | 64 | weight_average | 20 | 0.7728 | -0.0884 | -0.0983 |
-| 4 | 16 | c2m3_greedy_soup | 20 | 0.8206 | 0.0932 | -0.0012 |
-| 4 | 16 | c2m3_permutation | 20 | 0.7274 | 0.0000 | -0.0944 |
-| 4 | 16 | ensemble_upper_bound | 20 | 0.8357 | 0.1083 | 0.0139 |
-| 4 | 16 | global_monomial_greedy_soup | 20 | 0.8212 | 0.0938 | -0.0006 |
-| 4 | 16 | global_monomial_scale | 20 | 0.7598 | 0.0324 | -0.0620 |
-| 4 | 16 | greedy_soup | 20 | 0.8218 | 0.0944 | 0.0000 |
-| 4 | 16 | improved_validated_selector | 20 | 0.8210 | 0.0935 | -0.0008 |
-| 4 | 16 | monomial_scale | 20 | 0.7317 | 0.0043 | -0.0901 |
-| 4 | 16 | monomial_scaled_greedy_soup | 20 | 0.8218 | 0.0944 | 0.0000 |
-| 4 | 16 | optimized_monomial_greedy_soup | 20 | 0.8218 | 0.0944 | 0.0000 |
-| 4 | 16 | optimized_monomial_scale | 20 | 0.7438 | 0.0164 | -0.0779 |
-| 4 | 16 | shrinkage_monomial_greedy_soup | 20 | 0.8218 | 0.0944 | 0.0000 |
-| 4 | 16 | shrinkage_monomial_scale | 20 | 0.7604 | 0.0330 | -0.0614 |
-| 4 | 16 | union_candidate_soup | 20 | 0.8220 | 0.0946 | 0.0002 |
-| 4 | 16 | validated_ladder_selector | 20 | 0.7416 | 0.0141 | -0.0802 |
-| 4 | 16 | weight_average | 20 | 0.5223 | -0.2051 | -0.2994 |
-| 4 | 32 | c2m3_greedy_soup | 20 | 0.8517 | 0.0272 | 0.0000 |
-| 4 | 32 | c2m3_permutation | 20 | 0.8246 | 0.0000 | -0.0272 |
-| 4 | 32 | ensemble_upper_bound | 20 | 0.8561 | 0.0315 | 0.0044 |
-| 4 | 32 | global_monomial_greedy_soup | 20 | 0.8516 | 0.0271 | -0.0001 |
-| 4 | 32 | global_monomial_scale | 20 | 0.8333 | 0.0087 | -0.0185 |
-| 4 | 32 | greedy_soup | 20 | 0.8517 | 0.0272 | 0.0000 |
-| 4 | 32 | improved_validated_selector | 20 | 0.8515 | 0.0270 | -0.0002 |
-| 4 | 32 | monomial_scale | 20 | 0.8306 | 0.0060 | -0.0211 |
-| 4 | 32 | monomial_scaled_greedy_soup | 20 | 0.8518 | 0.0272 | 0.0000 |
-| 4 | 32 | optimized_monomial_greedy_soup | 20 | 0.8517 | 0.0272 | 0.0000 |
-| 4 | 32 | optimized_monomial_scale | 20 | 0.8271 | 0.0025 | -0.0247 |
-| 4 | 32 | shrinkage_monomial_greedy_soup | 20 | 0.8516 | 0.0270 | -0.0002 |
-| 4 | 32 | shrinkage_monomial_scale | 20 | 0.8328 | 0.0082 | -0.0189 |
-| 4 | 32 | union_candidate_soup | 20 | 0.8515 | 0.0270 | -0.0002 |
-| 4 | 32 | validated_ladder_selector | 20 | 0.8316 | 0.0070 | -0.0202 |
-| 4 | 32 | weight_average | 20 | 0.6559 | -0.1687 | -0.1958 |
-| 4 | 64 | c2m3_greedy_soup | 20 | 0.8714 | 0.0112 | -0.0001 |
-| 4 | 64 | c2m3_permutation | 20 | 0.8602 | 0.0000 | -0.0112 |
-| 4 | 64 | ensemble_upper_bound | 20 | 0.8747 | 0.0145 | 0.0033 |
-| 4 | 64 | global_monomial_greedy_soup | 20 | 0.8726 | 0.0124 | 0.0012 |
-| 4 | 64 | global_monomial_scale | 20 | 0.8618 | 0.0016 | -0.0096 |
-| 4 | 64 | greedy_soup | 20 | 0.8714 | 0.0112 | 0.0000 |
-| 4 | 64 | improved_validated_selector | 20 | 0.8714 | 0.0112 | 0.0000 |
-| 4 | 64 | monomial_scale | 20 | 0.8589 | -0.0014 | -0.0126 |
-| 4 | 64 | monomial_scaled_greedy_soup | 20 | 0.8710 | 0.0108 | -0.0005 |
-| 4 | 64 | optimized_monomial_greedy_soup | 20 | 0.8719 | 0.0117 | 0.0005 |
-| 4 | 64 | optimized_monomial_scale | 20 | 0.8588 | -0.0015 | -0.0127 |
-| 4 | 64 | shrinkage_monomial_greedy_soup | 20 | 0.8717 | 0.0115 | 0.0003 |
-| 4 | 64 | shrinkage_monomial_scale | 20 | 0.8623 | 0.0020 | -0.0092 |
-| 4 | 64 | union_candidate_soup | 20 | 0.8706 | 0.0104 | -0.0009 |
-| 4 | 64 | validated_ladder_selector | 20 | 0.8604 | 0.0002 | -0.0110 |
-| 4 | 64 | weight_average | 20 | 0.7148 | -0.1454 | -0.1566 |
+| 3 | 16 | c2m3_greedy_soup | 20 | 0.8280 | 0.0796 | 0.0000 |
+| 3 | 16 | c2m3_permutation | 20 | 0.7484 | 0.0000 | -0.0796 |
+| 3 | 16 | ensemble_upper_bound | 20 | 0.8435 | 0.0951 | 0.0155 |
+| 3 | 16 | global_monomial_greedy_soup | 20 | 0.8278 | 0.0794 | -0.0001 |
+| 3 | 16 | global_monomial_scale | 20 | 0.7775 | 0.0291 | -0.0505 |
+| 3 | 16 | greedy_soup | 20 | 0.8280 | 0.0796 | 0.0000 |
+| 3 | 16 | improved_validated_selector | 20 | 0.8273 | 0.0789 | -0.0007 |
+| 3 | 16 | monomial_scale | 20 | 0.7676 | 0.0192 | -0.0604 |
+| 3 | 16 | monomial_scaled_greedy_soup | 20 | 0.8280 | 0.0796 | 0.0000 |
+| 3 | 16 | optimized_monomial_greedy_soup | 20 | 0.8280 | 0.0796 | 0.0000 |
+| 3 | 16 | optimized_monomial_scale | 20 | 0.7566 | 0.0082 | -0.0714 |
+| 3 | 16 | shrinkage_monomial_greedy_soup | 20 | 0.8280 | 0.0796 | 0.0000 |
+| 3 | 16 | shrinkage_monomial_scale | 20 | 0.7775 | 0.0291 | -0.0505 |
+| 3 | 16 | union_candidate_soup | 20 | 0.8275 | 0.0791 | -0.0005 |
+| 3 | 16 | validated_ladder_selector | 20 | 0.7716 | 0.0232 | -0.0563 |
+| 3 | 16 | weight_average | 20 | 0.5518 | -0.1966 | -0.2762 |
+| 3 | 32 | c2m3_greedy_soup | 20 | 0.8617 | 0.0346 | -0.0005 |
+| 3 | 32 | c2m3_permutation | 20 | 0.8271 | 0.0000 | -0.0351 |
+| 3 | 32 | ensemble_upper_bound | 20 | 0.8669 | 0.0398 | 0.0047 |
+| 3 | 32 | global_monomial_greedy_soup | 20 | 0.8617 | 0.0346 | -0.0005 |
+| 3 | 32 | global_monomial_scale | 20 | 0.8385 | 0.0114 | -0.0237 |
+| 3 | 32 | greedy_soup | 20 | 0.8622 | 0.0351 | 0.0000 |
+| 3 | 32 | improved_validated_selector | 20 | 0.8614 | 0.0343 | -0.0008 |
+| 3 | 32 | monomial_scale | 20 | 0.8353 | 0.0082 | -0.0269 |
+| 3 | 32 | monomial_scaled_greedy_soup | 20 | 0.8618 | 0.0347 | -0.0004 |
+| 3 | 32 | optimized_monomial_greedy_soup | 20 | 0.8622 | 0.0351 | 0.0000 |
+| 3 | 32 | optimized_monomial_scale | 20 | 0.8366 | 0.0095 | -0.0256 |
+| 3 | 32 | shrinkage_monomial_greedy_soup | 20 | 0.8619 | 0.0347 | -0.0003 |
+| 3 | 32 | shrinkage_monomial_scale | 20 | 0.8377 | 0.0106 | -0.0245 |
+| 3 | 32 | union_candidate_soup | 20 | 0.8618 | 0.0347 | -0.0004 |
+| 3 | 32 | validated_ladder_selector | 20 | 0.8353 | 0.0082 | -0.0269 |
+| 3 | 32 | weight_average | 20 | 0.7287 | -0.0985 | -0.1335 |
+| 3 | 64 | c2m3_greedy_soup | 20 | 0.8796 | 0.0139 | -0.0004 |
+| 3 | 64 | c2m3_permutation | 20 | 0.8657 | 0.0000 | -0.0143 |
+| 3 | 64 | ensemble_upper_bound | 20 | 0.8826 | 0.0169 | 0.0026 |
+| 3 | 64 | global_monomial_greedy_soup | 20 | 0.8794 | 0.0137 | -0.0006 |
+| 3 | 64 | global_monomial_scale | 20 | 0.8705 | 0.0048 | -0.0095 |
+| 3 | 64 | greedy_soup | 20 | 0.8800 | 0.0143 | 0.0000 |
+| 3 | 64 | improved_validated_selector | 20 | 0.8766 | 0.0109 | -0.0034 |
+| 3 | 64 | monomial_scale | 20 | 0.8702 | 0.0045 | -0.0098 |
+| 3 | 64 | monomial_scaled_greedy_soup | 20 | 0.8797 | 0.0140 | -0.0003 |
+| 3 | 64 | optimized_monomial_greedy_soup | 20 | 0.8793 | 0.0136 | -0.0007 |
+| 3 | 64 | optimized_monomial_scale | 20 | 0.8689 | 0.0032 | -0.0111 |
+| 3 | 64 | shrinkage_monomial_greedy_soup | 20 | 0.8796 | 0.0139 | -0.0004 |
+| 3 | 64 | shrinkage_monomial_scale | 20 | 0.8704 | 0.0047 | -0.0096 |
+| 3 | 64 | union_candidate_soup | 20 | 0.8792 | 0.0135 | -0.0008 |
+| 3 | 64 | validated_ladder_selector | 20 | 0.8700 | 0.0043 | -0.0100 |
+| 3 | 64 | weight_average | 20 | 0.7856 | -0.0801 | -0.0944 |
+| 4 | 16 | c2m3_greedy_soup | 20 | 0.8300 | 0.0931 | -0.0011 |
+| 4 | 16 | c2m3_permutation | 20 | 0.7369 | 0.0000 | -0.0942 |
+| 4 | 16 | ensemble_upper_bound | 20 | 0.8465 | 0.1096 | 0.0154 |
+| 4 | 16 | global_monomial_greedy_soup | 20 | 0.8308 | 0.0939 | -0.0003 |
+| 4 | 16 | global_monomial_scale | 20 | 0.7679 | 0.0310 | -0.0633 |
+| 4 | 16 | greedy_soup | 20 | 0.8311 | 0.0942 | 0.0000 |
+| 4 | 16 | improved_validated_selector | 20 | 0.8294 | 0.0925 | -0.0018 |
+| 4 | 16 | monomial_scale | 20 | 0.7420 | 0.0050 | -0.0892 |
+| 4 | 16 | monomial_scaled_greedy_soup | 20 | 0.8311 | 0.0942 | 0.0000 |
+| 4 | 16 | optimized_monomial_greedy_soup | 20 | 0.8311 | 0.0942 | 0.0000 |
+| 4 | 16 | optimized_monomial_scale | 20 | 0.7589 | 0.0220 | -0.0722 |
+| 4 | 16 | shrinkage_monomial_greedy_soup | 20 | 0.8311 | 0.0942 | 0.0000 |
+| 4 | 16 | shrinkage_monomial_scale | 20 | 0.7688 | 0.0319 | -0.0623 |
+| 4 | 16 | union_candidate_soup | 20 | 0.8303 | 0.0934 | -0.0008 |
+| 4 | 16 | validated_ladder_selector | 20 | 0.7502 | 0.0133 | -0.0809 |
+| 4 | 16 | weight_average | 20 | 0.5367 | -0.2002 | -0.2944 |
+| 4 | 32 | c2m3_greedy_soup | 20 | 0.8619 | 0.0344 | 0.0000 |
+| 4 | 32 | c2m3_permutation | 20 | 0.8275 | 0.0000 | -0.0344 |
+| 4 | 32 | ensemble_upper_bound | 20 | 0.8674 | 0.0399 | 0.0055 |
+| 4 | 32 | global_monomial_greedy_soup | 20 | 0.8615 | 0.0340 | -0.0004 |
+| 4 | 32 | global_monomial_scale | 20 | 0.8377 | 0.0102 | -0.0242 |
+| 4 | 32 | greedy_soup | 20 | 0.8619 | 0.0344 | 0.0000 |
+| 4 | 32 | improved_validated_selector | 20 | 0.8617 | 0.0342 | -0.0002 |
+| 4 | 32 | monomial_scale | 20 | 0.8354 | 0.0079 | -0.0265 |
+| 4 | 32 | monomial_scaled_greedy_soup | 20 | 0.8616 | 0.0341 | -0.0003 |
+| 4 | 32 | optimized_monomial_greedy_soup | 20 | 0.8619 | 0.0344 | 0.0000 |
+| 4 | 32 | optimized_monomial_scale | 20 | 0.8352 | 0.0077 | -0.0267 |
+| 4 | 32 | shrinkage_monomial_greedy_soup | 20 | 0.8615 | 0.0340 | -0.0004 |
+| 4 | 32 | shrinkage_monomial_scale | 20 | 0.8371 | 0.0096 | -0.0248 |
+| 4 | 32 | union_candidate_soup | 20 | 0.8617 | 0.0342 | -0.0002 |
+| 4 | 32 | validated_ladder_selector | 20 | 0.8366 | 0.0091 | -0.0253 |
+| 4 | 32 | weight_average | 20 | 0.6633 | -0.1642 | -0.1986 |
+| 4 | 64 | c2m3_greedy_soup | 20 | 0.8800 | 0.0143 | -0.0003 |
+| 4 | 64 | c2m3_permutation | 20 | 0.8657 | 0.0000 | -0.0145 |
+| 4 | 64 | ensemble_upper_bound | 20 | 0.8833 | 0.0176 | 0.0030 |
+| 4 | 64 | global_monomial_greedy_soup | 20 | 0.8798 | 0.0141 | -0.0005 |
+| 4 | 64 | global_monomial_scale | 20 | 0.8692 | 0.0035 | -0.0111 |
+| 4 | 64 | greedy_soup | 20 | 0.8803 | 0.0145 | 0.0000 |
+| 4 | 64 | improved_validated_selector | 20 | 0.8780 | 0.0123 | -0.0022 |
+| 4 | 64 | monomial_scale | 20 | 0.8679 | 0.0022 | -0.0123 |
+| 4 | 64 | monomial_scaled_greedy_soup | 20 | 0.8797 | 0.0139 | -0.0006 |
+| 4 | 64 | optimized_monomial_greedy_soup | 20 | 0.8797 | 0.0139 | -0.0006 |
+| 4 | 64 | optimized_monomial_scale | 20 | 0.8675 | 0.0018 | -0.0128 |
+| 4 | 64 | shrinkage_monomial_greedy_soup | 20 | 0.8796 | 0.0139 | -0.0006 |
+| 4 | 64 | shrinkage_monomial_scale | 20 | 0.8691 | 0.0033 | -0.0112 |
+| 4 | 64 | union_candidate_soup | 20 | 0.8791 | 0.0133 | -0.0012 |
+| 4 | 64 | validated_ladder_selector | 20 | 0.8681 | 0.0023 | -0.0122 |
+| 4 | 64 | weight_average | 20 | 0.7316 | -0.1342 | -0.1487 |
 
 ## Paired Comparisons
 
 | comparison | n_pairs | paired_mean_accuracy_delta | paired_accuracy_delta_ci_low | paired_accuracy_delta_ci_high | paired_mean_loss_delta | accuracy_wins | accuracy_ties | accuracy_losses | sign_test_two_sided_p | fixed_settings_positive | fixed_settings_total |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| improved_validated_selector_vs_c2m3_permutation | 120 | 0.0411 | 0.0338 | 0.0482 | -0.1955 | 112 | 1 | 7 | 0.0000 | 6 | 6 |
-| improved_validated_selector_vs_greedy_soup | 120 | -0.0008 | -0.0017 | 0.0001 | 0.0254 | 27 | 58 | 35 | 0.3742 | 0 | 6 |
-| shrinkage_monomial_scale_vs_monomial_scale | 120 | 0.0079 | 0.0051 | 0.0112 | -0.0090 | 77 | 14 | 29 | 0.0000 | 5 | 6 |
-| global_monomial_scale_vs_monomial_scale | 120 | 0.0078 | 0.0049 | 0.0111 | -0.0067 | 77 | 8 | 35 | 0.0001 | 5 | 6 |
-| optimized_monomial_scale_vs_monomial_scale | 120 | -0.0010 | -0.0051 | 0.0032 | -0.1664 | 56 | 7 | 57 | 1.0000 | 2 | 6 |
-| union_candidate_soup_vs_greedy_soup | 120 | -0.0005 | -0.0012 | 0.0002 | 0.0177 | 21 | 68 | 31 | 0.2116 | 1 | 6 |
-| monomial_scaled_greedy_soup_vs_greedy_soup | 120 | -0.0001 | -0.0005 | 0.0002 | 0.0054 | 4 | 112 | 4 | 1.0000 | 1 | 6 |
-| shrinkage_monomial_greedy_soup_vs_greedy_soup | 120 | -0.0001 | -0.0005 | 0.0003 | 0.0074 | 6 | 109 | 5 | 1.0000 | 2 | 6 |
-| global_monomial_greedy_soup_vs_greedy_soup | 120 | 0.0001 | -0.0002 | 0.0005 | 0.0097 | 8 | 107 | 5 | 0.5811 | 3 | 6 |
-| optimized_monomial_greedy_soup_vs_greedy_soup | 120 | 0.0000 | -0.0002 | 0.0003 | 0.0003 | 2 | 117 | 1 | 1.0000 | 1 | 6 |
+| improved_validated_selector_vs_c2m3_permutation | 120 | 0.0438 | 0.0372 | 0.0508 | -0.1947 | 117 | 0 | 3 | 0.0000 | 6 | 6 |
+| improved_validated_selector_vs_greedy_soup | 120 | -0.0015 | -0.0023 | -0.0008 | 0.0261 | 20 | 49 | 51 | 0.0003 | 0 | 6 |
+| shrinkage_monomial_scale_vs_monomial_scale | 120 | 0.0070 | 0.0044 | 0.0102 | -0.0085 | 85 | 6 | 29 | 0.0000 | 6 | 6 |
+| global_monomial_scale_vs_monomial_scale | 120 | 0.0071 | 0.0045 | 0.0101 | -0.0063 | 85 | 4 | 31 | 0.0000 | 6 | 6 |
+| optimized_monomial_scale_vs_monomial_scale | 120 | 0.0009 | -0.0030 | 0.0053 | -0.1674 | 56 | 0 | 64 | 0.5230 | 2 | 6 |
+| union_candidate_soup_vs_greedy_soup | 120 | -0.0007 | -0.0011 | -0.0003 | 0.0179 | 19 | 58 | 43 | 0.0032 | 0 | 6 |
+| monomial_scaled_greedy_soup_vs_greedy_soup | 120 | -0.0003 | -0.0006 | -0.0000 | 0.0055 | 3 | 112 | 5 | 0.7266 | 0 | 6 |
+| shrinkage_monomial_greedy_soup_vs_greedy_soup | 120 | -0.0003 | -0.0006 | -0.0001 | 0.0077 | 2 | 109 | 9 | 0.0654 | 0 | 6 |
+| global_monomial_greedy_soup_vs_greedy_soup | 120 | -0.0004 | -0.0007 | -0.0001 | 0.0101 | 2 | 107 | 11 | 0.0225 | 0 | 6 |
+| optimized_monomial_greedy_soup_vs_greedy_soup | 120 | -0.0002 | -0.0005 | 0.0000 | 0.0006 | 0 | 117 | 3 | 0.2500 | 0 | 6 |
 
 ## Selector Behavior
 
 | method | scope | n_rows | selector_choice_counts | selector_behavior_reference | selector_chosen_test_better | selector_chosen_test_tied | selector_chosen_test_worse | selector_no_test_leakage |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| validated_ladder_selector | overall | 120 | {"monomial_scale": 92, "c2m3_permutation": 28} | c2m3_or_monomial_alternative | 91 | 1 | 28 | True |
-| validated_ladder_selector | N3_W16 | 20 | {"monomial_scale": 17, "c2m3_permutation": 3} | c2m3_or_monomial_alternative | 19 | 0 | 1 | True |
-| validated_ladder_selector | N3_W32 | 20 | {"monomial_scale": 14, "c2m3_permutation": 6} | c2m3_or_monomial_alternative | 15 | 1 | 4 | True |
-| validated_ladder_selector | N3_W64 | 20 | {"monomial_scale": 18, "c2m3_permutation": 2} | c2m3_or_monomial_alternative | 11 | 0 | 9 | True |
-| validated_ladder_selector | N4_W16 | 20 | {"monomial_scale": 12, "c2m3_permutation": 8} | c2m3_or_monomial_alternative | 16 | 0 | 4 | True |
-| validated_ladder_selector | N4_W32 | 20 | {"monomial_scale": 18, "c2m3_permutation": 2} | c2m3_or_monomial_alternative | 17 | 0 | 3 | True |
-| validated_ladder_selector | N4_W64 | 20 | {"monomial_scale": 13, "c2m3_permutation": 7} | c2m3_or_monomial_alternative | 13 | 0 | 7 | True |
-| improved_validated_selector | overall | 120 | {"union_candidate_soup": 95, "optimized_monomial_greedy_soup": 8, "optimized_monomial_scale": 5, "global_monomial_greedy_soup": 3, "monomial_scaled_greedy_soup": 3, "shrinkage_monomial_scale": 2, "global_monomial_scale": 2, "c2m3_greedy_soup": 1, "shrinkage_monomial_greedy_soup": 1} | greedy_soup | 27 | 58 | 35 | True |
-| improved_validated_selector | N3_W16 | 20 | {"union_candidate_soup": 16, "optimized_monomial_greedy_soup": 3, "global_monomial_greedy_soup": 1} | greedy_soup | 5 | 12 | 3 | True |
-| improved_validated_selector | N3_W32 | 20 | {"union_candidate_soup": 17, "global_monomial_scale": 1, "optimized_monomial_greedy_soup": 1, "monomial_scaled_greedy_soup": 1} | greedy_soup | 2 | 13 | 5 | True |
-| improved_validated_selector | N3_W64 | 20 | {"union_candidate_soup": 12, "optimized_monomial_scale": 4, "global_monomial_greedy_soup": 1, "optimized_monomial_greedy_soup": 1, "shrinkage_monomial_scale": 1, "global_monomial_scale": 1} | greedy_soup | 5 | 7 | 8 | True |
-| improved_validated_selector | N4_W16 | 20 | {"union_candidate_soup": 18, "shrinkage_monomial_scale": 1, "c2m3_greedy_soup": 1} | greedy_soup | 6 | 8 | 6 | True |
-| improved_validated_selector | N4_W32 | 20 | {"union_candidate_soup": 18, "monomial_scaled_greedy_soup": 1, "optimized_monomial_greedy_soup": 1} | greedy_soup | 3 | 12 | 5 | True |
-| improved_validated_selector | N4_W64 | 20 | {"union_candidate_soup": 14, "optimized_monomial_greedy_soup": 2, "global_monomial_greedy_soup": 1, "monomial_scaled_greedy_soup": 1, "optimized_monomial_scale": 1, "shrinkage_monomial_greedy_soup": 1} | greedy_soup | 6 | 6 | 8 | True |
+| validated_ladder_selector | overall | 120 | {"monomial_scale": 92, "c2m3_permutation": 28} | c2m3_or_monomial_alternative | 93 | 1 | 26 | True |
+| validated_ladder_selector | N3_W16 | 20 | {"monomial_scale": 17, "c2m3_permutation": 3} | c2m3_or_monomial_alternative | 18 | 0 | 2 | True |
+| validated_ladder_selector | N3_W32 | 20 | {"monomial_scale": 14, "c2m3_permutation": 6} | c2m3_or_monomial_alternative | 15 | 0 | 5 | True |
+| validated_ladder_selector | N3_W64 | 20 | {"monomial_scale": 18, "c2m3_permutation": 2} | c2m3_or_monomial_alternative | 13 | 1 | 6 | True |
+| validated_ladder_selector | N4_W16 | 20 | {"monomial_scale": 12, "c2m3_permutation": 8} | c2m3_or_monomial_alternative | 13 | 0 | 7 | True |
+| validated_ladder_selector | N4_W32 | 20 | {"monomial_scale": 18, "c2m3_permutation": 2} | c2m3_or_monomial_alternative | 19 | 0 | 1 | True |
+| validated_ladder_selector | N4_W64 | 20 | {"monomial_scale": 13, "c2m3_permutation": 7} | c2m3_or_monomial_alternative | 15 | 0 | 5 | True |
+| improved_validated_selector | overall | 120 | {"union_candidate_soup": 95, "optimized_monomial_greedy_soup": 8, "optimized_monomial_scale": 5, "global_monomial_greedy_soup": 3, "monomial_scaled_greedy_soup": 3, "shrinkage_monomial_scale": 2, "global_monomial_scale": 2, "c2m3_greedy_soup": 1, "shrinkage_monomial_greedy_soup": 1} | greedy_soup | 20 | 49 | 51 | True |
+| improved_validated_selector | N3_W16 | 20 | {"union_candidate_soup": 16, "optimized_monomial_greedy_soup": 3, "global_monomial_greedy_soup": 1} | greedy_soup | 1 | 12 | 7 | True |
+| improved_validated_selector | N3_W32 | 20 | {"union_candidate_soup": 17, "global_monomial_scale": 1, "optimized_monomial_greedy_soup": 1, "monomial_scaled_greedy_soup": 1} | greedy_soup | 1 | 12 | 7 | True |
+| improved_validated_selector | N3_W64 | 20 | {"union_candidate_soup": 12, "optimized_monomial_scale": 4, "global_monomial_greedy_soup": 1, "optimized_monomial_greedy_soup": 1, "shrinkage_monomial_scale": 1, "global_monomial_scale": 1} | greedy_soup | 2 | 4 | 14 | True |
+| improved_validated_selector | N4_W16 | 20 | {"union_candidate_soup": 18, "shrinkage_monomial_scale": 1, "c2m3_greedy_soup": 1} | greedy_soup | 5 | 8 | 7 | True |
+| improved_validated_selector | N4_W32 | 20 | {"union_candidate_soup": 18, "monomial_scaled_greedy_soup": 1, "optimized_monomial_greedy_soup": 1} | greedy_soup | 7 | 9 | 4 | True |
+| improved_validated_selector | N4_W64 | 20 | {"union_candidate_soup": 14, "optimized_monomial_greedy_soup": 2, "global_monomial_greedy_soup": 1, "monomial_scaled_greedy_soup": 1, "optimized_monomial_scale": 1, "shrinkage_monomial_greedy_soup": 1} | greedy_soup | 4 | 4 | 12 | True |
 
 The improved selector is a validation-only regret-minimizing selector over C2M3,
 raw monomial, shrinkage monomial, global monomial, optimized monomial, greedy
@@ -240,30 +240,30 @@ Union candidate soup is still one averaged MLP with the original architecture an
 
 | target | predictor | n_rows | pearson | spearman |
 | --- | --- | --- | --- | --- |
-| monomial_gain_vs_c2m3 | monomial_centrality_improvement_from_permutation | 120 | 0.1893 | 0.2868 |
-| monomial_gain_vs_c2m3 | log_scale_variance | 120 | -0.1534 | -0.0549 |
-| monomial_gain_vs_c2m3 | mean_abs_log_scale | 120 | 0.0563 | 0.0975 |
-| monomial_gain_vs_c2m3 | max_abs_log_scale | 120 | -0.2230 | -0.1928 |
-| monomial_gain_vs_c2m3 | validation_delta_vs_c2m3 | 120 | 0.9036 | 0.7570 |
-| monomial_gain_vs_c2m3 | scale_synchronization_disagreement | 120 | -0.1710 | -0.1498 |
-| monomial_gain_vs_c2m3 | pairwise_alignment_residual | 120 | 0.1388 | 0.2139 |
-| monomial_gain_vs_c2m3 | sync_disagreement | 120 | -0.1710 | -0.1498 |
-| monomial_gain_vs_c2m3 | individual_accuracy_variance | 120 | 0.2351 | 0.1280 |
-| shrinkage_gain_vs_monomial | monomial_centrality_improvement_from_permutation | 120 | -0.3538 | 0.0974 |
-| shrinkage_gain_vs_monomial | log_scale_variance | 120 | 0.5620 | 0.3016 |
-| shrinkage_gain_vs_monomial | mean_abs_log_scale | 120 | 0.5228 | 0.3484 |
-| shrinkage_gain_vs_monomial | max_abs_log_scale | 120 | 0.3765 | 0.1873 |
-| shrinkage_gain_vs_monomial | validation_delta_vs_c2m3 | 120 | -0.4545 | -0.1797 |
-| shrinkage_gain_vs_monomial | scale_synchronization_disagreement | 120 | 0.0985 | 0.0591 |
-| shrinkage_gain_vs_monomial | pairwise_alignment_residual | 120 | 0.4267 | 0.3544 |
-| shrinkage_gain_vs_monomial | sync_disagreement | 120 | 0.0985 | 0.0591 |
-| shrinkage_gain_vs_monomial | individual_accuracy_variance | 120 | 0.3218 | 0.2234 |
-| global_gain_vs_monomial | monomial_centrality_improvement_from_permutation | 120 | -0.3863 | 0.0885 |
-| global_gain_vs_monomial | log_scale_variance | 120 | 0.5708 | 0.2974 |
-| global_gain_vs_monomial | mean_abs_log_scale | 120 | 0.5189 | 0.3534 |
-| global_gain_vs_monomial | max_abs_log_scale | 120 | 0.3771 | 0.1981 |
-| global_gain_vs_monomial | validation_delta_vs_c2m3 | 120 | -0.4122 | -0.1739 |
-| global_gain_vs_monomial | scale_synchronization_disagreement | 120 | 0.1042 | 0.0911 |
+| monomial_gain_vs_c2m3 | monomial_centrality_improvement_from_permutation | 120 | 0.1897 | 0.2849 |
+| monomial_gain_vs_c2m3 | log_scale_variance | 120 | -0.1482 | -0.0278 |
+| monomial_gain_vs_c2m3 | mean_abs_log_scale | 120 | 0.0676 | 0.1114 |
+| monomial_gain_vs_c2m3 | max_abs_log_scale | 120 | -0.2162 | -0.1953 |
+| monomial_gain_vs_c2m3 | validation_delta_vs_c2m3 | 120 | 0.9418 | 0.8544 |
+| monomial_gain_vs_c2m3 | scale_synchronization_disagreement | 120 | -0.1839 | -0.2061 |
+| monomial_gain_vs_c2m3 | pairwise_alignment_residual | 120 | 0.1280 | 0.1499 |
+| monomial_gain_vs_c2m3 | sync_disagreement | 120 | -0.1839 | -0.2061 |
+| monomial_gain_vs_c2m3 | individual_accuracy_variance | 120 | 0.3642 | 0.1603 |
+| shrinkage_gain_vs_monomial | monomial_centrality_improvement_from_permutation | 120 | -0.2928 | 0.2342 |
+| shrinkage_gain_vs_monomial | log_scale_variance | 120 | 0.5807 | 0.4461 |
+| shrinkage_gain_vs_monomial | mean_abs_log_scale | 120 | 0.5537 | 0.4556 |
+| shrinkage_gain_vs_monomial | max_abs_log_scale | 120 | 0.3999 | 0.3412 |
+| shrinkage_gain_vs_monomial | validation_delta_vs_c2m3 | 120 | -0.4228 | -0.1192 |
+| shrinkage_gain_vs_monomial | scale_synchronization_disagreement | 120 | 0.0623 | -0.0156 |
+| shrinkage_gain_vs_monomial | pairwise_alignment_residual | 120 | 0.4502 | 0.4601 |
+| shrinkage_gain_vs_monomial | sync_disagreement | 120 | 0.0623 | -0.0156 |
+| shrinkage_gain_vs_monomial | individual_accuracy_variance | 120 | 0.3194 | 0.4464 |
+| global_gain_vs_monomial | monomial_centrality_improvement_from_permutation | 120 | -0.3530 | 0.1947 |
+| global_gain_vs_monomial | log_scale_variance | 120 | 0.5824 | 0.3780 |
+| global_gain_vs_monomial | mean_abs_log_scale | 120 | 0.5515 | 0.4231 |
+| global_gain_vs_monomial | max_abs_log_scale | 120 | 0.3871 | 0.2442 |
+| global_gain_vs_monomial | validation_delta_vs_c2m3 | 120 | -0.4282 | -0.2241 |
+| global_gain_vs_monomial | scale_synchronization_disagreement | 120 | 0.0641 | -0.0248 |
 
 Plot: `reports/plots/improved_validated_ladder_delta_vs_greedy.pdf`.
 
@@ -273,7 +273,7 @@ Plot: `reports/plots/improved_validated_ladder_delta_vs_greedy.pdf`.
 - `improved_selector_over_greedy_soup`: Supported negative (paired mean accuracy delta is not positive).
 - `shrinkage_over_raw_monomial`: Supported limited (paired validation-clean statistics have positive mean and positive bootstrap CI).
 - `global_over_raw_monomial`: Supported limited (paired validation-clean statistics have positive mean and positive bootstrap CI).
-- `optimized_over_raw_monomial`: Supported negative (paired mean accuracy delta is not positive).
+- `optimized_over_raw_monomial`: Supported descriptive (mean delta is positive but confidence interval or fixed-setting support is insufficient).
 - `union_soup_over_greedy_soup`: Supported negative (paired mean accuracy delta is not positive).
 - `monomial_soup_over_greedy_soup`: Supported negative (paired mean accuracy delta is not positive).
 
@@ -301,6 +301,6 @@ Plot: `reports/plots/improved_validated_ladder_delta_vs_greedy.pdf`.
     "torch": "2.12.1",
     "torchvision": "0.27.1"
   },
-  "git_commit": "927ee5e"
+  "git_commit": "e8b6434"
 }
 ```

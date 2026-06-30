@@ -1289,7 +1289,7 @@ def main() -> None:
     parser.add_argument("--widths", default="16,32,64")
     parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--max-train-samples", type=int, default=5000)
-    parser.add_argument("--max-test-samples", type=int, default=1000)
+    parser.add_argument("--max-test-samples", type=int, default=0)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--dataset-seed", type=int, default=8128)
