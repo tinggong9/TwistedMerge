@@ -2,9 +2,9 @@
   "argv": [
     "experiments/twisted_merge_plus_period_index_demo.py"
   ],
-  "commit": "852f1f2",
+  "commit": "27a296a",
   "environment": {
-    "git_commit": "852f1f2",
+    "git_commit": "27a296a",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
