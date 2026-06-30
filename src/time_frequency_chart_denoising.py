@@ -7,6 +7,10 @@ from typing import Mapping
 
 import numpy as np
 
+from .nearest_heisenberg_projection import (
+    HeisenbergProjectionResult,
+    project_to_nearest_finite_heisenberg,
+)
 from .period_index_mining import project_to_nearest_unitary
 from .time_frequency_benchmark import (
     PairedChartSplit,
@@ -30,6 +34,9 @@ DENOISING_METHODS = (
     "complex_unitary_projection",
     "global_chart_synchronization",
     "unitary_global_chart_synchronization",
+    "nearest_heisenberg_projection",
+    "unitary_then_heisenberg_projection",
+    "global_sync_then_heisenberg_projection",
 )
 
 
@@ -55,6 +62,14 @@ class DenoisedChartRecovery:
     unitary_projection_residual: float
     complex_structure_residual: float
     selected_ridge: float | None = None
+    heisenberg_projection: HeisenbergProjectionResult | None = None
+    projection_residual: float = float("nan")
+    projection_residual_threshold: float | None = None
+    projection_accepted: bool | None = None
+    commutator_residual_before_projection: float = float("nan")
+    commutator_residual_after_projection: float = float("nan")
+    exponent_matrix_residual: float = float("nan")
+    heisenberg_projection_decision: str | None = None
     notes: tuple[str, ...] = ()
 
 
@@ -178,6 +193,7 @@ def _pack_recovery(
     unitary_projection_residual: float = float("nan"),
     complex_structure_residual: float | None = None,
     selected_ridge: float | None = None,
+    heisenberg_projection: HeisenbergProjectionResult | None = None,
     notes: tuple[str, ...] = (),
 ) -> DenoisedChartRecovery:
     raw_mean, raw_max = _operator_errors(dataset, raw)
@@ -207,6 +223,24 @@ def _pack_recovery(
             else float(complex_structure_residual)
         ),
         selected_ridge=selected_ridge,
+        heisenberg_projection=heisenberg_projection,
+        projection_residual=(
+            float("nan") if heisenberg_projection is None else heisenberg_projection.projection_residual
+        ),
+        projection_residual_threshold=(
+            None if heisenberg_projection is None else heisenberg_projection.projection_residual_threshold
+        ),
+        projection_accepted=None if heisenberg_projection is None else heisenberg_projection.projection_accepted,
+        commutator_residual_before_projection=(
+            float("nan") if heisenberg_projection is None else heisenberg_projection.commutator_residual_before
+        ),
+        commutator_residual_after_projection=(
+            float("nan") if heisenberg_projection is None else heisenberg_projection.commutator_residual_after
+        ),
+        exponent_matrix_residual=(
+            float("nan") if heisenberg_projection is None else heisenberg_projection.exponent_matrix_residual
+        ),
+        heisenberg_projection_decision=None if heisenberg_projection is None else heisenberg_projection.decision,
         notes=notes,
     )
 
@@ -484,6 +518,120 @@ def fit_unitary_global_chart_synchronization(
         notes=(
             "unitary-projected pairwise maps followed by block spectral synchronization",
             f"cycle residual {sync.cycle_residual_before:.6g} to {sync.cycle_residual_after:.6g}",
+        ),
+    )
+
+
+def fit_nearest_heisenberg_projection(
+    dataset: PairedTimeFrequencyChartDataset,
+    *,
+    projection_residual_threshold: float = 1e-2,
+    ridge: float = 1e-8,
+    generator_names: tuple[str, ...] | None = None,
+    candidate_rank: int | None = None,
+) -> DenoisedChartRecovery:
+    names = _candidate_names(dataset, generator_names)
+    rank = dataset.d**dataset.k if candidate_rank is None else int(candidate_rank)
+    raw = _identity_transitions(dataset, ridge=ridge, generator_names=names)
+    learned = _candidate_generators_from_real(raw)
+    projection = project_to_nearest_finite_heisenberg(
+        learned,
+        expected_d=dataset.d,
+        expected_k=dataset.k,
+        candidate_rank=rank,
+        projection_residual_threshold=projection_residual_threshold,
+        generator_names=names,
+    )
+    denoised = {name: complex_to_real_block_matrix(projection.projected_generators[name]) for name in names}
+    return _pack_recovery(
+        method="nearest_heisenberg_projection",
+        dataset=dataset,
+        raw=raw,
+        denoised=denoised,
+        candidates=projection.projected_generators,
+        heisenberg_projection=projection,
+        selected_ridge=float(ridge),
+        notes=(
+            "commutator-form nearest finite-Heisenberg projection from raw learned maps",
+            f"projection_accepted={projection.projection_accepted}",
+            f"projection_decision={projection.decision}",
+        ),
+    )
+
+
+def fit_unitary_then_heisenberg_projection(
+    dataset: PairedTimeFrequencyChartDataset,
+    *,
+    projection_residual_threshold: float = 1e-2,
+    ridge: float = 1e-8,
+    generator_names: tuple[str, ...] | None = None,
+    candidate_rank: int | None = None,
+) -> DenoisedChartRecovery:
+    names = _candidate_names(dataset, generator_names)
+    rank = dataset.d**dataset.k if candidate_rank is None else int(candidate_rank)
+    raw = _identity_transitions(dataset, ridge=ridge, generator_names=names)
+    unitary = fit_complex_unitary_projection(dataset, ridge=ridge, generator_names=names)
+    projection = project_to_nearest_finite_heisenberg(
+        unitary.candidate_generators,
+        expected_d=dataset.d,
+        expected_k=dataset.k,
+        candidate_rank=rank,
+        projection_residual_threshold=projection_residual_threshold,
+        generator_names=names,
+    )
+    denoised = {name: complex_to_real_block_matrix(projection.projected_generators[name]) for name in names}
+    return _pack_recovery(
+        method="unitary_then_heisenberg_projection",
+        dataset=dataset,
+        raw=raw,
+        denoised=denoised,
+        candidates=projection.projected_generators,
+        unitary_projection_residual=unitary.unitary_projection_residual,
+        heisenberg_projection=projection,
+        selected_ridge=float(ridge),
+        notes=(
+            "complex-unitary projection followed by commutator-form finite-Heisenberg projection",
+            f"projection_accepted={projection.projection_accepted}",
+            f"projection_decision={projection.decision}",
+        ),
+    )
+
+
+def fit_global_sync_then_heisenberg_projection(
+    dataset: PairedTimeFrequencyChartDataset,
+    *,
+    projection_residual_threshold: float = 1e-2,
+    ridge: float = 1e-8,
+    generator_names: tuple[str, ...] | None = None,
+    candidate_rank: int | None = None,
+) -> DenoisedChartRecovery:
+    names = _candidate_names(dataset, generator_names)
+    rank = dataset.d**dataset.k if candidate_rank is None else int(candidate_rank)
+    sync = fit_unitary_global_chart_synchronization(dataset, ridge=ridge, generator_names=names)
+    projection = project_to_nearest_finite_heisenberg(
+        sync.candidate_generators,
+        expected_d=dataset.d,
+        expected_k=dataset.k,
+        candidate_rank=rank,
+        projection_residual_threshold=projection_residual_threshold,
+        generator_names=names,
+    )
+    denoised = {name: complex_to_real_block_matrix(projection.projected_generators[name]) for name in names}
+    return _pack_recovery(
+        method="global_sync_then_heisenberg_projection",
+        dataset=dataset,
+        raw=sync.transition_maps_raw,
+        denoised=denoised,
+        candidates=projection.projected_generators,
+        global_sync_residual=sync.global_sync_residual,
+        unitary_projection_residual=sync.unitary_projection_residual,
+        complex_structure_residual=sync.complex_structure_residual,
+        heisenberg_projection=projection,
+        selected_ridge=float(ridge),
+        notes=(
+            "unitary global synchronization followed by commutator-form finite-Heisenberg projection",
+            f"projection_accepted={projection.projection_accepted}",
+            f"projection_decision={projection.decision}",
         ),
     )
 

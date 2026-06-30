@@ -1,0 +1,85 @@
+{
+  "argv": [
+    "experiments/time_frequency_heisenberg_projection_benchmark.py"
+  ],
+  "calibrated_centrality_tolerance": 0.0003,
+  "calibrated_confidence_margin": 0.25,
+  "calibrated_phase_tolerance": 0.0003,
+  "cases": [
+    {
+      "candidate_ranks": [
+        2,
+        4
+      ],
+      "d": 2,
+      "expected_index": 4,
+      "expected_period": 2,
+      "k": 2
+    },
+    {
+      "candidate_ranks": [
+        3,
+        6,
+        9
+      ],
+      "d": 3,
+      "expected_index": 9,
+      "expected_period": 3,
+      "k": 2
+    }
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/time_frequency_heisenberg_projection_benchmark.py",
+  "commit": "0cf028f",
+  "environment": {
+    "git_commit": "0cf028f",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "methods": [
+    "raw_least_squares",
+    "nearest_unitary_projection",
+    "unitary_global_chart_synchronization",
+    "nearest_heisenberg_projection",
+    "unitary_then_heisenberg_projection",
+    "global_sync_then_heisenberg_projection"
+  ],
+  "negative_controls": true,
+  "noise_levels": [
+    0.0,
+    0.0001,
+    0.0003,
+    0.001,
+    0.003,
+    0.01,
+    0.03,
+    0.05
+  ],
+  "projection_residual_thresholds": [
+    0.0001,
+    0.0003,
+    0.001,
+    0.003,
+    0.01
+  ],
+  "scope": {
+    "canonical_replacement_without_small_residual": "rejected",
+    "mnist_cifar_claim": "not_claimed",
+    "period_divisibility_policy": "index_divisibility_required_for_lift",
+    "projection_method": "heisenberg_projection_projective_morita_lift",
+    "uncertain_lift_policy": "no_lift"
+  },
+  "seed_offset": 0,
+  "seeds": 10,
+  "test_samples": 1000,
+  "train_samples": 2000,
+  "validation_samples": 500
+}
