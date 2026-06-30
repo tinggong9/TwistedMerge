@@ -1,0 +1,73 @@
+\begin{longtable}{p{0.18\linewidth}p{0.12\linewidth}p{0.23\linewidth}lllllll}
+\caption{Full capacity and claim-boundary audit. The CSV contains all claim-boundary text.}\\
+\toprule
+Method & Family & Output & Param & Infer & Diag & Val & Extra & PI & Gate \\
+\midrule
+\endfirsthead
+\toprule
+Method & Family & Output & Param & Infer & Diag & Val & Extra & PI & Gate \\
+\midrule
+\endhead
+weight\_average & core baselines & single merged model & 1x & 1x & no & no & no & no & no \\
+git\_rebasin\_pairwise\_alignment & core baselines & single merged model after pairwise permutation alignment & 1x & 1x & no & no & no & no & no \\
+c2m3\_cycle\_synchronization & core baselines & single merged model after synchronized permutations & 1x & 1x & no & no & no & no & no \\
+greedy\_soup & core baselines & single model produced by validation-selected weight averaging & 1x & 1x & no & yes & no & no & no \\
+ensemble\_upper\_bound & core baselines & ensemble prediction & N x & N x & no & no & yes & no & no \\
+official\_external\_code\_attempt & external baselines & integration status log & 1x & 1x & yes & no & no & no & no \\
+official\_nsd\_smoke & external baselines & external GNN run plus post-hoc cycle diagnostic & 1x & 1x & yes & no & no & no & no \\
+monomial\_raw\_scale & MLP monomial gauges & single merged model after exact positive ReLU gauge & 1x & 1x & no & no & no & no & no \\
+monomial\_shrinkage\_scale & MLP monomial gauges & single merged model after validation-selected shrinkage gauge & 1x & 1x & no & yes & no & no & no \\
+monomial\_global\_scale & MLP monomial gauges & single merged model after global positive-scale synchronization & 1x & 1x & no & yes & no & no & no \\
+monomial\_optimized\_scale & MLP monomial gauges & single merged model after validation grid selection & 1x & 1x & no & yes & no & no & no \\
+monomial\_scaled\_greedy\_soup & MLP soups & single model soup over exact-gauged candidates & 1x & 1x & no & yes & no & no & no \\
+monomial\_shrinkage\_greedy\_soup & MLP soups & single model soup over shrinkage-scaled exact-gauge candidates & 1x & 1x & no & yes & no & no & no \\
+monomial\_global\_greedy\_soup & MLP soups & single model soup over globally synchronized exact-gauge candidates & 1x & 1x & no & yes & no & no & no \\
+monomial\_optimized\_greedy\_soup & MLP soups & single model soup over validation-grid exact-gauge candidates & 1x & 1x & no & yes & no & no & no \\
+union\_candidate\_soup & MLP soups & single model soup over original, C2M3, and monomial candidates & 1x & 1x & no & yes & no & no & no \\
+improved\_validated\_selector & selectors & validation-selected single-model candidate & 1x & 1x & no & yes & no & no & no \\
+greedy\_aware\_selector & selectors & validation-selected single-model candidate with greedy baseline awareness & 1x & 1x & no & yes & no & no & no \\
+greedy\_safe\_selector & selectors & validation-gated selector defaulting to greedy soup & 1x & 1x & no & yes & no & no & no \\
+cnn\_channel\_permutation & CNN channel gauges & single merged no-BatchNorm CNN after channel permutation & 1x & 1x & no & no & no & no & no \\
+cnn\_positive\_channel\_scale & CNN channel gauges & single merged no-BatchNorm CNN after exact positive channel scaling & 1x & 1x & no & no & no & no & no \\
+cnn\_shrinkage\_channel\_scale & CNN channel gauges & single merged no-BatchNorm CNN after validation-selected shrinkage scale & 1x & 1x & no & yes & no & no & no \\
+cnn\_global\_channel\_scale & CNN channel gauges & single merged no-BatchNorm CNN after global channel-scale synchronization & 1x & 1x & no & yes & no & no & no \\
+cnn\_optimized\_channel\_scale & CNN channel gauges & single merged no-BatchNorm CNN after validation grid selection & 1x & 1x & no & yes & no & no & no \\
+cnn\_positive\_channel\_scaled\_soup & CNN soups & single model soup over positive channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+cnn\_shrinkage\_channel\_scaled\_soup & CNN soups & single model soup over shrinkage channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+cnn\_global\_channel\_scaled\_soup & CNN soups & single model soup over globally synchronized channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+cnn\_optimized\_channel\_scaled\_soup & CNN soups & single model soup over validation-optimized channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+cnn\_union\_candidate\_soup & CNN soups & single model soup over original, C2M3, and channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+bridge\_rotated\_mnist\_channel\_sync & bridge datasets & single merged no-BatchNorm CNN after channel synchronization & 1x & 1x & no & no & no & no & no \\
+bridge\_colored\_mnist\_channel\_sync & bridge datasets & single merged no-BatchNorm CNN after channel synchronization & 1x & 1x & no & no & no & no & no \\
+bridge\_channel\_scale\_candidates & bridge datasets & single merged no-BatchNorm CNN channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+bridge\_union\_candidate\_soup & bridge datasets & single model soup over bridge C2M3 and channel-scale candidates & 1x & 1x & no & yes & no & no & no \\
+bridge\_greedy\_safe\_selector & bridge datasets & validation-gated selector defaulting to bridge greedy soup & 1x & 1x & no & yes & no & no & no \\
+cifar\_final\_c2m3\_channel\_sync & CIFAR final & single merged no-BatchNorm CNN after channel synchronization & 1x & 1x & no & no & no & no & no \\
+cifar\_final\_positive\_channel\_scale & CIFAR final & single merged no-BatchNorm CNN after positive channel scaling & 1x & 1x & no & no & no & no & no \\
+cifar\_final\_shrinkage\_channel\_scale & CIFAR final & single merged no-BatchNorm CNN after validation-selected shrinkage scale & 1x & 1x & no & yes & no & no & no \\
+cifar\_final\_global\_channel\_scale & CIFAR final & single merged no-BatchNorm CNN after global channel-scale synchronization & 1x & 1x & no & yes & no & no & no \\
+cifar\_final\_optimized\_channel\_scale & CIFAR final & single merged no-BatchNorm CNN after validation-optimized channel scaling & 1x & 1x & no & yes & no & no & no \\
+cifar\_final\_union\_candidate\_soup & CIFAR final & single model soup over CIFAR baseline and exact-gauge candidates & 1x & 1x & no & yes & no & no & no \\
+cifar\_final\_greedy\_safe\_selector & CIFAR final & validation-gated selector defaulting to greedy soup & 1x & 1x & no & yes & no & no & no \\
+twisted\_rank\_lift\_branch & twisted/branch lifts & branch prediction / extra-capacity lifted representation & q x & q x or branch ensemble proxy & no & no & yes & no & yes \\
+twisted\_merge\_plus\_branch\_selector & twisted/branch lifts & selector over C2M3, edge-outlier, central, and projective cases & 1x & 1x & yes & no & no & no & yes \\
+finite\_index\_projective\_lift & period-index/projective lifts & rank-d projective/direct-sum lift & d x or rank divisible by d & d x proxy & no & no & yes & yes & yes \\
+period\_index\_projective\_morita\_lift & period-index/projective lifts & rank d\textasciicircum{}k projective/Morita lift & index d\textasciicircum{}k x & index d\textasciicircum{}k x proxy & no & no & yes & yes & yes \\
+commutator\_matrix\_detector & period-index diagnostics & diagnostic detector and rank decision & 1x & 1x & yes & no & no & yes & yes \\
+robust\_period\_index\_detector & period-index diagnostics & diagnostic detector with calibrated uncertainty/rejection & 1x & 1x & yes & no & no & yes & yes \\
+time\_frequency\_known\_chart & time-frequency period-index & diagnostic known-operator period/index certification & 1x & 1x & yes & no & no & yes & yes \\
+time\_frequency\_learned\_charts & time-frequency period-index & learned chart diagnostic plus guarded lift decision & 1x & 1x & yes & no & no & yes & yes \\
+denoised\_learned\_chart\_methods & time-frequency period-index & structure-preserving chart denoising diagnostic & 1x & 1x & yes & no & no & yes & yes \\
+nearest\_heisenberg\_projection & time-frequency period-index & projection diagnostic plus residual-gated certification & 1x & 1x & yes & no & no & yes & yes \\
+finite\_index\_residual\_mining & residual mining & diagnostic mining table & 1x & 1x & yes & no & no & yes & yes \\
+structure\_group\_ladder & structure-group diagnostics & diagnostic residual taxonomy over permutation, signed, monomial, GL, and block groups & 1x & 1x & yes & no & no & no & yes \\
+block\_orthogonal\_ladder & block diagnostics & diagnostic block-orthogonal residual analysis & 1x & 1x & yes & no & no & no & yes \\
+global\_block\_synchronization & block diagnostics & diagnostic projected block gauges with connection-residual honesty check & 1x & 1x & yes & no & no & no & yes \\
+optimized\_global\_block\_synchronization & block diagnostics & diagnostic block-gauge optimization & 1x & 1x & yes & no & no & no & yes \\
+learned\_block\_partitions & block diagnostics & diagnostic/validation-selected block partition candidates & 1x & 1x & yes & yes & no & no & yes \\
+block\_compatible\_aligned\_average & block-compatible exact merge & single merged model in exact linear-hidden architecture & 1x & 1x & no & yes & no & no & no \\
+relu\_block\_diagnostic & block diagnostics & diagnostic-only ReLU block residual rows & 1x & 1x & yes & no & no & no & yes \\
+sheaf\_gnn\_cycle\_diagnostic & sheaf/GNN diagnostics & diagnostic GNN/sheaf run and cycle score & 1x & 1x & yes & yes & no & no & no \\
+unified\_quantitative\_obstruction\_chain & meta audit/aggregation & diagnostic aggregate table over existing artifacts & 1x & 1x & yes & no & no & no & no \\
+\bottomrule
+\end{longtable}

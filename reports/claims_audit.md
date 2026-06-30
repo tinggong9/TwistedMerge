@@ -242,6 +242,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | The current paper framing is a mathematical and diagnostic model-merging contribution with limited exact-gauge wins over faithful internal C2M3-style baselines. | Supported synthesis | `reports/results_narrative_after_35791f7.md`, `reports/latex/results_section_after_35791f7.tex`, and `reports/latex/main_claims_table_after_35791f7.tex` synthesize the final CIFAR boundary, bridge expansion, MNIST/Fashion exact-gauge results, residual taxonomy, period-index/time-frequency detectors, block-gauge gate, official-baseline status, and limitations. |
 | The post-35791f7 synthesis supports a broad SOTA, official-baseline, greedy-soup, broad CIFAR, or real-neural Brauer/period-index win. | Not yet supported | The synthesis files explicitly preserve the negative boundaries from the underlying reports: no official external-code metrics were produced, greedy soup remains a boundary baseline, CIFAR exact-gauge effects are descriptive only, and real neural residuals remain non-Brauer/noncentral under tested diagnostics. |
 
+## Full Capacity And Claim-Boundary Audit
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| `full_capacity_claim_audit_created` / authoritative capacity and symmetry registry exists | Supported | `reports/full_capacity_claim_audit.md` and `reports/csv/full_capacity_claim_audit.csv` enumerate current methods and diagnostics with output type, multipliers, exact-symmetry flags, validation-selection status, official-code status, extra-capacity status, residual gates, scopes, and allowed/forbidden paper claims. |
+| `capacity_claim_boundaries_are_explicit` / broad overclaim boundaries are machine-readable | Supported | `reports/csv/full_capacity_claim_audit.csv` records per-row `paper_claim_allowed` and `paper_claim_forbidden` fields, including explicit boundaries for external official code, CIFAR, BatchNorm, ReLU block rotations, period-index lifts, and sheaf/GNN diagnostics. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -315,6 +322,10 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/model_merging_verification_report.md` | Fixed-`N`, repeated-seed MNIST model-merging verification report. |
 | `reports/csv/model_merging_verification.csv` | Per-baseline rows for observed and injected-alignment verification settings. |
 | `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |
+| `experiments/full_capacity_claim_audit.py` | Generates the repository-wide capacity, exact-symmetry, diagnostic, validation-selection, official-code, extra-capacity, residual-gate, and claim-boundary registry. |
+| `reports/full_capacity_claim_audit.md` | Markdown report rendering the full capacity and claim-boundary audit. |
+| `reports/csv/full_capacity_claim_audit.csv` | Authoritative full-width capacity and claim-boundary table. |
+| `reports/tables/full_capacity_claim_audit.tex` | LaTeX longtable rendering of the audit. |
 | `reports/cifar_bridge_boundary_summary.md` | Concise CIFAR/bridge appendix summary covering the failed CIFAR gate, bounded rescue, final confirmatory run, exact-gauge descriptiveness, greedy-soup boundary, and bridge-only limitations. |
 | `reports/latex/cifar_bridge_appendix.tex` | LaTeX appendix section and compact table for CIFAR and bridge boundary evidence. |
 | `reports/external_integration_summary.md` | Reproducibility appendix summary for official Git Re-Basin, C2M3, Model Soups, and Neural Sheaf Diffusion integration attempts, blockers, surrogates, and claim boundaries. |
