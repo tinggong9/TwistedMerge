@@ -1,0 +1,26 @@
+\section*{Noncentral Holonomy Versus Brauer-Type Projective Twists}
+
+Central/projective obstructions and noncentral nonabelian holonomy are different
+phenomena.  A Brauer-type or projective torsion diagnostic is looking for a
+central scalar residual, for example a commutator equal to a root of unity times
+the identity.  A permutation-valued residual can instead be noncentral inside
+the generated permutation group.  Such a residual may obstruct naive descent or
+synchronization, but it is not by itself a scalar Brauer/projective class.
+
+\paragraph{Example.}
+In \(S_3\), let \(p=(12)\) and \(q=(23)\).  The commutator
+\([p,q]=p q p^{-1}q^{-1}\) is a nontrivial 3-cycle.  Since the center of
+\(S_3\) is trivial, this 3-cycle is not central in \(S_3\).  Therefore this
+obstruction is a noncentral permutation holonomy example, not a scalar
+Brauer/projective class.
+
+Pure permutation synchronization, as in C2M3-style alignment, is an untwisted
+or nonabelian gauge-synchronization problem.  TwistedMerge++ extends this by
+testing whether the residual descends to a central scalar torsion class after
+the structure group has been enlarged to signed, phase, monomial, block, or
+projective gauges.
+
+Failure to find finite-index scalar residuals in permutation alignments does
+not mean all obstruction theory is trivial.  It means that the detected
+residuals are noncentral in the chosen structure group, or that a larger
+structure group must be tested before making Brauer/projective claims.
