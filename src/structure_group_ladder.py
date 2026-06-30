@@ -14,6 +14,7 @@ from typing import Mapping
 
 import numpy as np
 
+from .block_gauge_alignment import estimate_block_orthogonal_alignments
 from .finite_index_twists import determinant_obstruction_allows
 from .model_merging_benchmark import (
     activation_permutation,
@@ -367,11 +368,13 @@ class StructureGroupLadderMerge:
         centrality_tolerance: float = 1e-6,
         phase_tolerance: float = 1e-6,
         c2m3_tolerance: float = 1e-8,
+        block_size: int | None = None,
     ):
         self.max_order = int(max_order)
         self.centrality_tolerance = float(centrality_tolerance)
         self.phase_tolerance = float(phase_tolerance)
         self.c2m3_tolerance = float(c2m3_tolerance)
+        self.block_size = None if block_size is None else int(block_size)
 
     def run(
         self,
@@ -437,6 +440,15 @@ class StructureGroupLadderMerge:
                 "monomial_phase_or_scale",
                 estimate_monomial_alignments_from_activations(perms, activations, n_models, width, mode="signed_scale"),
             )
+            if self.block_size is not None:
+                block_maps, _stats = estimate_block_orthogonal_alignments(
+                    perms,
+                    activations,
+                    n_models,
+                    width,
+                    self.block_size,
+                )
+                level_inputs.setdefault("block_orthogonal", block_maps)
             level_inputs.setdefault(
                 "low_rank_GL",
                 estimate_gl_alignments_from_activations(activations, n_models, width),
@@ -562,13 +574,20 @@ class StructureGroupLadderMerge:
 
         if level == "block_orthogonal":
             improved = previous is not None and np.isfinite(previous.centrality_score) and centrality < previous.centrality_score
-            if cycle_score <= self.c2m3_tolerance or improved:
+            if finite_candidate:
+                residual_type = "central_projective_after_block"
+                resolution = "central_projective_diagnostic"
+                supports = True
+                notes.append("block-orthogonal defect is scalar/root-of-unity; diagnostic only unless a valid lift is separately implemented")
+            elif cycle_score <= self.c2m3_tolerance or improved:
                 residual_type = "block_gauge_reduces_residual"
                 resolution = "block_orthogonal_diagnostic"
-                notes.append("synthetic block-orthogonal diagnostic only; no real-model merge improvement is claimed")
+                notes.append("block-orthogonal feature-space diagnostic only; no ReLU model merge improvement is claimed")
+                supports = False
             else:
                 residual_type = "block_noncentral_holonomy"
                 resolution = "report_noncentral_holonomy"
+                supports = False
             return _diag(
                 level=level,
                 residual_type=residual_type,
@@ -580,8 +599,8 @@ class StructureGroupLadderMerge:
                 selected_resolution=resolution,
                 notes=notes,
                 previous=previous,
-                supports_brauer_projective_interpretation=False,
-                is_finite_index_candidate=False,
+                supports_brauer_projective_interpretation=supports,
+                is_finite_index_candidate=finite_candidate,
             )
 
         if level == "low_rank_GL":
@@ -634,7 +653,7 @@ class StructureGroupLadderMerge:
             if diag.residual_type == "finite_index_projective_obstructed":
                 return diag.selected_resolution, diag.level, ["central finite-index residual was detected, but the candidate rank is obstructed"]
         for diag in diagnostics:
-            if diag.residual_type in {"central_mu2_candidate", "central_root_of_unity_candidate"}:
+            if diag.residual_type in {"central_mu2_candidate", "central_root_of_unity_candidate", "central_projective_after_block"}:
                 return diag.selected_resolution, diag.level, ["central residual detected, but this is diagnostic unless a merge is evaluated"]
         for diag in diagnostics:
             if diag.residual_type in {"block_gauge_reduces_residual", "gl_reduces_residual"}:
