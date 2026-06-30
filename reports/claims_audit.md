@@ -15,6 +15,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | The planted-obstruction benchmark uses functionally equivalent MNIST MLP copies before merging. | Supported | `reports/planted_obstruction_model_merging_report.md` reports mean base accuracy `0.8632`, max copy accuracy std `0`, and max logit disagreement about `2.9e-6`. |
 | In the planted central `mu_2` alignment-observation benchmark, planted cycle score predicts pairwise Git-ReBasin merge degradation. | Supported descriptive | `reports/csv/planted_obstruction_stats.csv` reports central `git_rebasin_pairwise` Spearman `0.8741` and monotone mean degradation `0.0000 -> 0.0031 -> 0.0149 -> 0.0387`. |
 | Cycle-consistent synchronization fixes the one-edge planted inconsistency in the planted benchmark. | Supported descriptive | `reports/csv/planted_obstruction_stats.csv` reports C2M3 high-defect degradation `0.0000` for both central and random planted families. |
+| TwistedMerge++ contains C2M3-style synchronization as the trivial/resolved-residual case. | Supported | `tests/test_twisted_merge_plus.py` checks zero defects select `untwisted_c2m3`; `reports/twisted_merge_plus_report.md` shows C2M3 selected for a C2M3-fixable one-edge permutation outlier. |
+| TwistedMerge++ distinguishes C2M3-fixable permutation noise from central/twist residuals. | Supported | `tests/test_twisted_merge_plus.py` checks one-edge permutation noise is classified as `edge_outlier_or_noise`, while the finite sign residual is classified as `central_coboundary`. |
+| TwistedMerge++ activates lifted maps only for finite central coboundary residuals in the current demo/tests. | Supported | `tests/test_twisted_merge_plus.py` checks the central coboundary case builds nontrivial `rho(beta_ij) tensor G_ij` maps and random/noncentral plus nonzero-H2 cases do not build lifted maps. |
 
 ## Not Yet Supported
 
@@ -30,6 +33,10 @@ This file tracks which claims are supported by current repository artifacts and 
 | The planted obstruction score generally predicts every kind of model-merging degradation. | Not yet supported | In `reports/planted_obstruction_model_merging_report.md`, weight averaging is constant across planted levels because it does not use alignments, and the random noncentral Git-ReBasin trend is weaker than the central trend. |
 | TwistedMerge/rank-lifted branching adds benefit beyond C2M3 in the planted model-merging benchmark. | Not yet supported | `reports/csv/planted_obstruction_stats.csv` reports rank-lift accuracy delta versus C2M3 is `0.0000` for central and random planted families. |
 | Rank-lift helps only when the planted defect is central/twist-like in the model-merging benchmark. | Not yet supported | The planted benchmark shows no rank-lift gain beyond C2M3 for either central or random defects, so central selectivity is not established. |
+| TwistedMerge++ beats C2M3 on real MNIST/CIFAR model merging. | Not yet supported | `reports/twisted_merge_plus_report.md` is a synthetic selector sanity check, not a real MNIST/CIFAR benchmark. |
+| TwistedMerge++ solves natural model merging. | Not yet supported | The current TwistedMerge++ artifacts test residual classification and selection logic only. Natural MNIST/CIFAR claims remain governed by `reports/model_merging_verification_report.md`. |
+| TwistedMerge++ trivializes a nonzero `H^2(mu_2)` class as an ordinary vector bundle. | Not yet supported | `tests/test_twisted_merge_plus.py` and `reports/twisted_merge_plus_report.md` label the nonzero tetrahedral class as branch-only extra-capacity behavior, not ordinary untwisted descent. |
+| TwistedMerge++ rank-lift gives a capacity-matched single-model improvement. | Not yet supported | The branch path is explicitly labeled `branch_lift_extra_capacity`; no capacity-matched single-model comparison has been run. |
 
 ## Current Artifact Map
 
@@ -46,3 +53,8 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/planted_obstruction_model_merging_report.md` | Causally planted cycle-obstruction model-merging report using exact hidden-permutation MNIST MLP copies. |
 | `reports/csv/planted_obstruction_model_merging.csv` | Per-seed planted central/random obstruction benchmark rows. |
 | `reports/csv/planted_obstruction_stats.csv` | Trend and method-delta statistics for the planted obstruction benchmark. |
+| `src/twisted_merge_plus.py` | TwistedMerge++ residual classifier and merge selector prototype. |
+| `tests/test_twisted_merge_plus.py` | Regression tests for TwistedMerge++ classifications and lifted-map activation. |
+| `experiments/twisted_merge_plus_demo.py` | Fast synthetic demo/report generator for TwistedMerge++. |
+| `reports/twisted_merge_plus_report.md` | TwistedMerge++ verification report with scenario table and negative-result boundaries. |
+| `reports/csv/twisted_merge_plus_demo.csv` | Per-scenario TwistedMerge++ selector diagnostics. |
