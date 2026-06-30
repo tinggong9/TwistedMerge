@@ -78,6 +78,86 @@ class TimeFrequencyDataset:
         return 2 * self.dimension_complex
 
 
+@dataclass(frozen=True)
+class PairedChartSplit:
+    split: str
+    d: int
+    k: int
+    chart_names: tuple[str, ...]
+    chart_operators: dict[str, np.ndarray]
+    base_x_complex: np.ndarray
+    base_x: np.ndarray
+    labels: np.ndarray
+    sample_ids: np.ndarray
+    chart_ids: np.ndarray
+    charted_x_complex: np.ndarray
+    charted_x: np.ndarray
+
+    @property
+    def n_samples(self) -> int:
+        return int(self.base_x.shape[0])
+
+    @property
+    def chart_count(self) -> int:
+        return len(self.chart_names)
+
+    @property
+    def dimension_complex(self) -> int:
+        return int(self.d**self.k)
+
+    @property
+    def dimension_real(self) -> int:
+        return 2 * self.dimension_complex
+
+    def chart_rows(self, chart_name: str) -> np.ndarray:
+        if chart_name not in self.chart_names:
+            raise KeyError(f"unknown chart name: {chart_name}")
+        chart_id = self.chart_names.index(chart_name)
+        return self.charted_x[self.chart_ids == chart_id]
+
+    def chart_rows_complex(self, chart_name: str) -> np.ndarray:
+        if chart_name not in self.chart_names:
+            raise KeyError(f"unknown chart name: {chart_name}")
+        chart_id = self.chart_names.index(chart_name)
+        return self.charted_x_complex[self.chart_ids == chart_id]
+
+    def chart_sample_ids(self, chart_name: str) -> np.ndarray:
+        if chart_name not in self.chart_names:
+            raise KeyError(f"unknown chart name: {chart_name}")
+        chart_id = self.chart_names.index(chart_name)
+        return self.sample_ids[self.chart_ids == chart_id]
+
+
+@dataclass(frozen=True)
+class PairedTimeFrequencyChartDataset:
+    d: int
+    k: int
+    n_classes: int
+    noise_level: float
+    seed: int
+    chart_names: tuple[str, ...]
+    chart_operators: dict[str, np.ndarray]
+    train: PairedChartSplit
+    validation: PairedChartSplit
+    test: PairedChartSplit
+    scope_note: str = (
+        "paired chart dataset for learned recovery; labels are invariant "
+        "prototype identities and chart maps are finite time-frequency operators"
+    )
+
+    @property
+    def dimension_complex(self) -> int:
+        return int(self.d**self.k)
+
+    @property
+    def dimension_real(self) -> int:
+        return 2 * self.dimension_complex
+
+    @property
+    def chart_count(self) -> int:
+        return len(self.chart_names)
+
+
 def primitive_time_frequency_root(d: int) -> complex:
     if d <= 0:
         raise ValueError("d must be positive")
@@ -187,6 +267,36 @@ def time_frequency_chart_operators(d: int, k: int) -> dict[str, np.ndarray]:
         charts[f"M{idx + 1}"] = system.M[idx]
         charts[f"T{idx + 1}M{idx + 1}"] = system.T[idx] @ system.M[idx]
     return charts
+
+
+def time_frequency_generator_chart_names(k: int) -> tuple[str, ...]:
+    if k <= 0:
+        raise ValueError("k must be positive")
+    names: list[str] = []
+    for idx in range(k):
+        names.extend([f"T{idx + 1}", f"M{idx + 1}"])
+    return tuple(names)
+
+
+def learned_chart_operator_names(k: int, *, include_products: bool = False) -> tuple[str, ...]:
+    if k <= 0:
+        raise ValueError("k must be positive")
+    names: list[str] = ["I"]
+    for idx in range(k):
+        names.extend([f"T{idx + 1}", f"M{idx + 1}"])
+        if include_products:
+            names.append(f"T{idx + 1}M{idx + 1}")
+    return tuple(names)
+
+
+def paired_chart_operators(
+    d: int,
+    k: int,
+    *,
+    include_products: bool = False,
+) -> dict[str, np.ndarray]:
+    all_charts = time_frequency_chart_operators(d, k)
+    return {name: all_charts[name] for name in learned_chart_operator_names(k, include_products=include_products)}
 
 
 def _relative_residual(left: np.ndarray, right: np.ndarray) -> float:
@@ -373,6 +483,126 @@ def generate_time_frequency_dataset(
         test_x_complex=test_x_complex,
         test_x=complex_vector_to_real(test_x_complex),
         test_y=test_y,
+    )
+
+
+def _make_paired_chart_split(
+    *,
+    split: str,
+    d: int,
+    k: int,
+    base_x_complex: np.ndarray,
+    labels: np.ndarray,
+    chart_operators: dict[str, np.ndarray],
+    chart_noise_level: float,
+    rng: np.random.Generator,
+) -> PairedChartSplit:
+    chart_names = tuple(chart_operators)
+    charted_complex: list[np.ndarray] = []
+    charted_real: list[np.ndarray] = []
+    chart_ids: list[int] = []
+    sample_ids: list[int] = []
+    for sample_id, base_signal in enumerate(base_x_complex):
+        for chart_id, chart_name in enumerate(chart_names):
+            signal = np.asarray(chart_operators[chart_name], dtype=complex) @ np.asarray(base_signal, dtype=complex)
+            if chart_noise_level > 0:
+                noise = rng.normal(size=signal.shape) + 1j * rng.normal(size=signal.shape)
+                signal = signal + (float(chart_noise_level) / np.sqrt(2.0)) * noise
+            charted_complex.append(signal)
+            charted_real.append(complex_vector_to_real(signal))
+            chart_ids.append(chart_id)
+            sample_ids.append(sample_id)
+    return PairedChartSplit(
+        split=split,
+        d=d,
+        k=k,
+        chart_names=chart_names,
+        chart_operators={name: np.asarray(matrix, dtype=complex) for name, matrix in chart_operators.items()},
+        base_x_complex=np.asarray(base_x_complex, dtype=complex),
+        base_x=complex_vector_to_real(np.asarray(base_x_complex, dtype=complex)),
+        labels=np.asarray(labels, dtype=int),
+        sample_ids=np.asarray(sample_ids, dtype=int),
+        chart_ids=np.asarray(chart_ids, dtype=int),
+        charted_x_complex=np.asarray(charted_complex, dtype=complex),
+        charted_x=np.asarray(charted_real, dtype=float),
+    )
+
+
+def generate_paired_time_frequency_chart_dataset(
+    d: int,
+    k: int,
+    *,
+    n_classes: int = 3,
+    train_samples: int = 2000,
+    validation_samples: int = 500,
+    test_samples: int = 1000,
+    noise_level: float = 0.0,
+    seed: int = 0,
+    include_products: bool = False,
+    base_noise_level: float = 0.0,
+) -> PairedTimeFrequencyChartDataset:
+    """Generate paired finite time-frequency chart observations.
+
+    The base sample is drawn once and every chart observes the same sample id as
+    ``x_c = G_c x``.  ``noise_level`` is independent chart-observation noise;
+    ``base_noise_level`` controls the underlying nuisance-signal noise.
+    """
+
+    if noise_level < 0 or base_noise_level < 0:
+        raise ValueError("noise levels must be nonnegative")
+    base = generate_time_frequency_dataset(
+        d,
+        k,
+        n_classes=n_classes,
+        train_samples=train_samples,
+        validation_samples=validation_samples,
+        test_samples=test_samples,
+        noise_level=base_noise_level,
+        seed=seed,
+    )
+    chart_operators = paired_chart_operators(d, k, include_products=include_products)
+    rng = np.random.default_rng(900000 + 1009 * int(seed) + 37 * d + 101 * k)
+    train = _make_paired_chart_split(
+        split="train",
+        d=d,
+        k=k,
+        base_x_complex=base.train_x_complex,
+        labels=base.train_y,
+        chart_operators=chart_operators,
+        chart_noise_level=noise_level,
+        rng=rng,
+    )
+    validation = _make_paired_chart_split(
+        split="validation",
+        d=d,
+        k=k,
+        base_x_complex=base.validation_x_complex,
+        labels=base.validation_y,
+        chart_operators=chart_operators,
+        chart_noise_level=noise_level,
+        rng=rng,
+    )
+    test = _make_paired_chart_split(
+        split="test",
+        d=d,
+        k=k,
+        base_x_complex=base.test_x_complex,
+        labels=base.test_y,
+        chart_operators=chart_operators,
+        chart_noise_level=noise_level,
+        rng=rng,
+    )
+    return PairedTimeFrequencyChartDataset(
+        d=d,
+        k=k,
+        n_classes=n_classes,
+        noise_level=float(noise_level),
+        seed=int(seed),
+        chart_names=tuple(chart_operators),
+        chart_operators=chart_operators,
+        train=train,
+        validation=validation,
+        test=test,
     )
 
 
