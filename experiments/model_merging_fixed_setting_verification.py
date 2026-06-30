@@ -78,6 +78,7 @@ REAL_OBSTRUCTION_TRIANGLES_CSV = "real_obstruction_triangle_defects.csv"
 REAL_OBSTRUCTION_INDIVIDUALS_CSV = "real_obstruction_individual_models.csv"
 REAL_OBSTRUCTION_PAIRED_DELTAS_CSV = "real_obstruction_paired_deltas.csv"
 REAL_OBSTRUCTION_REGRESSIONS_CSV = "real_obstruction_predictor_regressions.csv"
+OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV = "obstruction_predictor_target_stats.csv"
 MONOMIAL_RUNS_CSV = "monomial_fixed_setting_runs.csv"
 MONOMIAL_TRIANGLES_CSV = "monomial_triangle_defects.csv"
 BRANCH_CAPACITY_BASELINES = (
@@ -1684,6 +1685,55 @@ def plot_delta_methods(runs: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
+def plot_obstruction_predictor_target_grid(regressions: pd.DataFrame, path: Path) -> None:
+    import matplotlib.pyplot as plt
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(10.5, 6.2))
+    observed = regressions[regressions.get("alignment_source", "") == "observed"].copy() if not regressions.empty else pd.DataFrame()
+    if observed.empty:
+        ax.text(0.5, 0.5, "No observed predictor-target regression rows", ha="center", va="center")
+        ax.set_axis_off()
+    else:
+        observed["predictor_beta"] = pd.to_numeric(observed["predictor_beta"], errors="coerce")
+        pivot = (
+            observed.groupby(["outcome", "predictor"], dropna=False)["predictor_beta"]
+            .mean()
+            .unstack("predictor")
+            .reindex(index=list(PREDICTION_TARGETS), columns=list(REGRESSION_PREDICTORS))
+        )
+        values = pivot.to_numpy(dtype=float)
+        finite = values[np.isfinite(values)]
+        if finite.size:
+            vmax = max(float(np.max(np.abs(finite))), 1e-12)
+            image = ax.imshow(values, cmap="coolwarm", vmin=-vmax, vmax=vmax, aspect="auto")
+            fig.colorbar(image, ax=ax, fraction=0.032, pad=0.02, label="predictor coefficient")
+        else:
+            values = np.zeros_like(values, dtype=float)
+            image = ax.imshow(values, cmap="Greys", vmin=0.0, vmax=1.0, aspect="auto")
+            ax.text(0.5, 0.5, "No finite regression coefficients", ha="center", va="center", transform=ax.transAxes)
+        supported = {
+            (str(row.outcome), str(row.predictor))
+            for row in observed.itertuples()
+            if bool(getattr(row, "claim_supported", False))
+        }
+        for y_idx, outcome in enumerate(pivot.index):
+            for x_idx, predictor in enumerate(pivot.columns):
+                if (str(outcome), str(predictor)) in supported:
+                    ax.text(x_idx, y_idx, "*", ha="center", va="center", color="black", fontsize=14, fontweight="bold")
+        ax.set_xticks(np.arange(len(pivot.columns)))
+        ax.set_xticklabels(pivot.columns, rotation=35, ha="right", fontsize=8)
+        ax.set_yticks(np.arange(len(pivot.index)))
+        ax.set_yticklabels(pivot.index, fontsize=7)
+        ax.set_title("Observed obstruction predictor coefficients by target")
+        ax.set_xlabel("Predictor")
+        ax.set_ylabel("Target")
+        ax.grid(False)
+    fig.tight_layout()
+    fig.savefig(path)
+    plt.close(fig)
+
+
 def target_prediction_summary(regressions: pd.DataFrame) -> str:
     if regressions.empty:
         return "No regression rows were produced, so no obstruction target is supported."
@@ -1706,6 +1756,77 @@ def target_prediction_summary(regressions: pd.DataFrame) -> str:
     elif not raw_supported:
         lines.append("Raw weight-average prediction is not supported in this run.")
     return "\n".join(lines)
+
+
+def predictor_target_recommendation(regressions: pd.DataFrame) -> str:
+    if regressions.empty:
+        return "No predictor-target regressions were produced. Keep the real experiment framed as a negative boundary until repeated-seed rows exist."
+    observed = regressions[regressions["alignment_source"] == "observed"].copy()
+    supported = observed[observed["claim_supported"] == True].copy()  # noqa: E712
+    if supported.empty:
+        return (
+            "No target is supported by the observed bootstrap gate. Keep the real experiment as a negative boundary "
+            "and do not claim raw weight-average prediction or alignment-conditioned prediction from this run."
+        )
+    raw_supported = any(supported["outcome"] == "weight_average_degradation_vs_best_single")
+    alignment_supported = any(supported["outcome_family"] == "alignment_conditioned")
+    if alignment_supported and not raw_supported:
+        return (
+            "Only alignment-conditioned targets are supported. Do not claim raw weight-average prediction; frame the "
+            "diagnostic as useful after conditioning on alignment-aware targets."
+        )
+    if raw_supported:
+        return "At least one raw weight-average target is supported by the observed bootstrap gate."
+    return "Supported targets are secondary/non-raw targets; keep the raw weight-average boundary explicit."
+
+
+def write_obstruction_predictor_target_report(args, regressions: pd.DataFrame, report_path: Path) -> None:
+    observed = regressions[regressions["alignment_source"] == "observed"].copy() if not regressions.empty else pd.DataFrame()
+    injected = regressions[regressions["alignment_source"] != "observed"].copy() if not regressions.empty else pd.DataFrame()
+    supported = observed[observed["claim_supported"] == True].copy() if not observed.empty else pd.DataFrame()  # noqa: E712
+    report = f"""# Obstruction Predictor Target Diagnostics
+
+Generated by `experiments/model_merging_fixed_setting_verification.py`.
+
+## Exact Command
+
+```bash
+{args.command_string}
+```
+
+## Scope
+
+- This report asks which obstruction statistic predicts which target, if any.
+- Support is assigned only for observed alignment rows with at least 20 paired seeds and a positive bootstrap lower bound for the predictor coefficient.
+- Injected-noise rows remain diagnostic controls only and are never primary evidence.
+- Alignment-conditioned targets are separated from raw weight-average degradation so the paper does not overclaim raw merge prediction.
+
+## Outputs
+
+- `reports/csv/{OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV}`
+- `reports/plots/obstruction_predictor_target_grid.pdf`
+- `reports/obstruction_predictor_target_report.md`
+
+## Which target does the obstruction predict?
+
+{target_prediction_summary(regressions)}
+
+{predictor_target_recommendation(regressions)}
+
+## Supported Observed Rows
+
+{md_table(supported, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "outcome", "predictor", "n_rows", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "claim_status"], 60)}
+
+## Observed Predictor-Target Rows
+
+{md_table(observed, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "outcome", "outcome_family", "predictor", "n_rows", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "claim_status"], 80)}
+
+## Injected-Noise Diagnostics
+
+{md_table(injected, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "alignment_noise_fraction", "outcome", "predictor", "n_rows", "claim_status"], 40)}
+"""
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(report, encoding="utf-8")
 
 
 def write_report(
@@ -1734,10 +1855,10 @@ def write_report(
     default_command = (
         ".venv/bin/python experiments/model_merging_fixed_setting_verification.py "
         "--datasets mnist,fashion_mnist --architecture mlp2 --model-counts 3,4 --widths 128 "
-        "--domain-shifts none --seeds 2000:2029 --epochs 10 --max-train-samples 10000 "
+        "--domain-shifts none,input_noise --seeds 2000:2029 --epochs 10 --max-train-samples 10000 "
         "--max-test-samples 5000 --batch-size 128 --lr 0.001 --optimizer adamw "
-        "--scheduler cosine --weight-decay 0.0001 --device cpu --matching activation "
-        "--bootstrap-samples 5000 --alignment-noise-levels 0.15"
+        "--scheduler cosine --weight-decay 0.0001 --device auto --matching activation "
+        "--bootstrap-samples 5000 --alignment-noise-levels 0.15 --save-checkpoints"
     )
     claim_text = (
         "At least one fixed observed setting passes the correlation gate."
@@ -1782,6 +1903,9 @@ The intended full repeated-seed protocol is documented here and is not run autom
 - `reports/csv/{REAL_OBSTRUCTION_INDIVIDUALS_CSV}`
 - `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}`
 - `reports/csv/{REAL_OBSTRUCTION_REGRESSIONS_CSV}`
+- `reports/csv/{OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV}`
+- `reports/obstruction_predictor_target_report.md`
+- `reports/plots/obstruction_predictor_target_grid.pdf`
 - `reports/plots/fixed_setting_cycle_vs_degradation.pdf`
 - `reports/plots/fixed_setting_by_N_width.pdf`
 - `reports/plots/fixed_setting_delta_methods.pdf`
@@ -2262,6 +2386,7 @@ def main() -> None:
     individuals_path = csv_dir / INDIVIDUALS_CSV
     paired_deltas_path = csv_dir / REAL_OBSTRUCTION_PAIRED_DELTAS_CSV
     regressions_path = csv_dir / REAL_OBSTRUCTION_REGRESSIONS_CSV
+    predictor_target_path = csv_dir / OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV
     monomial_runs_path = csv_dir / MONOMIAL_RUNS_CSV
     monomial_triangles_path = csv_dir / MONOMIAL_TRIANGLES_CSV
     runs.to_csv(runs_path, index=False, lineterminator="\n")
@@ -2270,6 +2395,7 @@ def main() -> None:
     individuals.to_csv(individuals_path, index=False, lineterminator="\n")
     paired_deltas.to_csv(paired_deltas_path, index=False, lineterminator="\n")
     regressions.to_csv(regressions_path, index=False, lineterminator="\n")
+    regressions.to_csv(predictor_target_path, index=False, lineterminator="\n")
     monomial_runs.to_csv(monomial_runs_path, index=False, lineterminator="\n")
     monomial_triangles.to_csv(monomial_triangles_path, index=False, lineterminator="\n")
     runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
@@ -2280,6 +2406,7 @@ def main() -> None:
     plot_cycle_vs_degradation(runs, plot_dir / "fixed_setting_cycle_vs_degradation.pdf")
     plot_by_n_width(stats, plot_dir / "fixed_setting_by_N_width.pdf")
     plot_delta_methods(runs, plot_dir / "fixed_setting_delta_methods.pdf")
+    plot_obstruction_predictor_target_grid(regressions, plot_dir / "obstruction_predictor_target_grid.pdf")
     write_report(
         args,
         runs,
@@ -2309,6 +2436,11 @@ def main() -> None:
         regressions,
         args.reports_dir / "fixed_setting_full_run_interpretation.md",
     )
+    write_obstruction_predictor_target_report(
+        args,
+        regressions,
+        args.reports_dir / "obstruction_predictor_target_report.md",
+    )
     write_monomial_report(
         args,
         runs,
@@ -2332,11 +2464,13 @@ def main() -> None:
     print(f"wrote {individuals_path}")
     print(f"wrote {paired_deltas_path}")
     print(f"wrote {regressions_path}")
+    print(f"wrote {predictor_target_path}")
     print(f"wrote {monomial_runs_path}")
     print(f"wrote {monomial_triangles_path}")
     print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
     print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
     print(f"wrote {args.reports_dir / 'fixed_setting_full_run_interpretation.md'}")
+    print(f"wrote {args.reports_dir / 'obstruction_predictor_target_report.md'}")
     print(f"wrote {args.reports_dir / 'monomial_gauge_alignment_report.md'}")
 
 

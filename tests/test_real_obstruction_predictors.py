@@ -7,6 +7,7 @@ from experiments.model_merging_fixed_setting_verification import (
     PREDICTION_TARGETS,
     add_paired_deltas,
     compute_predictor_regressions,
+    predictor_target_recommendation,
     triangle_predictor_summary,
 )
 
@@ -93,6 +94,23 @@ class RealObstructionPredictorTests(unittest.TestCase):
         self.assertGreater(match["predictor_beta"], 0.0)
         self.assertEqual(match["claim_status"], "supported_positive_predictor_coefficient")
         self.assertTrue(match["claim_supported"])
+
+    def test_predictor_target_recommendation_keeps_negative_boundary(self):
+        regressions = pd.DataFrame(
+            [
+                {
+                    "alignment_source": "observed",
+                    "claim_supported": False,
+                    "outcome": "weight_average_degradation_vs_best_single",
+                    "outcome_family": "raw_weight_average",
+                }
+            ]
+        )
+
+        text = predictor_target_recommendation(regressions)
+
+        self.assertIn("No target is supported", text)
+        self.assertIn("negative boundary", text)
 
 
 if __name__ == "__main__":
