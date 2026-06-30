@@ -5,7 +5,7 @@ permutation synchronization already used in the model-merging benchmark.  It
 does not claim that every failed synchronization is a twist: it first checks
 whether C2M3 explains the observations, then separates edge noise,
 central-coboundary mu_2 residuals, central non-coboundary candidates, and
-random/noncentral residuals.
+period-index central projective candidates, and random/noncentral residuals.
 """
 
 from __future__ import annotations
@@ -32,6 +32,8 @@ from .model_merging_benchmark import (
     permutation_matrix,
     synchronize_permutations,
 )
+from .period_index_central import direct_sum_lift as direct_sum_period_index_lift
+from .period_index_detector import PeriodIndexDetection, detect_period_index_structure
 from .simplicial_mu2 import Face, canonical_face, is_coboundary_mu2, tetrahedral_sphere
 from .twisted_merge_algorithm import (
     lift_mu2_transition,
@@ -96,6 +98,7 @@ class ResidualDiagnostics:
     recommended_min_lift_rank: int | None = None
     determinant_obstruction_allows: bool | None = None
     finite_index_lift_residual: float | None = None
+    period_index: PeriodIndexDetection | None = None
     notes: tuple[str, ...] = ()
 
 
@@ -109,6 +112,7 @@ class TwistedMergePlusResult:
     lifted_transition_maps: dict[IndexPair, Alignment]
     edge_central_signs: dict[IndexPair, int] | None
     finite_index_lift: tuple[np.ndarray, np.ndarray] | None = None
+    period_index_lift: object | None = None
     metrics: dict[str, dict[str, float]] = field(default_factory=dict)
     notes: tuple[str, ...] = ()
 
@@ -385,6 +389,8 @@ class TwistedMergePlus:
         candidate_lift_rank: int | None = None,
         max_root_order: int | None = None,
         finite_index_tolerance: float | None = None,
+        period_index_generators: Mapping[str, np.ndarray] | None = None,
+        enable_period_index_detection: bool = True,
     ) -> TwistedMergePlusResult:
         actual_width = _infer_width(pairwise_alignments, width)
         actual_candidate_lift_rank = actual_width if candidate_lift_rank is None else int(candidate_lift_rank)
@@ -440,6 +446,15 @@ class TwistedMergePlus:
             actual_max_root_order,
             actual_finite_index_tolerance,
         )
+        period_index: PeriodIndexDetection | None = None
+        if enable_period_index_detection and period_index_generators is not None:
+            period_index = detect_period_index_structure(
+                period_index_generators,
+                actual_candidate_lift_rank,
+                max_root_order=actual_max_root_order,
+                centrality_tolerance=actual_finite_index_tolerance,
+                phase_tolerance=actual_finite_index_tolerance,
+            )
 
         if known_alpha is not None:
             alpha_coboundary = _alpha_is_coboundary(known_alpha, n_models, actual_triples)
@@ -470,6 +485,22 @@ class TwistedMergePlus:
         ):
             classification = "edge_outlier_or_noise"
             is_coboundary = None
+        elif period_index is not None and period_index.decision == "period_index_lift_success":
+            classification = "central_period_index_lift"
+            notes.extend(period_index.notes)
+            notes.append("Period-index detector requires index divisibility and the candidate rank passes.")
+        elif period_index is not None and period_index.decision == "period_divisible_index_obstructed":
+            classification = "period_divisible_index_obstructed"
+            notes.extend(period_index.notes)
+            notes.append("Period divisibility alone is insufficient for the period-index lift.")
+        elif period_index is not None and period_index.decision == "central_projective_index_unknown":
+            classification = "central_projective_index_unknown"
+            notes.extend(period_index.notes)
+            notes.append("No lift is selected because the period-index invariant is not recognized.")
+        elif period_index is not None and period_index.decision == "rank_obstructed":
+            classification = "finite_index_projective_obstructed"
+            notes.extend(period_index.notes)
+            notes.append("Central period-index data were detected, but candidate rank fails even period divisibility.")
         elif finite_index is not None and finite_index.root_order_d is not None:
             if finite_index.determinant_obstruction_allows:
                 classification = "finite_index_projective_lift"
@@ -511,12 +542,29 @@ class TwistedMergePlus:
             if finite_index_lift is not None:
                 notes.append("Built/referenced a clock-shift direct-sum finite-index projective lift.")
 
+        period_index_lift: object | None = None
+        if (
+            classification == "central_period_index_lift"
+            and period_index is not None
+            and period_index.period is not None
+            and period_index.independent_pair_count is not None
+        ):
+            period_index_lift = direct_sum_period_index_lift(
+                period_index.period,
+                period_index.independent_pair_count,
+                actual_candidate_lift_rank,
+            )
+            if period_index_lift is not None:
+                notes.append("Built/referenced a finite-rank projective/Morita period-index lift.")
+
         status, selected_method, reason = self._select(
             classification,
             lifted_transition_maps,
             alpha_residual,
             finite_index,
             finite_index_lift,
+            period_index,
+            period_index_lift,
         )
         diagnostics = ResidualDiagnostics(
             cycle_score=cycle_score,
@@ -539,6 +587,7 @@ class TwistedMergePlus:
             recommended_min_lift_rank=finite_index.recommended_min_lift_rank if finite_index else None,
             determinant_obstruction_allows=finite_index.determinant_obstruction_allows if finite_index else None,
             finite_index_lift_residual=finite_index.lift_residual if finite_index else None,
+            period_index=period_index,
             notes=tuple(notes),
         )
         return TwistedMergePlusResult(
@@ -550,6 +599,7 @@ class TwistedMergePlus:
             lifted_transition_maps=lifted_transition_maps,
             edge_central_signs=edge_central_signs,
             finite_index_lift=finite_index_lift,
+            period_index_lift=period_index_lift,
             metrics={key: dict(value) for key, value in (method_metrics or {}).items()},
             notes=tuple(notes),
         )
@@ -561,6 +611,8 @@ class TwistedMergePlus:
         alpha_residual: float | None,
         finite_index: FiniteIndexDiagnostics | None,
         finite_index_lift: tuple[np.ndarray, np.ndarray] | None,
+        period_index: PeriodIndexDetection | None,
+        period_index_lift: object | None,
     ) -> tuple[str, str, str]:
         if classification in {"gauge_trivial", "edge_outlier_or_noise"}:
             return (
@@ -607,6 +659,39 @@ class TwistedMergePlus:
                 "finite_index_projective_lift",
                 "Finite scalar projective residual is absorbed by a finite-rank projective/Morita lift.",
             )
+        if classification == "central_period_index_lift":
+            if period_index_lift is None:
+                return (
+                    "failed",
+                    "none",
+                    "Period-index threshold passed, but no finite-rank projective/Morita lift was constructed.",
+                )
+            period = "unknown" if period_index is None else period_index.period
+            index = "unknown" if period_index is None else period_index.index
+            return (
+                "central_period_index_lift",
+                "period_index_projective_morita_lift",
+                f"Central period-index residual detected with period {period} and index {index}; "
+                "candidate rank is divisible by the index.",
+            )
+        if classification == "period_divisible_index_obstructed":
+            period = "unknown" if period_index is None else period_index.period
+            index = "unknown" if period_index is None else period_index.index
+            rank = "unknown" if period_index is None else period_index.candidate_rank
+            return (
+                "period_divisible_index_obstructed",
+                "none",
+                f"Candidate rank {rank} is divisible by period {period} but not by index {index}; "
+                "period divisibility alone is insufficient.",
+            )
+        if classification == "central_projective_index_unknown":
+            period = "unknown" if period_index is None else period_index.period
+            return (
+                "central_projective_index_unknown",
+                "none",
+                f"Central projective commutators with period {period} were detected, but the index "
+                "invariant was not recognized; no lift is claimed.",
+            )
         if classification == "central_non_coboundary_candidate":
             if self.config.allow_branch_lift and self.config.rank_lift_q >= 2:
                 residual_text = "unknown" if alpha_residual is None else f"{alpha_residual:.4g}"
@@ -641,15 +726,19 @@ def pseudocode() -> str:
   3. Compute triangle defects c_ijk = g_ij g_jk g_ki.
   4. Classify the residual: gauge_trivial, edge_outlier_or_noise,
      central_coboundary, finite_index_projective_obstructed,
-     finite_index_projective_lift, central_non_coboundary_candidate,
-     random_noncentral, or unknown.
+     finite_index_projective_lift, central_period_index_lift,
+     period_divisible_index_obstructed, central_projective_index_unknown,
+     central_non_coboundary_candidate, random_noncentral, or unknown.
   5. For random/noncentral residuals, refuse twist language.
   6. For a finite central coboundary, solve beta with delta beta = alpha and
      build lifted maps rho(beta_ij) tensor G_ij.
   7. For a finite scalar projective phase, estimate its root order d and use
      the determinant threshold d | candidate_rank before constructing a
      clock-shift/direct-sum projective/Morita lift.
-  8. For a central non-coboundary candidate, allow only a branch/rank-lift
+  8. For supplied multi-generator central projective data, compute the
+     period-index invariant and require index | candidate_rank; period
+     divisibility alone is not a lift certificate.
+  9. For a central non-coboundary candidate, allow only a branch/rank-lift
      prediction prototype and label it extra capacity.
-  9. Report ordinary, C2M3, lifted, branch, and ensemble metrics without
+  10. Report ordinary, C2M3, lifted, branch, and ensemble metrics without
      claiming a win unless validation supports it."""
