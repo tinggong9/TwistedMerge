@@ -1,8 +1,10 @@
 """Small PyTorch model-merging benchmark utilities.
 
-The benchmark intentionally uses architectures with one permutable hidden
-layer/channel block.  That keeps permutation alignment and cycle-defect
-measurement explicit and auditable.
+The original benchmark used architectures with one permutable hidden/channel
+block.  The stronger quality-sweep path also supports two-block MLP/CNN models.
+For those models, alignment can be estimated per permutable layer, while the
+cycle score still reports a primary layer unless a caller explicitly aggregates
+layerwise diagnostics.
 """
 
 from __future__ import annotations
@@ -10,7 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from itertools import combinations, product
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Mapping
 
 import numpy as np
 
@@ -75,6 +77,38 @@ class PermutableMLP(_MODULE_BASE):
             return logits, h
         return logits
 
+    def features_by_layer(self, x) -> dict[str, object]:
+        _, _, F = require_torch()
+        h = F.relu(self.hidden(self.flatten(x)))
+        return {"hidden": h}
+
+
+class PermutableMLP2(_MODULE_BASE):
+    """Two-hidden-layer ReLU MLP with both hidden layers permutable."""
+
+    def __init__(self, input_dim: int, width: int, num_classes: int = 10):
+        _, nn, _ = require_torch()
+        super().__init__()
+        self.flatten = nn.Flatten()
+        self.hidden1 = nn.Linear(input_dim, width)
+        self.hidden2 = nn.Linear(width, width)
+        self.classifier = nn.Linear(width, num_classes)
+
+    def forward(self, x, return_features: bool = False):
+        _, _, F = require_torch()
+        h1 = F.relu(self.hidden1(self.flatten(x)))
+        h2 = F.relu(self.hidden2(h1))
+        logits = self.classifier(h2)
+        if return_features:
+            return logits, h2
+        return logits
+
+    def features_by_layer(self, x) -> dict[str, object]:
+        _, _, F = require_torch()
+        h1 = F.relu(self.hidden1(self.flatten(x)))
+        h2 = F.relu(self.hidden2(h1))
+        return {"hidden1": h1, "hidden2": h2}
+
 
 class PermutableCNN(_MODULE_BASE):
     def __init__(self, in_channels: int, width: int, num_classes: int = 10):
@@ -93,12 +127,74 @@ class PermutableCNN(_MODULE_BASE):
             return logits, h
         return logits
 
+    def features_by_layer(self, x) -> dict[str, object]:
+        _, _, F = require_torch()
+        h_map = F.relu(self.conv(x))
+        h = self.pool(h_map).flatten(1)
+        return {"conv": h}
+
+
+class SmallPermutableCNN(_MODULE_BASE):
+    """Conv -> ReLU -> Conv -> ReLU -> Pool -> Linear CNN.
+
+    Both convolutional channel blocks are permutable.  The adaptive pool keeps a
+    small spatial grid, so the second convolution's channel permutation is a
+    classifier-column block permutation.
+    """
+
+    def __init__(self, in_channels: int, width: int, num_classes: int = 10):
+        _, nn, _ = require_torch()
+        super().__init__()
+        self.conv1 = nn.Conv2d(in_channels, width, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(width, width, kernel_size=3, padding=1)
+        self.pool = nn.AdaptiveAvgPool2d((4, 4))
+        self.feature_pool = nn.AdaptiveAvgPool2d((1, 1))
+        self.classifier = nn.Linear(width * 4 * 4, num_classes)
+
+    def forward(self, x, return_features: bool = False):
+        _, _, F = require_torch()
+        h1_map = F.relu(self.conv1(x))
+        h2_map = F.relu(self.conv2(h1_map))
+        h2 = self.pool(h2_map).flatten(1)
+        logits = self.classifier(h2)
+        if return_features:
+            return logits, h2
+        return logits
+
+    def features_by_layer(self, x) -> dict[str, object]:
+        _, _, F = require_torch()
+        h1_map = F.relu(self.conv1(x))
+        h1 = self.feature_pool(h1_map).flatten(1)
+        h2_map = F.relu(self.conv2(h1_map))
+        h2 = self.feature_pool(h2_map).flatten(1)
+        return {"conv1": h1, "conv2": h2}
+
+
+def alignment_layers(architecture: str) -> tuple[str, ...]:
+    if architecture == "mlp":
+        return ("hidden",)
+    if architecture == "mlp2":
+        return ("hidden1", "hidden2")
+    if architecture == "cnn":
+        return ("conv",)
+    if architecture == "small_cnn":
+        return ("conv1", "conv2")
+    raise ValueError(f"unknown architecture: {architecture}")
+
+
+def primary_alignment_layer(architecture: str) -> str:
+    return alignment_layers(architecture)[-1]
+
 
 def make_model(architecture: str, spec: DatasetSpec, width: int):
     if architecture == "mlp":
         return PermutableMLP(spec.input_dim, width, spec.num_classes)
+    if architecture == "mlp2":
+        return PermutableMLP2(spec.input_dim, width, spec.num_classes)
     if architecture == "cnn":
         return PermutableCNN(spec.input_shape[0], width, spec.num_classes)
+    if architecture == "small_cnn":
+        return SmallPermutableCNN(spec.input_shape[0], width, spec.num_classes)
     raise ValueError(f"unknown architecture: {architecture}")
 
 
@@ -159,24 +255,37 @@ def subset_dataset(dataset, max_samples: int | None, seed: int):
     return torch.utils.data.Subset(dataset, indices)
 
 
-def load_dataset(name: str, root: Path, max_train_samples: int, max_test_samples: int, seed: int):
+def load_dataset(
+    name: str,
+    root: Path,
+    max_train_samples: int,
+    max_test_samples: int,
+    seed: int,
+    augmentation: str = "none",
+):
     torchvision, T = require_torchvision()
     torch, _, _ = require_torch()
     name = name.lower()
+    aug = augmentation.lower()
+    if aug not in {"none", "light"}:
+        raise ValueError(f"unknown augmentation: {augmentation}")
     if name == "mnist":
-        transform = T.ToTensor()
-        train = torchvision.datasets.MNIST(root=root, train=True, download=True, transform=transform)
-        test = torchvision.datasets.MNIST(root=root, train=False, download=True, transform=transform)
+        train_transform = T.Compose([T.RandomAffine(degrees=8, translate=(0.04, 0.04)), T.ToTensor()]) if aug == "light" else T.ToTensor()
+        test_transform = T.ToTensor()
+        train = torchvision.datasets.MNIST(root=root, train=True, download=True, transform=train_transform)
+        test = torchvision.datasets.MNIST(root=root, train=False, download=True, transform=test_transform)
         spec = DatasetSpec(name="mnist", input_shape=(1, 28, 28))
     elif name in {"fashion_mnist", "fashion-mnist", "fashionmnist"}:
-        transform = T.ToTensor()
-        train = torchvision.datasets.FashionMNIST(root=root, train=True, download=True, transform=transform)
-        test = torchvision.datasets.FashionMNIST(root=root, train=False, download=True, transform=transform)
+        train_transform = T.Compose([T.RandomHorizontalFlip(), T.RandomAffine(degrees=8, translate=(0.04, 0.04)), T.ToTensor()]) if aug == "light" else T.ToTensor()
+        test_transform = T.ToTensor()
+        train = torchvision.datasets.FashionMNIST(root=root, train=True, download=True, transform=train_transform)
+        test = torchvision.datasets.FashionMNIST(root=root, train=False, download=True, transform=test_transform)
         spec = DatasetSpec(name="fashion_mnist", input_shape=(1, 28, 28))
     elif name == "cifar10":
-        transform = T.ToTensor()
-        train = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=transform)
-        test = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=transform)
+        train_transform = T.Compose([T.RandomCrop(32, padding=4), T.RandomHorizontalFlip(), T.ToTensor()]) if aug == "light" else T.ToTensor()
+        test_transform = T.ToTensor()
+        train = torchvision.datasets.CIFAR10(root=root, train=True, download=True, transform=train_transform)
+        test = torchvision.datasets.CIFAR10(root=root, train=False, download=True, transform=test_transform)
         spec = DatasetSpec(name="cifar10", input_shape=(3, 32, 32))
     elif name == "fake-mnist":
         transform = T.ToTensor()
@@ -202,10 +311,38 @@ def make_loader(dataset, batch_size: int, shuffle: bool, seed: int):
     return torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=shuffle, generator=generator)
 
 
-def train_model(model, loader, epochs: int, lr: float, device) -> dict[str, float]:
+def train_model(
+    model,
+    loader,
+    epochs: int,
+    lr: float,
+    device,
+    optimizer: str = "adam",
+    weight_decay: float = 0.0,
+    scheduler: str = "none",
+    step_size: int = 3,
+    gamma: float = 0.5,
+) -> dict[str, float]:
     torch, _, _ = require_torch()
     model.to(device)
-    opt = torch.optim.Adam(model.parameters(), lr=lr)
+    optimizer = optimizer.lower()
+    if optimizer == "adam":
+        opt = torch.optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+    elif optimizer == "adamw":
+        opt = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    elif optimizer == "sgd":
+        opt = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=weight_decay)
+    else:
+        raise ValueError(f"unknown optimizer: {optimizer}")
+    scheduler = scheduler.lower()
+    if scheduler == "none":
+        lr_scheduler = None
+    elif scheduler == "cosine":
+        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(opt, T_max=max(epochs, 1))
+    elif scheduler == "step":
+        lr_scheduler = torch.optim.lr_scheduler.StepLR(opt, step_size=max(step_size, 1), gamma=gamma)
+    else:
+        raise ValueError(f"unknown scheduler: {scheduler}")
     for _ in range(epochs):
         model.train()
         for x, y in loader:
@@ -215,6 +352,8 @@ def train_model(model, loader, epochs: int, lr: float, device) -> dict[str, floa
             loss = torch.nn.functional.cross_entropy(model(x), y)
             loss.backward()
             opt.step()
+        if lr_scheduler is not None:
+            lr_scheduler.step()
     return evaluate_model(model, loader, device)
 
 
@@ -263,7 +402,7 @@ def evaluate_ensemble(models: list, loader, device) -> dict[str, float]:
     }
 
 
-def collect_features(model, loader, device, max_batches: int = 8) -> np.ndarray:
+def collect_features(model, loader, device, max_batches: int = 8, layer: str | None = None) -> np.ndarray:
     torch, _, _ = require_torch()
     model.to(device)
     model.eval()
@@ -273,7 +412,10 @@ def collect_features(model, loader, device, max_batches: int = 8) -> np.ndarray:
             if batch_idx >= max_batches:
                 break
             x = x.to(device)
-            _, h = model(x, return_features=True)
+            if layer is not None and hasattr(model, "features_by_layer"):
+                h = model.features_by_layer(x)[layer]
+            else:
+                _, h = model(x, return_features=True)
             features.append(h.detach().cpu())
     return torch.cat(features, dim=0).numpy()
 
@@ -305,15 +447,28 @@ def activation_permutation(features_i: np.ndarray, features_j: np.ndarray) -> np
     return linear_sum_assignment_max(similarity)
 
 
-def weight_permutation(model_i, model_j, architecture: str) -> np.ndarray:
-    if architecture == "mlp":
+def weight_permutation(model_i, model_j, architecture: str, layer: str | None = None) -> np.ndarray:
+    layer = layer or primary_alignment_layer(architecture)
+    if architecture == "mlp" and layer == "hidden":
         wi = model_i.hidden.weight.detach().cpu().numpy()
         wj = model_j.hidden.weight.detach().cpu().numpy()
-    elif architecture == "cnn":
+    elif architecture == "mlp2" and layer == "hidden1":
+        wi = model_i.hidden1.weight.detach().cpu().numpy()
+        wj = model_j.hidden1.weight.detach().cpu().numpy()
+    elif architecture == "mlp2" and layer == "hidden2":
+        wi = model_i.hidden2.weight.detach().cpu().numpy()
+        wj = model_j.hidden2.weight.detach().cpu().numpy()
+    elif architecture == "cnn" and layer == "conv":
         wi = model_i.conv.weight.detach().cpu().numpy().reshape(model_i.conv.out_channels, -1)
         wj = model_j.conv.weight.detach().cpu().numpy().reshape(model_j.conv.out_channels, -1)
+    elif architecture == "small_cnn" and layer == "conv1":
+        wi = model_i.conv1.weight.detach().cpu().numpy().reshape(model_i.conv1.out_channels, -1)
+        wj = model_j.conv1.weight.detach().cpu().numpy().reshape(model_j.conv1.out_channels, -1)
+    elif architecture == "small_cnn" and layer == "conv2":
+        wi = model_i.conv2.weight.detach().cpu().numpy().reshape(model_i.conv2.out_channels, -1)
+        wj = model_j.conv2.weight.detach().cpu().numpy().reshape(model_j.conv2.out_channels, -1)
     else:
-        raise ValueError(architecture)
+        raise ValueError(f"{architecture}/{layer}")
     wi = wi / np.maximum(np.linalg.norm(wi, axis=1, keepdims=True), 1e-12)
     wj = wj / np.maximum(np.linalg.norm(wj, axis=1, keepdims=True), 1e-12)
     return linear_sum_assignment_max(wi @ wj.T)
@@ -359,32 +514,75 @@ def inject_pairwise_permutation_noise(
     return out
 
 
-def compute_pairwise_permutations(models: list, architecture: str, loader, device, method: str) -> dict[tuple[int, int], np.ndarray]:
+def compute_pairwise_permutations(
+    models: list,
+    architecture: str,
+    loader,
+    device,
+    method: str,
+    layer: str | None = None,
+) -> dict[tuple[int, int], np.ndarray]:
+    layer = layer or primary_alignment_layer(architecture)
     n = len(models)
     features = None
     if method == "activation":
-        features = [collect_features(model, loader, device) for model in models]
+        features = [collect_features(model, loader, device, layer=layer) for model in models]
     perms: dict[tuple[int, int], np.ndarray] = {}
     for i, j in product(range(n), repeat=2):
         if i == j:
-            width = model_width(models[i], architecture)
+            width = model_width(models[i], architecture, layer=layer)
             perms[(i, j)] = np.arange(width)
         elif method == "activation":
             assert features is not None
             perms[(i, j)] = activation_permutation(features[i], features[j])
         elif method == "weight":
-            perms[(i, j)] = weight_permutation(models[i], models[j], architecture)
+            perms[(i, j)] = weight_permutation(models[i], models[j], architecture, layer=layer)
         else:
             raise ValueError(f"unknown matching method: {method}")
     return perms
 
 
-def model_width(model, architecture: str) -> int:
-    if architecture == "mlp":
+def compute_layerwise_pairwise_permutations(
+    models: list,
+    architecture: str,
+    loader,
+    device,
+    method: str,
+) -> dict[str, dict[tuple[int, int], np.ndarray]]:
+    return {
+        layer: compute_pairwise_permutations(models, architecture, loader, device, method, layer=layer)
+        for layer in alignment_layers(architecture)
+    }
+
+
+def primary_pairwise_permutations(
+    pairwise_by_layer: Mapping[str, dict[tuple[int, int], np.ndarray]] | dict[tuple[int, int], np.ndarray],
+    architecture: str,
+) -> dict[tuple[int, int], np.ndarray]:
+    if (0, 0) in pairwise_by_layer:  # type: ignore[operator]
+        return pairwise_by_layer  # type: ignore[return-value]
+    return pairwise_by_layer[primary_alignment_layer(architecture)]  # type: ignore[index]
+
+
+def model_width(model, architecture: str, layer: str | None = None) -> int:
+    layer = layer or primary_alignment_layer(architecture)
+    if architecture == "mlp" and layer == "hidden":
         return int(model.hidden.out_features)
-    if architecture == "cnn":
+    if architecture == "mlp2" and layer == "hidden1":
+        return int(model.hidden1.out_features)
+    if architecture == "mlp2" and layer == "hidden2":
+        return int(model.hidden2.out_features)
+    if architecture == "cnn" and layer == "conv":
         return int(model.conv.out_channels)
-    raise ValueError(architecture)
+    if architecture == "small_cnn" and layer == "conv1":
+        return int(model.conv1.out_channels)
+    if architecture == "small_cnn" and layer == "conv2":
+        return int(model.conv2.out_channels)
+    raise ValueError(f"{architecture}/{layer}")
+
+
+def model_layer_widths(model, architecture: str) -> dict[str, int]:
+    return {layer: model_width(model, architecture, layer) for layer in alignment_layers(architecture)}
 
 
 def cycle_score(pairwise_perms: dict[tuple[int, int], np.ndarray], n_models: int, width: int) -> tuple[float, list[dict[str, float]]]:
@@ -438,6 +636,21 @@ def synchronize_permutations(pairwise_perms: dict[tuple[int, int], np.ndarray], 
     return best_ref, best_q, best_score
 
 
+def synchronize_layerwise_permutations(
+    pairwise_by_layer: Mapping[str, dict[tuple[int, int], np.ndarray]],
+    n_models: int,
+) -> tuple[str, dict[str, dict[int, np.ndarray]], float]:
+    synced: dict[str, dict[int, np.ndarray]] = {}
+    refs = []
+    residuals = []
+    for layer, pairwise in pairwise_by_layer.items():
+        ref, q, residual = synchronize_permutations(pairwise, n_models)
+        refs.append(f"{layer}:{ref}")
+        synced[layer] = q
+        residuals.append(residual)
+    return ",".join(refs), synced, float(np.mean(residuals)) if residuals else 0.0
+
+
 def clone_model(model, architecture: str, spec: DatasetSpec, width: int):
     torch, _, _ = require_torch()
     cloned = make_model(architecture, spec, width)
@@ -445,18 +658,51 @@ def clone_model(model, architecture: str, spec: DatasetSpec, width: int):
     return cloned
 
 
-def permute_model_to_reference(model, architecture: str, spec: DatasetSpec, width: int, perm: np.ndarray):
+def _identity_perm(width: int) -> np.ndarray:
+    return np.arange(width, dtype=int)
+
+
+def permute_model_to_reference(
+    model,
+    architecture: str,
+    spec: DatasetSpec,
+    width: int,
+    perm: np.ndarray | Mapping[str, np.ndarray],
+):
     aligned = clone_model(model, architecture, spec, width)
     with require_torch()[0].no_grad():
         if architecture == "mlp":
+            assert isinstance(perm, np.ndarray)
             aligned.hidden.weight.copy_(model.hidden.weight.detach().cpu()[perm, :])
             aligned.hidden.bias.copy_(model.hidden.bias.detach().cpu()[perm])
             aligned.classifier.weight.copy_(model.classifier.weight.detach().cpu()[:, perm])
             aligned.classifier.bias.copy_(model.classifier.bias.detach().cpu())
+        elif architecture == "mlp2":
+            layer_perms = perm if isinstance(perm, Mapping) else {"hidden2": perm}
+            p1 = np.asarray(layer_perms.get("hidden1", _identity_perm(model.hidden1.out_features)), dtype=int)
+            p2 = np.asarray(layer_perms.get("hidden2", _identity_perm(model.hidden2.out_features)), dtype=int)
+            aligned.hidden1.weight.copy_(model.hidden1.weight.detach().cpu()[p1, :])
+            aligned.hidden1.bias.copy_(model.hidden1.bias.detach().cpu()[p1])
+            aligned.hidden2.weight.copy_(model.hidden2.weight.detach().cpu()[p2, :][:, p1])
+            aligned.hidden2.bias.copy_(model.hidden2.bias.detach().cpu()[p2])
+            aligned.classifier.weight.copy_(model.classifier.weight.detach().cpu()[:, p2])
+            aligned.classifier.bias.copy_(model.classifier.bias.detach().cpu())
         elif architecture == "cnn":
+            assert isinstance(perm, np.ndarray)
             aligned.conv.weight.copy_(model.conv.weight.detach().cpu()[perm, :, :, :])
             aligned.conv.bias.copy_(model.conv.bias.detach().cpu()[perm])
             aligned.classifier.weight.copy_(model.classifier.weight.detach().cpu()[:, perm])
+            aligned.classifier.bias.copy_(model.classifier.bias.detach().cpu())
+        elif architecture == "small_cnn":
+            layer_perms = perm if isinstance(perm, Mapping) else {"conv2": perm}
+            p1 = np.asarray(layer_perms.get("conv1", _identity_perm(model.conv1.out_channels)), dtype=int)
+            p2 = np.asarray(layer_perms.get("conv2", _identity_perm(model.conv2.out_channels)), dtype=int)
+            aligned.conv1.weight.copy_(model.conv1.weight.detach().cpu()[p1, :, :, :])
+            aligned.conv1.bias.copy_(model.conv1.bias.detach().cpu()[p1])
+            aligned.conv2.weight.copy_(model.conv2.weight.detach().cpu()[p2, :, :, :][:, p1, :, :])
+            aligned.conv2.bias.copy_(model.conv2.bias.detach().cpu()[p2])
+            classifier = model.classifier.weight.detach().cpu().reshape(model.classifier.out_features, model.conv2.out_channels, -1)
+            aligned.classifier.weight.copy_(classifier[:, p2, :].reshape_as(aligned.classifier.weight))
             aligned.classifier.bias.copy_(model.classifier.bias.detach().cpu())
         else:
             raise ValueError(architecture)

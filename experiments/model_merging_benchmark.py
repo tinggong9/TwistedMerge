@@ -19,7 +19,7 @@ from src.metrics import capture_environment, save_json  # noqa: E402
 from src.model_merging_benchmark import (  # noqa: E402
     DomainShiftDataset,
     average_models,
-    compute_pairwise_permutations,
+    compute_layerwise_pairwise_permutations,
     cycle_score,
     device_from_arg,
     evaluate_ensemble,
@@ -30,11 +30,15 @@ from src.model_merging_benchmark import (  # noqa: E402
     load_dataset,
     make_loader,
     make_model,
+    model_layer_widths,
+    primary_alignment_layer,
+    primary_pairwise_permutations,
     permute_model_to_reference,
     rank_lifted_branch_models,
     require_torch,
     save_checkpoint,
     set_seed,
+    synchronize_layerwise_permutations,
     synchronize_permutations,
     train_model,
 )
@@ -57,6 +61,62 @@ def split_train_val(dataset, val_fraction: float, seed: int):
     return torch.utils.data.random_split(dataset, [n_train, n_val], generator=generator)
 
 
+def train_with_args(model, train_loader, args, device):
+    return train_model(
+        model,
+        train_loader,
+        args.epochs,
+        args.lr,
+        device,
+        optimizer=args.optimizer,
+        weight_decay=args.weight_decay,
+        scheduler=args.scheduler,
+        step_size=args.step_size,
+        gamma=args.gamma,
+    )
+
+
+def compute_alignment_bundle(models, architecture: str, loader, device, method: str):
+    pairwise_by_layer = compute_layerwise_pairwise_permutations(models, architecture, loader, device, method)
+    primary = primary_pairwise_permutations(pairwise_by_layer, architecture)
+    return pairwise_by_layer, primary
+
+
+def reference_perms(pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]], ref: int, idx: int) -> dict[str, np.ndarray]:
+    return {layer: pairwise[(ref, idx)] for layer, pairwise in pairwise_by_layer.items()}
+
+
+def synced_perms(synced_by_layer: dict[str, dict[int, np.ndarray]], idx: int) -> dict[str, np.ndarray]:
+    return {layer: synced[idx] for layer, synced in synced_by_layer.items()}
+
+
+def synchronize_alignment_bundle(pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]], n_models: int):
+    if len(pairwise_by_layer) == 1:
+        layer = next(iter(pairwise_by_layer))
+        ref, synced, residual = synchronize_permutations(pairwise_by_layer[layer], n_models)
+        return str(ref), {layer: synced}, residual
+    return synchronize_layerwise_permutations(pairwise_by_layer, n_models)
+
+
+def inject_layerwise_permutation_noise(
+    pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]],
+    n_models: int,
+    widths_by_layer: dict[str, int],
+    swap_fraction: float,
+    seed: int,
+) -> dict[str, dict[tuple[int, int], np.ndarray]]:
+    return {
+        layer: inject_pairwise_permutation_noise(
+            pairwise,
+            n_models,
+            widths_by_layer[layer],
+            swap_fraction,
+            seed + 104729 * layer_idx,
+        )
+        for layer_idx, (layer, pairwise) in enumerate(pairwise_by_layer.items())
+    }
+
+
 def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift: str) -> tuple[list[dict], list[dict]]:
     torch, _, _ = require_torch()
     device = device_from_arg(args.device)
@@ -68,6 +128,7 @@ def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift
         args.max_train_samples,
         args.max_test_samples,
         args.seed,
+        augmentation=args.augmentation,
     )
     test_loader = make_loader(test_base, args.batch_size, shuffle=False, seed=args.seed + 999)
 
@@ -80,7 +141,7 @@ def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift
         train_loader = make_loader(train_subset, args.batch_size, shuffle=True, seed=args.seed + model_idx)
         val_loader_model = make_loader(val_subset, args.batch_size, shuffle=False, seed=args.seed + 100 + model_idx)
         model = make_model(architecture, spec, width)
-        train_model(model, train_loader, args.epochs, args.lr, device)
+        train_with_args(model, train_loader, args, device)
         test_metrics = evaluate_model(model, test_loader, device)
         val_metrics = evaluate_model(model, val_loader_model, device)
         model.to("cpu")
@@ -119,15 +180,17 @@ def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift
 
     val_loader = make_loader(train_base, args.batch_size, shuffle=False, seed=args.seed + 500)
     match_loader = make_loader(train_base, args.batch_size, shuffle=False, seed=args.seed + 501)
-    pairwise = compute_pairwise_permutations(models, architecture, match_loader, device, args.matching)
-    score, cycle_rows = cycle_score(pairwise, n_models, width)
-    ref, synced, sync_disagreement = synchronize_permutations(pairwise, n_models)
+    pairwise_by_layer, pairwise = compute_alignment_bundle(models, architecture, match_loader, device, args.matching)
+    primary_layer = primary_alignment_layer(architecture)
+    primary_width = model_layer_widths(models[0], architecture)[primary_layer]
+    score, cycle_rows = cycle_score(pairwise, n_models, primary_width)
+    ref, synced_by_layer, sync_disagreement = synchronize_alignment_bundle(pairwise_by_layer, n_models)
     aligned_to_zero = [
-        permute_model_to_reference(model, architecture, spec, width, pairwise[(0, idx)])
+        permute_model_to_reference(model, architecture, spec, width, reference_perms(pairwise_by_layer, 0, idx))
         for idx, model in enumerate(models)
     ]
     aligned_synced = [
-        permute_model_to_reference(model, architecture, spec, width, synced[idx])
+        permute_model_to_reference(model, architecture, spec, width, synced_perms(synced_by_layer, idx))
         for idx, model in enumerate(models)
     ]
 
@@ -151,6 +214,7 @@ def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift
             "single_best_accuracy": single_best,
             "merge_degradation": merged_degradation,
             "cycle_score": score,
+            "cycle_score_layer": primary_layer,
             "sync_disagreement": sync_disagreement,
             "sync_reference": ref,
         }
@@ -213,6 +277,7 @@ def run_setting(args, dataset_name: str, n_models: int, width: int, domain_shift
             "n_models": n_models,
             "width": width,
             "domain_shift": domain_shift,
+            "cycle_score_layer": primary_layer,
             **row,
         }
         for row in cycle_rows
@@ -362,6 +427,7 @@ def run_verification_setting(args, dataset_name: str, n_models: int, width: int,
         args.max_train_samples,
         args.max_test_samples,
         args.dataset_seed,
+        augmentation=args.augmentation,
     )
     test_loader = make_loader(test_base, args.batch_size, shuffle=False, seed=args.dataset_seed + 999)
 
@@ -375,7 +441,7 @@ def run_verification_setting(args, dataset_name: str, n_models: int, width: int,
         train_loader = make_loader(train_subset, args.batch_size, shuffle=True, seed=model_seed + 11)
         val_loader_model = make_loader(val_subset, args.batch_size, shuffle=False, seed=args.dataset_seed + 100 + model_idx)
         model = make_model(architecture, spec, width)
-        train_model(model, train_loader, args.epochs, args.lr, device)
+        train_with_args(model, train_loader, args, device)
         test_metrics = evaluate_model(model, test_loader, device)
         val_metrics = evaluate_model(model, val_loader_model, device)
         model.to("cpu")
@@ -421,7 +487,10 @@ def run_verification_setting(args, dataset_name: str, n_models: int, width: int,
 
     val_loader = make_loader(train_base, args.batch_size, shuffle=False, seed=args.dataset_seed + 500)
     match_loader = make_loader(train_base, args.batch_size, shuffle=False, seed=args.dataset_seed + 501)
-    observed_pairwise = compute_pairwise_permutations(models, architecture, match_loader, device, args.matching)
+    observed_pairwise_by_layer, observed_pairwise = compute_alignment_bundle(models, architecture, match_loader, device, args.matching)
+    primary_layer = primary_alignment_layer(architecture)
+    primary_width = model_layer_widths(models[0], architecture)[primary_layer]
+    widths_by_layer = model_layer_widths(models[0], architecture)
     model_accuracies = [row["test_accuracy"] for row in per_model_rows]
     single_best = max(model_accuracies)
     mean_individual = float(np.mean(model_accuracies))
@@ -431,29 +500,47 @@ def run_verification_setting(args, dataset_name: str, n_models: int, width: int,
     soup, soup_indices, soup_metrics = greedy_soup(models, val_loader, test_loader, device, architecture, spec, width)
     ensemble_metrics = evaluate_ensemble(models, test_loader, device)
 
-    variants: list[tuple[str, str, float, dict[tuple[int, int], np.ndarray], bool]] = [
-        ("observed", "observed", 0.0, observed_pairwise, True)
+    variants: list[
+        tuple[
+            str,
+            str,
+            float,
+            dict[str, dict[tuple[int, int], np.ndarray]],
+            dict[tuple[int, int], np.ndarray],
+            bool,
+        ]
+    ] = [
+        ("observed", "observed", 0.0, observed_pairwise_by_layer, observed_pairwise, True)
     ]
     for noise in parse_csv(args.alignment_noise_levels, float):
-        noisy = inject_pairwise_permutation_noise(
-            observed_pairwise,
+        noisy_by_layer = inject_layerwise_permutation_noise(
+            observed_pairwise_by_layer,
             n_models,
-            width,
+            widths_by_layer,
             noise,
             seed + 70000 + int(round(10000 * noise)) + 13 * width + n_models,
         )
-        variants.append((f"injected_{noise:g}", "observed_plus_injected_noise", noise, noisy, False))
+        variants.append(
+            (
+                f"injected_{noise:g}",
+                "observed_plus_injected_noise",
+                noise,
+                noisy_by_layer,
+                primary_pairwise_permutations(noisy_by_layer, architecture),
+                False,
+            )
+        )
 
     rows = []
-    for variant, alignment_source, noise, pairwise, independent_draw in variants:
-        score, _cycle_rows = cycle_score(pairwise, n_models, width)
-        ref, synced, sync_disagreement = synchronize_permutations(pairwise, n_models)
+    for variant, alignment_source, noise, pairwise_by_layer, pairwise, independent_draw in variants:
+        score, _cycle_rows = cycle_score(pairwise, n_models, primary_width)
+        ref, synced_by_layer, sync_disagreement = synchronize_alignment_bundle(pairwise_by_layer, n_models)
         aligned_to_zero = [
-            permute_model_to_reference(model, architecture, spec, width, pairwise[(0, idx)])
+            permute_model_to_reference(model, architecture, spec, width, reference_perms(pairwise_by_layer, 0, idx))
             for idx, model in enumerate(models)
         ]
         aligned_synced = [
-            permute_model_to_reference(model, architecture, spec, width, synced[idx])
+            permute_model_to_reference(model, architecture, spec, width, synced_perms(synced_by_layer, idx))
             for idx, model in enumerate(models)
         ]
         base = {
@@ -469,6 +556,7 @@ def run_verification_setting(args, dataset_name: str, n_models: int, width: int,
             "alignment_variant": variant,
             "alignment_source": alignment_source,
             "alignment_noise": noise,
+            "cycle_score_layer": primary_layer,
             "independent_model_draw": independent_draw,
             "single_best_accuracy": single_best,
             "mean_individual_accuracy": mean_individual,
@@ -516,6 +604,7 @@ def make_verification_wide(results: pd.DataFrame) -> pd.DataFrame:
         "alignment_variant",
         "alignment_source",
         "alignment_noise",
+        "cycle_score_layer",
         "independent_model_draw",
         "single_best_accuracy",
         "mean_individual_accuracy",
@@ -753,8 +842,9 @@ This report is generated by `experiments/model_merging_benchmark.py --mode verif
 
 - MNIST MLP only for the verification grid.
 - Fixed-N repeated-seed settings: `N in {args.model_counts}`, widths `{args.widths}`, seeds `{args.seeds}`.
-- Training uses `{args.max_train_samples}` MNIST training samples, `{args.max_test_samples}` test samples, and `{args.epochs}` epochs.
+- Training uses `{args.max_train_samples}` MNIST training samples, `{args.max_test_samples}` test samples, `{args.epochs}` epochs, optimizer `{args.optimizer}`, scheduler `{args.scheduler}`, weight decay `{args.weight_decay}`, and augmentation `{args.augmentation}`.
 - Alignment variants include observed activation matching plus controlled injected pairwise permutation noise levels `{args.alignment_noise_levels}`.
+- Multi-layer architectures use layerwise permutation alignment and report cycle score on the primary downstream layer.
 - Injected alignment rows are a negative/control intervention: they vary cycle score while reusing the same trained models, so they should not be interpreted as independent evidence that cycle score predicts weight-average degradation.
 
 {read_cifar_smoke_status(args.reports_dir)}
@@ -949,7 +1039,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--mode", default="benchmark", choices=["benchmark", "verification"])
     parser.add_argument("--datasets", default="mnist,cifar10")
-    parser.add_argument("--architecture", default="auto", choices=["auto", "mlp", "cnn"])
+    parser.add_argument("--architecture", default="auto", choices=["auto", "mlp", "mlp2", "cnn", "small_cnn"])
     parser.add_argument("--model-counts", default="3")
     parser.add_argument("--widths", default="16,32")
     parser.add_argument("--domain-shifts", default="none,input_noise")
@@ -959,6 +1049,12 @@ def main() -> None:
     parser.add_argument("--val-fraction", type=float, default=0.2)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=1e-3)
+    parser.add_argument("--optimizer", default="adam", choices=["adam", "adamw", "sgd"])
+    parser.add_argument("--weight-decay", type=float, default=0.0)
+    parser.add_argument("--scheduler", default="none", choices=["none", "cosine", "step"])
+    parser.add_argument("--step-size", type=int, default=3)
+    parser.add_argument("--gamma", type=float, default=0.5)
+    parser.add_argument("--augmentation", default="none", choices=["none", "light"])
     parser.add_argument("--matching", default="activation", choices=["activation", "weight"])
     parser.add_argument("--rank-lift-branches", type=int, default=2)
     parser.add_argument("--seed", type=int, default=8128)

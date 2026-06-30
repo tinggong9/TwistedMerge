@@ -638,3 +638,5 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/csv/sheaf_gnn_cycle_diagnostics.csv` | Per-seed synthetic GCN/sheaf rows with test accuracy, heterophily, triangle counts, cycle inconsistency, feature variance, and Dirichlet proxy. |
 | `reports/plots/sheaf_gnn_cycle_vs_accuracy.pdf` | Scatter plot of learned sheaf cycle inconsistency versus test accuracy. |
 | `reports/configs/sheaf_gnn_cycle_diagnostics_config.json` | Saved command, git state, runtime, and output metadata for the optional sheaf/GNN diagnostic run. |
+
+| Rank-lift branch evidence is separated from branch-capacity matched non-obstruction controls. | Supported implementation | `src/rank_lift_baselines.py` adds random, validation-selected, and C2M3-cluster branch ensembles. `reports/csv/real_obstruction_paired_deltas.csv` marks rank-lift support only when observed paired CI lower bounds are positive against all three branch controls with at least 20 paired seeds. |

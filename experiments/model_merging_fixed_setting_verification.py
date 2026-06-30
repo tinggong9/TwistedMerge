@@ -49,12 +49,28 @@ from src.model_merging_benchmark import (  # noqa: E402
     synchronize_permutations,
     train_model,
 )
+from src.rank_lift_baselines import (  # noqa: E402
+    c2m3_cluster_branch_ensemble,
+    method_capacity_metadata,
+    random_branch_ensemble,
+    validation_branch_ensemble,
+)
 
 
 RUNS_CSV = "fixed_setting_verification_runs.csv"
 STATS_CSV = "fixed_setting_verification_stats.csv"
 TRIANGLES_CSV = "fixed_setting_triangle_defects.csv"
 INDIVIDUALS_CSV = "fixed_setting_individual_models.csv"
+REAL_OBSTRUCTION_RUNS_CSV = "real_obstruction_degradation.csv"
+REAL_OBSTRUCTION_SUMMARY_CSV = "real_obstruction_summary.csv"
+REAL_OBSTRUCTION_TRIANGLES_CSV = "real_obstruction_triangle_defects.csv"
+REAL_OBSTRUCTION_INDIVIDUALS_CSV = "real_obstruction_individual_models.csv"
+REAL_OBSTRUCTION_PAIRED_DELTAS_CSV = "real_obstruction_paired_deltas.csv"
+BRANCH_CAPACITY_BASELINES = (
+    "random_branch_ensemble",
+    "validation_branch_ensemble",
+    "c2m3_cluster_branch_ensemble",
+)
 
 
 def parse_csv(text: str, cast=str) -> list:
@@ -156,6 +172,22 @@ def bootstrap_corr_ci(x_values, y_values, corr_fn, n_boot: int, seed: int) -> tu
             estimates.append(value)
     if not estimates:
         return float("nan"), float("nan")
+    return float(np.quantile(estimates, 0.025)), float(np.quantile(estimates, 0.975))
+
+
+def bootstrap_mean_ci(values, n_boot: int, seed: int) -> tuple[float, float]:
+    arr = np.asarray([safe_float(value) for value in values], dtype=float)
+    arr = arr[np.isfinite(arr)]
+    if len(arr) == 0:
+        return float("nan"), float("nan")
+    if len(arr) == 1 or n_boot <= 0:
+        mean = float(arr.mean())
+        return mean, mean
+    rng = np.random.default_rng(seed)
+    estimates = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, len(arr), len(arr))
+        estimates.append(float(arr[idx].mean()))
     return float(np.quantile(estimates, 0.025)), float(np.quantile(estimates, 0.975))
 
 
@@ -282,7 +314,30 @@ def baseline_record(
     inference_multiplier: float,
     uses_validation_data: bool,
     method_note: str,
+    capacity_metadata: dict | None = None,
 ) -> dict:
+    if capacity_metadata is None:
+        branch_count = 1 if is_single_model else max(1, int(round(inference_multiplier)))
+        capacity_metadata = {
+            "method_note": method_note,
+            "is_single_model": bool(is_single_model),
+            "branch_count": int(branch_count),
+            "parameter_count": float("nan"),
+            "parameter_multiplier": float(parameter_multiplier),
+            "inference_multiplier": float(inference_multiplier),
+            "capacity_matched_to_weight_average": bool(capacity_matched),
+            "capacity_matched_to_rank_lift": False,
+            "uses_obstruction_residual": False,
+            "uses_validation_data": bool(uses_validation_data),
+            "uses_distillation": False,
+        }
+    else:
+        is_single_model = bool(capacity_metadata["is_single_model"])
+        capacity_matched = bool(capacity_metadata["capacity_matched_to_weight_average"])
+        parameter_multiplier = float(capacity_metadata["parameter_multiplier"])
+        inference_multiplier = float(capacity_metadata["inference_multiplier"])
+        uses_validation_data = bool(capacity_metadata["uses_validation_data"])
+        method_note = str(capacity_metadata["method_note"])
     return {
         **base,
         "method": method,
@@ -298,8 +353,15 @@ def baseline_record(
         "is_soup": bool(is_soup),
         "is_ensemble_or_extra_capacity": bool(is_ensemble_or_extra_capacity),
         "capacity_matched_to_weight_average": bool(capacity_matched),
+        "capacity_matched_to_rank_lift": bool(capacity_metadata["capacity_matched_to_rank_lift"]),
+        "branch_count": int(capacity_metadata["branch_count"]),
+        "parameter_count": capacity_metadata["parameter_count"],
+        "parameter_multiplier": float(parameter_multiplier),
+        "inference_multiplier": float(inference_multiplier),
         "parameter_count_multiplier": float(parameter_multiplier),
         "inference_time_multiplier": float(inference_multiplier),
+        "uses_obstruction_residual": bool(capacity_metadata["uses_obstruction_residual"]),
+        "uses_distillation": bool(capacity_metadata["uses_distillation"]),
         "method_note": method_note,
     }
 
@@ -318,6 +380,7 @@ def evaluate_methods(
     base: dict,
 ) -> list[dict]:
     rows: list[dict] = []
+    base_model = models[0]
 
     weight_model = average_models(models, architecture, spec, width)
     rows.append(
@@ -335,6 +398,7 @@ def evaluate_methods(
             inference_multiplier=1.0,
             uses_validation_data=False,
             method_note="ordinary parameter average without alignment",
+            capacity_metadata=method_capacity_metadata("weight_average", weight_model, base_model),
         )
     )
 
@@ -356,6 +420,7 @@ def evaluate_methods(
             inference_multiplier=1.0,
             uses_validation_data=True,
             method_note="faithful greedy Model Soups-style validation-selected soup",
+            capacity_metadata=method_capacity_metadata("greedy_soup", soup_model, base_model),
         )
     )
 
@@ -379,6 +444,7 @@ def evaluate_methods(
             inference_multiplier=1.0,
             uses_validation_data=False,
             method_note="faithful Git-ReBasin-style pairwise hidden-unit alignment to model 0",
+            capacity_metadata=method_capacity_metadata("git_rebasin_pairwise_ref0", pairwise_merged, base_model),
         )
     )
 
@@ -404,6 +470,7 @@ def evaluate_methods(
             inference_multiplier=1.0,
             uses_validation_data=False,
             method_note="internal C2M3-style global permutation synchronization before averaging",
+            capacity_metadata=method_capacity_metadata("c2m3_synchronized", c2m3_model, base_model),
         )
     )
 
@@ -423,6 +490,7 @@ def evaluate_methods(
             inference_multiplier=float(len(models)),
             uses_validation_data=False,
             method_note="extra-capacity ensemble upper bound over all local models",
+            capacity_metadata=method_capacity_metadata("ensemble_upper_bound", models, base_model),
         )
     )
 
@@ -437,7 +505,7 @@ def evaluate_methods(
     branch_count = max(1, len(branches))
     rows.append(
         baseline_record(
-            method=f"rank_lift_branch_ensemble_{branch_count}",
+            method=f"twisted_rank_lift_{branch_count}",
             val_metrics=evaluate_ensemble(branches, val_loader, device),
             test_metrics=evaluate_ensemble(branches, test_loader, device),
             base=base,
@@ -450,6 +518,105 @@ def evaluate_methods(
             inference_multiplier=float(branch_count),
             uses_validation_data=False,
             method_note="rank-lift branch ensemble; extra capacity, not a single merged model",
+            capacity_metadata=method_capacity_metadata(f"twisted_rank_lift_{branch_count}", branches, base_model),
+        )
+    )
+
+    random_branches = random_branch_ensemble(
+        c2m3_aligned,
+        branch_count,
+        architecture,
+        spec,
+        width,
+        seed=int(base["seed"]) + 7919 + 97 * branch_count,
+    )
+    random_branch_count = max(1, len(random_branches))
+    rows.append(
+        baseline_record(
+            method=f"random_branch_ensemble_{random_branch_count}",
+            val_metrics=evaluate_ensemble(random_branches, val_loader, device),
+            test_metrics=evaluate_ensemble(random_branches, test_loader, device),
+            base=base,
+            is_single_model=False,
+            exact_relu_symmetry=True,
+            is_soup=False,
+            is_ensemble_or_extra_capacity=True,
+            capacity_matched=False,
+            parameter_multiplier=float(random_branch_count),
+            inference_multiplier=float(random_branch_count),
+            uses_validation_data=False,
+            method_note="random branch ensemble matched to rank-lift branch count; non-obstruction control",
+            capacity_metadata=method_capacity_metadata(
+                f"random_branch_ensemble_{random_branch_count}",
+                random_branches,
+                base_model,
+            ),
+        )
+    )
+
+    validation_branches = validation_branch_ensemble(
+        models,
+        val_loader,
+        test_loader,
+        branch_count,
+        architecture,
+        spec,
+        width,
+        device,
+    )
+    validation_branch_count = max(1, len(validation_branches))
+    rows.append(
+        baseline_record(
+            method=f"validation_branch_ensemble_{validation_branch_count}",
+            val_metrics=evaluate_ensemble(validation_branches, val_loader, device),
+            test_metrics=evaluate_ensemble(validation_branches, test_loader, device),
+            base=base,
+            is_single_model=False,
+            exact_relu_symmetry=False,
+            is_soup=False,
+            is_ensemble_or_extra_capacity=True,
+            capacity_matched=False,
+            parameter_multiplier=float(validation_branch_count),
+            inference_multiplier=float(validation_branch_count),
+            uses_validation_data=True,
+            method_note="validation-selected branch ensemble matched to rank-lift branch count; non-obstruction control",
+            capacity_metadata=method_capacity_metadata(
+                f"validation_branch_ensemble_{validation_branch_count}",
+                validation_branches,
+                base_model,
+            ),
+        )
+    )
+
+    c2m3_cluster_branches = c2m3_cluster_branch_ensemble(
+        c2m3_aligned,
+        pairwise_perms,
+        branch_count,
+        architecture,
+        spec,
+        width,
+    )
+    c2m3_cluster_branch_count = max(1, len(c2m3_cluster_branches))
+    rows.append(
+        baseline_record(
+            method=f"c2m3_cluster_branch_ensemble_{c2m3_cluster_branch_count}",
+            val_metrics=evaluate_ensemble(c2m3_cluster_branches, val_loader, device),
+            test_metrics=evaluate_ensemble(c2m3_cluster_branches, test_loader, device),
+            base=base,
+            is_single_model=False,
+            exact_relu_symmetry=True,
+            is_soup=False,
+            is_ensemble_or_extra_capacity=True,
+            capacity_matched=False,
+            parameter_multiplier=float(c2m3_cluster_branch_count),
+            inference_multiplier=float(c2m3_cluster_branch_count),
+            uses_validation_data=False,
+            method_note="C2M3-distance branch ensemble matched to rank-lift branch count; no obstruction residual used",
+            capacity_metadata=method_capacity_metadata(
+                f"c2m3_cluster_branch_ensemble_{c2m3_cluster_branch_count}",
+                c2m3_cluster_branches,
+                base_model,
+            ),
         )
     )
     return rows
@@ -775,6 +942,103 @@ def compute_stats(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
     return pd.concat([pd.DataFrame(rows), pd.DataFrame(method_rows)], ignore_index=True, sort=False)
 
 
+def compute_branch_paired_deltas(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
+    if runs.empty or "method" not in runs:
+        return pd.DataFrame()
+    group_cols = [
+        "dataset",
+        "architecture",
+        "n_models",
+        "width",
+        "domain_shift",
+        "matching",
+        "alignment_source",
+        "alignment_noise_fraction",
+    ]
+    rows = []
+    for key, group in runs.groupby(group_cols, dropna=False):
+        meta = dict(zip(group_cols, key))
+        methods = set(group["method"].astype(str))
+        rank_methods = sorted(method for method in methods if method.startswith("twisted_rank_lift_"))
+        for rank_method in rank_methods:
+            branch_count = int(rank_method.rsplit("_", 1)[-1])
+            rank = group[group["method"] == rank_method][["run_id", "seed", "test_accuracy"]].rename(
+                columns={"test_accuracy": "rank_lift_test_accuracy"}
+            )
+            for baseline_prefix in BRANCH_CAPACITY_BASELINES:
+                baseline_method = f"{baseline_prefix}_{branch_count}"
+                if baseline_method not in methods:
+                    continue
+                baseline = group[group["method"] == baseline_method][["run_id", "seed", "test_accuracy"]].rename(
+                    columns={"test_accuracy": "baseline_test_accuracy"}
+                )
+                paired = rank.merge(baseline, on=["run_id", "seed"], how="inner")
+                deltas = paired["rank_lift_test_accuracy"].astype(float) - paired["baseline_test_accuracy"].astype(float)
+                ci_low, ci_high = bootstrap_mean_ci(
+                    deltas,
+                    bootstrap_samples,
+                    seed=57721 + branch_count * 101 + len(rows),
+                )
+                n_paired = int(paired["seed"].nunique())
+                wins = int((deltas > 1e-12).sum())
+                ties = int((np.abs(deltas) <= 1e-12).sum())
+                losses = int((deltas < -1e-12).sum())
+                rows.append(
+                    {
+                        **meta,
+                        "fixed_setting_id": fixed_setting_id(
+                            str(meta["dataset"]),
+                            str(meta["architecture"]),
+                            int(meta["n_models"]),
+                            int(meta["width"]),
+                            str(meta["domain_shift"]),
+                            str(meta["matching"]),
+                        ),
+                        "rank_method": rank_method,
+                        "baseline_method": baseline_method,
+                        "comparison": f"{rank_method} - {baseline_method}",
+                        "branch_count": branch_count,
+                        "mean_delta": safe_mean(deltas),
+                        "std_delta": safe_std(deltas),
+                        "bootstrap_ci_low": ci_low,
+                        "bootstrap_ci_high": ci_high,
+                        "n_paired_seeds": n_paired,
+                        "wins": wins,
+                        "ties": ties,
+                        "losses": losses,
+                        "baseline_ci_lower_positive": bool(math.isfinite(ci_low) and ci_low > 0.0),
+                    }
+                )
+    out = pd.DataFrame(rows)
+    if out.empty:
+        return out
+    support_cols = group_cols + ["rank_method", "branch_count"]
+    out["rank_lift_capacity_matched_claim_supported"] = False
+    out["claim_status"] = "unsupported_missing_capacity_matched_controls"
+    for key, group in out.groupby(support_cols, dropna=False):
+        idx = group.index
+        observed = str(group["alignment_source"].iloc[0]) == "observed" and safe_float(group["alignment_noise_fraction"].iloc[0]) == 0.0
+        has_all = set(group["baseline_method"]) == {
+            f"{prefix}_{int(group['branch_count'].iloc[0])}" for prefix in BRANCH_CAPACITY_BASELINES
+        }
+        enough_pairs = bool((group["n_paired_seeds"] >= 20).all())
+        all_positive = bool(group["baseline_ci_lower_positive"].all())
+        supported = bool(observed and has_all and enough_pairs and all_positive)
+        if not observed:
+            status = "negative_control_not_primary_evidence"
+        elif not has_all:
+            status = "unsupported_missing_capacity_matched_controls"
+        elif not enough_pairs:
+            status = "unsupported_descriptive_n_below_20"
+        elif supported:
+            status = "supported_vs_all_capacity_matched_branch_baselines"
+        else:
+            status = "unsupported_ci_crosses_zero_or_negative"
+        out.loc[idx, "rank_lift_capacity_matched_claim_supported"] = supported
+        out.loc[idx, "claim_status"] = status
+    return out
+
+
 def md_table(df: pd.DataFrame, columns: list[str], max_rows: int = 20) -> str:
     if df.empty:
         return "_No rows._"
@@ -873,7 +1137,16 @@ def plot_delta_methods(runs: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
-def write_report(args, runs: pd.DataFrame, stats: pd.DataFrame, individuals: pd.DataFrame, triangles: pd.DataFrame, report_path: Path) -> None:
+def write_report(
+    args,
+    runs: pd.DataFrame,
+    stats: pd.DataFrame,
+    individuals: pd.DataFrame,
+    triangles: pd.DataFrame,
+    paired_deltas: pd.DataFrame,
+    report_path: Path,
+    title: str = "Fixed-Setting Model-Merging Verification",
+) -> None:
     observed_stats = stats[
         (stats["claim_status"].astype(str).str.contains("supported|unsupported|negative_control", na=False))
         & stats["pearson_cycle_vs_weight_degradation"].notna()
@@ -899,7 +1172,7 @@ def write_report(args, runs: pd.DataFrame, stats: pd.DataFrame, individuals: pd.
         if not supported.empty
         else "No fixed observed setting in this run passes the n>=20 positive-correlation gate; results are descriptive."
     )
-    report = f"""# Fixed-Setting Model-Merging Verification
+    report = f"""# {title}
 
 This report is generated by `experiments/model_merging_fixed_setting_verification.py`.
 
@@ -931,6 +1204,11 @@ The intended full repeated-seed protocol is documented here and is not run autom
 - `reports/csv/{STATS_CSV}`
 - `reports/csv/{TRIANGLES_CSV}`
 - `reports/csv/{INDIVIDUALS_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_RUNS_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_SUMMARY_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_TRIANGLES_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_INDIVIDUALS_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}`
 - `reports/plots/fixed_setting_cycle_vs_degradation.pdf`
 - `reports/plots/fixed_setting_by_N_width.pdf`
 - `reports/plots/fixed_setting_delta_methods.pdf`
@@ -948,6 +1226,12 @@ A fixed setting is marked supported only when `n_rows >= 20`, Pearson and Spearm
 ## Method Deltas
 
 {md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "alignment_source", "method", "n_rows", "mean_test_accuracy", "mean_delta_vs_weight_average", "mean_delta_vs_greedy_soup", "mean_delta_vs_c2m3_synchronized"], 40)}
+
+## Capacity matching and extra capacity
+
+The branch rank-lift row is not a single merged model. It is an extra-capacity branch ensemble with `branch_count > 1`, `parameter_multiplier > 1`, and `inference_multiplier > 1`. The branch-capacity controls below match that branch count and inference multiplier: random branch partitioning, validation-selected branches, and C2M3-distance cluster branches. A rank-lift improvement is marked supported only when the observed paired bootstrap CI lower bound is positive against all three controls with at least 20 paired seeds.
+
+{md_table(paired_deltas, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "alignment_source", "comparison", "branch_count", "n_paired_seeds", "mean_delta", "std_delta", "bootstrap_ci_low", "bootstrap_ci_high", "wins", "ties", "losses", "claim_status"], 40)}
 
 ## Individual Model Accuracy
 
@@ -991,20 +1275,36 @@ def update_claims_audit(path: Path) -> None:
     supported_new = (
         supported_marker
         + "\n| The fixed-setting verification script implements the stronger repeated-seed obstruction-correlation gate for real small neural networks. | Supported implementation | `experiments/model_merging_fixed_setting_verification.py` writes fixed-setting run, statistics, triangle-defect, and individual-model CSVs plus plots/report; claims remain gated by `n_rows >= 20` observed rows and bootstrap CIs. |"
+        + "\n| Rank-lift branch evidence is separated from branch-capacity matched non-obstruction controls. | Supported implementation | `src/rank_lift_baselines.py` adds random, validation-selected, and C2M3-cluster branch ensembles. `reports/csv/real_obstruction_paired_deltas.csv` marks rank-lift support only when observed paired CI lower bounds are positive against all three branch controls with at least 20 paired seeds. |"
     )
     if supported_marker in text and "fixed-setting verification script implements the stronger repeated-seed" not in text:
         text = text.replace(supported_marker, supported_new)
+    elif "Rank-lift branch evidence is separated from branch-capacity matched non-obstruction controls." not in text:
+        text += (
+            "\n| Rank-lift branch evidence is separated from branch-capacity matched non-obstruction controls. | Supported implementation | `src/rank_lift_baselines.py` adds random, validation-selected, and C2M3-cluster branch ensembles. `reports/csv/real_obstruction_paired_deltas.csv` marks rank-lift support only when observed paired CI lower bounds are positive against all three branch controls with at least 20 paired seeds. |"
+        )
     artifact_marker = "| `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |"
     artifact_new = (
         artifact_marker
         + "\n| `reports/fixed_setting_verification_report.md` | Stronger fixed-setting repeated-seed verification report for cycle residual versus ordinary merge degradation. |"
+        + "\n| `reports/real_obstruction_degradation_report.md` | Paper-facing real obstruction-degradation report with capacity-matched rank-lift branch controls. |"
         + f"\n| `reports/csv/{RUNS_CSV}` | Per-method fixed-setting rows including observed/injected alignment labels and method-capacity metadata. |"
+        + f"\n| `reports/csv/{REAL_OBSTRUCTION_RUNS_CSV}` | Paper-facing alias for per-method real obstruction-degradation rows, including capacity metadata and branch controls. |"
         + f"\n| `reports/csv/{STATS_CSV}` | Fixed-setting Pearson/Spearman/bootstrap and controlled regression statistics. |"
         + f"\n| `reports/csv/{TRIANGLES_CSV}` | Per-triangle permutation/cocycle defect rows. |"
         + f"\n| `reports/csv/{INDIVIDUALS_CSV}` | Per-local-model validation/test accuracy and checkpoint metadata. |"
+        + f"\n| `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}` | Paired rank-lift minus branch-capacity matched baseline deltas with bootstrap confidence intervals. |"
     )
     if artifact_marker in text and "fixed_setting_verification_report.md" not in text:
         text = text.replace(artifact_marker, artifact_new)
+    elif "real_obstruction_paired_deltas.csv" not in text:
+        text += (
+            "\n| `reports/real_obstruction_degradation_report.md` | Paper-facing real obstruction-degradation report with capacity-matched rank-lift branch controls. |"
+            f"\n| `reports/csv/{REAL_OBSTRUCTION_RUNS_CSV}` | Paper-facing alias for per-method real obstruction-degradation rows, including capacity metadata and branch controls. |"
+            f"\n| `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}` | Paired rank-lift minus branch-capacity matched baseline deltas with bootstrap confidence intervals. |"
+        )
+    if not text.endswith("\n"):
+        text += "\n"
     path.write_text(text, encoding="utf-8")
 
 
@@ -1078,6 +1378,7 @@ def main() -> None:
     individuals = pd.DataFrame(all_individuals)
     triangles = pd.DataFrame(all_triangles)
     stats = compute_stats(runs, args.bootstrap_samples)
+    paired_deltas = compute_branch_paired_deltas(runs, args.bootstrap_samples)
 
     csv_dir = args.reports_dir / "csv"
     plot_dir = args.reports_dir / "plots"
@@ -1087,15 +1388,39 @@ def main() -> None:
     stats_path = csv_dir / STATS_CSV
     triangles_path = csv_dir / TRIANGLES_CSV
     individuals_path = csv_dir / INDIVIDUALS_CSV
-    runs.to_csv(runs_path, index=False)
-    stats.to_csv(stats_path, index=False)
-    triangles.to_csv(triangles_path, index=False)
-    individuals.to_csv(individuals_path, index=False)
+    paired_deltas_path = csv_dir / REAL_OBSTRUCTION_PAIRED_DELTAS_CSV
+    runs.to_csv(runs_path, index=False, lineterminator="\n")
+    stats.to_csv(stats_path, index=False, lineterminator="\n")
+    triangles.to_csv(triangles_path, index=False, lineterminator="\n")
+    individuals.to_csv(individuals_path, index=False, lineterminator="\n")
+    paired_deltas.to_csv(paired_deltas_path, index=False, lineterminator="\n")
+    runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
+    stats.to_csv(csv_dir / REAL_OBSTRUCTION_SUMMARY_CSV, index=False, lineterminator="\n")
+    triangles.to_csv(csv_dir / REAL_OBSTRUCTION_TRIANGLES_CSV, index=False, lineterminator="\n")
+    individuals.to_csv(csv_dir / REAL_OBSTRUCTION_INDIVIDUALS_CSV, index=False, lineterminator="\n")
 
     plot_cycle_vs_degradation(runs, plot_dir / "fixed_setting_cycle_vs_degradation.pdf")
     plot_by_n_width(stats, plot_dir / "fixed_setting_by_N_width.pdf")
     plot_delta_methods(runs, plot_dir / "fixed_setting_delta_methods.pdf")
-    write_report(args, runs, stats, individuals, triangles, args.reports_dir / "fixed_setting_verification_report.md")
+    write_report(
+        args,
+        runs,
+        stats,
+        individuals,
+        triangles,
+        paired_deltas,
+        args.reports_dir / "fixed_setting_verification_report.md",
+    )
+    write_report(
+        args,
+        runs,
+        stats,
+        individuals,
+        triangles,
+        paired_deltas,
+        args.reports_dir / "real_obstruction_degradation_report.md",
+        title="Real Obstruction Degradation Verification",
+    )
     save_json(
         args.reports_dir / "configs" / "fixed_setting_verification_config.json",
         {
@@ -1110,7 +1435,9 @@ def main() -> None:
     print(f"wrote {stats_path}")
     print(f"wrote {triangles_path}")
     print(f"wrote {individuals_path}")
+    print(f"wrote {paired_deltas_path}")
     print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
+    print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
 
 
 if __name__ == "__main__":
