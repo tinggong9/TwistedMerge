@@ -2,10 +2,10 @@
   "argv": [
     "experiments/robust_period_index_calibration.py"
   ],
-  "commit": "cc3f255",
+  "commit": "ebbf7ec",
   "default_seeds_note": "20 seeds used by default for local runtime; rerun with --seeds 50 for heavier calibration.",
   "environment": {
-    "git_commit": "cc3f255",
+    "git_commit": "ebbf7ec",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
