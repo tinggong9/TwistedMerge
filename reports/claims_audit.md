@@ -35,6 +35,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | Controlled signed or monomial examples can reveal central `mu_2` or finite-index projective residuals. | Supported | `reports/structure_group_ladder_report.md` reports `signed_mu2_central` as `central_mu2_candidate`, order-3 clock-shift rank 2 as obstructed, and rank 3 as `finite_index_projective_lift`. |
 | Controlled noncentral examples remain noncentral and are not mislabeled as Brauer/projective by the ladder. | Supported | `tests/test_structure_group_ladder.py` checks the `S_3` and GL controls are noncentral; the ladder report labels them `noncentral_permutation_holonomy` and `gl_noncentral_holonomy`. |
 | Real MNIST residuals were tested across the implemented permutation, signed, monomial, and low-rank GL structure levels. | Supported negative result | `reports/csv/structure_group_ladder_summary.csv` reports 50 real MNIST rows per evaluated level, zero central/projective candidates, and block-orthogonal marked `not_evaluated`. |
+| The actionable ladder merge benchmark was run on MNIST MLPs. | Supported | `reports/structure_group_ladder_merge_report.md` and `reports/csv/structure_group_ladder_merge_benchmark.csv` cover MNIST ReLU MLP, `N=3,4`, widths `16,32`, five seeds, and methods including weight average, greedy soup, C2M3, signed, monomial scale, GL diagnostic, and ensemble. |
+| Monomial positive scaling was evaluated as an exact ReLU reparameterization before averaging. | Supported | `src/ladder_merge_methods.py` applies positive hidden-unit scaling with inverse outgoing adjustment; `reports/structure_group_ladder_merge_report.md` labels `monomial_scale` as `exact_relu_positive_scale_symmetry`. |
+| In the current MNIST ladder merge benchmark, monomial scaling gives a descriptive mean gain over C2M3 but not over greedy soup. | Supported descriptive | `reports/csv/structure_group_ladder_merge_summary.csv` reports monomial mean accuracy deltas versus C2M3 of `0.0090` to `0.0160`, while deltas versus greedy soup are negative in all fixed settings. |
 
 ## Not Yet Supported
 
@@ -50,7 +53,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | The planted obstruction score generally predicts every kind of model-merging degradation. | Not yet supported | In `reports/planted_obstruction_model_merging_report.md`, weight averaging is constant across planted levels because it does not use alignments, and the random noncentral Git-ReBasin trend is weaker than the central trend. |
 | TwistedMerge/rank-lifted branching adds benefit beyond C2M3 in the planted model-merging benchmark. | Not yet supported | `reports/csv/planted_obstruction_stats.csv` reports rank-lift accuracy delta versus C2M3 is `0.0000` for central and random planted families. |
 | Rank-lift helps only when the planted defect is central/twist-like in the model-merging benchmark. | Not yet supported | The planted benchmark shows no rank-lift gain beyond C2M3 for either central or random defects, so central selectivity is not established. |
-| TwistedMerge++ beats C2M3 on real MNIST/CIFAR model merging. | Not yet supported | `reports/twisted_merge_plus_report.md` is a synthetic selector sanity check, not a real MNIST/CIFAR benchmark. |
+| TwistedMerge++ beats C2M3 on real MNIST/CIFAR model merging. | Not yet supported | `reports/structure_group_ladder_merge_report.md` gives a descriptive MNIST monomial-scaling gain over C2M3, but it is a five-seed prototype benchmark, not CIFAR, not external C2M3, and not enough for a broad TwistedMerge++ claim. |
 | TwistedMerge++ solves natural model merging. | Not yet supported | The current TwistedMerge++ artifacts test residual classification and selection logic only. Natural MNIST/CIFAR claims remain governed by `reports/model_merging_verification_report.md`. |
 | TwistedMerge++ trivializes a nonzero `H^2(mu_2)` class as an ordinary vector bundle. | Not yet supported | `tests/test_twisted_merge_plus.py` and `reports/twisted_merge_plus_report.md` label the nonzero tetrahedral class as branch-only extra-capacity behavior, not ordinary untwisted descent. |
 | TwistedMerge++ rank-lift gives a capacity-matched single-model improvement. | Not yet supported | The branch path is explicitly labeled `branch_lift_extra_capacity`; no capacity-matched single-model comparison has been run. |
@@ -61,6 +64,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | Real neural defects are Brauer classes. | Not yet supported | `reports/noncentral_holonomy_ladder_report.md` explicitly separates noncentral permutation holonomy from central Brauer/projective candidates. |
 | Noncentral regular branch lifts are capacity-matched single merged models. | Not yet supported | `src/noncentral_holonomy.py` labels the regular representation construction `noncentral_regular_branch_lift_extra_capacity`; no compression/capacity-matched result is provided. |
 | Enlarging the structure group automatically reveals finite-index torsion in real models. | Not yet supported | `reports/structure_group_ladder_report.md` tests signed, monomial, and low-rank GL diagnostics on real MNIST and still reports zero central/projective candidates; block-orthogonal real mining is marked `not_evaluated`. |
+| Signed or full-GL transforms are exact single-model merges for ReLU MLPs. | Not yet supported | `reports/structure_group_ladder_merge_report.md` labels signed permutation as `heuristic_relu_not_exact` and low-rank GL as `diagnostic_not_single_model_for_relu`. |
 
 ## Current Artifact Map
 
@@ -111,3 +115,8 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/structure_group_ladder_report.md` | Report for structure-group ladder controls and real MNIST ladder mining. |
 | `reports/csv/structure_group_ladder_mining.csv` | Per-triangle, per-level ladder diagnostics for controls and MNIST. |
 | `reports/csv/structure_group_ladder_summary.csv` | Summary statistics by source and structure-group level. |
+| `src/ladder_merge_methods.py` | Exact ReLU positive scaling transform, heuristic signed transform, and method metadata for ladder merge benchmarking. |
+| `experiments/structure_group_ladder_merge_benchmark.py` | Actionable MNIST MLP benchmark comparing weight average, greedy soup, C2M3, signed, monomial scale, GL diagnostic, and ensemble. |
+| `reports/structure_group_ladder_merge_report.md` | Performance report for actionable structure-group ladder merge methods. |
+| `reports/csv/structure_group_ladder_merge_benchmark.csv` | Per-setting, per-method ladder merge performance rows. |
+| `reports/csv/structure_group_ladder_merge_summary.csv` | Fixed-setting summary statistics and deltas versus C2M3, weight averaging, and greedy soup. |
