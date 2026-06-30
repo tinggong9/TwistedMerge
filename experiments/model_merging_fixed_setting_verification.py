@@ -29,7 +29,7 @@ from src.model_merging_benchmark import (  # noqa: E402
     average_models,
     collect_features,
     compose_perm,
-    compute_pairwise_permutations,
+    compute_layerwise_pairwise_permutations,
     cycle_score,
     device_from_arg,
     evaluate_ensemble,
@@ -40,14 +40,25 @@ from src.model_merging_benchmark import (  # noqa: E402
     load_dataset,
     make_loader,
     make_model,
+    model_layer_widths,
     permutation_disagreement,
     permute_model_to_reference,
+    primary_alignment_layer,
+    primary_pairwise_permutations,
     rank_lifted_branch_models,
     require_torch,
     save_checkpoint,
     set_seed,
+    synchronize_layerwise_permutations,
     synchronize_permutations,
     train_model,
+)
+from src.monomial_gauge_alignment import (  # noqa: E402
+    apply_monomial_alignment_to_reference,
+    average_monomial_defect_score,
+    compare_function_before_after_alignment,
+    estimate_pairwise_monomial_alignments,
+    monomial_scaling_statistics,
 )
 from src.rank_lift_baselines import (  # noqa: E402
     c2m3_cluster_branch_ensemble,
@@ -66,10 +77,30 @@ REAL_OBSTRUCTION_SUMMARY_CSV = "real_obstruction_summary.csv"
 REAL_OBSTRUCTION_TRIANGLES_CSV = "real_obstruction_triangle_defects.csv"
 REAL_OBSTRUCTION_INDIVIDUALS_CSV = "real_obstruction_individual_models.csv"
 REAL_OBSTRUCTION_PAIRED_DELTAS_CSV = "real_obstruction_paired_deltas.csv"
+REAL_OBSTRUCTION_REGRESSIONS_CSV = "real_obstruction_predictor_regressions.csv"
+MONOMIAL_RUNS_CSV = "monomial_fixed_setting_runs.csv"
+MONOMIAL_TRIANGLES_CSV = "monomial_triangle_defects.csv"
 BRANCH_CAPACITY_BASELINES = (
     "random_branch_ensemble",
     "validation_branch_ensemble",
     "c2m3_cluster_branch_ensemble",
+)
+MONOMIAL_MATCHINGS = {"monomial_activation", "monomial_weight"}
+PREDICTION_TARGETS = (
+    "weight_average_degradation_vs_best_single",
+    "git_rebasin_degradation_vs_best_single",
+    "c2m3_degradation_vs_best_single",
+    "c2m3_delta_vs_git_rebasin",
+    "c2m3_delta_vs_weight_average",
+    "rank_lift_delta_vs_weight_average",
+    "rank_lift_delta_vs_c2m3",
+    "greedy_soup_delta_vs_weight_average",
+)
+REGRESSION_PREDICTORS = (
+    "mean_cycle_score",
+    "monomial_defect_score",
+    "combined_obstruction_score",
+    "sync_disagreement",
 )
 
 
@@ -114,6 +145,19 @@ def fixed_setting_id(dataset: str, architecture: str, n_models: int, width: int,
     return f"{dataset}_{architecture}_N{n_models}_W{width}_{domain_shift}_{matching}"
 
 
+def is_monomial_matching(matching: str) -> bool:
+    return str(matching).strip().lower() in MONOMIAL_MATCHINGS
+
+
+def permutation_matching_for(matching: str) -> str:
+    name = str(matching).strip().lower()
+    if name == "monomial_activation":
+        return "activation"
+    if name == "monomial_weight":
+        return "weight"
+    return name
+
+
 def run_id_for(setting_id: str, seed: int) -> str:
     return f"{setting_id}_seed{seed}"
 
@@ -130,6 +174,18 @@ def safe_mean(values) -> float:
     arr = np.asarray([safe_float(value) for value in values], dtype=float)
     arr = arr[np.isfinite(arr)]
     return float(arr.mean()) if len(arr) else float("nan")
+
+
+def safe_min(values) -> float:
+    arr = np.asarray([safe_float(value) for value in values], dtype=float)
+    arr = arr[np.isfinite(arr)]
+    return float(arr.min()) if len(arr) else float("nan")
+
+
+def safe_max(values) -> float:
+    arr = np.asarray([safe_float(value) for value in values], dtype=float)
+    arr = arr[np.isfinite(arr)]
+    return float(arr.max()) if len(arr) else float("nan")
 
 
 def safe_std(values) -> float:
@@ -227,6 +283,49 @@ def regression_cycle_beta(x_values, y_values, control_columns: list[np.ndarray])
     return float(beta[1])
 
 
+def regression_predictor_beta(predictor_values, outcome_values, control_columns: list[np.ndarray]) -> float:
+    x = np.asarray(predictor_values, dtype=float)
+    y = np.asarray(outcome_values, dtype=float)
+    controls = np.column_stack([np.asarray(col, dtype=float) for col in control_columns])
+    mask = np.isfinite(x) & np.isfinite(y) & np.isfinite(controls).all(axis=1)
+    x = x[mask]
+    y = y[mask]
+    controls = controls[mask]
+    if len(x) <= controls.shape[1] + 2 or np.std(x) <= 1e-12:
+        return float("nan")
+    design = np.column_stack([np.ones(len(x)), x, controls])
+    beta, *_ = np.linalg.lstsq(design, y, rcond=None)
+    return float(beta[1])
+
+
+def bootstrap_regression_beta_ci(
+    predictor_values,
+    outcome_values,
+    control_columns: list[np.ndarray],
+    n_boot: int,
+    seed: int,
+) -> tuple[float, float]:
+    x = np.asarray(predictor_values, dtype=float)
+    y = np.asarray(outcome_values, dtype=float)
+    controls = np.column_stack([np.asarray(col, dtype=float) for col in control_columns])
+    mask = np.isfinite(x) & np.isfinite(y) & np.isfinite(controls).all(axis=1)
+    x = x[mask]
+    y = y[mask]
+    controls = controls[mask]
+    if len(x) <= controls.shape[1] + 2 or n_boot <= 0:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    estimates = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, len(x), len(x))
+        value = regression_predictor_beta(x[idx], y[idx], [controls[idx, col] for col in range(controls.shape[1])])
+        if math.isfinite(value):
+            estimates.append(value)
+    if not estimates:
+        return float("nan"), float("nan")
+    return float(np.quantile(estimates, 0.025)), float(np.quantile(estimates, 0.975))
+
+
 def summarize_seed_list(seeds: list[int]) -> str:
     if not seeds:
         return ""
@@ -238,6 +337,79 @@ def summarize_seed_list(seeds: list[int]) -> str:
 def permutation_json(pairwise_perms: dict[tuple[int, int], np.ndarray]) -> str:
     payload = {f"{i}->{j}": pairwise_perms[(i, j)].astype(int).tolist() for i, j in sorted(pairwise_perms)}
     return json.dumps(payload, sort_keys=True, separators=(",", ":"))
+
+
+def layerwise_permutation_json(pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]]) -> str:
+    payload = {
+        layer: {f"{i}->{j}": pairwise_by_layer[layer][(i, j)].astype(int).tolist() for i, j in sorted(pairwise_by_layer[layer])}
+        for layer in sorted(pairwise_by_layer)
+    }
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"))
+
+
+def layer_reference_perms(pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]], ref: int, idx: int) -> dict[str, np.ndarray]:
+    return {layer: pairwise[(ref, idx)] for layer, pairwise in pairwise_by_layer.items()}
+
+
+def synced_layer_perms(synced_by_layer: dict[str, dict[int, np.ndarray]], idx: int) -> dict[str, np.ndarray]:
+    return {layer: synced[idx] for layer, synced in synced_by_layer.items()}
+
+
+def permutation_arg_for_architecture(architecture: str, layer_perms: dict[str, np.ndarray]) -> np.ndarray | dict[str, np.ndarray]:
+    if architecture in {"mlp", "cnn"}:
+        return layer_perms[primary_alignment_layer(architecture)]
+    return layer_perms
+
+
+def synchronize_alignment_bundle(
+    pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]],
+    n_models: int,
+) -> tuple[str, dict[str, dict[int, np.ndarray]], float]:
+    if len(pairwise_by_layer) == 1:
+        layer, pairwise = next(iter(pairwise_by_layer.items()))
+        ref, synced, residual = synchronize_permutations(pairwise, n_models)
+        return f"{layer}:{ref}", {layer: synced}, residual
+    return synchronize_layerwise_permutations(pairwise_by_layer, n_models)
+
+
+def inject_layerwise_permutation_noise(
+    pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]],
+    n_models: int,
+    widths_by_layer: dict[str, int],
+    swap_fraction: float,
+    seed: int,
+) -> dict[str, dict[tuple[int, int], np.ndarray]]:
+    return {
+        layer: inject_pairwise_permutation_noise(
+            pairwise,
+            n_models,
+            int(widths_by_layer[layer]),
+            swap_fraction,
+            seed + 104729 * layer_idx,
+        )
+        for layer_idx, (layer, pairwise) in enumerate(pairwise_by_layer.items())
+    }
+
+
+def triangle_predictor_summary(pairwise_perms: dict[tuple[int, int], np.ndarray], n_models: int, width: int) -> dict:
+    _score, rows = cycle_score(pairwise_perms, n_models, width)
+    cycle_values = [float(row["cycle_defect"]) for row in rows]
+    identity = np.arange(width)
+    nonidentity = []
+    defect_rates = []
+    for i, j, k in combinations(range(n_models), 3):
+        triangle_perm = compose_perm(compose_perm(pairwise_perms[(i, j)], pairwise_perms[(j, k)]), pairwise_perms[(k, i)])
+        defect_rate = permutation_disagreement(triangle_perm, identity)
+        defect_rates.append(defect_rate)
+        nonidentity.append(float(defect_rate > 0.0))
+    return {
+        "mean_cycle_score": safe_mean(cycle_values),
+        "max_cycle_score": max(cycle_values, default=float("nan")),
+        "median_cycle_score": float(np.median(cycle_values)) if cycle_values else float("nan"),
+        "nonidentity_triangle_fraction": safe_mean(nonidentity),
+        "mean_triangle_defect_rate": safe_mean(defect_rates),
+        "max_triangle_defect_rate": max(defect_rates, default=float("nan")),
+    }
 
 
 def triangle_rows(
@@ -263,6 +435,7 @@ def triangle_rows(
                 **base_row,
                 "alignment_source": source,
                 "alignment_noise_fraction": noise_fraction,
+                "triangle_type": "permutation",
                 "triangle": f"{i}-{j}-{k}",
                 "i": i,
                 "j": j,
@@ -280,6 +453,51 @@ def triangle_rows(
     return score, out
 
 
+def monomial_triangle_rows(
+    base_row: dict,
+    monomial_alignments: dict,
+    n_models: int,
+    alignment_source: str,
+    noise_fraction: float,
+) -> tuple[float, list[dict]]:
+    score, rows = average_monomial_defect_score(monomial_alignments, n_models)
+    out = []
+    for row in rows:
+        out.append(
+            {
+                **base_row,
+                "alignment_source": alignment_source,
+                "alignment_noise_fraction": noise_fraction,
+                "is_injected_alignment_control": alignment_source != "observed",
+                "triangle_type": "monomial",
+                "i": int(row["i"]),
+                "j": int(row["j"]),
+                "k": int(row["k"]),
+                "monomial_defect_score": row["monomial_defect_score"],
+                "monomial_cycle_trace": row["monomial_cycle_trace"],
+                "monomial_cycle_determinant": row["monomial_cycle_determinant"],
+                "monomial_average_defect_score": score,
+            }
+        )
+    return score, out
+
+
+def _center_normalize_features(features: np.ndarray) -> np.ndarray:
+    centered = features - features.mean(axis=0, keepdims=True)
+    return centered / np.maximum(np.linalg.norm(centered, axis=0, keepdims=True), 1e-12)
+
+
+def activation_assignment_similarity(features_i: np.ndarray, features_j: np.ndarray, perm: np.ndarray) -> dict:
+    xi = _center_normalize_features(features_i)
+    xj = _center_normalize_features(features_j)
+    similarity = xi.T @ xj
+    assigned = similarity[np.arange(len(perm)), perm]
+    return {
+        "assigned_similarity_mean": safe_mean(assigned),
+        "assigned_similarity_min": min([safe_float(value) for value in assigned], default=float("nan")),
+    }
+
+
 def pairwise_alignment_residuals(models: list, pairwise_perms: dict[tuple[int, int], np.ndarray], loader, device, max_batches: int) -> dict:
     features = [collect_features(model, loader, device, max_batches=max_batches) for model in models]
     rows = []
@@ -289,12 +507,57 @@ def pairwise_alignment_residuals(models: list, pairwise_perms: dict[tuple[int, i
         fj = features[j][:, perm] - features[j][:, perm].mean(axis=0, keepdims=True)
         denom = float(np.linalg.norm(fi) + np.linalg.norm(fj) + 1e-12)
         residual = float(np.linalg.norm(fi - fj) / denom)
-        rows.append({"pair": f"{i}-{j}", "residual": residual})
+        sim = activation_assignment_similarity(features[i], features[j], perm)
+        rows.append({"pair": f"{i}-{j}", "residual": residual, **sim})
     return {
         "pairwise_alignment_residual_mean": safe_mean([row["residual"] for row in rows]),
         "pairwise_alignment_residual_max": max([row["residual"] for row in rows], default=float("nan")),
+        "activation_assignment_similarity_mean": safe_mean([row["assigned_similarity_mean"] for row in rows]),
+        "activation_assignment_similarity_min": safe_min([row["assigned_similarity_min"] for row in rows]),
         "pairwise_alignment_residual_json": json.dumps(rows, sort_keys=True, separators=(",", ":")),
     }
+
+
+def bounded(value: float, low: float = 0.0, high: float = 1.0) -> float:
+    value = safe_float(value)
+    if not math.isfinite(value):
+        return float("nan")
+    return float(min(high, max(low, value)))
+
+
+def obstruction_predictor_columns(
+    pairwise_perms: dict[tuple[int, int], np.ndarray],
+    n_models: int,
+    width: int,
+    residuals: dict,
+    sync_disagreement: float,
+) -> dict:
+    predictors = triangle_predictor_summary(pairwise_perms, n_models, width)
+    residual_mean = bounded(residuals.get("pairwise_alignment_residual_mean", float("nan")))
+    similarity_mean = safe_float(residuals.get("activation_assignment_similarity_mean", float("nan")))
+    similarity_confidence = bounded((similarity_mean + 1.0) / 2.0)
+    residual_confidence = bounded(1.0 - residual_mean)
+    alignment_confidence = (
+        float(similarity_confidence * residual_confidence)
+        if math.isfinite(similarity_confidence) and math.isfinite(residual_confidence)
+        else float("nan")
+    )
+    obstruction_terms = [
+        bounded(predictors["mean_cycle_score"]),
+        bounded(predictors["max_cycle_score"]),
+        bounded(predictors["median_cycle_score"]),
+        bounded(predictors["nonidentity_triangle_fraction"]),
+        bounded(sync_disagreement),
+        residual_mean,
+        bounded(1.0 - alignment_confidence),
+    ]
+    predictors.update(
+        {
+            "alignment_confidence_score": alignment_confidence,
+            "combined_obstruction_score": safe_mean(obstruction_terms),
+        }
+    )
+    return predictors
 
 
 def baseline_record(
@@ -374,8 +637,11 @@ def evaluate_methods(
     spec,
     width: int,
     pairwise_perms: dict[tuple[int, int], np.ndarray],
+    pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]],
+    monomial_alignments: dict | None = None,
     val_loader,
     test_loader,
+    match_loader=None,
     device,
     base: dict,
 ) -> list[dict]:
@@ -424,10 +690,23 @@ def evaluate_methods(
         )
     )
 
-    pairwise_aligned = [
-        models[0] if idx == 0 else permute_model_to_reference(models[idx], architecture, spec, width, pairwise_perms[(0, idx)])
-        for idx in range(len(models))
-    ]
+    pairwise_aligned = []
+    for idx in range(len(models)):
+        if idx == 0:
+            pairwise_aligned.append(models[0])
+        else:
+            pairwise_aligned.append(
+                permute_model_to_reference(
+                    models[idx],
+                    architecture,
+                    spec,
+                    width,
+                    permutation_arg_for_architecture(
+                        architecture,
+                        layer_reference_perms(pairwise_by_layer, 0, idx),
+                    ),
+                )
+            )
     pairwise_merged = average_models(pairwise_aligned, architecture, spec, width)
     rows.append(
         baseline_record(
@@ -448,9 +727,73 @@ def evaluate_methods(
         )
     )
 
-    sync_ref, synced_perms, sync_disagreement = synchronize_permutations(pairwise_perms, len(models))
+    if architecture == "mlp" and monomial_alignments is not None:
+        monomial_aligned = [models[0]]
+        preservation_rows = []
+        for idx in range(1, len(models)):
+            aligned = apply_monomial_alignment_to_reference(models[idx], spec, width, monomial_alignments[(0, idx)])
+            if match_loader is not None:
+                preservation_rows.append(
+                    compare_function_before_after_alignment(
+                        models[idx],
+                        aligned,
+                        match_loader,
+                        device,
+                        max_batches=args.feature_batches,
+                    )
+                )
+            monomial_aligned.append(aligned)
+        preservation_summary = {
+            "functional_preservation_error": safe_max(
+                [row["functional_preservation_error"] for row in preservation_rows]
+            )
+            if preservation_rows
+            else float("nan"),
+            "functional_preservation_mean_abs_error": safe_mean(
+                [row["functional_preservation_mean_abs_error"] for row in preservation_rows]
+            )
+            if preservation_rows
+            else float("nan"),
+            "functional_preservation_prediction_disagreement": safe_mean(
+                [row["functional_preservation_prediction_disagreement"] for row in preservation_rows]
+            )
+            if preservation_rows
+            else float("nan"),
+        }
+        monomial_model = average_models(monomial_aligned, architecture, spec, width)
+        monomial_base = {
+            **base,
+            **monomial_scaling_statistics(monomial_alignments),
+            **preservation_summary,
+        }
+        rows.append(
+            baseline_record(
+                method="monomial_gauge_ref0",
+                val_metrics=evaluate_model(monomial_model, val_loader, device),
+                test_metrics=evaluate_model(monomial_model, test_loader, device),
+                base=monomial_base,
+                is_single_model=True,
+                exact_relu_symmetry=True,
+                is_soup=False,
+                is_ensemble_or_extra_capacity=False,
+                capacity_matched=True,
+                parameter_multiplier=1.0,
+                inference_multiplier=1.0,
+                uses_validation_data=False,
+                method_note="ReLU-compatible monomial alignment to model 0 before same-capacity averaging",
+                capacity_metadata=method_capacity_metadata("monomial_gauge_ref0", monomial_model, base_model),
+            )
+        )
+
+    sync_ref, synced_perms_by_layer, sync_disagreement = synchronize_alignment_bundle(pairwise_by_layer, len(models))
     c2m3_aligned = [
-        models[idx] if idx == sync_ref else permute_model_to_reference(models[idx], architecture, spec, width, synced_perms[idx])
+        permute_model_to_reference(
+            models[idx],
+            architecture,
+            spec,
+            width,
+            permutation_arg_for_architecture(architecture, synced_layer_perms(synced_perms_by_layer, idx)),
+        )
         for idx in range(len(models))
     ]
     c2m3_model = average_models(c2m3_aligned, architecture, spec, width)
@@ -626,18 +969,36 @@ def add_paired_deltas(rows: list[dict], single_best_accuracy: float, mean_indivi
     lookup = {row["method"]: row for row in rows}
     weight = lookup.get("weight_average", {})
     greedy = lookup.get("greedy_soup", {})
+    git_rebasin = lookup.get("git_rebasin_pairwise_ref0", {})
     c2m3 = lookup.get("c2m3_synchronized", {})
+    rank_lift = next((row for row in rows if str(row["method"]).startswith("twisted_rank_lift_")), {})
+    weight_acc = float(weight.get("test_accuracy", float("nan")))
+    greedy_acc = float(greedy.get("test_accuracy", float("nan")))
+    git_acc = float(git_rebasin.get("test_accuracy", float("nan")))
+    c2m3_acc = float(c2m3.get("test_accuracy", float("nan")))
+    rank_lift_acc = float(rank_lift.get("test_accuracy", float("nan")))
+    target_values = {
+        "weight_average_degradation_vs_best_single": single_best_accuracy - weight_acc,
+        "git_rebasin_degradation_vs_best_single": single_best_accuracy - git_acc,
+        "c2m3_degradation_vs_best_single": single_best_accuracy - c2m3_acc,
+        "c2m3_delta_vs_git_rebasin": c2m3_acc - git_acc,
+        "c2m3_delta_vs_weight_average": c2m3_acc - weight_acc,
+        "rank_lift_delta_vs_weight_average": rank_lift_acc - weight_acc,
+        "rank_lift_delta_vs_c2m3": rank_lift_acc - c2m3_acc,
+        "greedy_soup_delta_vs_weight_average": greedy_acc - weight_acc,
+    }
     for row in rows:
         row["single_best_merge_degradation"] = single_best_accuracy - float(row["test_accuracy"])
         row["mean_individual_merge_degradation"] = mean_individual_accuracy - float(row["test_accuracy"])
         row["weight_merge_degradation"] = (
-            single_best_accuracy - float(weight.get("test_accuracy", float("nan")))
+            single_best_accuracy - weight_acc
             if row["method"] == "weight_average"
             else float("nan")
         )
-        row["delta_vs_weight_average"] = float(row["test_accuracy"]) - float(weight.get("test_accuracy", float("nan")))
-        row["delta_vs_greedy_soup"] = float(row["test_accuracy"]) - float(greedy.get("test_accuracy", float("nan")))
-        row["delta_vs_c2m3_synchronized"] = float(row["test_accuracy"]) - float(c2m3.get("test_accuracy", float("nan")))
+        row["delta_vs_weight_average"] = float(row["test_accuracy"]) - weight_acc
+        row["delta_vs_greedy_soup"] = float(row["test_accuracy"]) - greedy_acc
+        row["delta_vs_c2m3_synchronized"] = float(row["test_accuracy"]) - c2m3_acc
+        row.update(target_values)
 
 
 def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, width: int, domain_shift: str, matching: str, seed: int):
@@ -654,6 +1015,7 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         args.max_train_samples,
         args.max_test_samples,
         args.dataset_seed,
+        augmentation=args.augmentation,
     )
     train_indices, val_indices = split_indices(len(train_base), args.val_fraction, args.dataset_seed + 17)
     val_subset = torch.utils.data.Subset(train_base, val_indices)
@@ -670,7 +1032,18 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         train_subset = torch.utils.data.Subset(shifted_train, train_indices)
         train_loader = make_loader(train_subset, args.batch_size, shuffle=True, seed=local_seed + 1)
         model = make_model(architecture, spec, width)
-        train_model(model, train_loader, args.epochs, args.lr, device)
+        train_model(
+            model,
+            train_loader,
+            args.epochs,
+            args.lr,
+            device,
+            optimizer=args.optimizer,
+            weight_decay=args.weight_decay,
+            scheduler=args.scheduler,
+            step_size=args.step_size,
+            gamma=args.gamma,
+        )
         val_metrics = evaluate_model(model, val_loader, device)
         test_metrics = evaluate_model(model, test_loader, device)
         model.to("cpu")
@@ -686,6 +1059,12 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
             "local_seed": local_seed,
             "model_index": model_idx,
             "epochs": args.epochs,
+            "optimizer": args.optimizer,
+            "weight_decay": args.weight_decay,
+            "scheduler": args.scheduler,
+            "step_size": args.step_size,
+            "gamma": args.gamma,
+            "augmentation": args.augmentation,
             "max_train_samples": args.max_train_samples,
             "max_test_samples": args.max_test_samples,
             "dataset_seed": args.dataset_seed,
@@ -722,9 +1101,36 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
     single_best_accuracy = max(row["test_accuracy"] for row in individual_rows)
     single_worst_accuracy = min(row["test_accuracy"] for row in individual_rows)
 
-    pairwise = compute_pairwise_permutations(models, architecture, match_loader, device, matching)
+    if is_monomial_matching(matching) and architecture != "mlp":
+        raise ValueError("monomial gauge alignment is currently implemented only for one-hidden-layer mlp")
+    if is_monomial_matching(matching):
+        monomial_alignments = estimate_pairwise_monomial_alignments(
+            models,
+            match_loader,
+            device,
+            matching=matching,
+            max_batches=args.feature_batches,
+        )
+        pairwise_by_layer = {
+            primary_alignment_layer(architecture): {
+                pair: alignment.permutation for pair, alignment in monomial_alignments.items()
+            }
+        }
+    else:
+        monomial_alignments = None
+        pairwise_by_layer = compute_layerwise_pairwise_permutations(
+            models,
+            architecture,
+            match_loader,
+            device,
+            permutation_matching_for(matching),
+        )
+    pairwise = primary_pairwise_permutations(pairwise_by_layer, architecture)
+    primary_layer = primary_alignment_layer(architecture)
+    widths_by_layer = model_layer_widths(models[0], architecture)
+    primary_width = int(widths_by_layer[primary_layer])
     residuals = pairwise_alignment_residuals(models, pairwise, match_loader, device, args.feature_batches)
-    observed_sync_ref, _observed_synced, observed_sync_disagreement = synchronize_permutations(pairwise, n_models)
+    observed_sync_ref, _observed_synced, observed_sync_disagreement = synchronize_alignment_bundle(pairwise_by_layer, n_models)
     shared_base = {
         "setting_id": setting_id,
         "run_id": run_id,
@@ -740,26 +1146,53 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         "max_test_samples": args.max_test_samples,
         "batch_size": args.batch_size,
         "lr": args.lr,
+        "optimizer": args.optimizer,
+        "weight_decay": args.weight_decay,
+        "scheduler": args.scheduler,
+        "step_size": args.step_size,
+        "gamma": args.gamma,
+        "augmentation": args.augmentation,
         "dataset_seed": args.dataset_seed,
         "val_fraction": args.val_fraction,
         "mean_individual_accuracy": mean_individual_accuracy,
         "single_best_accuracy": single_best_accuracy,
         "single_worst_accuracy": single_worst_accuracy,
         "individual_accuracy_spread": single_best_accuracy - single_worst_accuracy,
+        "primary_alignment_layer": primary_layer,
         "pairwise_alignment_permutations_json": permutation_json(pairwise),
+        "layerwise_alignment_permutations_json": layerwise_permutation_json(pairwise_by_layer),
         **residuals,
     }
 
     run_rows = []
     triangle_out = []
-    observed_cycle_score, observed_triangles = triangle_rows(shared_base, pairwise, n_models, width, "observed", 0.0)
+    observed_cycle_score, observed_triangles = triangle_rows(shared_base, pairwise, n_models, primary_width, "observed", 0.0)
     triangle_out.extend(observed_triangles)
+    monomial_observed_score = float("nan")
+    if monomial_alignments is not None:
+        monomial_observed_score, monomial_triangles = monomial_triangle_rows(
+            shared_base,
+            monomial_alignments,
+            n_models,
+            "observed",
+            0.0,
+        )
+        triangle_out.extend(monomial_triangles)
+    observed_predictors = obstruction_predictor_columns(
+        pairwise,
+        n_models,
+        primary_width,
+        residuals,
+        observed_sync_disagreement,
+    )
     observed_base = {
         **shared_base,
         "alignment_source": "observed",
         "alignment_noise_fraction": 0.0,
         "is_injected_alignment_control": False,
         "cycle_score": observed_cycle_score,
+        "monomial_defect_score": monomial_observed_score,
+        **observed_predictors,
         "sync_reference_model": observed_sync_ref,
         "sync_disagreement": observed_sync_disagreement,
         "evidence_role": "primary_observed_alignment" if n_models >= 3 else "not_primary_no_triangle",
@@ -771,8 +1204,11 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         spec=spec,
         width=width,
         pairwise_perms=pairwise,
+        pairwise_by_layer=pairwise_by_layer,
+        monomial_alignments=monomial_alignments,
         val_loader=val_loader,
         test_loader=test_loader,
+        match_loader=match_loader,
         device=device,
         base=observed_base,
     )
@@ -782,19 +1218,36 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
     for noise_fraction in parse_float_csv(args.alignment_noise_levels):
         if noise_fraction <= 0:
             continue
-        noisy = inject_pairwise_permutation_noise(pairwise, n_models, width, noise_fraction, seed + int(round(10000 * noise_fraction)))
+        noisy_by_layer = inject_layerwise_permutation_noise(
+            pairwise_by_layer,
+            n_models,
+            widths_by_layer,
+            noise_fraction,
+            seed + int(round(10000 * noise_fraction)),
+        )
+        noisy = primary_pairwise_permutations(noisy_by_layer, architecture)
         noisy_residuals = pairwise_alignment_residuals(models, noisy, match_loader, device, args.feature_batches)
-        sync_ref, _synced, sync_disagreement = synchronize_permutations(noisy, n_models)
-        noisy_cycle_score, noisy_triangles = triangle_rows(shared_base, noisy, n_models, width, "injected_noise", noise_fraction)
+        sync_ref, _synced, sync_disagreement = synchronize_alignment_bundle(noisy_by_layer, n_models)
+        noisy_cycle_score, noisy_triangles = triangle_rows(shared_base, noisy, n_models, primary_width, "injected_noise", noise_fraction)
         triangle_out.extend(noisy_triangles)
+        noisy_predictors = obstruction_predictor_columns(
+            noisy,
+            n_models,
+            primary_width,
+            noisy_residuals,
+            sync_disagreement,
+        )
         noisy_base = {
             **shared_base,
             **noisy_residuals,
             "pairwise_alignment_permutations_json": permutation_json(noisy),
+            "layerwise_alignment_permutations_json": layerwise_permutation_json(noisy_by_layer),
             "alignment_source": "injected_noise",
             "alignment_noise_fraction": noise_fraction,
             "is_injected_alignment_control": True,
             "cycle_score": noisy_cycle_score,
+            "monomial_defect_score": float("nan"),
+            **noisy_predictors,
             "sync_reference_model": sync_ref,
             "sync_disagreement": sync_disagreement,
             "evidence_role": "negative_control_injected_alignment_noise",
@@ -806,8 +1259,11 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
             spec=spec,
             width=width,
             pairwise_perms=noisy,
+            pairwise_by_layer=noisy_by_layer,
+            monomial_alignments=None,
             val_loader=val_loader,
             test_loader=test_loader,
+            match_loader=match_loader,
             device=device,
             base=noisy_base,
         )
@@ -940,6 +1396,98 @@ def compute_stats(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
             }
         )
     return pd.concat([pd.DataFrame(rows), pd.DataFrame(method_rows)], ignore_index=True, sort=False)
+
+
+def target_family(outcome: str) -> str:
+    if outcome == "weight_average_degradation_vs_best_single":
+        return "raw_weight_average"
+    if outcome == "greedy_soup_delta_vs_weight_average":
+        return "validation_soup_vs_weight_average"
+    return "alignment_conditioned"
+
+
+def compute_predictor_regressions(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
+    if runs.empty or "method" not in runs:
+        return pd.DataFrame()
+    base_rows = runs[runs["method"] == "weight_average"].copy()
+    group_cols = [
+        "dataset",
+        "architecture",
+        "n_models",
+        "width",
+        "domain_shift",
+        "matching",
+        "alignment_source",
+        "alignment_noise_fraction",
+    ]
+    rows = []
+    for key, group in base_rows.groupby(group_cols, dropna=False):
+        meta = dict(zip(group_cols, key))
+        n_rows = int(len(group))
+        n_unique_seeds = int(group["seed"].nunique())
+        mean_acc = pd.to_numeric(group["mean_individual_accuracy"], errors="coerce").to_numpy()
+        residual = pd.to_numeric(group["pairwise_alignment_residual_mean"], errors="coerce").to_numpy()
+        is_observed = str(meta["alignment_source"]) == "observed" and safe_float(meta["alignment_noise_fraction"]) == 0.0
+        for outcome in PREDICTION_TARGETS:
+            if outcome not in group:
+                continue
+            y = pd.to_numeric(group[outcome], errors="coerce").to_numpy()
+            for predictor in REGRESSION_PREDICTORS:
+                if predictor not in group:
+                    continue
+                x = pd.to_numeric(group[predictor], errors="coerce").to_numpy()
+                beta = regression_predictor_beta(x, y, [mean_acc, residual])
+                ci_low, ci_high = bootstrap_regression_beta_ci(
+                    x,
+                    y,
+                    [mean_acc, residual],
+                    bootstrap_samples,
+                    seed=8111 + len(rows) * 37,
+                )
+                supported = bool(is_observed and n_rows >= 20 and math.isfinite(ci_low) and ci_low > 0.0)
+                if not is_observed:
+                    status = "negative_control_not_primary_evidence"
+                elif n_rows < 20:
+                    status = "unsupported_descriptive_n_below_20"
+                elif supported:
+                    status = "supported_positive_predictor_coefficient"
+                elif math.isfinite(ci_high) and ci_high < 0.0:
+                    status = "negative_association"
+                else:
+                    status = "unsupported_ci_crosses_zero_or_unstable"
+                rows.append(
+                    {
+                        **meta,
+                        "fixed_setting_id": fixed_setting_id(
+                            str(meta["dataset"]),
+                            str(meta["architecture"]),
+                            int(meta["n_models"]),
+                            int(meta["width"]),
+                            str(meta["domain_shift"]),
+                            str(meta["matching"]),
+                        ),
+                        "outcome": outcome,
+                        "outcome_family": target_family(outcome),
+                        "predictor": predictor,
+                        "regression_formula": (
+                            f"{outcome} ~ {predictor} + mean_individual_accuracy "
+                            "+ pairwise_alignment_residual_mean"
+                        ),
+                        "n_rows": n_rows,
+                        "n_unique_seeds": n_unique_seeds,
+                        "predictor_beta": beta,
+                        "predictor_beta_ci_low": ci_low,
+                        "predictor_beta_ci_high": ci_high,
+                        "mean_outcome": safe_mean(y),
+                        "mean_predictor": safe_mean(x),
+                        "mean_individual_accuracy": safe_mean(mean_acc),
+                        "mean_pairwise_alignment_residual": safe_mean(residual),
+                        "claim_status": status,
+                        "claim_supported": supported,
+                        "primary_evidence": bool(is_observed and int(meta["n_models"]) >= 3),
+                    }
+                )
+    return pd.DataFrame(rows)
 
 
 def compute_branch_paired_deltas(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
@@ -1137,6 +1685,30 @@ def plot_delta_methods(runs: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
+def target_prediction_summary(regressions: pd.DataFrame) -> str:
+    if regressions.empty:
+        return "No regression rows were produced, so no obstruction target is supported."
+    observed = regressions[regressions["alignment_source"] == "observed"].copy()
+    supported = observed[observed["claim_supported"] == True].copy()  # noqa: E712
+    if supported.empty:
+        return (
+            "No target is supported in this run. Raw weight-average prediction is not claimed, "
+            "and alignment-conditioned targets are not claimed."
+        )
+    pairs = sorted({f"{row.outcome} via {row.predictor}" for row in supported.itertuples()})
+    raw_supported = any(supported["outcome"] == "weight_average_degradation_vs_best_single")
+    alignment_supported = any(supported["outcome_family"] == "alignment_conditioned")
+    lines = ["Supported observed target/predictor pairs:"]
+    lines.extend([f"- {pair}" for pair in pairs])
+    if alignment_supported and not raw_supported:
+        lines.append(
+            "Only alignment-conditioned targets are supported; raw weight-average prediction is not claimed."
+        )
+    elif not raw_supported:
+        lines.append("Raw weight-average prediction is not supported in this run.")
+    return "\n".join(lines)
+
+
 def write_report(
     args,
     runs: pd.DataFrame,
@@ -1144,6 +1716,7 @@ def write_report(
     individuals: pd.DataFrame,
     triangles: pd.DataFrame,
     paired_deltas: pd.DataFrame,
+    regressions: pd.DataFrame,
     report_path: Path,
     title: str = "Fixed-Setting Model-Merging Verification",
 ) -> None:
@@ -1161,11 +1734,11 @@ def write_report(
     )
     default_command = (
         ".venv/bin/python experiments/model_merging_fixed_setting_verification.py "
-        "--datasets mnist,fashion_mnist --architecture mlp --model-counts 3,4 --widths 32,64 "
-        "--domain-shifts none,input_noise,brightness --seeds 1000:1029 --epochs 5 "
-        "--max-train-samples 5000 --max-test-samples 2000 --batch-size 128 "
-        "--device auto --matching activation,weight --bootstrap-samples 1000 "
-        "--alignment-noise-levels 0.15"
+        "--datasets mnist,fashion_mnist --architecture mlp2 --model-counts 3,4 --widths 128 "
+        "--domain-shifts none --seeds 2000:2029 --epochs 10 --max-train-samples 10000 "
+        "--max-test-samples 5000 --batch-size 128 --lr 0.001 --optimizer adamw "
+        "--scheduler cosine --weight-decay 0.0001 --device cpu --matching activation "
+        "--bootstrap-samples 5000 --alignment-noise-levels 0.15"
     )
     claim_text = (
         "At least one fixed observed setting passes the correlation gate."
@@ -1209,6 +1782,7 @@ The intended full repeated-seed protocol is documented here and is not run autom
 - `reports/csv/{REAL_OBSTRUCTION_TRIANGLES_CSV}`
 - `reports/csv/{REAL_OBSTRUCTION_INDIVIDUALS_CSV}`
 - `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}`
+- `reports/csv/{REAL_OBSTRUCTION_REGRESSIONS_CSV}`
 - `reports/plots/fixed_setting_cycle_vs_degradation.pdf`
 - `reports/plots/fixed_setting_by_N_width.pdf`
 - `reports/plots/fixed_setting_delta_methods.pdf`
@@ -1226,6 +1800,12 @@ A fixed setting is marked supported only when `n_rows >= 20`, Pearson and Spearm
 ## Method Deltas
 
 {md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "alignment_source", "method", "n_rows", "mean_test_accuracy", "mean_delta_vs_weight_average", "mean_delta_vs_greedy_soup", "mean_delta_vs_c2m3_synchronized"], 40)}
+
+## Which target does the obstruction predict?
+
+{target_prediction_summary(regressions)}
+
+{md_table(regressions[regressions["alignment_source"] == "observed"] if not regressions.empty else regressions, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "outcome", "predictor", "n_rows", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "claim_status"], 60)}
 
 ## Capacity matching and extra capacity
 
@@ -1250,6 +1830,273 @@ This artifact tests whether observed cycle residuals predict ordinary weight-ave
 ```json
 {json.dumps(capture_environment(), indent=2)}
 ```
+"""
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(report, encoding="utf-8")
+
+
+def write_full_run_interpretation(
+    args,
+    runs: pd.DataFrame,
+    stats: pd.DataFrame,
+    individuals: pd.DataFrame,
+    regressions: pd.DataFrame,
+    report_path: Path,
+) -> None:
+    if individuals.empty:
+        quality = pd.DataFrame()
+    else:
+        best_by_run = (
+            individuals.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "run_id"])["test_accuracy"]
+            .max()
+            .reset_index(name="best_individual_accuracy")
+        )
+        quality = (
+            best_by_run.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching"])["best_individual_accuracy"]
+            .agg(["count", "mean", "min", "max"])
+            .reset_index()
+        )
+        quality["gate"] = quality.apply(
+            lambda row: (
+                "passes_preferred"
+                if (row["dataset"] == "mnist" and row["mean"] > 0.90)
+                or (row["dataset"] == "fashion_mnist" and row["mean"] > 0.80)
+                else "passes_minimum"
+                if (row["dataset"] == "mnist" and row["mean"] > 0.85)
+                or (row["dataset"] == "fashion_mnist" and row["mean"] > 0.75)
+                else "below_quality_gate"
+            ),
+            axis=1,
+        )
+
+    corr_rows = stats[
+        (stats["claim_status"].astype(str) != "method_summary_not_obstruction_correlation")
+        & (stats["alignment_source"].astype(str) == "observed")
+        & (pd.to_numeric(stats["alignment_noise_fraction"], errors="coerce").fillna(1.0) == 0.0)
+    ].copy()
+    supported_corr = corr_rows[corr_rows.get("claim_supported", False) == True].copy()  # noqa: E712
+    observed_methods = runs[
+        (runs["alignment_source"].astype(str) == "observed")
+        & (pd.to_numeric(runs["alignment_noise_fraction"], errors="coerce").fillna(1.0) == 0.0)
+    ].copy()
+    method_summary = (
+        observed_methods.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method"])[
+            ["test_accuracy", "delta_vs_weight_average", "delta_vs_greedy_soup", "delta_vs_c2m3_synchronized"]
+        ]
+        .mean()
+        .reset_index()
+        if not observed_methods.empty
+        else pd.DataFrame()
+    )
+    regression_supported = regressions[
+        (regressions["alignment_source"].astype(str) == "observed")
+        & (regressions.get("claim_supported", False) == True)
+    ].copy() if not regressions.empty else pd.DataFrame()
+    conclusion = (
+        "At least one primary observed fixed setting passes the strict obstruction-correlation gate."
+        if not supported_corr.empty
+        else "No primary observed fixed setting passes the strict obstruction-correlation gate; the full run is negative-but-useful descriptive evidence."
+    )
+    regression_conclusion = (
+        "Some controlled predictor-regression rows pass their positive-coefficient gate, but these are secondary diagnostics."
+        if not regression_supported.empty
+        else "No secondary predictor-regression row is promoted as a supported obstruction claim."
+    )
+    report = f"""# Fixed-Setting Full Run Interpretation
+
+Generated by `experiments/model_merging_fixed_setting_verification.py`.
+
+## Run Command
+
+```bash
+{args.command_string}
+```
+
+## Selected Setting
+
+The full verification used the strongest CPU-feasible setting from `reports/training_quality_sweep_report.md`: `mlp2`, width `128`, AdamW, cosine scheduling, and MNIST/Fashion-MNIST training quality checks. This run keeps dataset, architecture, `N`, width, domain shift, and matching protocol separated. It excludes `N=2` and does not include CIFAR.
+
+## Local Model Quality Gate
+
+{md_table(quality, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "count", "mean", "min", "max", "gate"], 20)}
+
+## Primary Obstruction-Correlation Gate
+
+{conclusion}
+
+A setting is supported only when it has at least 20 observed rows, positive Pearson and Spearman correlations, and a positive bootstrap lower bound for Pearson. Injected alignment-noise rows are controls and are not primary evidence.
+
+{md_table(corr_rows, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "n_rows", "n_unique_seeds", "mean_cycle_score", "mean_weight_merge_degradation", "pearson_cycle_vs_weight_degradation", "pearson_ci_low", "pearson_ci_high", "spearman_cycle_vs_weight_degradation", "spearman_ci_low", "spearman_ci_high", "partial_pearson_control_mean_acc_alignment_residual", "claim_status"], 30)}
+
+## Method Boundary
+
+{md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method", "test_accuracy", "delta_vs_weight_average", "delta_vs_greedy_soup", "delta_vs_c2m3_synchronized"], 40)}
+
+## Secondary Diagnostics
+
+{regression_conclusion}
+
+{md_table(regression_supported, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "outcome", "predictor", "n_rows", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "claim_status"], 30)}
+
+## Claim Boundary
+
+This report tests whether observed permutation/cycle residuals predict ordinary merge degradation for fixed small neural-network settings. It does not update the paper abstract, does not make a CIFAR claim, and does not claim that TwistedMerge beats Git Re-Basin, C2M3, Model Soups, or general model-merging baselines.
+"""
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(report, encoding="utf-8")
+
+
+def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, report_path: Path) -> None:
+    if runs.empty or "matching" not in runs:
+        monomial_runs = pd.DataFrame()
+    else:
+        monomial_runs = runs[runs["matching"].astype(str).isin(MONOMIAL_MATCHINGS)].copy()
+    if monomial_runs.empty or "alignment_source" not in monomial_runs:
+        observed = pd.DataFrame()
+    else:
+        observed = monomial_runs[monomial_runs["alignment_source"].astype(str) == "observed"].copy()
+    if observed.empty or "method" not in observed:
+        monomial_methods = pd.DataFrame()
+    else:
+        monomial_methods = observed[observed["method"].astype(str) == "monomial_gauge_ref0"].copy()
+
+    preservation = pd.DataFrame()
+    if not monomial_methods.empty:
+        preservation = (
+            monomial_methods.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching"], dropna=False)
+            .agg(
+                n_rows=("run_id", "count"),
+                max_functional_preservation_error=("functional_preservation_error", "max"),
+                mean_functional_preservation_error=("functional_preservation_error", "mean"),
+                mean_prediction_disagreement=("functional_preservation_prediction_disagreement", "mean"),
+                mean_abs_log_scale=("monomial_mean_abs_log_scale", "mean"),
+                max_abs_log_scale=("monomial_max_abs_log_scale", "max"),
+            )
+            .reset_index()
+        )
+
+    method_summary = pd.DataFrame()
+    if not observed.empty:
+        method_summary = (
+            observed.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method"], dropna=False)
+            .agg(
+                n_rows=("run_id", "count"),
+                mean_test_accuracy=("test_accuracy", "mean"),
+                mean_delta_vs_weight_average=("delta_vs_weight_average", "mean"),
+                mean_delta_vs_greedy_soup=("delta_vs_greedy_soup", "mean"),
+                mean_delta_vs_c2m3_synchronized=("delta_vs_c2m3_synchronized", "mean"),
+            )
+            .reset_index()
+        )
+
+    corr_rows = []
+    if not observed.empty and "method" in observed:
+        weight_rows = observed[observed["method"].astype(str) == "weight_average"].copy()
+    else:
+        weight_rows = pd.DataFrame()
+    group_cols = ["dataset", "architecture", "n_models", "width", "domain_shift", "matching"]
+    if not weight_rows.empty and "monomial_defect_score" in weight_rows:
+        for key, group in weight_rows.groupby(group_cols, dropna=False):
+            meta = dict(zip(group_cols, key))
+            y = pd.to_numeric(group["single_best_merge_degradation"], errors="coerce").to_numpy()
+            permutation_x = pd.to_numeric(group["cycle_score"], errors="coerce").to_numpy()
+            monomial_x = pd.to_numeric(group["monomial_defect_score"], errors="coerce").to_numpy()
+            permutation_pearson = safe_pearson(permutation_x, y)
+            monomial_pearson = safe_pearson(monomial_x, y)
+            corr_rows.append(
+                {
+                    **meta,
+                    "n_rows": int(len(group)),
+                    "permutation_pearson_vs_degradation": permutation_pearson,
+                    "permutation_spearman_vs_degradation": safe_spearman(permutation_x, y),
+                    "monomial_pearson_vs_degradation": monomial_pearson,
+                    "monomial_spearman_vs_degradation": safe_spearman(monomial_x, y),
+                    "monomial_more_predictive_by_abs_pearson": bool(abs(monomial_pearson) > abs(permutation_pearson))
+                    if math.isfinite(monomial_pearson) and math.isfinite(permutation_pearson)
+                    else False,
+                    "claim_status": "descriptive_n_below_20" if len(group) < 20 else "descriptive_no_strict_gate",
+                }
+            )
+    corr = pd.DataFrame(corr_rows)
+
+    if triangles.empty or "matching" not in triangles:
+        monomial_triangles = pd.DataFrame()
+    else:
+        monomial_triangles = triangles[triangles["matching"].astype(str).isin(MONOMIAL_MATCHINGS)].copy()
+    triangle_summary = pd.DataFrame()
+    if not monomial_triangles.empty and "triangle_type" in monomial_triangles:
+        triangle_summary = (
+            monomial_triangles.groupby(["matching", "triangle_type"], dropna=False)
+            .agg(
+                n_rows=("run_id", "count"),
+                mean_cycle_defect=("cycle_defect", "mean"),
+                mean_monomial_defect_score=("monomial_defect_score", "mean"),
+            )
+            .reset_index()
+        )
+
+    if monomial_runs.empty:
+        conclusion = "No monomial matching rows were generated in this run."
+    elif corr.empty or int(corr["n_rows"].max()) < 20:
+        conclusion = (
+            "The monomial run is implementation/descriptive evidence only; no predictor claim is supported because "
+            "each fixed setting has fewer than 20 observed seeds."
+        )
+    elif bool(corr["monomial_more_predictive_by_abs_pearson"].any()):
+        conclusion = (
+            "At least one descriptive fixed setting has a larger absolute Pearson correlation for the monomial residual "
+            "than for the permutation cycle score, but this report does not promote that to a paper claim without the "
+            "same bootstrap gate used by the main verifier."
+        )
+    else:
+        conclusion = "The generated rows do not show a clearer monomial residual predictor than the permutation cycle score."
+
+    report = f"""# ReLU-Compatible Monomial Gauge Alignment
+
+Generated by `experiments/model_merging_fixed_setting_verification.py`.
+
+## Exact Command
+
+```bash
+{args.command_string}
+```
+
+## Scope
+
+- Monomial matching is implemented only for one-hidden-layer ReLU `mlp` models.
+- The gauge is permutation plus positive hidden-unit scaling with inverse outgoing classifier scaling, so it is an exact ReLU reparameterization before averaging.
+- The monomial merge row is a single same-capacity merged model, not an ensemble and not a period-index lift.
+- The main fixed-setting obstruction claim gate is unchanged. This report only compares permutation and monomial diagnostics in rows generated with `--matching monomial_activation,monomial_weight`.
+
+## Outputs
+
+- `reports/csv/{MONOMIAL_RUNS_CSV}`
+- `reports/csv/{MONOMIAL_TRIANGLES_CSV}`
+- `reports/monomial_gauge_alignment_report.md`
+
+## Conclusion
+
+{conclusion}
+
+## Functional Preservation
+
+{md_table(preservation, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "n_rows", "max_functional_preservation_error", "mean_functional_preservation_error", "mean_prediction_disagreement", "mean_abs_log_scale", "max_abs_log_scale"], 30)}
+
+## Method Comparison
+
+{md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method", "n_rows", "mean_test_accuracy", "mean_delta_vs_weight_average", "mean_delta_vs_greedy_soup", "mean_delta_vs_c2m3_synchronized"], 40)}
+
+## Residual Correlations
+
+{md_table(corr, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "n_rows", "permutation_pearson_vs_degradation", "permutation_spearman_vs_degradation", "monomial_pearson_vs_degradation", "monomial_spearman_vs_degradation", "monomial_more_predictive_by_abs_pearson", "claim_status"], 30)}
+
+## Triangle Diagnostics
+
+{md_table(triangle_summary, ["matching", "triangle_type", "n_rows", "mean_cycle_defect", "mean_monomial_defect_score"], 30)}
+
+## Claim Boundary
+
+This artifact supports the implementation claim that positive monomial gauges can be estimated and applied as exact ReLU reparameterizations in the one-hidden-layer MLP path. It does not by itself support a claim that monomial obstruction residuals are more predictive, or that monomial-aligned merging beats greedy soup, C2M3, or external baselines.
 """
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(report, encoding="utf-8")
@@ -1294,6 +2141,7 @@ def update_claims_audit(path: Path) -> None:
         + f"\n| `reports/csv/{TRIANGLES_CSV}` | Per-triangle permutation/cocycle defect rows. |"
         + f"\n| `reports/csv/{INDIVIDUALS_CSV}` | Per-local-model validation/test accuracy and checkpoint metadata. |"
         + f"\n| `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}` | Paired rank-lift minus branch-capacity matched baseline deltas with bootstrap confidence intervals. |"
+        + f"\n| `reports/csv/{REAL_OBSTRUCTION_REGRESSIONS_CSV}` | Predictor-target regressions for obstruction diagnostics, with controls and bootstrap coefficient intervals. |"
     )
     if artifact_marker in text and "fixed_setting_verification_report.md" not in text:
         text = text.replace(artifact_marker, artifact_new)
@@ -1302,6 +2150,7 @@ def update_claims_audit(path: Path) -> None:
             "\n| `reports/real_obstruction_degradation_report.md` | Paper-facing real obstruction-degradation report with capacity-matched rank-lift branch controls. |"
             f"\n| `reports/csv/{REAL_OBSTRUCTION_RUNS_CSV}` | Paper-facing alias for per-method real obstruction-degradation rows, including capacity metadata and branch controls. |"
             f"\n| `reports/csv/{REAL_OBSTRUCTION_PAIRED_DELTAS_CSV}` | Paired rank-lift minus branch-capacity matched baseline deltas with bootstrap confidence intervals. |"
+            f"\n| `reports/csv/{REAL_OBSTRUCTION_REGRESSIONS_CSV}` | Predictor-target regressions for obstruction diagnostics, with controls and bootstrap coefficient intervals. |"
         )
     if not text.endswith("\n"):
         text += "\n"
@@ -1311,20 +2160,26 @@ def update_claims_audit(path: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--datasets", default="mnist,fashion_mnist")
-    parser.add_argument("--architecture", default="mlp", choices=["mlp"])
+    parser.add_argument("--architecture", default="mlp2", choices=["mlp", "mlp2", "cnn", "small_cnn"])
     parser.add_argument("--model-counts", default="3,4")
-    parser.add_argument("--widths", default="32,64")
-    parser.add_argument("--domain-shifts", default="none,input_noise,brightness")
-    parser.add_argument("--seeds", default="1000:1029")
-    parser.add_argument("--epochs", type=int, default=5)
-    parser.add_argument("--max-train-samples", type=int, default=5000)
-    parser.add_argument("--max-test-samples", type=int, default=2000)
+    parser.add_argument("--widths", default="128")
+    parser.add_argument("--domain-shifts", default="none")
+    parser.add_argument("--seeds", default="2000:2029")
+    parser.add_argument("--epochs", type=int, default=10)
+    parser.add_argument("--max-train-samples", type=int, default=10000)
+    parser.add_argument("--max-test-samples", type=int, default=5000)
     parser.add_argument("--val-fraction", type=float, default=0.2)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=1e-3)
-    parser.add_argument("--device", default="auto")
-    parser.add_argument("--matching", default="activation,weight")
-    parser.add_argument("--bootstrap-samples", type=int, default=1000)
+    parser.add_argument("--optimizer", default="adamw", choices=["adam", "adamw", "sgd"])
+    parser.add_argument("--weight-decay", type=float, default=1e-4)
+    parser.add_argument("--scheduler", default="cosine", choices=["none", "cosine", "step"])
+    parser.add_argument("--step-size", type=int, default=3)
+    parser.add_argument("--gamma", type=float, default=0.5)
+    parser.add_argument("--augmentation", default="none", choices=["none", "light"])
+    parser.add_argument("--device", default="cpu")
+    parser.add_argument("--matching", default="activation")
+    parser.add_argument("--bootstrap-samples", type=int, default=5000)
     parser.add_argument("--alignment-noise-levels", default="0.15")
     parser.add_argument("--rank-lift-branches", type=int, default=2)
     parser.add_argument("--feature-batches", type=int, default=8)
@@ -1332,6 +2187,7 @@ def main() -> None:
     parser.add_argument("--save-checkpoints", action="store_true")
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
     parser.add_argument("--reports-dir", type=Path, default=ROOT / "reports")
+    parser.add_argument("--update-claims-audit", action="store_true")
     args = parser.parse_args()
     args.command_string = " ".join([sys.executable, *sys.argv])
 
@@ -1341,6 +2197,12 @@ def main() -> None:
     domain_shifts = parse_csv(args.domain_shifts, str)
     matchings = parse_csv(args.matching, str)
     seeds = parse_seeds(args.seeds)
+    valid_matchings = {"activation", "weight", *MONOMIAL_MATCHINGS}
+    unknown_matchings = sorted(set(matchings) - valid_matchings)
+    if unknown_matchings:
+        raise ValueError(f"unknown matching protocols: {unknown_matchings}")
+    if any(is_monomial_matching(matching) for matching in matchings) and args.architecture != "mlp":
+        raise ValueError("monomial_activation/monomial_weight currently require --architecture mlp")
     if any(n < 3 for n in model_counts):
         raise ValueError("Do not include N=2 in fixed-setting verification: N=2 has no triangle obstruction.")
 
@@ -1377,8 +2239,19 @@ def main() -> None:
     runs = pd.DataFrame(all_runs)
     individuals = pd.DataFrame(all_individuals)
     triangles = pd.DataFrame(all_triangles)
+    monomial_runs = (
+        runs[runs["matching"].astype(str).isin(MONOMIAL_MATCHINGS)].copy()
+        if not runs.empty and "matching" in runs
+        else pd.DataFrame()
+    )
+    monomial_triangles = (
+        triangles[triangles["matching"].astype(str).isin(MONOMIAL_MATCHINGS)].copy()
+        if not triangles.empty and "matching" in triangles
+        else pd.DataFrame()
+    )
     stats = compute_stats(runs, args.bootstrap_samples)
     paired_deltas = compute_branch_paired_deltas(runs, args.bootstrap_samples)
+    regressions = compute_predictor_regressions(runs, args.bootstrap_samples)
 
     csv_dir = args.reports_dir / "csv"
     plot_dir = args.reports_dir / "plots"
@@ -1389,11 +2262,17 @@ def main() -> None:
     triangles_path = csv_dir / TRIANGLES_CSV
     individuals_path = csv_dir / INDIVIDUALS_CSV
     paired_deltas_path = csv_dir / REAL_OBSTRUCTION_PAIRED_DELTAS_CSV
+    regressions_path = csv_dir / REAL_OBSTRUCTION_REGRESSIONS_CSV
+    monomial_runs_path = csv_dir / MONOMIAL_RUNS_CSV
+    monomial_triangles_path = csv_dir / MONOMIAL_TRIANGLES_CSV
     runs.to_csv(runs_path, index=False, lineterminator="\n")
     stats.to_csv(stats_path, index=False, lineterminator="\n")
     triangles.to_csv(triangles_path, index=False, lineterminator="\n")
     individuals.to_csv(individuals_path, index=False, lineterminator="\n")
     paired_deltas.to_csv(paired_deltas_path, index=False, lineterminator="\n")
+    regressions.to_csv(regressions_path, index=False, lineterminator="\n")
+    monomial_runs.to_csv(monomial_runs_path, index=False, lineterminator="\n")
+    monomial_triangles.to_csv(monomial_triangles_path, index=False, lineterminator="\n")
     runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
     stats.to_csv(csv_dir / REAL_OBSTRUCTION_SUMMARY_CSV, index=False, lineterminator="\n")
     triangles.to_csv(csv_dir / REAL_OBSTRUCTION_TRIANGLES_CSV, index=False, lineterminator="\n")
@@ -1409,6 +2288,7 @@ def main() -> None:
         individuals,
         triangles,
         paired_deltas,
+        regressions,
         args.reports_dir / "fixed_setting_verification_report.md",
     )
     write_report(
@@ -1418,8 +2298,23 @@ def main() -> None:
         individuals,
         triangles,
         paired_deltas,
+        regressions,
         args.reports_dir / "real_obstruction_degradation_report.md",
         title="Real Obstruction Degradation Verification",
+    )
+    write_full_run_interpretation(
+        args,
+        runs,
+        stats,
+        individuals,
+        regressions,
+        args.reports_dir / "fixed_setting_full_run_interpretation.md",
+    )
+    write_monomial_report(
+        args,
+        runs,
+        triangles,
+        args.reports_dir / "monomial_gauge_alignment_report.md",
     )
     save_json(
         args.reports_dir / "configs" / "fixed_setting_verification_config.json",
@@ -1430,14 +2325,20 @@ def main() -> None:
             "environment": capture_environment(),
         },
     )
-    update_claims_audit(args.reports_dir / "claims_audit.md")
+    if args.update_claims_audit:
+        update_claims_audit(args.reports_dir / "claims_audit.md")
     print(f"wrote {runs_path}")
     print(f"wrote {stats_path}")
     print(f"wrote {triangles_path}")
     print(f"wrote {individuals_path}")
     print(f"wrote {paired_deltas_path}")
+    print(f"wrote {regressions_path}")
+    print(f"wrote {monomial_runs_path}")
+    print(f"wrote {monomial_triangles_path}")
     print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
     print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
+    print(f"wrote {args.reports_dir / 'fixed_setting_full_run_interpretation.md'}")
+    print(f"wrote {args.reports_dir / 'monomial_gauge_alignment_report.md'}")
 
 
 if __name__ == "__main__":
