@@ -1,79 +1,24 @@
 {
-  "args": {
-    "alignment_noise_levels": "0.15",
-    "architecture": "mlp2",
-    "augmentation": "none",
-    "batch_size": 128,
-    "bootstrap_samples": 5000,
-    "command_string": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/model_merging_fixed_setting_verification.py --datasets mnist,fashion_mnist --architecture mlp2 --model-counts 3,4 --widths 128 --domain-shifts none,input_noise --seeds 2000:2019 --epochs 10 --max-train-samples 10000 --max-test-samples 5000 --batch-size 128 --device cpu --matching activation --bootstrap-samples 5000 --alignment-noise-levels 0.15 --rank-lift-branches 2 --feature-batches 8 --optimizer adamw --scheduler cosine --weight-decay 0.0001",
-    "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
-    "dataset_seed": 314159,
-    "datasets": "mnist,fashion_mnist",
-    "device": "cpu",
-    "domain_shifts": "none,input_noise",
-    "epochs": 10,
-    "feature_batches": 8,
-    "gamma": 0.5,
-    "lr": 0.001,
-    "matching": "activation",
-    "max_test_samples": 5000,
-    "max_train_samples": 10000,
-    "model_counts": "3,4",
-    "optimizer": "adamw",
-    "rank_lift_branches": 2,
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
-    "save_checkpoints": false,
-    "scheduler": "cosine",
-    "seeds": "2000:2019",
-    "step_size": 3,
-    "update_claims_audit": false,
-    "val_fraction": 0.2,
-    "weight_decay": 0.0001,
-    "widths": "128"
-  },
-  "argv": [
-    "experiments/model_merging_fixed_setting_verification.py",
-    "--datasets",
-    "mnist,fashion_mnist",
-    "--architecture",
-    "mlp2",
-    "--model-counts",
-    "3,4",
-    "--widths",
-    "128",
-    "--domain-shifts",
-    "none,input_noise",
-    "--seeds",
-    "2000:2019",
-    "--epochs",
-    "10",
-    "--max-train-samples",
-    "10000",
-    "--max-test-samples",
-    "5000",
-    "--batch-size",
-    "128",
-    "--device",
-    "cpu",
-    "--matching",
-    "activation",
-    "--bootstrap-samples",
-    "5000",
-    "--alignment-noise-levels",
-    "0.15",
-    "--rank-lift-branches",
-    "2",
-    "--feature-batches",
-    "8",
-    "--optimizer",
-    "adamw",
-    "--scheduler",
-    "cosine",
-    "--weight-decay",
-    "0.0001"
+  "alignment_noise_levels": [
+    0.15
+  ],
+  "architecture": "mlp2",
+  "bootstrap_samples": 5000,
+  "commands": [
+    "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl .venv/bin/python experiments/model_merging_fixed_setting_verification.py --datasets mnist --architecture mlp2 --model-counts 3,4 --widths 128 --domain-shifts none,input_noise --seeds 2000:2029 --epochs 10 --max-train-samples 10000 --max-test-samples 5000 --batch-size 128 --lr 0.001 --optimizer adamw --scheduler cosine --device auto --matching activation --bootstrap-samples 5000 --alignment-noise-levels 0.15 --save-checkpoints",
+    "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl .venv/bin/python experiments/model_merging_fixed_setting_verification.py --datasets fashion_mnist --architecture mlp2 --model-counts 3,4 --widths 128 --domain-shifts none,input_noise --seeds 3000:3029 --epochs 10 --max-train-samples 10000 --max-test-samples 5000 --batch-size 128 --lr 0.001 --optimizer adamw --scheduler cosine --device auto --matching activation --bootstrap-samples 5000 --alignment-noise-levels 0.15 --save-checkpoints",
+    ".venv/bin/python - <<PY  # concatenate MNIST/Fashion outputs and regenerate combined reports using the same verifier functions"
+  ],
+  "datasets": [
+    "mnist",
+    "fashion_mnist"
+  ],
+  "domain_shifts": [
+    "none",
+    "input_noise"
   ],
   "environment": {
-    "git_commit": "984769c",
+    "git_commit": "888ff6f",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
@@ -86,5 +31,20 @@
     "processor": "arm",
     "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
   },
-  "parsed_seeds": "2000:2019"
+  "epochs": 10,
+  "fashion_mnist_seeds": "3000:3029",
+  "matching": "activation",
+  "max_test_samples": 5000,
+  "max_train_samples": 10000,
+  "mnist_seeds": "2000:2029",
+  "model_counts": [
+    3,
+    4
+  ],
+  "optimizer": "adamw",
+  "save_checkpoints": true,
+  "scheduler": "cosine",
+  "widths": [
+    128
+  ]
 }
