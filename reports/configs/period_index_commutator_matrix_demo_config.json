@@ -2,9 +2,9 @@
   "argv": [
     "experiments/period_index_commutator_matrix_demo.py"
   ],
-  "commit": "81e9816",
+  "commit": "43217ab",
   "environment": {
-    "git_commit": "81e9816",
+    "git_commit": "43217ab",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
