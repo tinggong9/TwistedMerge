@@ -1,0 +1,35 @@
+{
+  "args": {
+    "batch_size": 128,
+    "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+    "dataset_seed": 8128,
+    "device": "cpu",
+    "epochs": 3,
+    "lr": 0.001,
+    "max_order": 12,
+    "max_test_samples": 1000,
+    "max_train_samples": 2000,
+    "model_counts": "3,4",
+    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "seeds": "1400,1401,1402,1403,1404",
+    "widths": "16,32"
+  },
+  "argv": [
+    "experiments/mine_finite_index_residuals.py"
+  ],
+  "commit": "70b4646",
+  "environment": {
+    "git_commit": "70b4646",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  }
+}

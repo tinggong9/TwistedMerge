@@ -25,6 +25,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | TwistedMerge++ rejects candidate lift ranks not divisible by the detected order. | Supported | `test_order3_insufficient_rank_is_obstructed` checks order `3`, rank `2` is classified as `finite_index_projective_obstructed`; scenario E1 reports the same. |
 | TwistedMerge++ activates a finite-index projective lift when the rank threshold is met. | Supported | `test_order3_sufficient_rank_activates_projective_lift` and scenarios E2-E4 select `finite_index_projective_lift` with near-zero lift residual. |
 | TwistedMerge++ still gives C2M3/edge-outlier handling priority over finite-index language when synchronization diagnostics explain the issue. | Supported | `test_c2m3_resolved_case_keeps_c2m3_priority` and scenario E6 select `c2m3_cycle_consistent` with no detected finite-index order. |
+| The finite-index residual miner correctly identifies clock-shift positive controls. | Supported | `tests/test_finite_index_residual_mining.py` checks exact clock-shift controls, and `reports/finite_index_residual_mining_report.md` reports detected orders `2`, `3`, and `4`. |
+| Real MNIST activation-permutation residuals were mined for finite-index scalar/projective structure. | Supported | `reports/csv/finite_index_residual_mining.csv` contains 50 real MNIST triangle residual rows from `N=3,4`, widths `16,32`, five seeds, plus positive controls. |
+| The default MNIST residual-mining run found no strict/medium finite-index scalar candidates. | Supported negative result | `reports/finite_index_residual_mining_report.md` reports real MNIST candidate fraction `0.0000` at strict, medium, and loose thresholds; mean centrality is about `0.9620`. |
 
 ## Not Yet Supported
 
@@ -47,6 +50,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | Real neural model-merging defects have the exact finite-index clock-shift form. | Not yet supported | `reports/finite_index_twist_report.md` is a controlled algebraic toy experiment, not a learned MNIST/CIFAR defect identification result. |
 | Every torsion cohomology class in the paper's broad setting is trivialized on the original cover. | Not yet supported | The finite-index report says the defect is absorbed by a finite-rank projective/Morita lift and explicitly not that the original class vanishes. |
 | Branch/projective finite-index lift is a capacity-matched single merged model. | Not yet supported | `reports/finite_index_twist_report.md` labels the branch/projective proxy as extra capacity. |
+| Pure permutation C2M3 residuals are the same as scalar finite-index twists. | Not yet supported | `reports/finite_index_residual_mining_report.md` shows MNIST permutation residuals are generally noncentral and do not pass scalar finite-index thresholds. |
 
 ## Current Artifact Map
 
@@ -79,3 +83,9 @@ This file tracks which claims are supported by current repository artifacts and 
 | `experiments/twisted_merge_plus_finite_index_demo.py` | Demo generator for TwistedMerge++ finite-index selector behavior. |
 | `reports/twisted_merge_plus_finite_index_report.md` | Scenario report for finite-index TwistedMerge++ integration. |
 | `reports/csv/twisted_merge_plus_finite_index_demo.csv` | Per-scenario finite-index TwistedMerge++ diagnostics. |
+| `experiments/mine_finite_index_residuals.py` | Mines real MNIST activation-permutation residuals for scalar finite-index structure. |
+| `tests/test_finite_index_residual_mining.py` | Unit tests for residual-mining detector helpers and negative controls. |
+| `reports/finite_index_residual_mining_report.md` | Report for positive controls and real MNIST finite-index residual mining. |
+| `reports/csv/finite_index_residual_mining.csv` | Per-triangle residual-mining rows. |
+| `reports/csv/finite_index_residual_mining_summary.csv` | Threshold sensitivity and grouped mining summary. |
+| `reports/plots/finite_index_residual_phase_histogram.pdf` | Phase-angle histogram for mined residuals and controls. |
