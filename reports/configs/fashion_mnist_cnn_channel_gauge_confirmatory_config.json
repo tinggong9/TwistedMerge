@@ -1,0 +1,52 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/fashion_mnist_cnn_channel_gauge_confirmatory.py --device auto",
+  "git_commit": "ba8fc00",
+  "dirty_worktree": true,
+  "model_counts": [
+    3,
+    4
+  ],
+  "main_n_models": 3,
+  "main_seeds": [
+    7600,
+    7601,
+    7602,
+    7603,
+    7604,
+    7605,
+    7606,
+    7607,
+    7608,
+    7609
+  ],
+  "secondary_seeds": [
+    7700,
+    7701,
+    7702,
+    7703,
+    7704
+  ],
+  "epochs": 5,
+  "max_train_samples": 12000,
+  "max_test_samples": 0,
+  "feature_batches": 16,
+  "alpha_grid": "0,0.5,1.0,1.25",
+  "tau_grid": "1.0,inf",
+  "optimized_alpha_grid": "0,0.5,1.0,1.25",
+  "optimized_tau_grid": "1.0,inf",
+  "optimized_layer_masks": "all,conv2+fc1,fc1,conv2",
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "ba8fc00"
+  }
+}

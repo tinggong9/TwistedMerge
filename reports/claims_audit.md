@@ -153,6 +153,19 @@ This file tracks which claims are supported by current repository artifacts and 
 | Cycle inconsistency strongly explains heterophily or test accuracy on this run. | Not yet supported | `reports/sheaf_gnn_optional_report.md` reports weak synthetic-run correlations: cycle-vs-test-accuracy Pearson `-0.1139` and heterophily-vs-cycle Pearson `-0.0501`. |
 | The official Neural Sheaf Diffusion baselines were run in TwistedMerge. | Not yet supported | The optional report states the official code was inspected but not run because the current venv lacks `torch_geometric`, `torch_sparse`, and `torch_scatter`. |
 
+## Fashion-MNIST CNN Channel-Gauge Confirmatory Benchmark
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| `cnn_exact_channel_gauges_preserve_logits` / exact CNN channel gauges preserve logits | Supported | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records tests/test_cnn_channel_gauge.py covers permutation, scaling, combined gauges, conv-to-conv, conv-to-linear, hidden scaling, parameter count, and inference-cost proxy. |
+| `cnn_shrinkage_channel_scale_over_c2m3_confirmed` / shrinkage channel scale over C2M3 | Supported limited | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records positive paired mean=0.002967, CI lower=0.000313, fixed positives=2/2. |
+| `cnn_global_channel_scale_over_c2m3_confirmed` / global channel scale over C2M3 | Supported limited | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records positive paired mean=0.003180, CI lower=0.000420, fixed positives=2/2. |
+| `cnn_optimized_channel_scale_over_c2m3_confirmed` / optimized channel scale over C2M3 | Supported limited | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records positive paired mean=0.009333, CI lower=0.004787, fixed positives=2/2. |
+| `cnn_channel_candidate_soup_over_greedy_soup` / channel candidate soup over greedy soup | Supported descriptive | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records positive paired mean=0.000647, CI=[0.000000,0.001553], fixed positives=2/2. |
+| `cnn_greedy_safe_selector_matches_or_beats_greedy_soup` / greedy-safe selector versus greedy soup | Supported descriptive | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records positive paired mean=0.000653, CI=[0.000000,0.001493], fixed positives=2/2. |
+| `cnn_channel_gauge_generalizes_mlp_exact_gauge_story` / CNN channel gauge generalizes exact-gauge story | Supported limited | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records exactness tests pass; confirmatory performance status follows shrinkage/global/optimized C2M3 comparisons. |
+| `cnn_residuals_are_brauer_or_period_index` / CNN residuals are Brauer or period-index | Not yet supported | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records central/projective and finite-index candidate fractions are zero under tested diagnostics. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -457,6 +470,16 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/tables/fashion_cnn_ladder_table.tex` | LaTeX summary table for the CNN channel-gauge ladder benchmark. |
 | `reports/configs/fashion_mnist_greedy_safe_selector_config.json` | Saved command, environment, and selector-grid metadata for the Fashion-MNIST greedy-safe selector replay. |
 | `reports/configs/fashion_mnist_cnn_ladder_config.json` | Saved command, environment, and benchmark metadata for the Fashion-MNIST CNN ladder run. |
+| `experiments/fashion_mnist_cnn_channel_gauge_confirmatory.py` | Confirmatory Fashion-MNIST CNN channel-gauge benchmark over N=3 and N=4 with optimized layer-gated scale grids and channel-gauge soup variants. |
+| `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` | Confirmatory CNN report answering exactness, C2M3, greedy soup, greedy-safe selector, residual taxonomy, and paper-placement questions. |
+| `reports/csv/fashion_mnist_cnn_channel_gauge_confirmatory.csv` | Per-setting confirmatory CNN channel-gauge benchmark rows. |
+| `reports/csv/fashion_mnist_cnn_channel_gauge_confirmatory_summary.csv` | Confirmatory CNN method summaries, paired comparisons, selector behavior, diagnostics, and claim decisions. |
+| `reports/plots/fashion_cnn_confirmatory_delta_vs_c2m3.pdf` | Confirmatory CNN method deltas versus channel-permutation C2M3. |
+| `reports/plots/fashion_cnn_confirmatory_delta_vs_greedy_soup.pdf` | Confirmatory CNN method deltas versus greedy soup. |
+| `reports/plots/fashion_cnn_confirmatory_channel_residuals.pdf` | Confirmatory CNN channel residual diagnostic scatter plot. |
+| `reports/plots/fashion_cnn_confirmatory_selector_choices.pdf` | Confirmatory CNN greedy-safe selector choice counts. |
+| `reports/tables/fashion_cnn_channel_gauge_confirmatory_table.tex` | LaTeX summary table for the confirmatory CNN channel-gauge benchmark. |
+| `reports/configs/fashion_mnist_cnn_channel_gauge_confirmatory_config.json` | Saved command, environment, and grid metadata for the confirmatory CNN channel-gauge benchmark. |
 | `external_baselines/README.md` | License-clean external-baseline documentation for Git Re-Basin, C2M3, Model Soups, internal controls, deviations, capacity matching, inference cost, and fairness boundaries. |
 | `experiments/external_baseline_comparison.py` | MNIST MLP external-baseline comparison generator using shared checkpoints/splits, faithful Git-ReBasin-style alignment, faithful C2M3-style synchronization, faithful greedy soup, monomial scaling, and validation-only selectors. |
 | `reports/external_baseline_comparison.md` | Report for the external-baseline MNIST MLP comparison, integration status, method metadata, paired deltas, selector behavior, and negative boundaries. |
