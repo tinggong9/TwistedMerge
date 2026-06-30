@@ -198,6 +198,22 @@ This file tracks which claims are supported by current repository artifacts and 
 | Exact positive channel scaling does not improve over C2M3-style channel synchronization on the CIFAR rescue run. | Supported negative result | `reports/csv/cifar_rescue_or_no_go_summary.csv` reports `positive_channel_scale` test accuracy `0.438333`, below C2M3-style channel synchronization `0.487000`, with delta `-0.048667`. |
 | The CIFAR ensemble row is an upper bound with extra inference and parameter cost. | Supported | `reports/cifar_rescue_or_no_go_report.md` reports `ensemble_upper_bound` test accuracy `0.675000`, while the CSV records `single_model=False`, `capacity_matched=False`, and parameter/inference multipliers `3.0`. |
 
+
+## Final CIFAR Channel-Gauge Confirmatory Run
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| `cifar_base_accuracy_gate_passed_final` / base accuracy gate passed | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records all final settings pass; minimum setting max individual accuracy=0.6464. |
+| `cifar_shrinkage_channel_scale_over_c2m3` / shrinkage channel scale over C2M3 | Supported descriptive | `reports/cifar_final_channel_gauge_confirmatory_report.md` records positive paired mean=0.000160, CI=[-0.000640,0.001280], fixed positives=1/1. |
+| `cifar_global_channel_scale_over_c2m3` / global channel scale over C2M3 | Supported descriptive | `reports/cifar_final_channel_gauge_confirmatory_report.md` records positive paired mean=0.000040, CI=[-0.001900,0.002280], fixed positives=1/1. |
+| `cifar_optimized_channel_scale_over_c2m3` / optimized channel scale over C2M3 | Supported descriptive | `reports/cifar_final_channel_gauge_confirmatory_report.md` records positive paired mean=0.000540, CI=[-0.000880,0.002740], fixed positives=1/1. |
+| `cifar_union_candidate_soup_over_greedy_soup` / union candidate soup over greedy soup | Supported descriptive | `reports/cifar_final_channel_gauge_confirmatory_report.md` records positive paired mean=0.000440, CI=[0.000000,0.001320], fixed positives=1/1. |
+| `cifar_greedy_safe_selector_over_or_matches_greedy_soup` / greedy-safe selector over or matches greedy soup | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records matches baseline with paired mean=0.000000, CI=[0.000000,0.000000]. |
+| `cifar_exact_channel_gauge_methods_capacity_matched` / exact channel-gauge methods capacity matched | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records exact=True, capacity_matched=True for C2M3 and scale rows; no BatchNorm gauge claim is made. |
+| `cifar_general_model_merging_win` / general CIFAR model-merging win | Not yet supported | `reports/cifar_final_channel_gauge_confirmatory_report.md` records bounded no-BatchNorm CIFAR setting only; no external official baseline, SOTA, BatchNorm, or broad CIFAR claim. |
+| `cifar_branch_closed_for_current_paper` / CIFAR branch closed for current paper | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records final bounded CIFAR run completed; base gate passes, exact channel gauges are descriptive only, union soup CI touches zero, and the report closes CIFAR as an appendix boundary. |
+| `cifar_residuals_are_brauer_or_period_index` / CIFAR residuals are Brauer or period-index | Not yet supported | `reports/cifar_final_channel_gauge_confirmatory_report.md` records this run records channel residual diagnostics but does not find or certify Brauer/period-index CIFAR residual classes. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -282,6 +298,16 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/cifar_rescue_or_no_go_report.md` | CIFAR rescue report with gate decision, probe rows, merge/diagnostic rows, and claim boundaries. |
 | `reports/csv/cifar_rescue_or_no_go.csv` | Per-setting CIFAR rescue rows for probes, merge methods, selectors, and ensemble upper bound. |
 | `reports/csv/cifar_rescue_or_no_go_summary.csv` | CIFAR rescue method summaries and formal gate decision. |
+| `experiments/cifar_final_channel_gauge_confirmatory.py` | Final bounded CIFAR-10 no-BatchNorm CNN channel-gauge confirmatory benchmark. |
+| `reports/cifar_final_channel_gauge_confirmatory_report.md` | Final CIFAR report with exact command, method table, paired summaries, diagnostics, negative results, and branch decision. |
+| `reports/csv/cifar_final_channel_gauge_confirmatory.csv` | Per-setting CIFAR final channel-gauge benchmark rows. |
+| `reports/csv/cifar_final_channel_gauge_confirmatory_summary.csv` | CIFAR final method summaries, paired comparisons, selector behavior, and claim decisions. |
+| `reports/tables/cifar_final_channel_gauge_confirmatory_table.tex` | LaTeX table for the final CIFAR channel-gauge benchmark. |
+| `reports/plots/cifar_final_delta_vs_c2m3.pdf` | CIFAR final method deltas versus C2M3-style channel synchronization. |
+| `reports/plots/cifar_final_delta_vs_greedy_soup.pdf` | CIFAR final method deltas versus greedy soup. |
+| `reports/plots/cifar_final_selector_choices.pdf` | CIFAR final greedy-safe selector choice counts. |
+| `reports/plots/cifar_final_channel_residuals.pdf` | CIFAR final channel residual diagnostics. |
+| `reports/configs/cifar_final_channel_gauge_confirmatory_config.json` | Saved command and runtime metadata for the final CIFAR benchmark. |
 | `reports/planted_obstruction_model_merging_report.md` | Causally planted cycle-obstruction model-merging report using exact hidden-permutation MNIST MLP copies. |
 | `reports/csv/planted_obstruction_model_merging.csv` | Per-seed planted central/random obstruction benchmark rows. |
 | `reports/csv/planted_obstruction_stats.csv` | Trend and method-delta statistics for the planted obstruction benchmark. |

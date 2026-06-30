@@ -1,0 +1,20 @@
+\begin{tabular}{lrrrr}
+\toprule
+Method & Test acc. & $\Delta$ C2M3 & $\Delta$ greedy & exact \\
+\midrule
+weight\_average & 0.1342 & -0.3302 & -0.5138 & False \\
+c2m3\_channel\_synchronization & 0.4644 & +0.0000 & -0.1836 & True \\
+positive\_channel\_scale & 0.4156 & -0.0488 & -0.2324 & True \\
+shrinkage\_channel\_scale & 0.4646 & +0.0002 & -0.1834 & True \\
+global\_channel\_scale & 0.4645 & +0.0000 & -0.1835 & True \\
+optimized\_channel\_scale & 0.4650 & +0.0005 & -0.1830 & True \\
+greedy\_soup & 0.6480 & +0.1836 & +0.0000 & False \\
+positive\_channel\_scaled\_greedy\_soup & 0.6480 & +0.1836 & +0.0000 & True \\
+shrinkage\_channel\_scaled\_greedy\_soup & 0.6480 & +0.1836 & +0.0000 & True \\
+global\_channel\_scaled\_greedy\_soup & 0.6480 & +0.1836 & +0.0000 & True \\
+optimized\_channel\_scaled\_greedy\_soup & 0.6480 & +0.1836 & +0.0000 & True \\
+union\_channel\_candidate\_soup & 0.6484 & +0.1840 & +0.0004 & True \\
+greedy\_safe\_selector & 0.6480 & +0.1836 & +0.0000 & False \\
+ensemble\_upper\_bound & 0.6728 & +0.2083 & +0.0248 & False \\
+\bottomrule
+\end{tabular}
