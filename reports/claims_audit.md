@@ -214,6 +214,13 @@ This file tracks which claims are supported by current repository artifacts and 
 | `cifar_branch_closed_for_current_paper` / CIFAR branch closed for current paper | Supported limited | `reports/cifar_final_channel_gauge_confirmatory_report.md` records final bounded CIFAR run completed; base gate passes, exact channel gauges are descriptive only, union soup CI touches zero, and the report closes CIFAR as an appendix boundary. |
 | `cifar_residuals_are_brauer_or_period_index` / CIFAR residuals are Brauer or period-index | Not yet supported | `reports/cifar_final_channel_gauge_confirmatory_report.md` records this run records channel residual diagnostics but does not find or certify Brauer/period-index CIFAR residual classes. |
 
+## Unified Quantitative Obstruction Chain
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| Different residual scores predict different downstream decisions; a single scalar obstruction does not explain all cases. | Supported descriptive | `reports/unified_quantitative_obstruction_chain.md` aligns 51,895 rows from 19 source families. Link tests show planted cycle score predicts Git-ReBasin-style pairwise degradation (Spearman `0.795903`), validation deltas predict selector gain as a separate selection signal (Spearman `0.552456`), learned-operator error predicts certification negatively (Spearman `-0.835969`), projection residual gates keep accepted false-lift rate at `0`, period-index divisibility matches selected lifts at rate `1.0`, and the block-gauge phase diagram has 12,240 projected-cycle trap rows where connection residual is needed. |
+| Every merging failure is Brauer/projective. | Not yet supported | `reports/unified_quantitative_obstruction_chain.md` explicitly separates permutation synchronization, validation-selected soups, exact positive scale gauges, noncentral diagnostics, projection-gated period-index rows, sheaf diagnostics, and dataset gates; it repeats that the unified chain does not claim every merging failure is Brauer/projective. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -224,6 +231,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | The expanded rotated/colored-MNIST bridge run proves CIFAR or general vision performance. | Not yet supported | `reports/bridge_dataset_channel_gauge_expansion.md` covers MNIST-derived bridge datasets only; it does not evaluate CIFAR and explicitly forbids promoting the bridge result to CIFAR/general-vision claims. |
 | The CIFAR rescue proves a general CIFAR model-merging win. | Not yet supported | `reports/cifar_rescue_or_no_go_report.md` clears the meaningful base-accuracy gate, but method comparisons are one-setting descriptive rows; no broad or multi-seed CIFAR method-win claim is established. |
 | Positive channel scaling improves CIFAR merging. | Not yet supported | The bounded CIFAR rescue reports `positive_channel_scale` below C2M3-style channel synchronization by `-0.048667` test accuracy. |
+| Every merging failure is Brauer/projective. | Not yet supported | `reports/unified_quantitative_obstruction_chain.md` gives explicit counter-accounting: different residual scores govern synchronization degradation, selector gain, detector certification, lift decisions, and dataset gates, and noncentral/permutation/soup cases are not promoted to Brauer/projective failures. |
 | TwistedMerge fully trivializes a nonzero `H^2(mu_2)` class as an ordinary untwisted vector bundle. | Not yet supported | The nonzero tetrahedral `H^2` class is explicitly non-coboundary. Current `TwistedMerge` does not construct an edge-level untwisted descent for it. |
 | The branch-prediction lift is a complete transition-map-level twisted sheaf descent implementation. | Not yet supported | The q=2 branch result is a controlled prediction-level sanity check. It is not a proof of full sheaf-level descent in the non-coboundary case. |
 | Cycle obstruction score predicts weight-average merge degradation beyond the trivial number-of-models confound. | Not yet supported | In `reports/csv/model_merging_stats.csv`, fixed-`N` observed correlations are marked unsupported: `N=3` Pearson `-0.0347`, `N=4` Pearson `-0.3622`, and bootstrap intervals cross zero. |
@@ -284,6 +292,11 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/model_merging_verification_report.md` | Fixed-`N`, repeated-seed MNIST model-merging verification report. |
 | `reports/csv/model_merging_verification.csv` | Per-baseline rows for observed and injected-alignment verification settings. |
 | `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |
+| `experiments/unified_quantitative_obstruction_chain.py` | Aggregates existing obstruction, detector, gate, selector, model-merging, block-gauge, time-frequency, and optional sheaf/GNN CSV artifacts into one quantitative chain. |
+| `reports/unified_quantitative_obstruction_chain.md` | Unified obstruction-chain report with link tests for cycle scores, validation deltas, operator/projection residuals, period-index decisions, dataset gates, and residual taxonomy. |
+| `reports/csv/unified_quantitative_obstruction_chain.csv` | Row-level normalized obstruction-chain table with aligned residual, detector, lift, gate, validation, and merge-degradation fields. |
+| `reports/plots/unified_obstruction_chain.pdf` | Four-panel diagnostic plot for planted degradation, selector deltas, operator-error certification, and projection-residual gates. |
+| `reports/latex/quantitative_obstruction_theorem_candidate.tex` | Cautious LaTeX theorem-candidate snippet stating the artifact-scoped multi-residual decision chain. |
 | `experiments/cifar_or_colored_mnist_feasibility.py` | Rotated-MNIST bridge and gated CIFAR probe feasibility benchmark for small CNN channel-gauge merging. |
 | `reports/cifar_or_colored_mnist_feasibility.md` | Report for bridge/CIFAR accuracy gates, merge method summaries, and plumbing-only boundaries. |
 | `reports/csv/cifar_or_colored_mnist_feasibility.csv` | Per-setting bridge/CIFAR feasibility rows with method metrics, threshold status, and validation-only selector metadata. |
