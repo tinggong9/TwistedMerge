@@ -178,6 +178,16 @@ This file tracks which claims are supported by current repository artifacts and 
 | Positive channel scaling beats C2M3 on the rotated-MNIST bridge run. | Not yet supported | `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` reports `positive_channel_scale` mean delta versus C2M3 `0.001250` with CI `[-0.004167, 0.006667]`, so the effect is descriptive at best. |
 | CIFAR-10 remains below the plumbing threshold in the gated small-CNN probe. | Supported negative result | The CIFAR probe in `reports/cifar_or_colored_mnist_feasibility.md` reports test accuracy `0.2480`, below the `0.45` plumbing threshold and far below the `0.60` meaningful-claim threshold, so CIFAR merge methods were not run. |
 
+## Bridge Dataset Channel-Gauge Expansion
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| Bridge datasets support the same C2M3-versus-greedy boundary pattern. | Supported limited | `reports/bridge_dataset_channel_gauge_expansion.md` reports 17 bridge settings across rotated-MNIST angles `15,25,45`, colored-MNIST, and `N=3,4`; on the main rotated-25 `N=3` 10-seed setting, greedy soup beats C2M3-style channel synchronization by `0.089670`, CI `[0.067857,0.112412]`, and over all bridge settings the delta is `0.084724`, CI `[0.063629,0.103986]`. |
+| The expanded bridge run clears the bridge base-accuracy gate. | Supported limited | `reports/csv/bridge_dataset_channel_gauge_expansion_summary.csv` records `bridge_accuracy_gate` as `Supported limited`, with minimum setting-level individual max accuracy `0.9103` above the `0.80` bridge threshold. |
+| Greedy-safe selection preserves the greedy-soup bridge result in this run. | Supported descriptive | `reports/bridge_dataset_channel_gauge_expansion.md` reports greedy-safe selector mean delta versus greedy soup `0.000000`; the selector chose `greedy_soup` in all 17 settings using validation metrics only. |
+| Optimized channel scaling improves over C2M3-style synchronization on bridge datasets but remains below greedy soup. | Supported limited | `reports/csv/bridge_dataset_channel_gauge_expansion_summary.csv` reports overall `optimized_channel_scale` delta versus C2M3 `0.014729`, CI `[0.010211,0.019659]`, while its delta versus greedy soup is `-0.069994`. |
+| Bridge results imply CIFAR or general vision performance. | Not yet supported | `reports/bridge_dataset_channel_gauge_expansion.md` explicitly labels rotated/colored-MNIST as bridge datasets only and states that these results do not imply CIFAR or general vision performance. |
+
 ## CIFAR Rescue Or No-Go Gate
 
 | Claim | Status | Evidence |
@@ -195,6 +205,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | TwistedMerge beats external model-merging baselines. | Not yet supported | `reports/external_baseline_comparison.md` compares documented faithful in-repo baselines, not official external code execution; `reports/official_external_baseline_attempt.md` records no successful official-code runs; and the improved selector remains below faithful greedy soup with paired mean accuracy delta `-0.0024`. |
 | TwistedMerge solves natural MNIST/CIFAR merging. | Not yet supported | `reports/model_merging_verification_report.md` is stronger for MNIST than the smoke run, but it still reports descriptive prototype baselines and excludes CIFAR as near chance. |
 | The rotated-MNIST bridge result proves CIFAR or broad vision generality. | Not yet supported | The bridge run is rotated-MNIST only; the later CIFAR rescue is a bounded no-BatchNorm CNN run with one merge setting, not broad vision generality. |
+| The expanded rotated/colored-MNIST bridge run proves CIFAR or general vision performance. | Not yet supported | `reports/bridge_dataset_channel_gauge_expansion.md` covers MNIST-derived bridge datasets only; it does not evaluate CIFAR and explicitly forbids promoting the bridge result to CIFAR/general-vision claims. |
 | The CIFAR rescue proves a general CIFAR model-merging win. | Not yet supported | `reports/cifar_rescue_or_no_go_report.md` clears the meaningful base-accuracy gate, but method comparisons are one-setting descriptive rows; no broad or multi-seed CIFAR method-win claim is established. |
 | Positive channel scaling improves CIFAR merging. | Not yet supported | The bounded CIFAR rescue reports `positive_channel_scale` below C2M3-style channel synchronization by `-0.048667` test accuracy. |
 | TwistedMerge fully trivializes a nonzero `H^2(mu_2)` class as an ordinary untwisted vector bundle. | Not yet supported | The nonzero tetrahedral `H^2` class is explicitly non-coboundary. Current `TwistedMerge` does not construct an edge-level untwisted descent for it. |
@@ -262,6 +273,11 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/csv/cifar_or_colored_mnist_feasibility.csv` | Per-setting bridge/CIFAR feasibility rows with method metrics, threshold status, and validation-only selector metadata. |
 | `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` | Method summaries and claim-gate decisions for rotated-MNIST and CIFAR. |
 | `reports/configs/cifar_or_colored_mnist_feasibility_config.json` | Saved command, thresholds, git state, and environment metadata for the feasibility run. |
+| `experiments/bridge_dataset_channel_gauge_expansion.py` | Expanded rotated/colored-MNIST bridge benchmark over angles, `N=3,4`, 10 main seeds, exact channel gauges, C2M3-style synchronization, and greedy baselines. |
+| `reports/bridge_dataset_channel_gauge_expansion.md` | Bridge expansion report with bridge-only claim decisions, main-setting method table, overall boundary comparisons, and setting coverage. |
+| `reports/csv/bridge_dataset_channel_gauge_expansion.csv` | Per-setting bridge expansion rows for all methods and validation/test metrics. |
+| `reports/csv/bridge_dataset_channel_gauge_expansion_summary.csv` | Bridge expansion method summaries, paired comparisons, and claim-decision rows. |
+| `reports/tables/bridge_dataset_channel_gauge_expansion.tex` | LaTeX table for the main rotated-25 `N=3` bridge setting. |
 | `experiments/cifar_rescue_or_no_go.py` | Bounded CIFAR rescue/no-go gate with larger no-BatchNorm CNNs, normalization/augmentation, thresholded merge evaluation, and ensemble upper bound. |
 | `reports/cifar_rescue_or_no_go_report.md` | CIFAR rescue report with gate decision, probe rows, merge/diagnostic rows, and claim boundaries. |
 | `reports/csv/cifar_rescue_or_no_go.csv` | Per-setting CIFAR rescue rows for probes, merge methods, selectors, and ensemble upper bound. |
