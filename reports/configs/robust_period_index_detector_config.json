@@ -2,9 +2,9 @@
   "argv": [
     "experiments/robust_period_index_detector.py"
   ],
-  "commit": "a6ba1d5",
+  "commit": "7277bd3",
   "environment": {
-    "git_commit": "a6ba1d5",
+    "git_commit": "7277bd3",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
