@@ -129,6 +129,19 @@ This file tracks which claims are supported by current repository artifacts and 
 | The block-compatible aligned average does not beat greedy soup in the current exact linear-hidden benchmark. | Supported negative result | `reports/csv/block_gauge_phase_diagram_paired_stats.csv` reports optimized aligned average versus greedy soup mean accuracy delta `-0.00055`, CI `[-0.00165, 0]`, wins/ties/losses `0/19/1`. |
 | Real ReLU MLP block-gauge rows remain diagnostic-only under the improved phase-diagram run. | Supported negative result | `reports/relu_block_diagnostic_report.md` reports `block_merge_reported=False` and scalar candidate fraction `0` for ReLU diagnostic rows; block-orthogonal ReLU merge accuracy is not reported. |
 
+## Fashion-MNIST Greedy-Safe Selector And CNN Extension
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| A Fashion-MNIST greedy-safe selector can avoid harmful departures from greedy soup in the replayed 5(m) MLP candidate table. | Supported limited | `reports/csv/fashion_mnist_greedy_safe_selector_summary.csv` reports bootstrap/regret selector rows with false challenger rate `0.0000`, mean delta versus greedy soup `0.0000`, and mean delta versus internal C2M3 `0.067223`. |
+| The Fashion-MNIST greedy-safe selector matches greedy soup while preserving gains over internal C2M3. | Supported limited | `reports/fashion_mnist_greedy_safe_selector_report.md` records safe rows that choose greedy soup in all 35 settings, match greedy exactly, and retain the C2M3 gain inherited from the 5(m) method pool. |
+| The Fashion-MNIST greedy-safe selector beats greedy soup overall. | Not yet supported | The best greedy-safe selector rows have mean delta versus greedy soup `0.000000` with bootstrap CI `[0.000000, 0.000000]`, so this is a match, not a win. |
+| Exact positive ReLU channel gauges extend the MLP monomial-scaling idea to the tested small CNN channel/hidden units. | Supported | `tests/test_cnn_channel_gauge.py` verifies exact logit preservation for channel permutations, positive channel scalings, and combined gauges, with unchanged parameter count and inference-cost proxy. |
+| In the initial Fashion-MNIST CNN benchmark, shrinkage/global channel scaling gives a descriptive improvement over channel-permutation C2M3. | Supported descriptive | `reports/csv/fashion_mnist_cnn_ladder_summary.csv` reports shrinkage/global channel-scale mean deltas over C2M3 of `0.012733` and `0.014667`, with bootstrap CIs touching zero over three N=3 seeds. |
+| Raw positive channel scaling improves over channel-permutation C2M3 in the initial CNN benchmark. | Supported negative result | `reports/csv/fashion_mnist_cnn_ladder_summary.csv` reports raw positive channel scale mean delta versus C2M3 `-0.000567`, CI `[-0.020900, 0.028300]`. |
+| The CNN channel-gauge branch beats greedy soup. | Not yet supported | `reports/fashion_mnist_cnn_ladder_report.md` reports greedy soup mean test accuracy `0.824267`; shrinkage/global channel-scale rows remain below greedy soup, and the greedy-safe selector matches greedy with zero delta. |
+| CNN residuals are Brauer or period-index classes. | Not yet supported | `reports/fashion_mnist_cnn_ladder_report.md` records zero central/projective and finite-index candidate fractions and explicitly does not run a CNN Brauer/period-index detector. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
@@ -406,6 +419,27 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/plots/fashion_residual_taxonomy.pdf` | Fashion-MNIST residual taxonomy fractions across fixed settings. |
 | `reports/tables/fashion_ladder_table.tex` | LaTeX summary table for the Fashion-MNIST improved ladder benchmark. |
 | `reports/configs/fashion_mnist_improved_ladder_config.json` | Saved configuration and environment metadata for the Fashion-MNIST improved ladder run. |
+| `src/greedy_safe_selector.py` | Greedy-safe validation-only selector modes: fixed margin, loss-aware margin, bootstrap/LCB, nested validation, and regret bound. |
+| `tests/test_greedy_safe_selector.py` | Regression tests for greedy fallback, challenger acceptance, bootstrap/LCB behavior, nested accept split, and conservative regret-bound selection. |
+| `experiments/fashion_mnist_greedy_safe_selector.py` | Fashion-MNIST MLP greedy-safe selector replay over the 5(m) candidate table. |
+| `reports/fashion_mnist_greedy_safe_selector_report.md` | Report for Fashion-MNIST greedy-safe selector modes, false challenger rates, regret, paired deltas, and negative boundaries. |
+| `reports/csv/fashion_mnist_greedy_safe_selector.csv` | Per-setting Fashion-MNIST MLP candidate and greedy-safe selector rows. |
+| `reports/csv/fashion_mnist_greedy_safe_selector_summary.csv` | Greedy-safe selector method summaries, paired comparisons, choice counts, and claim decisions. |
+| `reports/plots/fashion_greedy_safe_delta_vs_greedy_soup.pdf` | Fashion-MNIST greedy-safe validation margin versus test delta plot. |
+| `reports/plots/fashion_greedy_safe_regret.pdf` | Greedy-safe selector regret plot for the lowest-false-challenger rows. |
+| `reports/tables/fashion_greedy_safe_selector_table.tex` | LaTeX table of conservative Fashion-MNIST greedy-safe selector rows. |
+| `src/cnn_channel_gauge.py` | No-BatchNorm small Fashion-MNIST CNN plus exact channel permutation and positive channel-scaling gauges. |
+| `tests/test_cnn_channel_gauge.py` | Exactness tests for CNN channel permutation, positive scaling, combined gauges, parameter count, and inference-cost proxy. |
+| `experiments/fashion_mnist_cnn_ladder.py` | Small CNN Fashion-MNIST channel-gauge ladder benchmark over channel permutation, positive scale, shrinkage/global scales, greedy soup, greedy-safe selector, and ensemble. |
+| `reports/fashion_mnist_cnn_ladder_report.md` | CNN channel-gauge report with exactness status, method table, residual diagnostics, and claim decisions. |
+| `reports/csv/fashion_mnist_cnn_ladder.csv` | Per-setting CNN channel-gauge benchmark rows. |
+| `reports/csv/fashion_mnist_cnn_ladder_summary.csv` | CNN method summaries, paired channel-scale comparisons, residual diagnostics, and claim decisions. |
+| `reports/plots/fashion_cnn_delta_vs_c2m3.pdf` | CNN method deltas versus channel-permutation C2M3. |
+| `reports/plots/fashion_cnn_delta_vs_greedy_soup.pdf` | CNN method deltas versus greedy soup. |
+| `reports/plots/fashion_cnn_channel_residual_taxonomy.pdf` | CNN residual taxonomy fractions showing no central/projective or finite-index candidate claims. |
+| `reports/tables/fashion_cnn_ladder_table.tex` | LaTeX summary table for the CNN channel-gauge ladder benchmark. |
+| `reports/configs/fashion_mnist_greedy_safe_selector_config.json` | Saved command, environment, and selector-grid metadata for the Fashion-MNIST greedy-safe selector replay. |
+| `reports/configs/fashion_mnist_cnn_ladder_config.json` | Saved command, environment, and benchmark metadata for the Fashion-MNIST CNN ladder run. |
 | `external_baselines/README.md` | License-clean external-baseline documentation for Git Re-Basin, C2M3, Model Soups, internal controls, deviations, capacity matching, inference cost, and fairness boundaries. |
 | `experiments/external_baseline_comparison.py` | MNIST MLP external-baseline comparison generator using shared checkpoints/splits, faithful Git-ReBasin-style alignment, faithful C2M3-style synchronization, faithful greedy soup, monomial scaling, and validation-only selectors. |
 | `reports/external_baseline_comparison.md` | Report for the external-baseline MNIST MLP comparison, integration status, method metadata, paired deltas, selector behavior, and negative boundaries. |

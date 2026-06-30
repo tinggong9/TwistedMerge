@@ -1,0 +1,30 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/fashion_mnist_cnn_ladder.py --device auto",
+  "git_commit": "9535ed3",
+  "dirty_worktree": true,
+  "model_counts": [
+    3
+  ],
+  "seeds": [
+    6400,
+    6401,
+    6402
+  ],
+  "epochs": 3,
+  "max_train_samples": 12000,
+  "max_test_samples": 0,
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "9535ed3"
+  }
+}
