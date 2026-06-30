@@ -40,10 +40,66 @@ class PeriodIndexDetection:
 
 
 @dataclass(frozen=True)
+class CommutatorRootObservation:
+    pair: tuple[str, str]
+    centrality_score: float
+    scalar_phase: complex | None
+    root_order: int
+    root_exponent: int
+    phase_residual: float
+    root_margin: float
+
+
+@dataclass(frozen=True)
+class RobustPeriodIndexDetection:
+    status: str
+    certified: bool
+    detector_mode: str
+    generator_names: tuple[str, ...]
+    period: int | None
+    index: int | None
+    independent_pair_count: int | None
+    exponent_matrix: list[list[int]] | None
+    centrality_score: float
+    phase_residual: float
+    candidate_rank: int
+    period_divides_rank: bool | None
+    index_divides_rank: bool | None
+    decision: str
+    notes: list[str]
+    threshold_level: str | None = None
+    centrality_tolerance: float | None = None
+    phase_tolerance: float | None = None
+    min_root_margin: float | None = None
+    min_root_confidence: float | None = None
+    alternating_rank: int | None = None
+    radical_size: int | None = None
+    quotient_size: int | None = None
+    pair_observations: tuple[CommutatorRootObservation, ...] = ()
+    exact_detection: PeriodIndexDetection | None = None
+
+    @property
+    def max_centrality_score(self) -> float:
+        return self.centrality_score
+
+    @property
+    def max_phase_residual(self) -> float:
+        return self.phase_residual
+
+
+@dataclass(frozen=True)
 class _RootFit:
     order: int
     exponent: int
     residual: float
+
+
+@dataclass(frozen=True)
+class _RobustRootFit:
+    order: int
+    exponent: int
+    residual: float
+    margin: float
 
 
 def _relative_residual(left: np.ndarray, right: np.ndarray) -> float:
@@ -102,6 +158,103 @@ def _nearest_root(matrix: np.ndarray, max_root_order: int) -> _RootFit:
     residual, raw_order, raw_exponent = best
     order, exponent = _phase_order(raw_order, raw_exponent)
     return _RootFit(order=order, exponent=exponent, residual=float(residual))
+
+
+def _nearest_root_with_margin(matrix: np.ndarray, max_root_order: int) -> _RobustRootFit:
+    width = matrix.shape[0]
+    by_root: dict[tuple[int, int], float] = {}
+    for order in range(1, max_root_order + 1):
+        for exponent in range(order):
+            reduced_order, reduced_exponent = _phase_order(order, exponent)
+            residual = _relative_residual(matrix, _root(reduced_order, reduced_exponent) * np.eye(width, dtype=complex))
+            key = (reduced_order, reduced_exponent)
+            if key not in by_root or residual < by_root[key]:
+                by_root[key] = residual
+    if not by_root:
+        return _RobustRootFit(order=1, exponent=0, residual=float("inf"), margin=0.0)
+    ordered = sorted(by_root.items(), key=lambda item: (item[1], item[0][0], item[0][1]))
+    (order, exponent), best_residual = ordered[0]
+    second_residual = ordered[1][1] if len(ordered) > 1 else float("inf")
+    margin = float(second_residual - best_residual) if np.isfinite(second_residual) else float("inf")
+    return _RobustRootFit(
+        order=int(order),
+        exponent=int(exponent),
+        residual=float(best_residual),
+        margin=margin,
+    )
+
+
+def _robust_result_from_detection(
+    *,
+    status: str,
+    certified: bool,
+    detection: PeriodIndexDetection | None,
+    candidate_rank: int,
+    generator_names: tuple[str, ...],
+    observations: tuple[CommutatorRootObservation, ...],
+    threshold_level: str | None,
+    centrality_tolerance: float | None,
+    phase_tolerance: float | None,
+    min_root_margin: float | None,
+    notes: list[str],
+    min_root_confidence: float | None = None,
+    decision: str | None = None,
+) -> RobustPeriodIndexDetection:
+    if detection is None:
+        centrality_score = float(max((obs.centrality_score for obs in observations), default=float("inf")))
+        phase_residual = float(max((obs.phase_residual for obs in observations), default=float("inf")))
+        return RobustPeriodIndexDetection(
+            status=status,
+            certified=False,
+            detector_mode="robust_commutator_matrix",
+            generator_names=generator_names,
+            period=None,
+            index=None,
+            independent_pair_count=None,
+            exponent_matrix=None,
+            centrality_score=centrality_score,
+            phase_residual=phase_residual,
+            candidate_rank=int(candidate_rank),
+            period_divides_rank=None,
+            index_divides_rank=None,
+            decision=decision or "not_central_projective",
+            notes=notes,
+            threshold_level=threshold_level,
+            centrality_tolerance=centrality_tolerance,
+            phase_tolerance=phase_tolerance,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            pair_observations=observations,
+        )
+
+    effective_decision = decision or detection.decision
+    return RobustPeriodIndexDetection(
+        status=status,
+        certified=certified,
+        detector_mode="robust_commutator_matrix",
+        generator_names=detection.generator_names,
+        period=detection.period,
+        index=detection.index,
+        independent_pair_count=detection.independent_pair_count,
+        exponent_matrix=detection.exponent_matrix,
+        centrality_score=detection.centrality_score,
+        phase_residual=detection.phase_residual,
+        candidate_rank=detection.candidate_rank,
+        period_divides_rank=detection.period_divides_rank,
+        index_divides_rank=detection.index_divides_rank if certified else None,
+        decision=effective_decision,
+        notes=notes,
+        threshold_level=threshold_level,
+        centrality_tolerance=centrality_tolerance,
+        phase_tolerance=phase_tolerance,
+        min_root_margin=min_root_margin,
+        min_root_confidence=min_root_confidence,
+        alternating_rank=detection.alternating_rank,
+        radical_size=detection.radical_size,
+        quotient_size=detection.quotient_size,
+        pair_observations=observations,
+        exact_detection=detection,
+    )
 
 
 def _build_exponent_matrix(size: int, pair_exponents: Mapping[tuple[int, int], int], period: int) -> list[list[int]]:
@@ -419,6 +572,255 @@ def detect_commutator_matrix_period_index(
         period_divides_rank=period_divides,
         index_divides_rank=index_divides,
         decision=decision,
+        notes=notes,
+    )
+
+
+def robust_detect_commutator_matrix_period_index(
+    generators: Mapping[str, np.ndarray],
+    candidate_rank: int,
+    max_root_order: int = 12,
+    centrality_tol_grid: tuple[float, ...] = (1e-6, 1e-4, 1e-3, 1e-2),
+    phase_tol_grid: tuple[float, ...] = (1e-6, 1e-4, 1e-3, 1e-2),
+    confidence_margin: float = 0.25,
+    max_bruteforce_states: int = 200000,
+) -> RobustPeriodIndexDetection:
+    """Robust central commutator-matrix detector for noisy generators.
+
+    The result is certified only when commutators pass the strict or medium
+    threshold levels and nearest-root choices have a margin.  Loose detections
+    are reported as diagnostics and never as lift certificates.
+    """
+
+    generator_names = tuple(generators)
+    matrices = [np.asarray(generators[name], dtype=complex) for name in generator_names]
+    rank = int(candidate_rank)
+    empty_observations: tuple[CommutatorRootObservation, ...] = ()
+    centrality_grid = tuple(sorted(float(value) for value in centrality_tol_grid))
+    phase_grid = tuple(sorted(float(value) for value in phase_tol_grid))
+    if not centrality_grid or not phase_grid:
+        raise ValueError("centrality_tol_grid and phase_tol_grid must be nonempty")
+    loose_centrality = centrality_grid[-1]
+    loose_phase = phase_grid[-1]
+
+    def invalid(notes: list[str], *, decision: str = "not_central_projective") -> RobustPeriodIndexDetection:
+        return _robust_result_from_detection(
+            status="rejected_noncentral",
+            certified=False,
+            detection=None,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=empty_observations,
+            threshold_level=None,
+            centrality_tolerance=None,
+            phase_tolerance=None,
+            min_root_margin=None,
+            decision=decision,
+            notes=notes,
+        )
+
+    if len(matrices) < 2:
+        return invalid(["at least two generators are required"])
+    first_shape = matrices[0].shape
+    if len(first_shape) != 2 or first_shape[0] != first_shape[1]:
+        return invalid(["generators must be square matrices"])
+    if any(matrix.shape != first_shape for matrix in matrices):
+        return invalid(["all generators must have the same square shape"])
+
+    pair_keys: list[tuple[int, int]] = []
+    commutators: list[np.ndarray] = []
+    try:
+        for i in range(len(matrices)):
+            for j in range(i + 1, len(matrices)):
+                pair_keys.append((i, j))
+                commutators.append(_commutator(matrices[i], matrices[j]))
+    except np.linalg.LinAlgError:
+        return invalid(["a generator was singular"])
+
+    observations: list[CommutatorRootObservation] = []
+    for (i, j), commutator in zip(pair_keys, commutators, strict=True):
+        centrality, scalar_phase = _scalar_centrality(commutator)
+        root_fit = _nearest_root_with_margin(commutator, max_root_order)
+        observations.append(
+            CommutatorRootObservation(
+                pair=(generator_names[i], generator_names[j]),
+                centrality_score=centrality,
+                scalar_phase=scalar_phase,
+                root_order=root_fit.order,
+                root_exponent=root_fit.exponent,
+                phase_residual=root_fit.residual,
+                root_margin=root_fit.margin,
+            )
+        )
+    observation_tuple = tuple(observations)
+    max_centrality = float(max((obs.centrality_score for obs in observations), default=0.0))
+    max_phase_residual = float(max((obs.phase_residual for obs in observations), default=0.0))
+    min_root_margin = float(min((obs.root_margin for obs in observations), default=float("inf")))
+    min_root_confidence = float(
+        min(
+            (
+                obs.root_margin / max(obs.root_margin + obs.phase_residual, 1e-12)
+                for obs in observations
+            ),
+            default=1.0,
+        )
+    )
+    if max_centrality > loose_centrality:
+        return _robust_result_from_detection(
+            status="rejected_noncentral",
+            certified=False,
+            detection=None,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=None,
+            centrality_tolerance=loose_centrality,
+            phase_tolerance=loose_phase,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            decision="not_central_projective",
+            notes=[
+                f"commutator centrality {max_centrality:.6g} exceeds the loose threshold {loose_centrality:.6g}"
+            ],
+        )
+
+    threshold_count = max(len(centrality_grid), len(phase_grid))
+    threshold_rows: list[tuple[str, float, float, int]] = []
+    for idx in range(threshold_count):
+        centrality_tol = centrality_grid[min(idx, len(centrality_grid) - 1)]
+        phase_tol = phase_grid[min(idx, len(phase_grid) - 1)]
+        if idx == 0:
+            level = "strict"
+        elif idx == 1:
+            level = "medium"
+        else:
+            level = "loose"
+        threshold_rows.append((level, centrality_tol, phase_tol, idx))
+
+    passed = [
+        (level, centrality_tol, phase_tol, idx)
+        for level, centrality_tol, phase_tol, idx in threshold_rows
+        if max_centrality <= centrality_tol and max_phase_residual <= phase_tol
+    ]
+    if not passed:
+        return _robust_result_from_detection(
+            status="unknown_index",
+            certified=False,
+            detection=None,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=None,
+            centrality_tolerance=loose_centrality,
+            phase_tolerance=loose_phase,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            decision="central_projective_index_unknown",
+            notes=[
+                "commutators were close enough to scalar to avoid noncentral rejection, "
+                "but did not fit finite roots of unity on the configured tolerance grid"
+            ],
+        )
+
+    level, centrality_tol, phase_tol, idx = passed[0]
+    detection = detect_commutator_matrix_period_index(
+        generators,
+        candidate_rank=rank,
+        max_root_order=max_root_order,
+        centrality_tol=centrality_tol,
+        phase_tol=phase_tol,
+        max_bruteforce_states=max_bruteforce_states,
+    )
+    notes = list(detection.notes)
+    notes.append(
+        f"robust threshold level {level} accepted centrality {max_centrality:.6g} "
+        f"and phase residual {max_phase_residual:.6g}"
+    )
+
+    if detection.decision == "not_central_projective":
+        return _robust_result_from_detection(
+            status="rejected_noncentral",
+            certified=False,
+            detection=detection,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=level,
+            centrality_tolerance=centrality_tol,
+            phase_tolerance=phase_tol,
+            min_root_margin=min_root_margin,
+            decision=detection.decision,
+            notes=notes,
+        )
+
+    if min_root_confidence < confidence_margin:
+        notes.append(
+            f"nearest-root relative confidence {min_root_confidence:.6g} is below confidence margin {confidence_margin:.6g}"
+        )
+        return _robust_result_from_detection(
+            status="candidate_uncertain",
+            certified=False,
+            detection=detection,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=level,
+            centrality_tolerance=centrality_tol,
+            phase_tolerance=phase_tol,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            decision="central_projective_candidate_uncertain",
+            notes=notes,
+        )
+
+    if idx >= 2:
+        notes.append("only loose thresholds passed; this is a diagnostic candidate, not a lift certificate")
+        return _robust_result_from_detection(
+            status="candidate_uncertain",
+            certified=False,
+            detection=detection,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=level,
+            centrality_tolerance=centrality_tol,
+            phase_tolerance=phase_tol,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            decision="central_projective_candidate_uncertain",
+            notes=notes,
+        )
+
+    if detection.index is None:
+        notes.append("scalar central commutators were visible, but the index was not certified")
+        return _robust_result_from_detection(
+            status="unknown_index",
+            certified=False,
+            detection=detection,
+            candidate_rank=rank,
+            generator_names=generator_names,
+            observations=observation_tuple,
+            threshold_level=level,
+            centrality_tolerance=centrality_tol,
+            phase_tolerance=phase_tol,
+            min_root_margin=min_root_margin,
+            min_root_confidence=min_root_confidence,
+            decision="central_projective_index_unknown",
+            notes=notes,
+        )
+
+    return _robust_result_from_detection(
+        status="certified",
+        certified=True,
+        detection=detection,
+        candidate_rank=rank,
+        generator_names=generator_names,
+        observations=observation_tuple,
+        threshold_level=level,
+        centrality_tolerance=centrality_tol,
+        phase_tolerance=phase_tol,
+        min_root_margin=min_root_margin,
+        min_root_confidence=min_root_confidence,
         notes=notes,
     )
 

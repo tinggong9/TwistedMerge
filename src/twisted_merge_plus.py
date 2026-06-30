@@ -33,7 +33,13 @@ from .model_merging_benchmark import (
     synchronize_permutations,
 )
 from .period_index_central import direct_sum_lift as direct_sum_period_index_lift
-from .period_index_detector import PeriodIndexDetection, detect_period_index_structure
+from .period_index_detector import (
+    PeriodIndexDetection,
+    RobustPeriodIndexDetection,
+    detect_period_index_structure,
+    robust_detect_commutator_matrix_period_index,
+)
+from .period_index_mining import detect_mined_period_index
 from .simplicial_mu2 import Face, canonical_face, is_coboundary_mu2, tetrahedral_sphere
 from .twisted_merge_algorithm import (
     lift_mu2_transition,
@@ -45,6 +51,7 @@ from .twisted_merge_algorithm import (
 IndexPair = tuple[int, int]
 Triple = tuple[int, int, int]
 Alignment = np.ndarray
+PeriodIndexLike = PeriodIndexDetection | RobustPeriodIndexDetection
 
 
 @dataclass(frozen=True)
@@ -98,7 +105,7 @@ class ResidualDiagnostics:
     recommended_min_lift_rank: int | None = None
     determinant_obstruction_allows: bool | None = None
     finite_index_lift_residual: float | None = None
-    period_index: PeriodIndexDetection | None = None
+    period_index: PeriodIndexLike | None = None
     notes: tuple[str, ...] = ()
 
 
@@ -391,6 +398,10 @@ class TwistedMergePlus:
         finite_index_tolerance: float | None = None,
         period_index_generators: Mapping[str, np.ndarray] | None = None,
         enable_period_index_detection: bool = True,
+        enable_robust_period_index: bool = True,
+        period_index_detection_mode: str = "exact_or_robust",
+        period_index_threshold_policy: str = "certified_only",
+        candidate_transition_maps_for_mining: Mapping[IndexPair, np.ndarray] | None = None,
     ) -> TwistedMergePlusResult:
         actual_width = _infer_width(pairwise_alignments, width)
         actual_candidate_lift_rank = actual_width if candidate_lift_rank is None else int(candidate_lift_rank)
@@ -446,15 +457,49 @@ class TwistedMergePlus:
             actual_max_root_order,
             actual_finite_index_tolerance,
         )
-        period_index: PeriodIndexDetection | None = None
+        period_index: PeriodIndexLike | None = None
+        if period_index_threshold_policy != "certified_only":
+            notes.append("Only the certified-only period-index threshold policy is implemented; uncertain candidates do not lift.")
+        mode = period_index_detection_mode
+        exact_enabled = mode in {"exact", "exact_or_robust"}
+        robust_enabled = enable_robust_period_index and mode in {"robust", "robust_only", "exact_or_robust"}
         if enable_period_index_detection and period_index_generators is not None:
-            period_index = detect_period_index_structure(
-                period_index_generators,
+            exact_period_index: PeriodIndexDetection | None = None
+            if exact_enabled:
+                exact_period_index = detect_period_index_structure(
+                    period_index_generators,
+                    actual_candidate_lift_rank,
+                    max_root_order=actual_max_root_order,
+                    centrality_tolerance=actual_finite_index_tolerance,
+                    phase_tolerance=actual_finite_index_tolerance,
+                )
+            if exact_period_index is not None and (exact_period_index.index is not None or not robust_enabled):
+                period_index = exact_period_index
+            elif robust_enabled:
+                period_index = robust_detect_commutator_matrix_period_index(
+                    period_index_generators,
+                    actual_candidate_lift_rank,
+                    max_root_order=actual_max_root_order,
+                    max_bruteforce_states=200000,
+                )
+            else:
+                period_index = exact_period_index
+
+        if (
+            enable_period_index_detection
+            and robust_enabled
+            and candidate_transition_maps_for_mining is not None
+            and (period_index is None or period_index.decision == "not_central_projective")
+        ):
+            mined = detect_mined_period_index(
+                candidate_transition_maps_for_mining,
                 actual_candidate_lift_rank,
                 max_root_order=actual_max_root_order,
-                centrality_tolerance=actual_finite_index_tolerance,
-                phase_tolerance=actual_finite_index_tolerance,
             )
+            if mined.detection is not None:
+                period_index = mined.detection
+            else:
+                notes.extend(mined.mining.explanation)
 
         if known_alpha is not None:
             alpha_coboundary = _alpha_is_coboundary(known_alpha, n_models, actual_triples)
@@ -497,6 +542,10 @@ class TwistedMergePlus:
             classification = "central_projective_index_unknown"
             notes.extend(period_index.notes)
             notes.append("No lift is selected because the period-index invariant is not recognized.")
+        elif period_index is not None and period_index.decision == "central_projective_candidate_uncertain":
+            classification = "central_projective_candidate_uncertain"
+            notes.extend(period_index.notes)
+            notes.append("No lift is selected because the robust period-index candidate is not certified.")
         elif period_index is not None and period_index.decision == "rank_obstructed":
             classification = "finite_index_projective_obstructed"
             notes.extend(period_index.notes)
@@ -611,7 +660,7 @@ class TwistedMergePlus:
         alpha_residual: float | None,
         finite_index: FiniteIndexDiagnostics | None,
         finite_index_lift: tuple[np.ndarray, np.ndarray] | None,
-        period_index: PeriodIndexDetection | None,
+        period_index: PeriodIndexLike | None,
         period_index_lift: object | None,
     ) -> tuple[str, str, str]:
         if classification in {"gauge_trivial", "edge_outlier_or_noise"}:
@@ -692,6 +741,15 @@ class TwistedMergePlus:
                 f"Central projective commutators with period {period} were detected, but the index "
                 "invariant was not recognized; no lift is claimed.",
             )
+        if classification == "central_projective_candidate_uncertain":
+            period = "unknown" if period_index is None else period_index.period
+            index = "unknown" if period_index is None else period_index.index
+            return (
+                "central_projective_candidate_uncertain",
+                "none",
+                f"Robust central projective candidate has period {period} and index {index}, "
+                "but it is not certified; no lift is claimed.",
+            )
         if classification == "central_non_coboundary_candidate":
             if self.config.allow_branch_lift and self.config.rank_lift_q >= 2:
                 residual_text = "unknown" if alpha_residual is None else f"{alpha_residual:.4g}"
@@ -735,9 +793,11 @@ def pseudocode() -> str:
   7. For a finite scalar projective phase, estimate its root order d and use
      the determinant threshold d | candidate_rank before constructing a
      clock-shift/direct-sum projective/Morita lift.
-  8. For supplied multi-generator central projective data, compute the
-     period-index invariant and require index | candidate_rank; period
-     divisibility alone is not a lift certificate.
+  8. For supplied multi-generator central projective data, compute the exact
+     period-index invariant first. If exact certification fails, try robust
+     central commutator detection and optional mined loop-holonomy generators.
+     Require a certified index | candidate_rank; period divisibility alone and
+     uncertain robust candidates are not lift certificates.
   9. For a central non-coboundary candidate, allow only a branch/rank-lift
      prediction prototype and label it extra capacity.
   10. Report ordinary, C2M3, lifted, branch, and ensemble metrics without
