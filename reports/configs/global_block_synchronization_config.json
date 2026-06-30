@@ -1,7 +1,7 @@
 {
   "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/global_block_synchronization_experiment.py",
-  "git_commit": "395f70c",
-  "git_worktree_dirty": true,
+  "git_commit": "222646d",
+  "git_worktree_dirty": false,
   "settings": {
     "dataset": "mnist",
     "model_counts": "3,4",
@@ -27,6 +27,6 @@
       "torch": "2.12.1",
       "torchvision": "0.27.1"
     },
-    "git_commit": "395f70c"
+    "git_commit": "222646d"
   }
 }

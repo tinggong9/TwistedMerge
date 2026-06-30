@@ -1,0 +1,14 @@
+source,case_family,method,n_rows,mean_connection_residual,mean_initial_connection_residual,mean_projected_cycle_score,accepted_sync_rate,mean_merge_accuracy,mean_validation_block_residual
+block_compatible_linear_hidden,block_compatible_merge,base,10,,,,,1.0,
+block_compatible_linear_hidden,block_compatible_merge,block_compatible_aligned_average,10,,,,,1.0,
+block_compatible_linear_hidden,block_compatible_merge,gauge_equivalent_copy,10,,,,,1.0,
+block_compatible_linear_hidden,block_compatible_merge,unaligned_weight_average,10,,,,,0.96640625,
+learned_block_control,learned_noncontiguous_blocks,contiguous,1,,,,,,0.9571888124441943
+learned_block_control,learned_noncontiguous_blocks,learned,1,,,,,,0.0002081644329836041
+synthetic_control,exact_global_block_gauges,residual_optimized,1,8.834526040544369e-17,2.830929582183921e-16,2.449061296459628e-16,1.0,,
+synthetic_control,exact_global_block_gauges,spectral,1,2.830929582183921e-16,2.830929582183921e-16,4.023654182875706e-16,1.0,,
+synthetic_control,fake_projection_trap,residual_optimized,1,0.27939509620296804,0.31276685998069553,3.3994703357525654e-16,0.0,,
+synthetic_control,noisy_globally_generated_gauges,residual_optimized,1,0.26365211697352936,0.26629279816562723,2.294894857719955e-16,0.0,,
+synthetic_control,noisy_globally_generated_gauges,spectral,1,0.26629279816562723,0.26629279816562723,4.74250363523265e-16,0.0,,
+synthetic_control,noncentral_holonomy,residual_optimized,1,0.17596920301551539,0.1772514968297522,4.835824844929745e-16,0.0,,
+synthetic_control,scalar_block_phase_before_projection,residual_optimized,1,0.5078522624318847,0.6696354347929158,4.98494626757577e-16,0.0,,

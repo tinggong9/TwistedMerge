@@ -1,0 +1,4 @@
+comparison,n,mean_delta,metric,decision,notes
+optimized_sync_vs_spectral_connection_residual,1,-0.0026406811920978712,connection_residual,supported_descriptive,"negative delta means optimized residual is lower; single synthetic control, not a real benchmark"
+learned_blocks_vs_contiguous_validation_residual,1,-0.9569806480112106,validation_block_residual,supported,positive control with planted non-contiguous blocks
+block_compatible_aligned_average_vs_unaligned_weight_average,10,0.03359375,pseudo_label_accuracy,supported_descriptive,linear-hidden exact-symmetry synthetic task; not evidence for ReLU block rotations
