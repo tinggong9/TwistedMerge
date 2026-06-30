@@ -1,0 +1,43 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/external_baseline_comparison.py --seeds 1800,1801,1802,1803,1804 --model-counts 3,4 --widths 32,64 --epochs 3 --max-train-samples 5000 --max-test-samples 0 --bootstrap-samples 2000 --device cpu",
+  "dataset": "mnist",
+  "dirty_worktree": true,
+  "environment": {
+    "git_commit": "65eed8d",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "epochs": 3,
+  "git_commit": "65eed8d",
+  "improved_benchmark_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/improved_validated_ladder_merge_benchmark.csv",
+  "max_test_samples": 0,
+  "max_train_samples": 5000,
+  "model_counts": [
+    3,
+    4
+  ],
+  "reuse_checkpoints": true,
+  "reuse_improved_selector": true,
+  "save_checkpoints": true,
+  "seeds": [
+    1800,
+    1801,
+    1802,
+    1803,
+    1804
+  ],
+  "val_fraction": 0.2,
+  "widths": [
+    32,
+    64
+  ]
+}
