@@ -1,0 +1,31 @@
+{
+  "args": {
+    "config_json": "reports/configs/nsd_official_integration_config.json",
+    "cycle_lambda_attempt": 1.0,
+    "d": 2,
+    "dataset": "texas",
+    "early_stopping": 3,
+    "edge_weight_modes": [
+      false,
+      true
+    ],
+    "epochs": 3,
+    "fold": 0,
+    "hidden_channels": 8,
+    "layers": 1,
+    "lr": 0.02,
+    "nsd_root": "/private/tmp/neural-sheaf-diffusion",
+    "output_csv": "reports/csv/nsd_cycle_diagnostics.csv",
+    "seed": 43,
+    "sheaf_decay": 0.005,
+    "torch_threads": 1,
+    "weight_decay": 0.005
+  },
+  "command": "experiments/nsd_official_cycle_diagnostics.py --nsd-root /private/tmp/neural-sheaf-diffusion --dataset texas --fold 0 --seed 43 --epochs 3 --edge-weight-modes false true --cycle-lambda-attempt 1.0",
+  "outputs": {
+    "config_json": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/configs/nsd_official_integration_config.json",
+    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/nsd_cycle_diagnostics.csv"
+  },
+  "rows": 3,
+  "twistedmerge_cwd": "/Users/tinggong/Documents/GitHub/TwistedMerge"
+}
