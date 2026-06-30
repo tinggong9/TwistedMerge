@@ -12,6 +12,7 @@ from .model_merging_benchmark import require_torch
 
 @dataclass(frozen=True)
 class CnnGaugeSpec:
+    in_channels: int = 1
     conv1_channels: int = 16
     conv2_channels: int = 32
     hidden_units: int = 128
@@ -31,7 +32,7 @@ class SmallFashionCNN(require_torch()[1].Module):
         super().__init__()
         self.gauge_spec = spec or CnnGaugeSpec()
         s = self.gauge_spec
-        self.conv1 = nn.Conv2d(1, s.conv1_channels, kernel_size=3, padding=1)
+        self.conv1 = nn.Conv2d(s.in_channels, s.conv1_channels, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(s.conv1_channels, s.conv2_channels, kernel_size=3, padding=1)
         self.fc1 = nn.Linear(s.conv2_channels * s.conv2_block_size, s.hidden_units)
         self.classifier = nn.Linear(s.hidden_units, s.num_classes)
@@ -62,8 +63,10 @@ def inference_cost_units(spec: CnnGaugeSpec | None = None) -> int:
     """Static multiply-add proxy; invariant under channel gauges."""
 
     s = spec or CnnGaugeSpec()
-    conv1 = 28 * 28 * s.conv1_channels * 1 * 3 * 3
-    conv2 = 14 * 14 * s.conv2_channels * s.conv1_channels * 3 * 3
+    input_spatial = s.spatial_after_pool * 4
+    conv2_spatial = input_spatial // 2
+    conv1 = input_spatial * input_spatial * s.conv1_channels * s.in_channels * 3 * 3
+    conv2 = conv2_spatial * conv2_spatial * s.conv2_channels * s.conv1_channels * 3 * 3
     fc1 = s.conv2_channels * s.conv2_block_size * s.hidden_units
     fc2 = s.hidden_units * s.num_classes
     return int(conv1 + conv2 + fc1 + fc2)

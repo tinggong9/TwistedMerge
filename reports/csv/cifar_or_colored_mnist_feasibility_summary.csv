@@ -1,0 +1,9 @@
+summary_type,dataset,method,n_rows,n_settings,mean_val_accuracy,mean_test_accuracy,mean_individual_accuracy_max,mean_delta_vs_c2m3,delta_vs_c2m3_ci_low,delta_vs_c2m3_ci_high,mean_delta_vs_greedy_soup,mean_delta_vs_weight_average,merge_claims_allowed_fraction,feasibility_statuses,claim,claim_decision,claim_reason
+method_summary,rotated_mnist,weight_average,2.0,2.0,0.4666666666666667,0.46708333333333335,0.9245833333333333,-0.3695833333333333,-0.3983333333333333,-0.3408333333333333,-0.45749999999999996,0.0,1.0,bridge_claims_allowed,,,
+method_summary,rotated_mnist,c2m3_channel_permutation,2.0,2.0,0.8291666666666666,0.8366666666666667,0.9245833333333333,0.0,0.0,0.0,-0.08791666666666664,0.3695833333333333,1.0,bridge_claims_allowed,,,
+method_summary,rotated_mnist,positive_channel_scale,2.0,2.0,0.8329166666666666,0.8379166666666666,0.9245833333333333,0.0012500000000000289,-0.004166666666666652,0.00666666666666671,-0.08666666666666661,0.37083333333333335,1.0,bridge_claims_allowed,,,
+method_summary,rotated_mnist,greedy_soup,2.0,2.0,0.91875,0.9245833333333333,0.9245833333333333,0.08791666666666664,0.0625,0.11333333333333329,0.0,0.45749999999999996,1.0,bridge_claims_allowed,,,
+method_summary,rotated_mnist,greedy_safe_selector,2.0,2.0,0.91875,0.9245833333333333,0.9245833333333333,0.08791666666666664,0.0625,0.11333333333333329,0.0,0.45749999999999996,1.0,bridge_claims_allowed,,,
+method_summary,cifar10,individual_probe,1.0,1.0,0.238,0.248,0.248,,,,,,0.0,cifar_below_plumbing_threshold,,,
+claim_decision,rotated_mnist,,,,,,,,,,,,,,rotated_mnist_feasibility_status,Supported limited,max individual accuracy=0.9283; bridge threshold=0.8000
+claim_decision,cifar10,,,,,,,,,,,,,,cifar10_feasibility_status,CIFAR not run beyond probe,max individual/probe accuracy=0.2480; plumbing threshold=0.4500; meaningful threshold=0.6000; statuses=['cifar_below_plumbing_threshold']

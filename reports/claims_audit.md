@@ -11,7 +11,7 @@ This file tracks which claims are supported by current repository artifacts and 
 | The code separates finite central coboundary twists from the nonzero `H^2(mu_2)` tetrahedral obstruction. | Supported | `tests/test_twisted_merge_algorithm.py` checks the H2 tetrahedral twist is non-coboundary and is not absorbed by the current `TwistedMerge` algorithm. |
 | Lifted transition maps are no longer trivial placeholders for the finite central coboundary example. | Supported | `test_lifted_transition_maps_encode_nontrivial_edge_sign` checks that a nontrivial lifted edge uses `rho(-1)` rather than `rho(+1)`. |
 | The model-merging benchmark now includes fixed-`N` repeated-seed MNIST checks and controlled injected-alignment negative controls. | Supported | `reports/model_merging_verification_report.md` and `reports/csv/model_merging_verification.csv` cover MNIST MLP, `N=3,4`, widths `16,32`, five seeds, and injected pairwise alignment noise. |
-| CIFAR should remain plumbing-only in the current benchmark artifacts. | Supported | `reports/model_merging_verification_report.md` records that prior smoke-run CIFAR individual accuracy maxed at `0.1328`, below the `0.20` threshold for non-plumbing claims. |
+| CIFAR should remain plumbing-only in the current benchmark artifacts. | Supported | `reports/model_merging_verification_report.md` records that prior smoke-run CIFAR individual accuracy maxed at `0.1328`; `reports/cifar_or_colored_mnist_feasibility.md` records a gated CIFAR probe test accuracy of `0.2480`, below the `0.45` plumbing threshold and far below the `0.60` meaningful-claim threshold. |
 | The planted-obstruction benchmark uses functionally equivalent MNIST MLP copies before merging. | Supported | `reports/planted_obstruction_model_merging_report.md` reports mean base accuracy `0.8632`, max copy accuracy std `0`, and max logit disagreement about `2.9e-6`. |
 | In the planted central `mu_2` alignment-observation benchmark, planted cycle score predicts pairwise Git-ReBasin merge degradation. | Supported descriptive | `reports/csv/planted_obstruction_stats.csv` reports central `git_rebasin_pairwise` Spearman `0.8741` and monotone mean degradation `0.0000 -> 0.0031 -> 0.0149 -> 0.0387`. |
 | Cycle-consistent synchronization fixes the one-edge planted inconsistency in the planted benchmark. | Supported descriptive | `reports/csv/planted_obstruction_stats.csv` reports C2M3 high-defect degradation `0.0000` for both central and random planted families. |
@@ -166,12 +166,23 @@ This file tracks which claims are supported by current repository artifacts and 
 | `cnn_channel_gauge_generalizes_mlp_exact_gauge_story` / CNN channel gauge generalizes exact-gauge story | Supported limited | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records exactness tests pass; confirmatory performance status follows shrinkage/global/optimized C2M3 comparisons. |
 | `cnn_residuals_are_brauer_or_period_index` / CNN residuals are Brauer or period-index | Not yet supported | `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md` records central/projective and finite-index candidate fractions are zero under tested diagnostics. |
 
+## CIFAR Or Rotated-MNIST Feasibility
+
+| Claim | Status | Evidence |
+| --- | --- | --- |
+| Rotated-MNIST is feasible as a bridge dataset for the small CNN channel-gauge benchmark. | Supported limited | `reports/cifar_or_colored_mnist_feasibility.md` reports rotated-MNIST individual max accuracy `0.9283` over two `N=3` settings, above the `0.80` bridge threshold; `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` marks `rotated_mnist_feasibility_status` as `Supported limited`. |
+| On the rotated-MNIST bridge run, greedy soup and the greedy-safe selector outperform C2M3-style channel permutation descriptively. | Supported limited | `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` reports mean test accuracy `0.924583` for greedy soup and greedy-safe selector versus `0.836667` for `c2m3_channel_permutation`, with paired mean delta `0.087917` and CI `[0.062500, 0.113333]`; the selector chose greedy soup in both settings. |
+| Positive channel scaling beats C2M3 on the rotated-MNIST bridge run. | Not yet supported | `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` reports `positive_channel_scale` mean delta versus C2M3 `0.001250` with CI `[-0.004167, 0.006667]`, so the effect is descriptive at best. |
+| CIFAR-10 remains below the plumbing threshold in the gated small-CNN probe. | Supported negative result | The CIFAR probe in `reports/cifar_or_colored_mnist_feasibility.md` reports test accuracy `0.2480`, below the `0.45` plumbing threshold and far below the `0.60` meaningful-claim threshold, so CIFAR merge methods were not run. |
+
 ## Not Yet Supported
 
 | Claim | Status | Reason |
 | --- | --- | --- |
 | TwistedMerge beats external model-merging baselines. | Not yet supported | `reports/external_baseline_comparison.md` compares documented faithful in-repo baselines, not official external code execution, and the improved selector remains below faithful greedy soup with paired mean accuracy delta `-0.0024`. |
 | TwistedMerge solves natural MNIST/CIFAR merging. | Not yet supported | `reports/model_merging_verification_report.md` is stronger for MNIST than the smoke run, but it still reports descriptive prototype baselines and excludes CIFAR as near chance. |
+| The rotated-MNIST bridge result proves CIFAR or broad vision generality. | Not yet supported | The bridge run is rotated-MNIST only; the gated CIFAR probe reached only `0.2480` test accuracy and did not run CIFAR merge methods. |
+| CIFAR-10 small-CNN model merging is meaningful in the current artifacts. | Not yet supported | `reports/cifar_or_colored_mnist_feasibility.md` labels CIFAR below the `0.45` plumbing threshold with probe accuracy `0.2480`; no CIFAR merge-performance claim is allowed. |
 | TwistedMerge fully trivializes a nonzero `H^2(mu_2)` class as an ordinary untwisted vector bundle. | Not yet supported | The nonzero tetrahedral `H^2` class is explicitly non-coboundary. Current `TwistedMerge` does not construct an edge-level untwisted descent for it. |
 | The branch-prediction lift is a complete transition-map-level twisted sheaf descent implementation. | Not yet supported | The q=2 branch result is a controlled prediction-level sanity check. It is not a proof of full sheaf-level descent in the non-coboundary case. |
 | Cycle obstruction score predicts weight-average merge degradation beyond the trivial number-of-models confound. | Not yet supported | In `reports/csv/model_merging_stats.csv`, fixed-`N` observed correlations are marked unsupported: `N=3` Pearson `-0.0347`, `N=4` Pearson `-0.3622`, and bootstrap intervals cross zero. |
@@ -232,6 +243,11 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/model_merging_verification_report.md` | Fixed-`N`, repeated-seed MNIST model-merging verification report. |
 | `reports/csv/model_merging_verification.csv` | Per-baseline rows for observed and injected-alignment verification settings. |
 | `reports/csv/model_merging_stats.csv` | Correlations, bootstrap intervals, deltas, and negative-result labels for verification settings. |
+| `experiments/cifar_or_colored_mnist_feasibility.py` | Rotated-MNIST bridge and gated CIFAR probe feasibility benchmark for small CNN channel-gauge merging. |
+| `reports/cifar_or_colored_mnist_feasibility.md` | Report for bridge/CIFAR accuracy gates, merge method summaries, and plumbing-only boundaries. |
+| `reports/csv/cifar_or_colored_mnist_feasibility.csv` | Per-setting bridge/CIFAR feasibility rows with method metrics, threshold status, and validation-only selector metadata. |
+| `reports/csv/cifar_or_colored_mnist_feasibility_summary.csv` | Method summaries and claim-gate decisions for rotated-MNIST and CIFAR. |
+| `reports/configs/cifar_or_colored_mnist_feasibility_config.json` | Saved command, thresholds, git state, and environment metadata for the feasibility run. |
 | `reports/planted_obstruction_model_merging_report.md` | Causally planted cycle-obstruction model-merging report using exact hidden-permutation MNIST MLP copies. |
 | `reports/csv/planted_obstruction_model_merging.csv` | Per-seed planted central/random obstruction benchmark rows. |
 | `reports/csv/planted_obstruction_stats.csv` | Trend and method-delta statistics for the planted obstruction benchmark. |
