@@ -58,6 +58,7 @@ from src.monomial_gauge_alignment import (  # noqa: E402
     average_monomial_defect_score,
     compare_function_before_after_alignment,
     estimate_pairwise_monomial_alignments,
+    monomial_permutations_by_layer,
     monomial_scaling_statistics,
 )
 from src.rank_lift_baselines import (  # noqa: E402
@@ -81,12 +82,21 @@ REAL_OBSTRUCTION_REGRESSIONS_CSV = "real_obstruction_predictor_regressions.csv"
 OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV = "obstruction_predictor_target_stats.csv"
 MONOMIAL_RUNS_CSV = "monomial_fixed_setting_runs.csv"
 MONOMIAL_TRIANGLES_CSV = "monomial_triangle_defects.csv"
+MONOMIAL_PAIRED_DELTAS_CSV = "monomial_paired_deltas.csv"
 BRANCH_CAPACITY_BASELINES = (
     "random_branch_ensemble",
     "validation_branch_ensemble",
     "c2m3_cluster_branch_ensemble",
 )
-MONOMIAL_MATCHINGS = {"monomial_activation", "monomial_weight"}
+MONOMIAL_MATCHINGS = {
+    "monomial_activation",
+    "monomial_weight",
+    "monomial_activation_mlp2",
+    "monomial_weight_mlp2",
+    "monomial_shrinkage_mlp2",
+    "monomial_global_ls_mlp2",
+}
+MONOMIAL_SCALE_METHODS = {"raw", "clipped", "shrinkage", "global_synchronized"}
 PREDICTION_TARGETS = (
     "weight_average_degradation_vs_best_single",
     "git_rebasin_degradation_vs_best_single",
@@ -112,6 +122,28 @@ def parse_csv(text: str, cast=str) -> list:
 
 def parse_float_csv(text: str) -> list[float]:
     return [float(item) for item in parse_csv(text, str)]
+
+
+def parse_monomial_scale_methods(text: str) -> list[str]:
+    methods = []
+    aliases = {
+        "raw": "raw",
+        "clipped": "clipped",
+        "clip": "clipped",
+        "shrinkage": "shrinkage",
+        "shrunk": "shrinkage",
+        "global": "global_synchronized",
+        "global_synchronized": "global_synchronized",
+        "global-synchronized": "global_synchronized",
+    }
+    for item in parse_csv(text, str):
+        key = item.strip().lower()
+        if key not in aliases:
+            raise ValueError(f"unknown monomial scale method: {item}")
+        method = aliases[key]
+        if method not in methods:
+            methods.append(method)
+    return methods or ["raw"]
 
 
 def parse_seeds(text: str) -> list[int]:
@@ -151,11 +183,20 @@ def is_monomial_matching(matching: str) -> bool:
 
 def permutation_matching_for(matching: str) -> str:
     name = str(matching).strip().lower()
-    if name == "monomial_activation":
+    if name in {"monomial_activation", "monomial_activation_mlp2", "monomial_shrinkage_mlp2", "monomial_global_ls_mlp2"}:
         return "activation"
-    if name == "monomial_weight":
+    if name in {"monomial_weight", "monomial_weight_mlp2"}:
         return "weight"
     return name
+
+
+def monomial_matching_supported_for_architecture(matching: str, architecture: str) -> bool:
+    name = str(matching).strip().lower()
+    if name in {"monomial_activation", "monomial_weight"}:
+        return architecture == "mlp"
+    if name in {"monomial_activation_mlp2", "monomial_weight_mlp2", "monomial_shrinkage_mlp2", "monomial_global_ls_mlp2"}:
+        return architecture == "mlp2"
+    return False
 
 
 def run_id_for(setting_id: str, seed: int) -> str:
@@ -470,6 +511,7 @@ def monomial_triangle_rows(
                 "alignment_noise_fraction": noise_fraction,
                 "is_injected_alignment_control": alignment_source != "observed",
                 "triangle_type": "monomial",
+                "monomial_scale_method": base_row.get("monomial_scale_method", ""),
                 "i": int(row["i"]),
                 "j": int(row["j"]),
                 "k": int(row["k"]),
@@ -638,7 +680,7 @@ def evaluate_methods(
     width: int,
     pairwise_perms: dict[tuple[int, int], np.ndarray],
     pairwise_by_layer: dict[str, dict[tuple[int, int], np.ndarray]],
-    monomial_alignments: dict | None = None,
+    monomial_alignments_by_method: dict[str, dict] | None = None,
     val_loader,
     test_loader,
     match_loader=None,
@@ -727,63 +769,71 @@ def evaluate_methods(
         )
     )
 
-    if architecture == "mlp" and monomial_alignments is not None:
-        monomial_aligned = [models[0]]
-        preservation_rows = []
-        for idx in range(1, len(models)):
-            aligned = apply_monomial_alignment_to_reference(models[idx], spec, width, monomial_alignments[(0, idx)])
-            if match_loader is not None:
-                preservation_rows.append(
-                    compare_function_before_after_alignment(
-                        models[idx],
-                        aligned,
-                        match_loader,
-                        device,
-                        max_batches=args.feature_batches,
+    if architecture in {"mlp", "mlp2"} and monomial_alignments_by_method:
+        for scale_method, monomial_alignments in monomial_alignments_by_method.items():
+            monomial_aligned = [models[0]]
+            preservation_rows = []
+            for idx in range(1, len(models)):
+                aligned = apply_monomial_alignment_to_reference(models[idx], spec, width, monomial_alignments[(0, idx)])
+                if match_loader is not None:
+                    preservation_rows.append(
+                        compare_function_before_after_alignment(
+                            models[idx],
+                            aligned,
+                            match_loader,
+                            device,
+                            max_batches=args.feature_batches,
+                        )
                     )
+                monomial_aligned.append(aligned)
+            preservation_summary = {
+                "functional_preservation_error": safe_max(
+                    [row["functional_preservation_error"] for row in preservation_rows]
                 )
-            monomial_aligned.append(aligned)
-        preservation_summary = {
-            "functional_preservation_error": safe_max(
-                [row["functional_preservation_error"] for row in preservation_rows]
+                if preservation_rows
+                else float("nan"),
+                "functional_preservation_mean_abs_error": safe_mean(
+                    [row["functional_preservation_mean_abs_error"] for row in preservation_rows]
+                )
+                if preservation_rows
+                else float("nan"),
+                "functional_preservation_prediction_disagreement": safe_mean(
+                    [row["functional_preservation_prediction_disagreement"] for row in preservation_rows]
+                )
+                if preservation_rows
+                else float("nan"),
+            }
+            monomial_score, _triangle_rows = average_monomial_defect_score(monomial_alignments, len(models))
+            monomial_model = average_models(monomial_aligned, architecture, spec, width)
+            method_name = f"monomial_gauge_ref0_{scale_method}"
+            monomial_base = {
+                **base,
+                "monomial_scale_method": scale_method,
+                "monomial_defect_score": monomial_score,
+                **monomial_scaling_statistics(monomial_alignments),
+                **preservation_summary,
+            }
+            rows.append(
+                baseline_record(
+                    method=method_name,
+                    val_metrics=evaluate_model(monomial_model, val_loader, device),
+                    test_metrics=evaluate_model(monomial_model, test_loader, device),
+                    base=monomial_base,
+                    is_single_model=True,
+                    exact_relu_symmetry=True,
+                    is_soup=False,
+                    is_ensemble_or_extra_capacity=False,
+                    capacity_matched=True,
+                    parameter_multiplier=1.0,
+                    inference_multiplier=1.0,
+                    uses_validation_data=False,
+                    method_note=(
+                        "ReLU-compatible monomial alignment to model 0 before same-capacity averaging; "
+                        f"scale_method={scale_method}"
+                    ),
+                    capacity_metadata=method_capacity_metadata(method_name, monomial_model, base_model),
+                )
             )
-            if preservation_rows
-            else float("nan"),
-            "functional_preservation_mean_abs_error": safe_mean(
-                [row["functional_preservation_mean_abs_error"] for row in preservation_rows]
-            )
-            if preservation_rows
-            else float("nan"),
-            "functional_preservation_prediction_disagreement": safe_mean(
-                [row["functional_preservation_prediction_disagreement"] for row in preservation_rows]
-            )
-            if preservation_rows
-            else float("nan"),
-        }
-        monomial_model = average_models(monomial_aligned, architecture, spec, width)
-        monomial_base = {
-            **base,
-            **monomial_scaling_statistics(monomial_alignments),
-            **preservation_summary,
-        }
-        rows.append(
-            baseline_record(
-                method="monomial_gauge_ref0",
-                val_metrics=evaluate_model(monomial_model, val_loader, device),
-                test_metrics=evaluate_model(monomial_model, test_loader, device),
-                base=monomial_base,
-                is_single_model=True,
-                exact_relu_symmetry=True,
-                is_soup=False,
-                is_ensemble_or_extra_capacity=False,
-                capacity_matched=True,
-                parameter_multiplier=1.0,
-                inference_multiplier=1.0,
-                uses_validation_data=False,
-                method_note="ReLU-compatible monomial alignment to model 0 before same-capacity averaging",
-                capacity_metadata=method_capacity_metadata("monomial_gauge_ref0", monomial_model, base_model),
-            )
-        )
 
     sync_ref, synced_perms_by_layer, sync_disagreement = synchronize_alignment_bundle(pairwise_by_layer, len(models))
     c2m3_aligned = [
@@ -1101,23 +1151,31 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
     single_best_accuracy = max(row["test_accuracy"] for row in individual_rows)
     single_worst_accuracy = min(row["test_accuracy"] for row in individual_rows)
 
-    if is_monomial_matching(matching) and architecture != "mlp":
-        raise ValueError("monomial gauge alignment is currently implemented only for one-hidden-layer mlp")
+    if is_monomial_matching(matching) and not monomial_matching_supported_for_architecture(matching, architecture):
+        raise ValueError(f"{matching} is not supported for architecture {architecture}")
     if is_monomial_matching(matching):
-        monomial_alignments = estimate_pairwise_monomial_alignments(
-            models,
-            match_loader,
-            device,
-            matching=matching,
-            max_batches=args.feature_batches,
-        )
-        pairwise_by_layer = {
-            primary_alignment_layer(architecture): {
-                pair: alignment.permutation for pair, alignment in monomial_alignments.items()
-            }
-        }
+        monomial_scale_methods = parse_monomial_scale_methods(args.monomial_scale_methods)
+        monomial_alignments_by_method = {}
+        for requested_scale_method in monomial_scale_methods:
+            estimated = estimate_pairwise_monomial_alignments(
+                models,
+                match_loader,
+                device,
+                matching=matching,
+                max_batches=args.feature_batches,
+                scale_method=requested_scale_method,
+                log_scale_clip=args.monomial_log_scale_clip,
+                shrinkage=args.monomial_shrinkage,
+                activation_similarity_threshold=args.monomial_activation_similarity_threshold,
+            )
+            actual_scale_method = next(iter(estimated.values())).scale_method
+            monomial_alignments_by_method[actual_scale_method] = estimated
+        monomial_scale_methods = list(monomial_alignments_by_method)
+        permutation_alignments = monomial_alignments_by_method[monomial_scale_methods[0]]
+        pairwise_by_layer = monomial_permutations_by_layer(permutation_alignments)
     else:
-        monomial_alignments = None
+        monomial_scale_methods = []
+        monomial_alignments_by_method = None
         pairwise_by_layer = compute_layerwise_pairwise_permutations(
             models,
             architecture,
@@ -1161,6 +1219,8 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         "primary_alignment_layer": primary_layer,
         "pairwise_alignment_permutations_json": permutation_json(pairwise),
         "layerwise_alignment_permutations_json": layerwise_permutation_json(pairwise_by_layer),
+        "monomial_scale_methods": ",".join(monomial_scale_methods),
+        "monomial_scale_method": "none",
         **residuals,
     }
 
@@ -1169,15 +1229,19 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
     observed_cycle_score, observed_triangles = triangle_rows(shared_base, pairwise, n_models, primary_width, "observed", 0.0)
     triangle_out.extend(observed_triangles)
     monomial_observed_score = float("nan")
-    if monomial_alignments is not None:
-        monomial_observed_score, monomial_triangles = monomial_triangle_rows(
-            shared_base,
-            monomial_alignments,
-            n_models,
-            "observed",
-            0.0,
-        )
-        triangle_out.extend(monomial_triangles)
+    if monomial_alignments_by_method is not None:
+        monomial_scores = []
+        for scale_method, monomial_alignments in monomial_alignments_by_method.items():
+            monomial_score, monomial_triangles = monomial_triangle_rows(
+                {**shared_base, "monomial_scale_method": scale_method},
+                monomial_alignments,
+                n_models,
+                "observed",
+                0.0,
+            )
+            monomial_scores.append(monomial_score)
+            triangle_out.extend(monomial_triangles)
+        monomial_observed_score = safe_mean(monomial_scores)
     observed_predictors = obstruction_predictor_columns(
         pairwise,
         n_models,
@@ -1205,7 +1269,7 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         width=width,
         pairwise_perms=pairwise,
         pairwise_by_layer=pairwise_by_layer,
-        monomial_alignments=monomial_alignments,
+        monomial_alignments_by_method=monomial_alignments_by_method,
         val_loader=val_loader,
         test_loader=test_loader,
         match_loader=match_loader,
@@ -1260,7 +1324,7 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
             width=width,
             pairwise_perms=noisy,
             pairwise_by_layer=noisy_by_layer,
-            monomial_alignments=None,
+            monomial_alignments_by_method=None,
             val_loader=val_loader,
             test_loader=test_loader,
             match_loader=match_loader,
@@ -1587,6 +1651,91 @@ def compute_branch_paired_deltas(runs: pd.DataFrame, bootstrap_samples: int) -> 
     return out
 
 
+def compute_monomial_paired_deltas(runs: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
+    if runs.empty or "method" not in runs:
+        return pd.DataFrame()
+    group_cols = [
+        "dataset",
+        "architecture",
+        "n_models",
+        "width",
+        "domain_shift",
+        "matching",
+        "alignment_source",
+        "alignment_noise_fraction",
+    ]
+    baseline_methods = ["c2m3_synchronized", "greedy_soup", "weight_average"]
+    rows = []
+    for key, group in runs.groupby(group_cols, dropna=False):
+        meta = dict(zip(group_cols, key))
+        methods = set(group["method"].astype(str))
+        monomial_methods = sorted(method for method in methods if method.startswith("monomial_gauge_ref0_"))
+        for monomial_method in monomial_methods:
+            mono = group[group["method"] == monomial_method].copy()
+            if mono.empty:
+                continue
+            scale_method = str(mono.get("monomial_scale_method", pd.Series([""])).iloc[0])
+            mono = mono[["run_id", "seed", "test_accuracy"]].rename(
+                columns={"test_accuracy": "monomial_test_accuracy"}
+            )
+            for baseline_method in baseline_methods:
+                if baseline_method not in methods:
+                    continue
+                baseline = group[group["method"] == baseline_method][["run_id", "seed", "test_accuracy"]].rename(
+                    columns={"test_accuracy": "baseline_test_accuracy"}
+                )
+                paired = mono.merge(baseline, on=["run_id", "seed"], how="inner")
+                deltas = paired["monomial_test_accuracy"].astype(float) - paired["baseline_test_accuracy"].astype(float)
+                ci_low, ci_high = bootstrap_mean_ci(
+                    deltas,
+                    bootstrap_samples,
+                    seed=90131 + len(rows) * 41,
+                )
+                n_paired = int(paired["seed"].nunique())
+                observed = str(meta["alignment_source"]) == "observed" and safe_float(meta["alignment_noise_fraction"]) == 0.0
+                supported = bool(observed and n_paired >= 20 and math.isfinite(ci_low) and ci_low > 0.0)
+                if not observed:
+                    status = "negative_control_not_primary_evidence"
+                elif n_paired < 20:
+                    status = "unsupported_descriptive_n_below_20"
+                elif supported and baseline_method == "c2m3_synchronized":
+                    status = "supported_positive_ci_vs_c2m3"
+                elif supported and baseline_method == "greedy_soup":
+                    status = "supported_positive_ci_vs_greedy_soup"
+                elif supported:
+                    status = "supported_positive_ci_vs_weight_average"
+                else:
+                    status = "unsupported_ci_crosses_zero_or_negative"
+                rows.append(
+                    {
+                        **meta,
+                        "fixed_setting_id": fixed_setting_id(
+                            str(meta["dataset"]),
+                            str(meta["architecture"]),
+                            int(meta["n_models"]),
+                            int(meta["width"]),
+                            str(meta["domain_shift"]),
+                            str(meta["matching"]),
+                        ),
+                        "monomial_method": monomial_method,
+                        "monomial_scale_method": scale_method,
+                        "baseline_method": baseline_method,
+                        "comparison": f"{monomial_method} - {baseline_method}",
+                        "mean_delta": safe_mean(deltas),
+                        "std_delta": safe_std(deltas),
+                        "bootstrap_ci_low": ci_low,
+                        "bootstrap_ci_high": ci_high,
+                        "n_paired_seeds": n_paired,
+                        "wins": int((deltas > 1e-12).sum()),
+                        "ties": int((np.abs(deltas) <= 1e-12).sum()),
+                        "losses": int((deltas < -1e-12).sum()),
+                        "claim_status": status,
+                        "claim_supported": supported,
+                    }
+                )
+    return pd.DataFrame(rows)
+
+
 def md_table(df: pd.DataFrame, columns: list[str], max_rows: int = 20) -> str:
     if df.empty:
         return "_No rows._"
@@ -1853,12 +2002,14 @@ def write_report(
         .reset_index()
     )
     default_command = (
+        "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig "
         ".venv/bin/python experiments/model_merging_fixed_setting_verification.py "
         "--datasets mnist,fashion_mnist --architecture mlp2 --model-counts 3,4 --widths 128 "
-        "--domain-shifts none,input_noise --seeds 2000:2029 --epochs 10 --max-train-samples 10000 "
-        "--max-test-samples 5000 --batch-size 128 --lr 0.001 --optimizer adamw "
-        "--scheduler cosine --weight-decay 0.0001 --device auto --matching activation "
-        "--bootstrap-samples 5000 --alignment-noise-levels 0.15 --save-checkpoints"
+        "--domain-shifts none,input_noise --seeds 4100:4129 --epochs 10 --max-train-samples 10000 "
+        "--max-test-samples 2000 --batch-size 128 --lr 0.001 --optimizer adamw "
+        "--weight-decay 0.0001 --scheduler cosine --matching activation,weight "
+        "--bootstrap-samples 2000 --alignment-noise-levels 0.15 --rank-lift-branches 2 "
+        "--feature-batches 8 --device auto"
     )
     claim_text = (
         "At least one fixed observed setting passes the correlation gate."
@@ -1887,6 +2038,8 @@ The intended full repeated-seed protocol is documented here and is not run autom
 
 - Fixed settings are kept separate by dataset, architecture, `N`, width, domain shift, and matching protocol.
 - The main obstruction-correlation claim uses only `N>=3` observed-alignment rows; `N=2` is rejected because it has no triangle obstruction.
+- Multi-layer architectures use layerwise permutation alignment and synchronization. For `mlp2`, both `hidden1` and `hidden2` are aligned for model transforms; the scalar cycle table uses the primary layer `hidden2`, and the full layerwise maps are serialized in `layerwise_alignment_permutations_json`.
+- Monomial gauge rows are available for `mlp` via `monomial_activation,monomial_weight` and for `mlp2` via `monomial_activation_mlp2,monomial_weight_mlp2,monomial_shrinkage_mlp2,monomial_global_ls_mlp2`. They remain descriptive unless the repeated-seed paired-CI gates pass.
 - The validation and test partitions are shared across all methods within each seed and setting. The test set is evaluation-only.
 - Injected alignment-noise rows, when present, are labeled `injected_noise` and are negative/control diagnostics, not primary evidence.
 - CIFAR is not part of the default run. No CIFAR success claim is made by this artifact.
@@ -1942,7 +2095,7 @@ The branch rank-lift row is not a single merged model. It is an extra-capacity b
 
 ## Triangle Defects
 
-Triangle/cocycle defects are written one row per triangle to `reports/csv/{TRIANGLES_CSV}`. The smoke or full run currently produced `{len(triangles)}` triangle rows.
+Triangle/cocycle defects are written one row per triangle to `reports/csv/{TRIANGLES_CSV}`. This full run produced `{len(triangles)}` triangle rows.
 
 ## Interpretation Boundary
 
@@ -2069,7 +2222,13 @@ This report tests whether observed permutation/cycle residuals predict ordinary 
     report_path.write_text(report, encoding="utf-8")
 
 
-def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, report_path: Path) -> None:
+def write_monomial_report(
+    args,
+    runs: pd.DataFrame,
+    triangles: pd.DataFrame,
+    paired_deltas: pd.DataFrame,
+    report_path: Path,
+) -> None:
     if runs.empty or "matching" not in runs:
         monomial_runs = pd.DataFrame()
     else:
@@ -2081,12 +2240,15 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
     if observed.empty or "method" not in observed:
         monomial_methods = pd.DataFrame()
     else:
-        monomial_methods = observed[observed["method"].astype(str) == "monomial_gauge_ref0"].copy()
+        monomial_methods = observed[observed["method"].astype(str).str.startswith("monomial_gauge_ref0_")].copy()
 
     preservation = pd.DataFrame()
     if not monomial_methods.empty:
         preservation = (
-            monomial_methods.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching"], dropna=False)
+            monomial_methods.groupby(
+                ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method"],
+                dropna=False,
+            )
             .agg(
                 n_rows=("run_id", "count"),
                 max_functional_preservation_error=("functional_preservation_error", "max"),
@@ -2094,6 +2256,8 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
                 mean_prediction_disagreement=("functional_preservation_prediction_disagreement", "mean"),
                 mean_abs_log_scale=("monomial_mean_abs_log_scale", "mean"),
                 max_abs_log_scale=("monomial_max_abs_log_scale", "max"),
+                mean_low_similarity_fraction=("monomial_scale_low_similarity_fraction", "mean"),
+                min_assignment_similarity=("monomial_scale_assignment_similarity_min", "min"),
             )
             .reset_index()
         )
@@ -2101,7 +2265,19 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
     method_summary = pd.DataFrame()
     if not observed.empty:
         method_summary = (
-            observed.groupby(["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method"], dropna=False)
+            observed.groupby(
+                [
+                    "dataset",
+                    "architecture",
+                    "n_models",
+                    "width",
+                    "domain_shift",
+                    "matching",
+                    "monomial_scale_method",
+                    "method",
+                ],
+                dropna=False,
+            )
             .agg(
                 n_rows=("run_id", "count"),
                 mean_test_accuracy=("test_accuracy", "mean"),
@@ -2113,19 +2289,23 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
         )
 
     corr_rows = []
-    if not observed.empty and "method" in observed:
-        weight_rows = observed[observed["method"].astype(str) == "weight_average"].copy()
-    else:
-        weight_rows = pd.DataFrame()
-    group_cols = ["dataset", "architecture", "n_models", "width", "domain_shift", "matching"]
-    if not weight_rows.empty and "monomial_defect_score" in weight_rows:
-        for key, group in weight_rows.groupby(group_cols, dropna=False):
+    group_cols = ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method"]
+    if not monomial_methods.empty and "monomial_defect_score" in monomial_methods:
+        for key, group in monomial_methods.groupby(group_cols, dropna=False):
             meta = dict(zip(group_cols, key))
             y = pd.to_numeric(group["single_best_merge_degradation"], errors="coerce").to_numpy()
             permutation_x = pd.to_numeric(group["cycle_score"], errors="coerce").to_numpy()
             monomial_x = pd.to_numeric(group["monomial_defect_score"], errors="coerce").to_numpy()
             permutation_pearson = safe_pearson(permutation_x, y)
             monomial_pearson = safe_pearson(monomial_x, y)
+            mono_low, mono_high = bootstrap_corr_ci(
+                monomial_x,
+                y,
+                safe_pearson,
+                args.bootstrap_samples,
+                seed=71237 + len(corr_rows) * 29,
+            )
+            supported = bool(len(group) >= 20 and math.isfinite(mono_low) and mono_low > 0.0)
             corr_rows.append(
                 {
                     **meta,
@@ -2133,11 +2313,16 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
                     "permutation_pearson_vs_degradation": permutation_pearson,
                     "permutation_spearman_vs_degradation": safe_spearman(permutation_x, y),
                     "monomial_pearson_vs_degradation": monomial_pearson,
+                    "monomial_pearson_ci_low": mono_low,
+                    "monomial_pearson_ci_high": mono_high,
                     "monomial_spearman_vs_degradation": safe_spearman(monomial_x, y),
                     "monomial_more_predictive_by_abs_pearson": bool(abs(monomial_pearson) > abs(permutation_pearson))
                     if math.isfinite(monomial_pearson) and math.isfinite(permutation_pearson)
                     else False,
-                    "claim_status": "descriptive_n_below_20" if len(group) < 20 else "descriptive_no_strict_gate",
+                    "claim_status": "supported_positive_bootstrap_ci" if supported else (
+                        "descriptive_n_below_20" if len(group) < 20 else "unsupported_ci_crosses_zero_or_negative"
+                    ),
+                    "claim_supported": supported,
                 }
             )
     corr = pd.DataFrame(corr_rows)
@@ -2149,7 +2334,7 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
     triangle_summary = pd.DataFrame()
     if not monomial_triangles.empty and "triangle_type" in monomial_triangles:
         triangle_summary = (
-            monomial_triangles.groupby(["matching", "triangle_type"], dropna=False)
+            monomial_triangles.groupby(["matching", "monomial_scale_method", "triangle_type"], dropna=False)
             .agg(
                 n_rows=("run_id", "count"),
                 mean_cycle_defect=("cycle_defect", "mean"),
@@ -2158,21 +2343,60 @@ def write_monomial_report(args, runs: pd.DataFrame, triangles: pd.DataFrame, rep
             .reset_index()
         )
 
+    monomial_delta_rows = (
+        paired_deltas[paired_deltas["monomial_method"].astype(str).str.startswith("monomial_gauge_ref0_")].copy()
+        if not paired_deltas.empty and "monomial_method" in paired_deltas
+        else pd.DataFrame()
+    )
+    c2m3_supported = bool(
+        not monomial_delta_rows.empty
+        and (monomial_delta_rows["claim_status"].astype(str) == "supported_positive_ci_vs_c2m3").any()
+    )
+    greedy_supported = bool(
+        not monomial_delta_rows.empty
+        and (monomial_delta_rows["claim_status"].astype(str) == "supported_positive_ci_vs_greedy_soup").any()
+    )
+    predictor_supported = bool(not corr.empty and corr.get("claim_supported", pd.Series(dtype=bool)).astype(bool).any())
+    raw_activation_warning = "No raw activation-scale instability was detected from the generated rows."
+    if not preservation.empty:
+        raw_activation = preservation[
+            (preservation["matching"].astype(str) == "monomial_activation")
+            & (preservation["monomial_scale_method"].astype(str) == "raw")
+        ].copy()
+        if not raw_activation.empty:
+            max_log = safe_max(raw_activation["max_abs_log_scale"])
+            low_fraction = safe_max(raw_activation["mean_low_similarity_fraction"])
+            if (math.isfinite(max_log) and max_log > float(args.monomial_log_scale_clip)) or (
+                math.isfinite(low_fraction) and low_fraction > 0.25
+            ):
+                raw_activation_warning = (
+                    "Raw activation-derived scales show large log scales or many low-similarity assignments; "
+                    "treat raw monomial activation rows as unreliable and prefer clipped/shrinkage/global rows."
+                )
+
     if monomial_runs.empty:
         conclusion = "No monomial matching rows were generated in this run."
+    elif c2m3_supported or greedy_supported or predictor_supported:
+        parts = []
+        if c2m3_supported:
+            parts.append("a same-capacity monomial row passes the positive paired-CI gate versus C2M3 in at least one fixed setting")
+        if greedy_supported:
+            parts.append("a monomial row passes the greedy-soup win gate")
+        else:
+            parts.append("greedy soup remains stronger or unseated by the current monomial rows")
+        if predictor_supported:
+            parts.append("a monomial residual passes the positive bootstrap-CI predictor gate")
+        conclusion = "Supported gates: " + "; ".join(parts) + "."
     elif corr.empty or int(corr["n_rows"].max()) < 20:
         conclusion = (
             "The monomial run is implementation/descriptive evidence only; no predictor claim is supported because "
             "each fixed setting has fewer than 20 observed seeds."
         )
-    elif bool(corr["monomial_more_predictive_by_abs_pearson"].any()):
-        conclusion = (
-            "At least one descriptive fixed setting has a larger absolute Pearson correlation for the monomial residual "
-            "than for the permutation cycle score, but this report does not promote that to a paper claim without the "
-            "same bootstrap gate used by the main verifier."
-        )
     else:
-        conclusion = "The generated rows do not show a clearer monomial residual predictor than the permutation cycle score."
+        conclusion = (
+            "No monomial performance or predictor claim is supported: paired or predictor bootstrap intervals do not "
+            "clear the required positive lower-bound gates."
+        )
 
     report = f"""# ReLU-Compatible Monomial Gauge Alignment
 
@@ -2186,40 +2410,51 @@ Generated by `experiments/model_merging_fixed_setting_verification.py`.
 
 ## Scope
 
-- Monomial matching is implemented only for one-hidden-layer ReLU `mlp` models.
-- The gauge is permutation plus positive hidden-unit scaling with inverse outgoing classifier scaling, so it is an exact ReLU reparameterization before averaging.
+- Monomial matching is implemented for one-hidden-layer ReLU `mlp` models and two-hidden-layer ReLU `mlp2` models.
+- The gauge is permutation plus positive hidden-unit scaling with consistent adjacent-layer inverse scaling, so it is an exact ReLU reparameterization before averaging.
 - The monomial merge row is a single same-capacity merged model, not an ensemble and not a period-index lift.
-- The main fixed-setting obstruction claim gate is unchanged. This report only compares permutation and monomial diagnostics in rows generated with `--matching monomial_activation,monomial_weight`.
+- The main fixed-setting obstruction claim gate is unchanged. This report only compares permutation and monomial diagnostics in rows generated with monomial matching modes.
 
 ## Outputs
 
 - `reports/csv/{MONOMIAL_RUNS_CSV}`
 - `reports/csv/{MONOMIAL_TRIANGLES_CSV}`
+- `reports/csv/{MONOMIAL_PAIRED_DELTAS_CSV}`
 - `reports/monomial_gauge_alignment_report.md`
 
 ## Conclusion
 
 {conclusion}
 
+{raw_activation_warning}
+
 ## Functional Preservation
 
-{md_table(preservation, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "n_rows", "max_functional_preservation_error", "mean_functional_preservation_error", "mean_prediction_disagreement", "mean_abs_log_scale", "max_abs_log_scale"], 30)}
+{md_table(preservation, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method", "n_rows", "max_functional_preservation_error", "mean_functional_preservation_error", "mean_prediction_disagreement"], 40)}
+
+## Scale Stability
+
+{md_table(preservation, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method", "n_rows", "mean_abs_log_scale", "max_abs_log_scale", "mean_low_similarity_fraction", "min_assignment_similarity"], 40)}
 
 ## Method Comparison
 
-{md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "method", "n_rows", "mean_test_accuracy", "mean_delta_vs_weight_average", "mean_delta_vs_greedy_soup", "mean_delta_vs_c2m3_synchronized"], 40)}
+{md_table(method_summary, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method", "method", "n_rows", "mean_test_accuracy", "mean_delta_vs_weight_average", "mean_delta_vs_greedy_soup", "mean_delta_vs_c2m3_synchronized"], 60)}
+
+## Paired Delta Claim Gates
+
+{md_table(monomial_delta_rows, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method", "baseline_method", "n_paired_seeds", "mean_delta", "bootstrap_ci_low", "bootstrap_ci_high", "wins", "ties", "losses", "claim_status"], 60)}
 
 ## Residual Correlations
 
-{md_table(corr, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "n_rows", "permutation_pearson_vs_degradation", "permutation_spearman_vs_degradation", "monomial_pearson_vs_degradation", "monomial_spearman_vs_degradation", "monomial_more_predictive_by_abs_pearson", "claim_status"], 30)}
+{md_table(corr, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "monomial_scale_method", "n_rows", "permutation_pearson_vs_degradation", "monomial_pearson_vs_degradation", "monomial_pearson_ci_low", "monomial_pearson_ci_high", "monomial_spearman_vs_degradation", "monomial_more_predictive_by_abs_pearson", "claim_status"], 40)}
 
 ## Triangle Diagnostics
 
-{md_table(triangle_summary, ["matching", "triangle_type", "n_rows", "mean_cycle_defect", "mean_monomial_defect_score"], 30)}
+{md_table(triangle_summary, ["matching", "monomial_scale_method", "triangle_type", "n_rows", "mean_cycle_defect", "mean_monomial_defect_score"], 40)}
 
 ## Claim Boundary
 
-This artifact supports the implementation claim that positive monomial gauges can be estimated and applied as exact ReLU reparameterizations in the one-hidden-layer MLP path. It does not by itself support a claim that monomial obstruction residuals are more predictive, or that monomial-aligned merging beats greedy soup, C2M3, or external baselines.
+This artifact supports the implementation claim that positive monomial gauges can be estimated and applied as exact ReLU reparameterizations in the supported MLP paths. It does not by itself support a claim that monomial obstruction residuals are more predictive, or that monomial-aligned merging beats greedy soup, C2M3, or external baselines; performance claims require a 20+ seed paired-CI pass.
 """
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(report, encoding="utf-8")
@@ -2302,6 +2537,10 @@ def main() -> None:
     parser.add_argument("--augmentation", default="none", choices=["none", "light"])
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--matching", default="activation")
+    parser.add_argument("--monomial-scale-methods", default="raw")
+    parser.add_argument("--monomial-log-scale-clip", type=float, default=2.0)
+    parser.add_argument("--monomial-shrinkage", type=float, default=0.5)
+    parser.add_argument("--monomial-activation-similarity-threshold", type=float, default=0.2)
     parser.add_argument("--bootstrap-samples", type=int, default=5000)
     parser.add_argument("--alignment-noise-levels", default="0.15")
     parser.add_argument("--rank-lift-branches", type=int, default=2)
@@ -2319,13 +2558,23 @@ def main() -> None:
     widths = parse_csv(args.widths, int)
     domain_shifts = parse_csv(args.domain_shifts, str)
     matchings = parse_csv(args.matching, str)
+    monomial_scale_methods = parse_monomial_scale_methods(args.monomial_scale_methods)
+    args.monomial_scale_methods = ",".join(monomial_scale_methods)
     seeds = parse_seeds(args.seeds)
     valid_matchings = {"activation", "weight", *MONOMIAL_MATCHINGS}
     unknown_matchings = sorted(set(matchings) - valid_matchings)
     if unknown_matchings:
         raise ValueError(f"unknown matching protocols: {unknown_matchings}")
-    if any(is_monomial_matching(matching) for matching in matchings) and args.architecture != "mlp":
-        raise ValueError("monomial_activation/monomial_weight currently require --architecture mlp")
+    unknown_scale_methods = sorted(set(monomial_scale_methods) - MONOMIAL_SCALE_METHODS)
+    if unknown_scale_methods:
+        raise ValueError(f"unknown monomial scale methods: {unknown_scale_methods}")
+    unsupported_monomial = [
+        matching
+        for matching in matchings
+        if is_monomial_matching(matching) and not monomial_matching_supported_for_architecture(matching, args.architecture)
+    ]
+    if unsupported_monomial:
+        raise ValueError(f"monomial matchings not supported for --architecture {args.architecture}: {unsupported_monomial}")
     if any(n < 3 for n in model_counts):
         raise ValueError("Do not include N=2 in fixed-setting verification: N=2 has no triangle obstruction.")
 
@@ -2374,6 +2623,7 @@ def main() -> None:
     )
     stats = compute_stats(runs, args.bootstrap_samples)
     paired_deltas = compute_branch_paired_deltas(runs, args.bootstrap_samples)
+    monomial_paired_deltas = compute_monomial_paired_deltas(runs, args.bootstrap_samples)
     regressions = compute_predictor_regressions(runs, args.bootstrap_samples)
 
     csv_dir = args.reports_dir / "csv"
@@ -2389,6 +2639,7 @@ def main() -> None:
     predictor_target_path = csv_dir / OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV
     monomial_runs_path = csv_dir / MONOMIAL_RUNS_CSV
     monomial_triangles_path = csv_dir / MONOMIAL_TRIANGLES_CSV
+    monomial_paired_deltas_path = csv_dir / MONOMIAL_PAIRED_DELTAS_CSV
     runs.to_csv(runs_path, index=False, lineterminator="\n")
     stats.to_csv(stats_path, index=False, lineterminator="\n")
     triangles.to_csv(triangles_path, index=False, lineterminator="\n")
@@ -2398,6 +2649,7 @@ def main() -> None:
     regressions.to_csv(predictor_target_path, index=False, lineterminator="\n")
     monomial_runs.to_csv(monomial_runs_path, index=False, lineterminator="\n")
     monomial_triangles.to_csv(monomial_triangles_path, index=False, lineterminator="\n")
+    monomial_paired_deltas.to_csv(monomial_paired_deltas_path, index=False, lineterminator="\n")
     runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
     stats.to_csv(csv_dir / REAL_OBSTRUCTION_SUMMARY_CSV, index=False, lineterminator="\n")
     triangles.to_csv(csv_dir / REAL_OBSTRUCTION_TRIANGLES_CSV, index=False, lineterminator="\n")
@@ -2445,6 +2697,7 @@ def main() -> None:
         args,
         runs,
         triangles,
+        monomial_paired_deltas,
         args.reports_dir / "monomial_gauge_alignment_report.md",
     )
     save_json(
@@ -2467,6 +2720,7 @@ def main() -> None:
     print(f"wrote {predictor_target_path}")
     print(f"wrote {monomial_runs_path}")
     print(f"wrote {monomial_triangles_path}")
+    print(f"wrote {monomial_paired_deltas_path}")
     print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
     print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
     print(f"wrote {args.reports_dir / 'fixed_setting_full_run_interpretation.md'}")
