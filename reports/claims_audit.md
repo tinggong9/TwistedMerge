@@ -652,6 +652,8 @@ This file tracks which claims are supported by current repository artifacts and 
 
 | SLERP is audited as a path-geometry baseline rather than a descent obstruction method. | Supported descriptive | `reports/slerp_barrier_geometry_report.md` compares SLERP against linear and aligned paths; mean validation max-loss barrier delta versus linear is `0.1901`; SLERP remains a path-geometry baseline, not a descent obstruction method. |
 
+| Enriched generated-candidate descent envelopes are validation-only same-base selectors. | Supported exact-setting | `reports/descent_envelope_selector_report.md` records validation-only generated-candidate selectors; 16 exact-setting selector rows pass positive paired CIs; strongest row `greedy_soup_over_generated_candidates` on `mnist/mnist_digit_subsets/W128` has mean delta `0.0493`. No broad superiority claim is made. Overall multi-setting support is also flagged descriptively in the selector summary. |
+
 <!-- prompt10-claim-audit:start -->
 ## Prompt 10 Verification Pipeline And Claim Boundary Audit
 
