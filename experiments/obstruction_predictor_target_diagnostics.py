@@ -27,6 +27,16 @@ TARGETS = (
     "rank_lift_delta_vs_c2m3",
     "greedy_soup_delta_vs_weight_average",
     "linear_mode_connectivity_barrier",
+    "c2m3_barrier_delta_vs_git_rebasin",
+    "c2m3_barrier_delta_vs_weight_average",
+    "monomial_barrier_delta_vs_c2m3",
+)
+
+BARRIER_TARGETS = (
+    "linear_mode_connectivity_barrier",
+    "c2m3_barrier_delta_vs_git_rebasin",
+    "c2m3_barrier_delta_vs_weight_average",
+    "monomial_barrier_delta_vs_c2m3",
 )
 
 PREDICTORS = (
@@ -75,6 +85,12 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=ROOT / "reports",
         help="Report root containing csv/ and plots/ directories.",
+    )
+    parser.add_argument(
+        "--barriers-csv",
+        type=Path,
+        default=ROOT / "reports" / "csv" / "alignment_barrier_targets.csv",
+        help="Optional alignment-barrier target CSV to merge into the fixed-setting run rows.",
     )
     parser.add_argument("--bootstrap-samples", type=int, default=5000)
     parser.add_argument(
@@ -187,13 +203,33 @@ def bootstrap_beta_ci(
 
 
 def target_family(target: str) -> str:
-    if target == "linear_mode_connectivity_barrier":
-        return "not_run"
     if target == "weight_average_degradation_vs_best_single":
-        return "raw_weight_average"
+        return "raw_accuracy"
+    if target in BARRIER_TARGETS:
+        return "alignment_conditioned_barrier"
     if target == "greedy_soup_delta_vs_weight_average":
-        return "validation_soup_vs_weight_average"
-    return "alignment_conditioned"
+        return "validation_soup_accuracy"
+    return "alignment_conditioned_accuracy"
+
+
+def merge_barrier_targets(runs: pd.DataFrame, barriers_csv: Path) -> pd.DataFrame:
+    if not barriers_csv.exists():
+        return runs
+    barriers = pd.read_csv(barriers_csv)
+    key_cols = [col for col in ("setting_id", "run_id", "seed") if col in barriers.columns and col in runs.columns]
+    value_cols = [col for col in BARRIER_TARGETS if col in barriers.columns]
+    if not key_cols or not value_cols:
+        return runs
+
+    if "status" in barriers.columns:
+        barriers = barriers[barriers["status"].astype(str) == "ok"].copy()
+    barrier_rows = barriers[key_cols + value_cols].drop_duplicates(subset=key_cols, keep="first")
+
+    out = runs.copy()
+    existing = [col for col in value_cols if col in out.columns]
+    if existing:
+        out = out.drop(columns=existing)
+    return out.merge(barrier_rows, on=key_cols, how="left")
 
 
 def load_config_command(reports_dir: Path) -> str:
@@ -221,6 +257,8 @@ def input_audit(reports_dir: Path) -> pd.DataFrame:
         "real_obstruction_summary.csv",
         "real_obstruction_paired_deltas.csv",
         "real_obstruction_predictor_regressions.csv",
+        "alignment_barrier_targets.csv",
+        "alignment_barrier_target_stats.csv",
     ]
     rows = []
     for name in names:
@@ -438,13 +476,16 @@ def recommendation(stats: pd.DataFrame) -> str:
             "No predictor-target claim passes the observed bootstrap gate. The paper should describe these diagnostics "
             "as negative/descriptive on the quality-gated real-network benchmark."
         )
-    raw_supported = observed_supported[observed_supported["outcome_family"] == "raw_weight_average"]
-    alignment_supported = observed_supported[observed_supported["outcome_family"] == "alignment_conditioned"]
-    if raw_supported.empty and not alignment_supported.empty:
+    raw_supported = observed_supported[observed_supported["outcome_family"] == "raw_accuracy"]
+    accuracy_supported = observed_supported[
+        observed_supported["outcome_family"].isin(["alignment_conditioned_accuracy", "validation_soup_accuracy"])
+    ]
+    barrier_supported = observed_supported[observed_supported["outcome_family"] == "alignment_conditioned_barrier"]
+    if raw_supported.empty and (not accuracy_supported.empty or not barrier_supported.empty):
         return (
             "Only alignment-conditioned targets pass the gate. Do not claim raw weight-average degradation prediction; "
-            "state that selected obstruction statistics predict alignment-conditioned targets within this "
-            "quality-gated fixed-setting run."
+            "state that selected obstruction statistics predict alignment-conditioned accuracy or barrier targets "
+            "within this quality-gated fixed-setting run."
         )
     if not raw_supported.empty:
         return (
@@ -454,14 +495,17 @@ def recommendation(stats: pd.DataFrame) -> str:
     return "Supported targets are secondary targets; keep the raw weight-average boundary explicit."
 
 
-def target_support_sections(stats: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def target_support_sections(stats: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     observed = stats[stats["alignment_source"].astype(str) == "observed"].copy()
     supported = observed[observed["claim_supported"] == True].copy()  # noqa: E712
-    raw = supported[supported["outcome_family"] == "raw_weight_average"].copy()
-    conditioned = supported[supported["outcome_family"] == "alignment_conditioned"].copy()
+    raw = supported[supported["outcome_family"] == "raw_accuracy"].copy()
+    conditioned = supported[
+        supported["outcome_family"].isin(["alignment_conditioned_accuracy", "validation_soup_accuracy"])
+    ].copy()
+    barrier = supported[supported["outcome_family"] == "alignment_conditioned_barrier"].copy()
     unsupported_names = sorted(set(TARGETS) - set(supported["target"].astype(str).unique()))
     unsupported = pd.DataFrame({"target": unsupported_names})
-    return raw, conditioned, unsupported
+    return raw, conditioned, barrier, unsupported
 
 
 def write_report(args: argparse.Namespace, runs: pd.DataFrame, stats: pd.DataFrame, audit: pd.DataFrame) -> None:
@@ -470,7 +514,7 @@ def write_report(args: argparse.Namespace, runs: pd.DataFrame, stats: pd.DataFra
     injected = stats[stats["alignment_source"].astype(str) != "observed"].copy()
     supported = observed[observed["claim_supported"] == True].copy()  # noqa: E712
     setting_specific = supported[supported["support_scope"] == "setting_specific"].copy()
-    raw_supported, conditioned_supported, unsupported_targets = target_support_sections(stats)
+    raw_supported, conditioned_supported, barrier_supported, unsupported_targets = target_support_sections(stats)
     datasets = sorted(str(item) for item in runs["dataset"].dropna().unique())
     architectures = sorted(str(item) for item in runs["architecture"].dropna().unique())
     fake_rows = runs[runs["dataset"].astype(str).str.contains("fake", case=False, na=False)]
@@ -500,6 +544,7 @@ Generated by `experiments/obstruction_predictor_target_diagnostics.py` from comp
 - Architectures used as evidence: {", ".join(architectures)}
 - Fake/smoke dataset rows: {len(fake_rows)}
 - Bootstrap samples: {args.bootstrap_samples}
+- Barrier target CSV: `{args.barriers_csv}`
 - Platform: {platform.platform()}
 
 {md_table(audit, ["input", "exists", "rows", "size_mb"], max_rows=20)}
@@ -517,7 +562,8 @@ Generated by `experiments/obstruction_predictor_target_diagnostics.py` from comp
 - Dataset, model count, and domain shift are handled by fixed-setting stratification rather than pooled smoke-data mixing.
 - A predictor-target row is supported only when it has at least 20 unique seeds, an observed alignment source, and a positive bootstrap lower bound for the predictor coefficient.
 - If the positive sign is not repeated in a secondary setting, the row is explicitly labeled setting-specific.
-- `linear_mode_connectivity_barrier` is marked `target_not_run` because no LMC barrier column is present in the completed fixed-setting CSVs.
+- Raw accuracy targets and alignment-conditioned barrier targets are reported separately.
+- Barrier targets are validation-loss interpolation barriers merged from `alignment_barrier_targets.csv`; test barriers remain evaluation-only in the barrier report.
 
 ## Supported Raw Targets
 
@@ -526,6 +572,10 @@ Generated by `experiments/obstruction_predictor_target_diagnostics.py` from comp
 ## Supported Alignment-Conditioned Targets
 
 {md_table(conditioned_supported, ["dataset", "n_models", "width", "domain_shift", "target", "predictor", "n_unique_seeds", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "support_scope", "claim_status"], max_rows=80)}
+
+## Supported Barrier Targets
+
+{md_table(barrier_supported, ["dataset", "n_models", "width", "domain_shift", "target", "predictor", "n_unique_seeds", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "support_scope", "claim_status"], max_rows=80)}
 
 ## Unsupported Targets
 
@@ -586,7 +636,7 @@ def write_plot(args: argparse.Namespace, stats: pd.DataFrame) -> None:
             observed.groupby(["target", "predictor"], dropna=False)["predictor_beta"]
             .mean()
             .unstack("predictor")
-            .reindex(index=list(TARGETS[:-1]), columns=list(PREDICTORS))
+            .reindex(index=list(TARGETS), columns=list(PREDICTORS))
         )
         values = pivot.to_numpy(dtype=float)
         finite = values[np.isfinite(values)]
@@ -650,13 +700,14 @@ def main() -> None:
     (args.reports_dir / "csv").mkdir(parents=True, exist_ok=True)
     (args.reports_dir / "plots").mkdir(parents=True, exist_ok=True)
     runs = pd.read_csv(args.runs_csv)
+    runs = merge_barrier_targets(runs, args.barriers_csv)
     stats = compute_rows(runs, args.bootstrap_samples)
-    audit = input_audit(args.reports_dir)
 
     stats_path = args.reports_dir / "csv" / OUTPUT_STATS
     regressions_path = args.reports_dir / "csv" / OUTPUT_REGRESSIONS
     stats.to_csv(stats_path, index=False, lineterminator="\n")
     stats.to_csv(regressions_path, index=False, lineterminator="\n")
+    audit = input_audit(args.reports_dir)
     write_plot(args, stats)
     write_report(args, runs, stats, audit)
 
