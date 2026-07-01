@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -28,6 +29,7 @@ from src.model_merging_benchmark import (  # noqa: E402
     DatasetSpec,
     average_models,
     clone_model,
+    device_from_arg,
     evaluate_model,
     greedy_soup,
     load_dataset,
@@ -48,6 +50,9 @@ BARRIER_CSV = "alignment_barrier_targets.csv"
 BARRIER_STATS_CSV = "alignment_barrier_target_stats.csv"
 BARRIER_REPORT = "alignment_barrier_targets_report.md"
 BARRIER_PLOT = "alignment_barrier_vs_obstruction.pdf"
+BARRIER_STABILITY_REPORT = "alignment_barrier_stability_report.md"
+BARRIER_STABILITY_PLOT = "alignment_barrier_stability.pdf"
+PREVIOUS_BARRIER_PREDICTOR_STATS_CSV = "obstruction_barrier_predictor_stats.csv"
 
 TARGET_COLUMNS = (
     "linear_mode_connectivity_barrier",
@@ -82,6 +87,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--monomial-log-scale-clip", type=float, default=2.0)
     parser.add_argument("--monomial-shrinkage", type=float, default=0.5)
     parser.add_argument("--monomial-activation-similarity-threshold", type=float, default=0.2)
+    parser.add_argument(
+        "--previous-barrier-predictor-stats-csv",
+        type=Path,
+        default=ROOT / "reports" / "csv" / PREVIOUS_BARRIER_PREDICTOR_STATS_CSV,
+        help="Prior predictor-target barrier stats used only for stability comparison.",
+    )
+    parser.add_argument(
+        "--feasibility-note",
+        default="",
+        help="Optional note explaining why a nonzero evaluation cap was used.",
+    )
     return parser.parse_args()
 
 
@@ -120,6 +136,77 @@ def safe_pearson(x, y) -> float:
     if float(np.std(x)) <= 1e-12 or float(np.std(y)) <= 1e-12:
         return float("nan")
     return float(np.corrcoef(x, y)[0, 1])
+
+
+def finite_std(values: np.ndarray) -> float:
+    values = np.asarray(values, dtype=float)
+    values = values[np.isfinite(values)]
+    if values.size < 2:
+        return 0.0
+    return float(np.std(values))
+
+
+def prepare_regression_design(
+    x: np.ndarray,
+    y: np.ndarray,
+    controls: list[np.ndarray],
+) -> tuple[np.ndarray | None, np.ndarray | None, int, str]:
+    arrays = [np.asarray(x, dtype=float), np.asarray(y, dtype=float)]
+    arrays.extend(np.asarray(control, dtype=float) for control in controls)
+    mask = np.ones(len(arrays[0]), dtype=bool)
+    for array in arrays:
+        mask &= np.isfinite(array)
+    if int(mask.sum()) < 4:
+        return None, None, int(mask.sum()), "insufficient_finite_rows"
+    x_f = arrays[0][mask]
+    y_f = arrays[1][mask]
+    if finite_std(x_f) <= 1e-12:
+        return None, None, int(mask.sum()), "predictor_missing_or_constant"
+    design_parts = [np.ones_like(x_f), x_f]
+    for control in arrays[2:]:
+        control_f = control[mask]
+        if finite_std(control_f) > 1e-12:
+            design_parts.append(control_f)
+    return np.column_stack(design_parts), y_f, int(mask.sum()), "ok"
+
+
+def regression_beta(
+    x: np.ndarray,
+    y: np.ndarray,
+    controls: list[np.ndarray],
+) -> tuple[float, int, str]:
+    design, y_f, n_finite, status = prepare_regression_design(x, y, controls)
+    if design is None or y_f is None:
+        return float("nan"), n_finite, status
+    try:
+        beta = np.linalg.lstsq(design, y_f, rcond=None)[0][1]
+    except np.linalg.LinAlgError:
+        return float("nan"), n_finite, "singular_design"
+    return float(beta), n_finite, "ok"
+
+
+def bootstrap_beta_ci(
+    x: np.ndarray,
+    y: np.ndarray,
+    controls: list[np.ndarray],
+    samples: int,
+    seed: int,
+) -> tuple[float, float]:
+    design, y_f, n, status = prepare_regression_design(x, y, controls)
+    if design is None or y_f is None or status != "ok" or int(samples) <= 0:
+        return float("nan"), float("nan")
+    rng = np.random.default_rng(seed)
+    idx = rng.integers(0, n, size=(int(samples), n))
+    boot_design = design[idx]
+    boot_y = y_f[idx]
+    xtx = np.einsum("sni,snj->sij", boot_design, boot_design)
+    xty = np.einsum("sni,sn->si", boot_design, boot_y)
+    coefs = np.einsum("sij,sj->si", np.linalg.pinv(xtx, rcond=1e-12), xty)
+    betas = coefs[:, 1]
+    betas = betas[np.isfinite(betas)]
+    if betas.size == 0:
+        return float("nan"), float("nan")
+    return float(np.percentile(betas, 2.5)), float(np.percentile(betas, 97.5))
 
 
 def bootstrap_corr_ci(x, y, samples: int, seed: int) -> tuple[float, float]:
@@ -407,7 +494,7 @@ def copy_predictors(row: pd.Series) -> dict:
 
 def compute_barriers(args: argparse.Namespace) -> pd.DataFrame:
     torch, _, _ = require_torch()
-    device = torch.device(args.device if args.device != "auto" else "cpu")
+    device = device_from_arg(str(args.device))
     runs = pd.read_csv(args.runs_csv)
     individuals = pd.read_csv(args.individuals_csv)
     weight_rows = runs[
@@ -584,6 +671,257 @@ def compute_stats(barriers: pd.DataFrame, bootstrap_samples: int) -> pd.DataFram
     return pd.DataFrame(rows)
 
 
+def load_existing_csv(path: Path) -> pd.DataFrame:
+    if not path.exists():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except Exception:
+        return pd.DataFrame()
+
+
+def compare_barrier_estimates(previous: pd.DataFrame, current: pd.DataFrame) -> pd.DataFrame:
+    if previous.empty or current.empty:
+        return pd.DataFrame()
+    key_cols = ["setting_id", "run_id", "seed", "method"]
+    if not all(col in previous.columns and col in current.columns for col in key_cols):
+        return pd.DataFrame()
+    metric_cols = [
+        "val_midpoint_loss_barrier",
+        "val_max_loss_barrier",
+        "val_accuracy_drop_barrier_t05",
+        "val_logit_interpolation_disagreement_t05",
+        "test_max_loss_barrier",
+        "linear_mode_connectivity_barrier",
+        "c2m3_barrier_delta_vs_git_rebasin",
+        "c2m3_barrier_delta_vs_weight_average",
+        "monomial_barrier_delta_vs_c2m3",
+    ]
+    merged = previous[key_cols + [col for col in metric_cols if col in previous.columns]].merge(
+        current[key_cols + [col for col in metric_cols if col in current.columns]],
+        on=key_cols,
+        how="inner",
+        suffixes=("_previous", "_current"),
+    )
+    rows = []
+    for metric in metric_cols:
+        old_col = f"{metric}_previous"
+        new_col = f"{metric}_current"
+        if old_col not in merged.columns or new_col not in merged.columns:
+            continue
+        for method, group in merged.groupby("method", dropna=False, sort=True):
+            old = pd.to_numeric(group[old_col], errors="coerce").to_numpy()
+            new = pd.to_numeric(group[new_col], errors="coerce").to_numpy()
+            mask = np.isfinite(old) & np.isfinite(new)
+            diff = new[mask] - old[mask]
+            rows.append(
+                {
+                    "metric": metric,
+                    "method": method,
+                    "n_pairs": int(mask.sum()),
+                    "previous_mean": float(np.mean(old[mask])) if mask.any() else float("nan"),
+                    "current_mean": float(np.mean(new[mask])) if mask.any() else float("nan"),
+                    "mean_delta_current_minus_previous": float(np.mean(diff)) if diff.size else float("nan"),
+                    "mean_abs_difference": float(np.mean(np.abs(diff))) if diff.size else float("nan"),
+                    "max_abs_difference": float(np.max(np.abs(diff))) if diff.size else float("nan"),
+                    "pearson_previous_current": safe_pearson(old[mask], new[mask]) if int(mask.sum()) >= 3 else float("nan"),
+                }
+            )
+    return pd.DataFrame(rows)
+
+
+def run_level_barrier_targets(barriers: pd.DataFrame, runs_csv: Path) -> pd.DataFrame:
+    if barriers.empty or not runs_csv.exists():
+        return pd.DataFrame()
+    runs = pd.read_csv(runs_csv)
+    base = runs[
+        (runs["method"].astype(str) == "weight_average")
+        & (runs["alignment_source"].astype(str) == "observed")
+        & (pd.to_numeric(runs["alignment_noise_fraction"], errors="coerce") == 0.0)
+    ].copy()
+    key_cols = ["setting_id", "run_id", "seed"]
+    target_cols = [col for col in TARGET_COLUMNS if col in barriers.columns]
+    if not target_cols or not all(col in base.columns and col in barriers.columns for col in key_cols):
+        return pd.DataFrame()
+    targets = barriers[key_cols + target_cols].drop_duplicates(subset=key_cols, keep="first")
+    return base.merge(targets, on=key_cols, how="inner")
+
+
+def supported_claim_stability(
+    previous_predictor_stats: pd.DataFrame,
+    current_barriers: pd.DataFrame,
+    runs_csv: Path,
+    bootstrap_samples: int,
+) -> pd.DataFrame:
+    if previous_predictor_stats.empty:
+        return pd.DataFrame()
+    supported = previous_predictor_stats[
+        (previous_predictor_stats["claim_supported"] == True)  # noqa: E712
+        & (previous_predictor_stats["target"].astype(str).isin(TARGET_COLUMNS))
+    ].copy()
+    if supported.empty:
+        return pd.DataFrame()
+    run_level = run_level_barrier_targets(current_barriers, runs_csv)
+    if run_level.empty:
+        return pd.DataFrame()
+    rows = []
+    for idx, claim in supported.iterrows():
+        group = run_level[
+            (run_level["dataset"].astype(str) == str(claim["dataset"]))
+            & (run_level["architecture"].astype(str) == str(claim["architecture"]))
+            & (pd.to_numeric(run_level["n_models"], errors="coerce") == int(claim["n_models"]))
+            & (pd.to_numeric(run_level["width"], errors="coerce") == int(claim["width"]))
+            & (run_level["domain_shift"].astype(str) == str(claim["domain_shift"]))
+            & (run_level["matching"].astype(str) == str(claim["matching"]))
+        ].copy()
+        target = str(claim["target"])
+        predictor = str(claim["predictor"])
+        controls = [
+            pd.to_numeric(group[col], errors="coerce").to_numpy()
+            for col in ("mean_individual_accuracy", "pairwise_alignment_residual_mean")
+            if col in group.columns
+        ]
+        x = pd.to_numeric(group[predictor], errors="coerce").to_numpy() if predictor in group.columns else np.full(len(group), np.nan)
+        y = pd.to_numeric(group[target], errors="coerce").to_numpy() if target in group.columns else np.full(len(group), np.nan)
+        beta, n_finite, status = regression_beta(x, y, controls)
+        low, high = (
+            bootstrap_beta_ci(x, y, controls, bootstrap_samples, seed=120011 + int(idx) * 1237)
+            if status == "ok"
+            else (float("nan"), float("nan"))
+        )
+        rows.append(
+            {
+                "dataset": claim["dataset"],
+                "architecture": claim["architecture"],
+                "n_models": int(claim["n_models"]),
+                "width": int(claim["width"]),
+                "domain_shift": claim["domain_shift"],
+                "matching": claim["matching"],
+                "target": target,
+                "predictor": predictor,
+                "previous_claim_status": claim.get("claim_status", ""),
+                "previous_beta": safe_float(claim.get("predictor_beta")),
+                "previous_ci_low": safe_float(claim.get("predictor_beta_ci_low")),
+                "previous_ci_high": safe_float(claim.get("predictor_beta_ci_high")),
+                "current_beta": beta,
+                "current_ci_low": low,
+                "current_ci_high": high,
+                "n_unique_seeds": int(group["seed"].nunique()) if "seed" in group else 0,
+                "n_finite": n_finite,
+                "fit_status": status,
+                "stable_positive_gate": bool(math.isfinite(low) and low > 0.0),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def write_stability_plot(stability: pd.DataFrame, path: Path) -> None:
+    import matplotlib.pyplot as plt
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    metric = "val_max_loss_barrier"
+    fig, ax = plt.subplots(figsize=(7.2, 6.2))
+    if stability.empty:
+        ax.text(0.5, 0.5, "No previous barrier rows available", ha="center", va="center")
+        ax.set_axis_off()
+    else:
+        subset = stability[stability["metric"].astype(str) == metric].copy()
+        if subset.empty:
+            ax.text(0.5, 0.5, "No val barrier stability rows", ha="center", va="center")
+            ax.set_axis_off()
+        else:
+            x = pd.to_numeric(subset["previous_mean"], errors="coerce")
+            y = pd.to_numeric(subset["current_mean"], errors="coerce")
+            labels = subset["method"].astype(str).to_list()
+            ax.scatter(x, y, s=60, color="#4c78a8")
+            for x_i, y_i, label in zip(x, y, labels):
+                if math.isfinite(float(x_i)) and math.isfinite(float(y_i)):
+                    ax.text(float(x_i), float(y_i), label, fontsize=7, ha="left", va="bottom")
+            finite = np.asarray([*x[np.isfinite(x)], *y[np.isfinite(y)]], dtype=float)
+            if finite.size:
+                lo = float(np.min(finite))
+                hi = float(np.max(finite))
+                pad = max((hi - lo) * 0.08, 1e-4)
+                ax.plot([lo - pad, hi + pad], [lo - pad, hi + pad], color="black", linewidth=0.8)
+            ax.set_xlabel("previous mean validation max loss barrier")
+            ax.set_ylabel("current mean validation max loss barrier")
+            ax.set_title("Barrier stability: previous debug cap vs larger evaluation")
+    fig.tight_layout()
+    fig.savefig(path)
+    plt.close(fig)
+
+
+def write_stability_report(
+    args: argparse.Namespace,
+    previous_barriers: pd.DataFrame,
+    current_barriers: pd.DataFrame,
+    stability: pd.DataFrame,
+    claim_stability: pd.DataFrame,
+    runtime_seconds: float,
+    path: Path,
+) -> None:
+    previous_cap = (
+        sorted(previous_barriers["max_eval_batches"].dropna().unique().tolist())
+        if not previous_barriers.empty and "max_eval_batches" in previous_barriers.columns
+        else []
+    )
+    current_cap = (
+        sorted(current_barriers["max_eval_batches"].dropna().unique().tolist())
+        if not current_barriers.empty and "max_eval_batches" in current_barriers.columns
+        else []
+    )
+    skipped = current_barriers[current_barriers["status"].astype(str) != "ok"].copy() if not current_barriers.empty else pd.DataFrame()
+    cap_label = "full loaders" if int(args.max_eval_batches) == 0 else f"cap {int(args.max_eval_batches)} batches per validation/test loader"
+    if int(args.max_eval_batches) == 0:
+        feasibility = "Full-loader evaluation completed and should replace the previous 2-batch debug barriers for citation."
+    else:
+        note = args.feasibility_note.strip() or "Full-loader evaluation was not run in this pass; the report records the bounded cap used."
+        feasibility = f"Largest feasible local run in this pass used {cap_label}. {note}"
+    if stability.empty or "metric" not in stability.columns:
+        stability_focus = pd.DataFrame()
+    else:
+        stability_focus = stability[
+            stability["metric"].astype(str).isin(["val_max_loss_barrier", "test_max_loss_barrier", *TARGET_COLUMNS])
+        ].copy()
+    report = f"""# Alignment Barrier Stability Report
+
+Generated by `experiments/alignment_barrier_targets.py`.
+
+## Evaluation Scale
+
+- Previous barrier cap(s): `{previous_cap}`
+- Current barrier cap(s): `{current_cap}`
+- Current evaluation scale: `{cap_label}`
+- Runtime: `{runtime_seconds:.2f}` seconds
+- Bootstrap samples for barrier stats and claim-stability checks: `{args.bootstrap_samples}`
+- Feasibility note: {feasibility}
+
+## Acceptance Audit
+
+- Current rows: {len(current_barriers)}
+- Current skipped/failed rows: {len(skipped)}
+- Previous rows available for comparison: {len(previous_barriers)}
+- Methods: {", ".join(sorted(current_barriers["method"].dropna().astype(str).unique())) if not current_barriers.empty and "method" in current_barriers else ""}
+
+## Stability Summary
+
+{md_table(stability_focus, ["metric", "method", "n_pairs", "previous_mean", "current_mean", "mean_delta_current_minus_previous", "mean_abs_difference", "max_abs_difference", "pearson_previous_current"], 80)}
+
+## Supported Predictor-Target Claim Stability
+
+{md_table(claim_stability, ["dataset", "n_models", "width", "domain_shift", "target", "predictor", "previous_beta", "previous_ci_low", "previous_ci_high", "current_beta", "current_ci_low", "current_ci_high", "n_unique_seeds", "stable_positive_gate"], 80)}
+
+## Skipped Or Failed Current Rows
+
+{md_table(skipped, ["dataset", "architecture", "n_models", "width", "domain_shift", "matching", "seed", "method", "status", "skip_reason"], 60)}
+
+## Claim Boundary
+
+The paper should cite the current larger-evaluation barrier files, not the previous 2-batch debug estimates. Validation barriers remain selector/predictor diagnostics, and test barriers remain evaluation-only.
+"""
+    path.write_text(report, encoding="utf-8")
+
+
 def md_table(df: pd.DataFrame, columns: list[str], max_rows: int = 40) -> str:
     if df.empty:
         return "_None._"
@@ -629,7 +967,7 @@ def write_plot(barriers: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
-def write_report(args: argparse.Namespace, barriers: pd.DataFrame, stats: pd.DataFrame, path: Path) -> None:
+def write_report(args: argparse.Namespace, barriers: pd.DataFrame, stats: pd.DataFrame, runtime_seconds: float, path: Path) -> None:
     ok = barriers[barriers["status"].astype(str) == "ok"].copy() if not barriers.empty else pd.DataFrame()
     skipped = barriers[barriers["status"].astype(str) != "ok"].copy() if not barriers.empty else pd.DataFrame()
     target_summary = (
@@ -661,6 +999,7 @@ Generated by `experiments/alignment_barrier_targets.py`.
 - Inputs are the saved quality-gated fixed-setting CSVs and checkpoints.
 - Validation and test barriers are computed separately. Validation barriers are selector/diagnostic targets; test barriers are evaluation-only.
 - Evaluation batch cap: `{args.max_eval_batches}` (`0` means full loader).
+- Runtime: `{runtime_seconds:.2f}` seconds.
 - The path endpoint is the best local model in the same coordinate system as the merged target for each method.
 - Midpoint loss barrier is `loss(t=0.5) - 0.5 * (loss(t=0) + loss(t=1))`.
 - Max loss barrier is the maximum loss excess above the linear endpoint-loss interpolation over `t in {args.t_grid}`.
@@ -674,7 +1013,9 @@ Generated by `experiments/alignment_barrier_targets.py`.
 - `reports/csv/{BARRIER_CSV}`
 - `reports/csv/{BARRIER_STATS_CSV}`
 - `reports/{BARRIER_REPORT}`
+- `reports/{BARRIER_STABILITY_REPORT}`
 - `reports/plots/{BARRIER_PLOT}`
+- `reports/plots/{BARRIER_STABILITY_PLOT}`
 
 ## Target Summary
 
@@ -690,7 +1031,7 @@ Generated by `experiments/alignment_barrier_targets.py`.
 
 ## Claim Boundary
 
-These targets refine the outcome side of the real-model diagnostics. They do not show a general performance win, and test-set barriers are not used for method selection.
+These targets refine the outcome side of the real-model diagnostics. They do not show a general performance win, and test-set barriers are not used for method selection. The paper should cite these current larger-evaluation barriers rather than the earlier 2-batch debug estimates.
 """
     path.write_text(report, encoding="utf-8")
 
@@ -701,16 +1042,39 @@ def main() -> None:
     plot_dir = args.reports_dir / "plots"
     csv_dir.mkdir(parents=True, exist_ok=True)
     plot_dir.mkdir(parents=True, exist_ok=True)
+    previous_barriers = load_existing_csv(csv_dir / BARRIER_CSV)
+    previous_predictor_stats = load_existing_csv(args.previous_barrier_predictor_stats_csv)
+    start_time = time.perf_counter()
     barriers = compute_barriers(args)
+    runtime_seconds = time.perf_counter() - start_time
     stats = compute_stats(barriers, args.bootstrap_samples)
+    stability = compare_barrier_estimates(previous_barriers, barriers)
+    claim_stability = supported_claim_stability(
+        previous_predictor_stats,
+        barriers,
+        args.runs_csv,
+        args.bootstrap_samples,
+    )
     barriers.to_csv(csv_dir / BARRIER_CSV, index=False, lineterminator="\n")
     stats.to_csv(csv_dir / BARRIER_STATS_CSV, index=False, lineterminator="\n")
     write_plot(barriers, plot_dir / BARRIER_PLOT)
-    write_report(args, barriers, stats, args.reports_dir / BARRIER_REPORT)
+    write_report(args, barriers, stats, runtime_seconds, args.reports_dir / BARRIER_REPORT)
+    write_stability_plot(stability, plot_dir / BARRIER_STABILITY_PLOT)
+    write_stability_report(
+        args,
+        previous_barriers,
+        barriers,
+        stability,
+        claim_stability,
+        runtime_seconds,
+        args.reports_dir / BARRIER_STABILITY_REPORT,
+    )
     print(f"wrote {csv_dir / BARRIER_CSV}")
     print(f"wrote {csv_dir / BARRIER_STATS_CSV}")
     print(f"wrote {args.reports_dir / BARRIER_REPORT}")
+    print(f"wrote {args.reports_dir / BARRIER_STABILITY_REPORT}")
     print(f"wrote {plot_dir / BARRIER_PLOT}")
+    print(f"wrote {plot_dir / BARRIER_STABILITY_PLOT}")
 
 
 if __name__ == "__main__":

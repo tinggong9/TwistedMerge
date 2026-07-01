@@ -37,8 +37,8 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-m
 | reports/csv/real_obstruction_summary.csv | true | 160 | 0.0470 |
 | reports/csv/real_obstruction_paired_deltas.csv | true | 48 | 0.0160 |
 | reports/csv/real_obstruction_predictor_regressions.csv | true | 2304 | 1.5640 |
-| reports/csv/alignment_barrier_targets.csv | true | 1200 | 0.8300 |
-| reports/csv/alignment_barrier_target_stats.csv | true | 40 | 0.0080 |
+| reports/csv/alignment_barrier_targets.csv | true | 1200 | 0.8230 |
+| reports/csv/alignment_barrier_target_stats.csv | true | 40 | 0.0090 |
 | reports/csv/obstruction_barrier_predictor_stats.csv | true | 1152 | 0.7710 |
 
 ## Fixed Settings
@@ -90,11 +90,7 @@ _None._
 
 | dataset | n_models | width | domain_shift | target | predictor | n_unique_seeds | predictor_beta | predictor_beta_ci_low | predictor_beta_ci_high | support_scope | claim_status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| fashion_mnist | 3 | 128 | none | monomial_barrier_delta_vs_c2m3 | mean_cycle_score | 30 | 0.2351 | 0.0296 | 0.3940 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
-| fashion_mnist | 3 | 128 | none | monomial_barrier_delta_vs_c2m3 | max_cycle_score | 30 | 0.2351 | 0.0295 | 0.4060 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
-| fashion_mnist | 3 | 128 | none | monomial_barrier_delta_vs_c2m3 | combined_obstruction_score | 30 | 0.4940 | 0.0101 | 0.8290 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
-| fashion_mnist | 3 | 128 | none | monomial_barrier_delta_vs_c2m3 | mean_triangle_defect_rate | 30 | 0.1289 | 0.0149 | 0.2210 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
-| fashion_mnist | 4 | 128 | none | c2m3_barrier_delta_vs_git_rebasin | pairwise_alignment_residual_mean | 30 | 0.9511 | 0.1035 | 1.9371 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
+| fashion_mnist | 4 | 128 | none | c2m3_barrier_delta_vs_git_rebasin | pairwise_alignment_residual_mean | 30 | 1.0801 | 0.2201 | 2.1449 | replicated_positive_sign | supported_positive_predictor_coefficient_replicated |
 
 ## Unsupported Targets
 
@@ -109,6 +105,7 @@ _None._
 | git_rebasin_val_max_loss_barrier |
 | greedy_soup_delta_vs_weight_average |
 | linear_mode_connectivity_barrier |
+| monomial_barrier_delta_vs_c2m3 |
 | monomial_val_max_loss_barrier |
 | rank_lift_delta_vs_weight_average |
 | weight_average_degradation_vs_best_single |
@@ -198,53 +195,53 @@ Only alignment-conditioned targets pass the gate. Do not claim raw weight-averag
 | fashion_mnist | 3 | 128 | input_noise | greedy_soup_delta_vs_weight_average | validation_soup_accuracy | combined_obstruction_score | 30 | -0.3589 | -3.0636 | 3.0669 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | greedy_soup_delta_vs_weight_average | validation_soup_accuracy | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
 | fashion_mnist | 3 | 128 | input_noise | greedy_soup_delta_vs_weight_average | validation_soup_accuracy | mean_triangle_defect_rate | 30 | -0.1397 | -0.8387 | 0.7417 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0128 | -0.1847 | 0.1555 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0128 | -0.1783 | 0.1591 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | 0.0307 | -0.1250 | 0.1976 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | 0.0307 | -0.1201 | 0.1951 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | sync_disagreement | 30 | -0.2025 | -0.5267 | 0.0927 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | -0.1124 | -0.3621 | 0.1031 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0045 | -0.1563 | 0.1639 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.0478 | -0.3832 | 0.3026 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | sync_disagreement | 30 | -0.1174 | -0.4469 | 0.2041 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | -0.0931 | -0.3592 | 0.1307 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0645 | -0.2318 | 0.1163 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | combined_obstruction_score | 30 | 0.0544 | -0.2655 | 0.4017 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
-| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0069 | -0.0997 | 0.0917 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | mean_cycle_score | 30 | 0.0089 | -0.1533 | 0.1591 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | max_cycle_score | 30 | 0.0089 | -0.1611 | 0.1576 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | linear_mode_connectivity_barrier | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | 0.0173 | -0.0665 | 0.1111 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0265 | -0.1869 | 0.1254 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0265 | -0.1882 | 0.1197 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | sync_disagreement | 30 | 0.1699 | -0.1089 | 0.4711 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.1308 | -0.0949 | 0.4072 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0056 | -0.1747 | 0.1479 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | combined_obstruction_score | 30 | 0.0392 | -0.2949 | 0.3439 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | sync_disagreement | 30 | 0.1400 | -0.1414 | 0.4432 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.1166 | -0.1260 | 0.4461 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | 0.0240 | -0.1750 | 0.1996 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.0341 | -0.3688 | 0.2692 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | 0.0048 | -0.0861 | 0.0888 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.1185 | -0.9290 | 0.9281 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | max_cycle_score | 30 | -0.1185 | -0.9129 | 0.8979 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_git_rebasin | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0152 | -0.1045 | 0.0666 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.1292 | -0.9419 | 0.8466 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | max_cycle_score | 30 | -0.1292 | -0.9280 | 0.8275 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | sync_disagreement | 30 | -0.3259 | -1.9673 | 1.5211 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.5219 | -1.0996 | 1.9695 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0303 | -0.9693 | 1.1673 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.2449 | -1.8101 | 1.7864 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | sync_disagreement | 30 | -0.1698 | -1.8690 | 1.7187 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.4545 | -1.1285 | 1.8961 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.1475 | -1.0649 | 1.0279 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.2145 | -1.8417 | 1.7616 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
-| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0633 | -0.5004 | 0.5049 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0194 | -0.1840 | 0.1519 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0194 | -0.1779 | 0.1482 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | c2m3_barrier_delta_vs_weight_average | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0701 | -0.5069 | 0.4830 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0053 | -0.1722 | 0.1702 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0053 | -0.1704 | 0.1714 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | sync_disagreement | 30 | -0.2000 | -0.5156 | 0.0894 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | -0.1321 | -0.4124 | 0.0919 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | 0.0147 | -0.1453 | 0.1840 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.0637 | -0.3932 | 0.2741 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | sync_disagreement | 30 | -0.1848 | -0.5310 | 0.1357 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | -0.1172 | -0.4596 | 0.1458 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0204 | -0.2002 | 0.1946 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.0285 | -0.3793 | 0.3228 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
-| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0106 | -0.1019 | 0.0823 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.1313 | -0.9439 | 0.8829 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | -0.1313 | -0.9578 | 0.8840 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | monomial_barrier_delta_vs_c2m3 | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0024 | -0.0992 | 0.0955 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0986 | -0.9048 | 0.8584 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0986 | -0.9153 | 0.8585 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | sync_disagreement | 30 | -0.5284 | -2.1417 | 1.3599 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.4095 | -1.2383 | 1.7826 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.0348 | -1.0025 | 1.2252 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.2927 | -1.8628 | 1.6601 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | sync_disagreement | 30 | -0.2872 | -1.9261 | 1.6714 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | pairwise_alignment_residual_mean | 30 | 0.3613 | -1.2744 | 1.7346 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | activation_assignment_similarity_mean | 30 | -0.2119 | -1.1795 | 1.0189 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | combined_obstruction_score | 30 | -0.1601 | -1.7972 | 1.7691 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | monomial_defect_score | 30 |  |  |  | unsupported_insufficient_finite_rows |
-| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0702 | -0.5173 | 0.4955 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | git_rebasin_val_max_loss_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | -0.0038 | -0.0414 | 0.0392 | unsupported_ci_crosses_zero_or_unstable |
-| fashion_mnist | 3 | 128 | input_noise | git_rebasin_val_max_loss_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | -0.0038 | -0.0399 | 0.0413 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | weight_average_val_max_loss_barrier | alignment_conditioned_barrier | mean_triangle_defect_rate | 30 | -0.0527 | -0.4992 | 0.4872 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | git_rebasin_val_max_loss_barrier | alignment_conditioned_barrier | mean_cycle_score | 30 | 0.0042 | -0.0731 | 0.0861 | unsupported_ci_crosses_zero_or_unstable |
+| fashion_mnist | 3 | 128 | input_noise | git_rebasin_val_max_loss_barrier | alignment_conditioned_barrier | max_cycle_score | 30 | 0.0042 | -0.0701 | 0.0890 | unsupported_ci_crosses_zero_or_unstable |
 | fashion_mnist | 3 | 128 | input_noise | git_rebasin_val_max_loss_barrier | alignment_conditioned_barrier | nonidentity_triangle_fraction | 30 |  |  |  | unsupported_predictor_missing_or_constant |
 
 _Showing 120 of 1152 rows._
