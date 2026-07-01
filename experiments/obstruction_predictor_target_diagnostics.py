@@ -30,6 +30,10 @@ TARGETS = (
     "c2m3_barrier_delta_vs_git_rebasin",
     "c2m3_barrier_delta_vs_weight_average",
     "monomial_barrier_delta_vs_c2m3",
+    "weight_average_val_max_loss_barrier",
+    "git_rebasin_val_max_loss_barrier",
+    "c2m3_val_max_loss_barrier",
+    "monomial_val_max_loss_barrier",
 )
 
 BARRIER_TARGETS = (
@@ -37,6 +41,17 @@ BARRIER_TARGETS = (
     "c2m3_barrier_delta_vs_git_rebasin",
     "c2m3_barrier_delta_vs_weight_average",
     "monomial_barrier_delta_vs_c2m3",
+    "weight_average_val_max_loss_barrier",
+    "git_rebasin_val_max_loss_barrier",
+    "c2m3_val_max_loss_barrier",
+    "monomial_val_max_loss_barrier",
+)
+
+BARRIER_METHOD_TARGETS = (
+    ("weight_average", "weight_average_val_max_loss_barrier"),
+    ("git_rebasin_pairwise_ref0", "git_rebasin_val_max_loss_barrier"),
+    ("c2m3_synchronized", "c2m3_val_max_loss_barrier"),
+    ("monomial_shrinkage", "monomial_val_max_loss_barrier"),
 )
 
 PREDICTORS = (
@@ -48,6 +63,7 @@ PREDICTORS = (
     "activation_assignment_similarity_mean",
     "combined_obstruction_score",
     "monomial_defect_score",
+    "mean_triangle_defect_rate",
 )
 
 GROUP_COLS = (
@@ -68,8 +84,11 @@ NUMERIC_CONTROLS = (
 
 OUTPUT_STATS = "obstruction_predictor_target_stats.csv"
 OUTPUT_REGRESSIONS = "real_obstruction_predictor_regressions.csv"
+OUTPUT_BARRIER_STATS = "obstruction_barrier_predictor_stats.csv"
 OUTPUT_REPORT = "obstruction_predictor_target_report.md"
 OUTPUT_PLOT = "obstruction_predictor_target_grid.pdf"
+OUTPUT_BARRIER_REPORT = "obstruction_barrier_predictor_report.md"
+OUTPUT_BARRIER_PLOT = "obstruction_barrier_predictor_grid.pdf"
 
 
 def parse_args() -> argparse.Namespace:
@@ -216,15 +235,57 @@ def merge_barrier_targets(runs: pd.DataFrame, barriers_csv: Path) -> pd.DataFram
     if not barriers_csv.exists():
         return runs
     barriers = pd.read_csv(barriers_csv)
-    key_cols = [col for col in ("setting_id", "run_id", "seed") if col in barriers.columns and col in runs.columns]
-    value_cols = [col for col in BARRIER_TARGETS if col in barriers.columns]
-    if not key_cols or not value_cols:
+
+    # The checkpoint barrier run is computed only for observed alignments.  Add
+    # the source columns before merging so injected-noise rows remain controls
+    # rather than silently inheriting observed-path targets.
+    if "alignment_source" not in barriers.columns:
+        barriers["alignment_source"] = "observed"
+    if "alignment_noise_fraction" not in barriers.columns:
+        barriers["alignment_noise_fraction"] = 0.0
+
+    fixed_keys = [
+        "dataset",
+        "architecture",
+        "n_models",
+        "width",
+        "domain_shift",
+        "matching",
+        "seed",
+        "alignment_source",
+    ]
+    key_cols = [col for col in fixed_keys if col in barriers.columns and col in runs.columns]
+    if len(key_cols) < len(fixed_keys):
         return runs
 
     if "status" in barriers.columns:
         barriers = barriers[barriers["status"].astype(str) == "ok"].copy()
-    barrier_rows = barriers[key_cols + value_cols].drop_duplicates(subset=key_cols, keep="first")
 
+    pieces: list[pd.DataFrame] = []
+    aggregate_cols = [col for col in BARRIER_TARGETS if col in barriers.columns]
+    if aggregate_cols:
+        pieces.append(barriers[key_cols + aggregate_cols].drop_duplicates(subset=key_cols, keep="first"))
+
+    if "method" in barriers.columns and "val_max_loss_barrier" in barriers.columns:
+        pivot = barriers.pivot_table(
+            index=key_cols,
+            columns="method",
+            values="val_max_loss_barrier",
+            aggfunc="first",
+        )
+        rename = {method: target for method, target in BARRIER_METHOD_TARGETS if method in pivot.columns}
+        method_targets = pivot.rename(columns=rename).reset_index()
+        keep = key_cols + [target for _method, target in BARRIER_METHOD_TARGETS if target in method_targets.columns]
+        if len(keep) > len(key_cols):
+            pieces.append(method_targets[keep])
+
+    if not pieces:
+        return runs
+    barrier_rows = pieces[0]
+    for piece in pieces[1:]:
+        barrier_rows = barrier_rows.merge(piece, on=key_cols, how="outer")
+
+    value_cols = [col for col in barrier_rows.columns if col not in key_cols]
     out = runs.copy()
     existing = [col for col in value_cols if col in out.columns]
     if existing:
@@ -259,6 +320,7 @@ def input_audit(reports_dir: Path) -> pd.DataFrame:
         "real_obstruction_predictor_regressions.csv",
         "alignment_barrier_targets.csv",
         "alignment_barrier_target_stats.csv",
+        "obstruction_barrier_predictor_stats.csv",
     ]
     rows = []
     for name in names:
@@ -433,6 +495,8 @@ def md_table(df: pd.DataFrame, cols: list[str], max_rows: int = 40) -> str:
         "n_unique_seeds",
         "n_finite",
         "rows",
+        "n_supported",
+        "n_target_not_run",
     }
     for col in view.columns:
         if pd.api.types.is_bool_dtype(view[col]):
@@ -564,6 +628,7 @@ Generated by `experiments/obstruction_predictor_target_diagnostics.py` from comp
 - If the positive sign is not repeated in a secondary setting, the row is explicitly labeled setting-specific.
 - Raw accuracy targets and alignment-conditioned barrier targets are reported separately.
 - Barrier targets are validation-loss interpolation barriers merged from `alignment_barrier_targets.csv`; test barriers remain evaluation-only in the barrier report.
+- Barrier rows are merged by dataset, architecture, model count, width, domain shift, matching, seed, and alignment source; method-specific barriers are pivoted from the barrier method rows.
 
 ## Supported Raw Targets
 
@@ -600,6 +665,90 @@ Generated by `experiments/obstruction_predictor_target_diagnostics.py` from comp
     report_path.write_text(report, encoding="utf-8")
 
 
+def write_barrier_report(args: argparse.Namespace, stats: pd.DataFrame, audit: pd.DataFrame) -> None:
+    report_path = args.reports_dir / OUTPUT_BARRIER_REPORT
+    observed = stats[
+        (stats["alignment_source"].astype(str) == "observed")
+        & (pd.to_numeric(stats["alignment_noise_fraction"], errors="coerce") == 0.0)
+    ].copy()
+    barrier = observed[observed["target"].astype(str).isin(BARRIER_TARGETS)].copy()
+    raw = observed[observed["outcome_family"].astype(str) == "raw_accuracy"].copy()
+    supported_barrier = barrier[barrier["claim_supported"] == True].copy()  # noqa: E712
+    supported_raw = raw[raw["claim_supported"] == True].copy()  # noqa: E712
+    unavailable = stats[
+        stats["target"].astype(str).isin(BARRIER_TARGETS)
+        & (stats["target_status"].astype(str) == "not_run")
+    ].copy()
+    if supported_barrier.empty and supported_raw.empty:
+        conclusion = "Neither raw accuracy nor barrier targets pass the observed bootstrap gate."
+    elif not supported_barrier.empty and supported_raw.empty:
+        conclusion = (
+            "Barrier-style targets pass in selected fixed settings while raw weight-average degradation does not. "
+            "The supported wording should be barrier-specific, not a raw merge-degradation prediction claim."
+        )
+    elif supported_barrier.empty and not supported_raw.empty:
+        conclusion = "Raw accuracy targets pass but barrier targets do not; do not promote a barrier-prediction claim."
+    else:
+        conclusion = "Both raw and barrier targets have supported rows; keep every claim fixed-setting and predictor-specific."
+
+    target_summary = (
+        observed.groupby(["target", "outcome_family"], dropna=False)
+        .agg(
+            n_rows=("target", "size"),
+            n_supported=("claim_supported", "sum"),
+            n_target_not_run=("target_status", lambda values: int((values.astype(str) == "not_run").sum())),
+        )
+        .reset_index()
+        .sort_values(["outcome_family", "target"])
+    )
+    supported_display = supported_barrier.sort_values(
+        ["target", "dataset", "n_models", "domain_shift", "predictor"]
+    )
+    report = f"""# Obstruction Barrier Predictor Diagnostics
+
+Generated by `experiments/obstruction_predictor_target_diagnostics.py`.
+
+## Scope
+
+- This is the barrier-focused companion to `reports/obstruction_predictor_target_report.md`.
+- Barrier targets are validation-loss interpolation barriers from `reports/csv/alignment_barrier_targets.csv`.
+- Test barriers remain evaluation-only in `reports/alignment_barrier_targets_report.md`; this predictor report uses validation barrier targets.
+- Observed alignment rows with at least 20 unique seeds are the only primary evidence.
+- Injected-noise rows are not primary evidence.
+- Regressions control for mean individual accuracy and pairwise alignment residual within fixed-setting strata.
+- Fixed-setting strata are dataset, architecture, model count, width, domain shift, matching, alignment source, and alignment-noise fraction.
+
+## Data Audit
+
+{md_table(audit, ["input", "exists", "rows", "size_mb"], max_rows=20)}
+
+## Barrier Target Availability
+
+{md_table(target_summary[target_summary["target"].astype(str).isin(BARRIER_TARGETS)], ["target", "outcome_family", "n_rows", "n_supported", "n_target_not_run"], max_rows=20)}
+
+## Supported Barrier Rows
+
+{md_table(supported_display, ["dataset", "n_models", "width", "domain_shift", "target", "predictor", "n_unique_seeds", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "support_scope", "claim_status"], max_rows=120)}
+
+## Raw Accuracy Gate
+
+{md_table(supported_raw, ["dataset", "n_models", "width", "domain_shift", "target", "predictor", "n_unique_seeds", "predictor_beta", "predictor_beta_ci_low", "predictor_beta_ci_high", "support_scope", "claim_status"], max_rows=60)}
+
+## Not-Run Barrier Rows
+
+{md_table(unavailable, ["dataset", "n_models", "width", "domain_shift", "alignment_source", "target", "predictor", "claim_status"], max_rows=40)}
+
+## Conclusion
+
+{conclusion}
+
+## Claim Boundary
+
+This report tests whether obstruction/alignment diagnostics predict barrier-style targets better than raw weight-average degradation. It does not claim a method-performance win and does not use injected-noise rows as primary evidence.
+"""
+    report_path.write_text(report, encoding="utf-8")
+
+
 def wrap_label(label: str, width: int) -> str:
     if len(label) <= width:
         return label
@@ -618,15 +767,23 @@ def wrap_label(label: str, width: int) -> str:
     return "\n".join(lines)
 
 
-def write_plot(args: argparse.Namespace, stats: pd.DataFrame) -> None:
+def write_plot(
+    args: argparse.Namespace,
+    stats: pd.DataFrame,
+    output_name: str = OUTPUT_PLOT,
+    targets: tuple[str, ...] = TARGETS,
+    title: str = "Observed predictor coefficients on full quality-gated fixed-setting data",
+) -> None:
     import matplotlib.pyplot as plt
 
-    path = args.reports_dir / "plots" / OUTPUT_PLOT
+    path = args.reports_dir / "plots" / output_name
     observed = stats[
         (stats["alignment_source"].astype(str) == "observed")
         & (stats["target_status"].astype(str) != "not_run")
+        & (stats["target"].astype(str).isin(targets))
     ].copy()
-    fig, ax = plt.subplots(figsize=(13.0, 7.8))
+    height = max(4.8, 1.0 + 0.55 * len(targets))
+    fig, ax = plt.subplots(figsize=(13.0, height))
     if observed.empty:
         ax.text(0.5, 0.5, "No observed predictor-target rows", ha="center", va="center")
         ax.set_axis_off()
@@ -636,7 +793,7 @@ def write_plot(args: argparse.Namespace, stats: pd.DataFrame) -> None:
             observed.groupby(["target", "predictor"], dropna=False)["predictor_beta"]
             .mean()
             .unstack("predictor")
-            .reindex(index=list(TARGETS), columns=list(PREDICTORS))
+            .reindex(index=list(targets), columns=list(PREDICTORS))
         )
         values = pivot.to_numpy(dtype=float)
         finite = values[np.isfinite(values)]
@@ -677,7 +834,7 @@ def write_plot(args: argparse.Namespace, stats: pd.DataFrame) -> None:
         )
         ax.set_yticks(np.arange(len(pivot.index)))
         ax.set_yticklabels([wrap_label(label, 34) for label in pivot.index], fontsize=8)
-        ax.set_title("Observed predictor coefficients on full quality-gated fixed-setting data")
+        ax.set_title(title)
         ax.set_xlabel("Predictor")
         ax.set_ylabel("Target")
         ax.text(
@@ -702,19 +859,33 @@ def main() -> None:
     runs = pd.read_csv(args.runs_csv)
     runs = merge_barrier_targets(runs, args.barriers_csv)
     stats = compute_rows(runs, args.bootstrap_samples)
+    barrier_stats = stats[stats["target"].astype(str).isin(BARRIER_TARGETS)].copy()
 
     stats_path = args.reports_dir / "csv" / OUTPUT_STATS
     regressions_path = args.reports_dir / "csv" / OUTPUT_REGRESSIONS
+    barrier_stats_path = args.reports_dir / "csv" / OUTPUT_BARRIER_STATS
     stats.to_csv(stats_path, index=False, lineterminator="\n")
     stats.to_csv(regressions_path, index=False, lineterminator="\n")
+    barrier_stats.to_csv(barrier_stats_path, index=False, lineterminator="\n")
     audit = input_audit(args.reports_dir)
     write_plot(args, stats)
+    write_plot(
+        args,
+        barrier_stats,
+        output_name=OUTPUT_BARRIER_PLOT,
+        targets=BARRIER_TARGETS,
+        title="Observed predictor coefficients for validation barrier targets",
+    )
     write_report(args, runs, stats, audit)
+    write_barrier_report(args, stats, audit)
 
     print(f"wrote {stats_path}")
     print(f"wrote {regressions_path}")
+    print(f"wrote {barrier_stats_path}")
     print(f"wrote {args.reports_dir / OUTPUT_REPORT}")
+    print(f"wrote {args.reports_dir / OUTPUT_BARRIER_REPORT}")
     print(f"wrote {args.reports_dir / 'plots' / OUTPUT_PLOT}")
+    print(f"wrote {args.reports_dir / 'plots' / OUTPUT_BARRIER_PLOT}")
 
 
 if __name__ == "__main__":
