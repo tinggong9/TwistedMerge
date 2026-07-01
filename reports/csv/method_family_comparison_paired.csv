@@ -1,0 +1,6 @@
+regime,comparison,method,baseline,paired_mean_delta,ci_low,ci_high,claim_reading
+independent_seed_rebasin,TwistedMerge selector vs greedy soup,improved_validated_selector,greedy_soup,-0.0024149999999999,-0.0041751249999999,-0.0008598749999999,not_supported_win
+independent_seed_rebasin,TwistedMerge selector vs C2M3,improved_validated_selector,c2m3_permutation,0.020905,0.013539375,0.029615125,supported_internal_c2m3_delta
+shared_base_task_vector,Task Arithmetic vs greedy soup,task_arithmetic,greedy_soup,0.017655207821720562,-0.0003541666666666,0.0520555555555555,mixed_exact_setting_task_vector
+shared_base_task_vector,TIES-style merging vs greedy soup,ties_merging,greedy_soup,-0.01014158032039975,-0.0684444444444443,0.0195840277777777,mixed_exact_setting_task_vector
+shared_base_task_vector,DARE-style merging vs greedy soup,dare,greedy_soup,0.016083810237741702,-0.0014374999999999,0.0444722222222221,mixed_exact_setting_task_vector

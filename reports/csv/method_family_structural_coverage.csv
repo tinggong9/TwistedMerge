@@ -1,0 +1,9 @@
+method,method_family,validation_selection,pairwise_gauge_synchronization,permutation_gauge_handling,monomial_relu_scaling_gauge_handling,coordinatewise_sign_or_sparsity,cycle_holonomy_diagnostic,central_projective_obstruction_detection,conservative_rejection_no_lift,common_base_required,official_implementation,qualitative_coverage_score,note
+weight_average,parameter averaging,no,no,no,no,no,no,no,no,no,internal,0,Capacity-matched unprotected average.
+greedy_soup,Model Soups / validation soup,yes,no,no,no,no,no,no,no,preferred but not required,internal faithful-style,1,Strong validation-selected pure-accuracy baseline.
+c2m3_permutation,cycle-consistent permutation synchronization,no,yes,yes,no,no,yes,no,partial,no,internal faithful-style,3,"Handles permutation cycle consistency, not full obstruction taxonomy."
+twistedmerge_selector,TwistedMerge / TwistedMerge++ selector,yes,yes,yes,yes,partial,yes,yes,yes,no,project,7,Broadest structural coverage in current in-repo framework; accuracy claims remain paired-CI gated.
+slerp,SLERP-style path geometry,partial,no,no,no,no,no,no,no,fixed chart preferred,internal style,0,Path-geometry baseline in a fixed parameter chart.
+task_arithmetic,shared-base task vectors,yes,no,no,no,no,no,no,no,yes,internal style,1,Requires a common base/fixed trivialization.
+ties,shared-base sparse/sign task vectors,yes,no,no,no,yes,no,no,no,yes,internal style,2,Adds coordinatewise sign/sparsity handling in a common chart.
+dare,shared-base dropout-rescaled task vectors,yes,no,no,no,yes,no,no,no,yes,internal style,2,Dropout/rescale task-vector baseline in a common chart.

@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Qualitative structural coverage by method family.}
+\label{tab:method-family-coverage}
+\begin{tabular}{lllllllll}
+\toprule
+method & validation\_selection & pairwise\_gauge\_synchronization & permutation\_gauge\_handling & monomial\_relu\_scaling\_gauge\_handling & coordinatewise\_sign\_or\_sparsity & cycle\_holonomy\_diagnostic & central\_projective\_obstruction\_detection & conservative\_rejection\_no\_lift \\
+\midrule
+weight\_average & no & no & no & no & no & no & no & no \\
+greedy\_soup & yes & no & no & no & no & no & no & no \\
+c2m3\_permutation & no & yes & yes & no & no & yes & no & partial \\
+twistedmerge\_selector & yes & yes & yes & yes & partial & yes & yes & yes \\
+slerp & partial & no & no & no & no & no & no & no \\
+task\_arithmetic & yes & no & no & no & no & no & no & no \\
+ties & yes & no & no & no & yes & no & no & no \\
+dare & yes & no & no & no & yes & no & no & no \\
+\bottomrule
+\end{tabular}
+\end{table}
