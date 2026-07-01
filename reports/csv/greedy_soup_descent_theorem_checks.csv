@@ -1,0 +1,49 @@
+dataset,architecture,n_models,width,domain_shift,matching,theorem_check,n_runs,violations,check_status,boundary
+fashion_mnist,mlp2,3,128,input_noise,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,3,128,input_noise,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,3,128,input_noise,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,3,128,input_noise,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,3,128,input_noise,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,3,128,input_noise,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,3,128,none,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,3,128,none,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,3,128,none,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,3,128,none,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,3,128,none,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,3,128,none,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,4,128,input_noise,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,4,128,input_noise,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,4,128,input_noise,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,4,128,input_noise,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,4,128,input_noise,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,4,128,input_noise,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,4,128,none,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,4,128,none,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,4,128,none,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+fashion_mnist,mlp2,4,128,none,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+fashion_mnist,mlp2,4,128,none,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+fashion_mnist,mlp2,4,128,none,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,3,128,input_noise,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,3,128,input_noise,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,3,128,input_noise,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,3,128,input_noise,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,3,128,input_noise,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,3,128,input_noise,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,3,128,none,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,3,128,none,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,3,128,none,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,3,128,none,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,3,128,none,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,3,128,none,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,4,128,input_noise,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,4,128,input_noise,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,4,128,input_noise,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,4,128,input_noise,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,4,128,input_noise,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,4,128,input_noise,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,4,128,none,activation,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,4,128,none,activation,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,4,128,none,activation,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
+mnist,mlp2,4,128,none,weight,greedy_validation_risk_le_best_single_validation_risk,30,0,supported,final accepted greedy row only; candidate soup after-metrics were not fully logged
+mnist,mlp2,4,128,none,weight,test_risk_within_validation_gap_plus_generalization_proxy,30,0,supported_proxy,evaluation-only test accounting; not a proof of test optimality
+mnist,mlp2,4,128,none,weight,rejected_candidates_have_non_positive_validation_margin,30,,not_empirically_logged_algorithm_implied,rejected candidate soup validation metrics are not saved in current artifacts
