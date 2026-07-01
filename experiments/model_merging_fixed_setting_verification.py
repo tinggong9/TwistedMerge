@@ -2469,7 +2469,7 @@ def update_claims_audit(path: Path) -> None:
     )
     unsupported_new = (
         "| Cycle obstruction score predicts weight-average merge degradation beyond the trivial number-of-models confound. "
-        "| Not yet supported | `reports/fixed_setting_verification_report.md` adds a stricter fixed-setting protocol separating dataset, architecture, `N`, width, domain shift, and matching. The current generated artifact is smoke-scale/descriptive unless a setting reaches `n_rows >= 20` with positive Pearson/Spearman and a positive Pearson bootstrap lower bound. |"
+        "| Supported narrow | `reports/fixed_setting_verification_report.md` and `reports/fixed_setting_full_run_interpretation.md` record the quality-gated `mlp2` run on MNIST and Fashion-MNIST with 30 observed seeds per fixed setting. One Fashion-MNIST, `N=3`, no-shift, activation-matching setting passes the predefined gate; other observed settings remain unsupported, so this is not a broad predictor claim. |"
     )
     if unsupported_old in text:
         text = text.replace(unsupported_old, unsupported_new)

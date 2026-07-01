@@ -1,0 +1,5 @@
+source_csv,compact_csv,rows,shard_count,columns_moved,max_shard_bytes
+reports/csv/fixed_setting_verification_runs.csv,reports/csv/fixed_setting_verification_runs.csv,8640,5,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json",1019270
+reports/csv/fixed_setting_triangle_defects.csv,reports/csv/fixed_setting_triangle_defects.csv,2400,2,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json,p_ij,p_jk,p_ki,triangle_perm",2069047
+reports/csv/real_obstruction_degradation.csv,reports/csv/real_obstruction_degradation.csv,8640,5,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json",1019270
+reports/csv/real_obstruction_triangle_defects.csv,reports/csv/real_obstruction_triangle_defects.csv,2400,2,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json,p_ij,p_jk,p_ki,triangle_perm",2069047
