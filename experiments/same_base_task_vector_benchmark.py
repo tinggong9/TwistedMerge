@@ -101,6 +101,14 @@ def parse_seeds(text: str) -> list[int]:
     return seeds
 
 
+def safe_float(value) -> float:
+    try:
+        out = float(value)
+    except Exception:
+        return float("nan")
+    return out if math.isfinite(out) else float("nan")
+
+
 def split_indices(n_items: int, val_fraction: float, seed: int) -> tuple[list[int], list[int]]:
     torch, _, _ = require_torch()
     generator = torch.Generator()
@@ -259,6 +267,109 @@ def select_candidate(
             best = (key, row, model)
     assert best is not None
     return best[1], best[2], {"method": name, "candidates": rows}
+
+
+def candidate_grid_records(base: dict, method: str, selection: dict, selected: dict) -> list[dict]:
+    candidate_base = candidate_grid_base(base)
+    records = []
+    selected_params = {
+        key: value
+        for key, value in selected.items()
+        if key not in {"validation_accuracy", "validation_loss", "selection_trace"}
+    }
+    for rank, candidate in enumerate(selection.get("candidates", []), start=1):
+        params = {
+            key: value
+            for key, value in candidate.items()
+            if key not in {"validation_accuracy", "validation_loss"}
+        }
+        is_selected = all(candidate.get(key) == value for key, value in selected_params.items())
+        records.append(
+            {
+                **candidate_base,
+                "method": method,
+                "candidate_kind": "validation_hyperparameter_grid",
+                "candidate_rank": rank,
+                "candidate_model_index": "",
+                "candidate_params_json": json.dumps(params, sort_keys=True, separators=(",", ":")),
+                "scale": candidate.get("scale", float("nan")),
+                "density": candidate.get("density", float("nan")),
+                "drop_rate": candidate.get("drop_rate", float("nan")),
+                "validation_accuracy": candidate.get("validation_accuracy", float("nan")),
+                "validation_loss": candidate.get("validation_loss", float("nan")),
+                "accepted": bool(is_selected),
+                "selected": bool(is_selected),
+                "decision_reason": "selected_by_validation_accuracy_then_loss" if is_selected else "not_selected_validation_grid",
+                "uses_test_metrics_for_selection": False,
+            }
+        )
+    return records
+
+
+def greedy_candidate_records(base: dict, trajectory: list[dict]) -> list[dict]:
+    candidate_base = candidate_grid_base(base)
+    records = []
+    for item in trajectory:
+        records.append(
+            {
+                **candidate_base,
+                "method": "greedy_soup",
+                "candidate_kind": "greedy_soup_validation_trajectory",
+                "candidate_rank": int(item["candidate_rank"]),
+                "candidate_model_index": int(item["candidate_model_index"]),
+                "candidate_params_json": json.dumps(
+                    {
+                        "candidate_order": item.get("candidate_order", []),
+                        "soup_indices_before": item.get("soup_indices_before", []),
+                        "soup_indices_after": item.get("soup_indices_after", []),
+                    },
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+                "scale": float("nan"),
+                "density": float("nan"),
+                "drop_rate": float("nan"),
+                "validation_accuracy": item.get("candidate_soup_validation_accuracy", float("nan")),
+                "validation_loss": item.get("candidate_soup_validation_loss", float("nan")),
+                "accepted": bool(item.get("accepted", False)),
+                "selected": bool(item.get("is_final_selection", False)),
+                "decision_reason": item.get("decision_reason", ""),
+                "uses_test_metrics_for_selection": False,
+            }
+        )
+    return records
+
+
+def candidate_grid_base(base: dict) -> dict:
+    """Metadata allowed in the validation-selection candidate grid.
+
+    Keep this free of test metrics. The benchmark table stores test evaluation,
+    but selector candidate rows should remain validation-only plus static
+    setting/task-vector diagnostics.
+    """
+
+    allowed = [
+        "setting_id",
+        "run_id",
+        "dataset",
+        "task_preset",
+        "architecture",
+        "width",
+        "n_tasks",
+        "seed",
+        "base_epochs",
+        "finetune_epochs",
+        "max_train_samples",
+        "max_test_samples",
+        "task_definitions_json",
+        "task_vector_sign_conflict_fraction",
+        "task_vector_active_fraction",
+        "task_vector_mean_pairwise_cosine",
+        "task_vector_min_pairwise_cosine",
+        "triangle_cycle_score",
+        "sync_disagreement",
+    ]
+    return {key: base[key] for key in allowed if key in base}
 
 
 def sign_conflict_stats(deltas: list[np.ndarray]) -> dict[str, float]:
@@ -543,6 +654,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
     }
 
     rows: list[dict] = []
+    candidate_rows: list[dict] = []
     rows.append(
         method_record(
             base=base,
@@ -614,6 +726,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
         args.width,
         return_trajectory=True,
     )
+    candidate_rows.extend(greedy_candidate_records(base, soup_trajectory))
     rows.append(
         method_record(
             base=base,
@@ -648,6 +761,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
         model = vector_to_model(task_arithmetic_vector(base_vector, deltas, scale), meta, args.architecture, spec, args.width)
         task_arithmetic_candidates.append(({"scale": scale}, model))
     selected, task_arithmetic_model, selection = select_candidate("task_arithmetic", task_arithmetic_candidates, task_val_loaders, device)
+    candidate_rows.extend(candidate_grid_records(base, "task_arithmetic", selection, selected))
     rows.append(
         method_record(
             base=base,
@@ -668,6 +782,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
             model = vector_to_model(ties_vector(base_vector, deltas, density, scale), meta, args.architecture, spec, args.width)
             ties_candidates.append(({"density": density, "scale": scale}, model))
     selected, ties_model, selection = select_candidate("ties_merging", ties_candidates, task_val_loaders, device)
+    candidate_rows.extend(candidate_grid_records(base, "ties_merging", selection, selected))
     rows.append(
         method_record(
             base=base,
@@ -694,6 +809,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
             )
             dare_candidates.append(({"drop_rate": drop_rate, "scale": scale}, model))
     selected, dare_model, selection = select_candidate("dare", dare_candidates, task_val_loaders, device)
+    candidate_rows.extend(candidate_grid_records(base, "dare", selection, selected))
     rows.append(
         method_record(
             base=base,
@@ -735,7 +851,7 @@ def run_one_seed(args, dataset_name: str, seed: int, task_defs: tuple[TaskDef, .
 
     for model in [base_model, *task_models]:
         model.to("cpu")
-    return rows, []
+    return rows, candidate_rows
 
 
 def bootstrap_ci(values: np.ndarray, samples: int, seed: int) -> tuple[float, float]:
@@ -754,7 +870,9 @@ def summarize(rows: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
     records = []
     if rows.empty:
         return pd.DataFrame()
-    for (dataset, task_preset, method), group in rows.groupby(["dataset", "task_preset", "method"], dropna=False):
+    group_cols = ["dataset", "task_preset", "architecture", "width", "n_tasks", "method"]
+    for key, group in rows.groupby(group_cols, dropna=False):
+        dataset, task_preset, architecture, width, n_tasks, method = key
         ok = group[group["status"].astype(str).isin(["ok", "oracle_summary"])]
         values = pd.to_numeric(ok["average_test_accuracy"], errors="coerce").to_numpy(dtype=float)
         delta_greedy = pd.to_numeric(ok["delta_vs_greedy_soup"], errors="coerce").to_numpy(dtype=float)
@@ -770,6 +888,9 @@ def summarize(rows: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
             {
                 "dataset": dataset,
                 "task_preset": task_preset,
+                "architecture": architecture,
+                "width": int(width),
+                "n_tasks": int(n_tasks),
                 "method": method,
                 "method_role": group["method_role"].iloc[0],
                 "status": group["status"].iloc[0],
@@ -782,6 +903,8 @@ def summarize(rows: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
                 "mean_worst_task_accuracy": float(pd.to_numeric(ok["worst_task_accuracy"], errors="coerce").mean()) if not ok.empty else float("nan"),
                 "mean_validation_selected_accuracy": float(pd.to_numeric(ok["validation_selected_accuracy"], errors="coerce").mean()) if not ok.empty else float("nan"),
                 "mean_interference_score": float(pd.to_numeric(ok["interference_score"], errors="coerce").mean()) if not ok.empty else float("nan"),
+                "mean_base_epochs": float(pd.to_numeric(ok["base_epochs"], errors="coerce").mean()) if not ok.empty else float("nan"),
+                "mean_finetune_epochs": float(pd.to_numeric(ok["finetune_epochs"], errors="coerce").mean()) if not ok.empty else float("nan"),
                 "mean_delta_vs_greedy_soup": float(np.nanmean(delta_greedy)) if len(delta_greedy) else float("nan"),
                 "delta_vs_greedy_ci_low": dg_low,
                 "delta_vs_greedy_ci_high": dg_high,
@@ -800,24 +923,42 @@ def summarize(rows: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
         )
     summary = pd.DataFrame(records)
     if not summary.empty:
-        ok = summary[
-            (summary["n_ok_rows"] > 0)
-            & summary["status"].astype(str).eq("ok")
-            & ~summary["method"].astype(str).str.startswith("individual_finetuned_")
-        ].copy()
-        if not ok.empty:
-            best = ok.sort_values(["mean_average_test_accuracy", "mean_worst_task_accuracy"], ascending=[False, False]).iloc[0]
-            summary["best_single_model_method_by_mean_accuracy"] = best["method"]
-            if str(best["method"]) == "greedy_soup":
-                decision = "greedy_soup_empirical_descent_best_in_this_limited_run"
-            elif str(best["method"]) in {"task_arithmetic", "ties_merging", "dare"}:
-                decision = "task_vector_algebra_best_in_this_limited_run"
+        setting_cols = ["dataset", "task_preset", "architecture", "width", "n_tasks"]
+        summary["best_single_model_method_by_mean_accuracy"] = ""
+        summary["claim_decision"] = "descriptive_no_general_superiority_claim"
+        summary["claim_boundary"] = "same-base task-vector benchmark; no broad superiority claim"
+        for setting_key, setting_group in summary.groupby(setting_cols, dropna=False):
+            setting_mask = np.ones(len(summary), dtype=bool)
+            for col, value in zip(setting_cols, setting_key):
+                setting_mask &= summary[col].eq(value).to_numpy()
+            comparable = setting_group[
+                (setting_group["n_ok_rows"] > 0)
+                & setting_group["status"].astype(str).eq("ok")
+                & ~setting_group["method"].astype(str).str.startswith("individual_finetuned_")
+            ].copy()
+            if comparable.empty:
+                continue
+            best = comparable.sort_values(["mean_average_test_accuracy", "mean_worst_task_accuracy"], ascending=[False, False]).iloc[0]
+            best_method = str(best["method"])
+            n_seeds = int(best["n_unique_seeds"])
+            if n_seeds < 20:
+                decision = "descriptive_below_20_seed_gate"
+            elif best_method == "greedy_soup":
+                decision = "greedy_soup_empirical_descent_best_in_exact_setting"
+            elif best_method in {"task_arithmetic", "ties_merging", "dare", "slerp_sequential"}:
+                if safe_float(best["delta_vs_greedy_ci_low"]) > 0.0:
+                    decision = "supported_exact_setting_delta_vs_greedy"
+                else:
+                    decision = "descriptive_best_mean_ci_overlaps_greedy"
             else:
                 decision = "descriptive_no_general_superiority_claim"
-            summary["claim_decision"] = decision
-            summary["claim_boundary"] = (
-                "limited_same_base_task_vector_run; no general superiority claim without more seeds and tasks"
+            boundary = (
+                f"exact setting only; n_unique_seeds={n_seeds}; "
+                "same-base task-vector regime, not independent-seed rebasin"
             )
+            summary.loc[setting_mask, "best_single_model_method_by_mean_accuracy"] = best_method
+            summary.loc[setting_mask, "claim_decision"] = decision
+            summary.loc[setting_mask, "claim_boundary"] = boundary
     return summary
 
 
@@ -837,7 +978,7 @@ def plot_deltas(summary: pd.DataFrame, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     ok = summary[(summary["n_ok_rows"] > 0) & (~summary["method"].astype(str).str.startswith("individual_finetuned_"))].copy()
     ok = ok[~ok["method"].isin(["individual_finetuned_mean"])]
-    fig, ax = plt.subplots(figsize=(10, 4.8))
+    fig, ax = plt.subplots(figsize=(12, max(5.2, 0.26 * max(len(ok), 1))))
     if ok.empty:
         ax.text(0.5, 0.5, "No summary rows", ha="center", va="center")
         ax.set_axis_off()
@@ -848,14 +989,18 @@ def plot_deltas(summary: pd.DataFrame, path: Path) -> None:
         lo = ok["delta_vs_greedy_ci_low"].to_numpy(dtype=float)
         hi = ok["delta_vs_greedy_ci_high"].to_numpy(dtype=float)
         err = np.vstack([np.maximum(y - lo, 0.0), np.maximum(hi - y, 0.0)])
-        ax.bar(x, y, color="tab:blue", alpha=0.78)
-        ax.errorbar(x, y, yerr=err, fmt="none", ecolor="black", capsize=3, linewidth=0.8)
-        ax.axhline(0.0, color="black", linewidth=0.8)
-        ax.set_xticks(x)
-        ax.set_xticklabels(ok["method"], rotation=35, ha="right")
-        ax.set_ylabel("mean accuracy delta vs greedy soup")
-        ax.set_title("Same-base task-vector methods")
-        ax.grid(True, axis="y", alpha=0.25)
+        labels = [
+            f"{row.dataset}/{row.task_preset}/W{int(row.width)}\n{row.method}"
+            for row in ok.itertuples(index=False)
+        ]
+        ax.barh(x, y, color="tab:blue", alpha=0.78)
+        ax.errorbar(y, x, xerr=err, fmt="none", ecolor="black", capsize=3, linewidth=0.8)
+        ax.axvline(0.0, color="black", linewidth=0.8)
+        ax.set_yticks(x)
+        ax.set_yticklabels(labels, fontsize=7)
+        ax.set_xlabel("mean accuracy delta vs greedy soup")
+        ax.set_title("Same-base task-vector methods by fixed setting")
+        ax.grid(True, axis="x", alpha=0.25)
     fig.tight_layout()
     fig.savefig(path)
     plt.close(fig)
@@ -867,15 +1012,18 @@ def write_latex(summary: pd.DataFrame, path: Path) -> None:
     keep_methods = ["base_model", "weight_average", "greedy_soup", "slerp_sequential", "task_arithmetic", "ties_merging", "dare"]
     ok = ok[ok["method"].isin(keep_methods)]
     lines = [
-        r"\begin{tabular}{lrrrr}",
+        r"\begin{tabular}{lllrrrr}",
         r"\toprule",
-        r"Method & Avg. acc. & Worst acc. & $\Delta$ Soup & Interference \\",
+        r"Setting & Method & Seeds & Avg. acc. & Worst acc. & $\Delta$ Soup & Interference \\",
         r"\midrule",
     ]
-    for row in ok.sort_values("mean_average_test_accuracy", ascending=False).itertuples(index=False):
+    for row in ok.sort_values(["dataset", "task_preset", "width", "mean_average_test_accuracy"], ascending=[True, True, True, False]).itertuples(index=False):
+        setting = f"{row.dataset}/{row.task_preset}/W{int(row.width)}".replace("_", "\\_")
         method_name = str(row.method).replace("_", "\\_")
         lines.append(
+            f"{setting} & "
             f"{method_name} & "
+            f"{int(row.n_unique_seeds)} & "
             f"{row.mean_average_test_accuracy:.4f} & "
             f"{row.mean_worst_task_accuracy:.4f} & "
             f"{row.mean_delta_vs_greedy_soup:.4f} & "
@@ -885,27 +1033,37 @@ def write_latex(summary: pd.DataFrame, path: Path) -> None:
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_report(args, rows: pd.DataFrame, summary: pd.DataFrame, path: Path) -> None:
+def write_report(args, rows: pd.DataFrame, summary: pd.DataFrame, candidate_grid: pd.DataFrame, path: Path) -> None:
     best = summary[
         (summary["n_ok_rows"] > 0)
         & summary["status"].astype(str).eq("ok")
         & ~summary["method"].astype(str).str.startswith("individual_finetuned_")
     ].sort_values("mean_average_test_accuracy", ascending=False).head(1)
-    oracle = summary[summary["method"].eq("individual_finetuned_mean")].head(1)
+    oracle = summary[summary["method"].eq("individual_finetuned_mean")].sort_values(
+        "mean_average_test_accuracy",
+        ascending=False,
+    ).head(1)
     if best.empty:
         headline = "No completed method rows."
     else:
         row = best.iloc[0]
         headline = (
-            f"Best single-model mean accuracy in this limited run: `{row['method']}` "
+            f"Best single-model mean accuracy across completed settings: `{row['method']}` "
+            f"on `{row['dataset']}/{row['task_preset']}/W{int(row['width'])}` "
             f"at {row['mean_average_test_accuracy']:.4f}; claim decision `{row.get('claim_decision', 'descriptive')}`."
         )
         if not oracle.empty:
             oracle_row = oracle.iloc[0]
             headline += (
-                f" The per-task fine-tuned oracle summary is `{oracle_row['mean_average_test_accuracy']:.4f}` "
+                f" The strongest per-task fine-tuned oracle summary row is `{oracle_row['mean_average_test_accuracy']:.4f}` "
                 "and is not a single merged model."
             )
+    completed = summary[summary["n_ok_rows"] > 0].drop_duplicates(["dataset", "task_preset", "architecture", "width", "n_tasks"])
+    completed_settings = md_table(
+        completed,
+        ["dataset", "task_preset", "architecture", "width", "n_tasks", "n_unique_seeds", "mean_base_epochs", "mean_finetune_epochs", "claim_decision", "claim_boundary"],
+        40,
+    )
     report = f"""# Same-Base Task-Vector Benchmark
 
 Generated by `experiments/same_base_task_vector_benchmark.py`.
@@ -922,7 +1080,7 @@ This benchmark trains a common `mlp2` base checkpoint, fine-tunes task copies fr
 
 This is not an independent-seed/rebasin benchmark. Git-ReBasin and C2M3 rows are recorded as secondary not-run diagnostics because the current setup uses a common base and does not intentionally create independent permutation mismatch.
 
-No paper prose is written here. Claim decisions are descriptive and gated by the limited number of seeds/tasks in the generated run.
+No paper prose is written here. Claim decisions are exact-setting, validation-safe, and gated by paired bootstrap confidence intervals and completed seed counts.
 
 ## Headline
 
@@ -932,17 +1090,28 @@ No paper prose is written here. Claim decisions are descriptive and gated by the
 
 - `reports/csv/same_base_task_vector_benchmark.csv`
 - `reports/csv/same_base_task_vector_summary.csv`
+- `reports/csv/same_base_task_vector_candidate_grid.csv`
 - `reports/same_base_task_vector_report.md`
 - `reports/plots/same_base_task_vector_deltas.pdf`
 - `reports/tables/same_base_task_vector_table.tex`
 
+## Completed Settings
+
+{completed_settings}
+
 ## Method Summary
 
-{md_table(summary, ["method", "status", "n_ok_rows", "n_unique_seeds", "mean_average_test_accuracy", "accuracy_ci_low", "accuracy_ci_high", "mean_worst_task_accuracy", "mean_validation_selected_accuracy", "mean_interference_score", "mean_delta_vs_greedy_soup", "delta_vs_greedy_ci_low", "delta_vs_greedy_ci_high", "claim_boundary"], 60)}
+{md_table(summary, ["dataset", "task_preset", "width", "method", "status", "n_ok_rows", "n_unique_seeds", "mean_average_test_accuracy", "accuracy_ci_low", "accuracy_ci_high", "mean_worst_task_accuracy", "mean_validation_selected_accuracy", "mean_interference_score", "mean_delta_vs_greedy_soup", "delta_vs_greedy_ci_low", "delta_vs_greedy_ci_high", "claim_decision"], 120)}
 
 ## Task-Vector Diagnostics
 
-{md_table(summary.drop_duplicates(["dataset", "task_preset"]), ["dataset", "task_preset", "mean_sign_conflict_fraction", "mean_triangle_cycle_score", "claim_decision"], 20)}
+{md_table(summary.drop_duplicates(["dataset", "task_preset", "width"]), ["dataset", "task_preset", "width", "mean_sign_conflict_fraction", "mean_triangle_cycle_score", "claim_decision"], 40)}
+
+## Validation Candidate Grid
+
+Task Arithmetic scale, TIES density/scale, and DARE drop-rate/scale are selected by validation accuracy and validation loss only. The candidate grid contains no test metrics and records greedy-soup accept/reject validation decisions separately.
+
+{md_table(candidate_grid, ["dataset", "task_preset", "width", "seed", "method", "candidate_kind", "candidate_rank", "candidate_params_json", "validation_accuracy", "validation_loss", "accepted", "selected", "uses_test_metrics_for_selection"], 30)}
 
 ## Greedy Soup Acceptance Sample
 
@@ -971,11 +1140,16 @@ def update_claims_audit(summary: pd.DataFrame, path: Path) -> None:
         evidence = "the same-base task-vector benchmark did not produce completed rows"
     else:
         row = best.iloc[0]
+        completed_settings = summary[summary["n_ok_rows"] > 0].drop_duplicates(["dataset", "task_preset", "architecture", "width", "n_tasks"])
+        n_completed = int(len(completed_settings))
+        min_seeds = int(completed_settings["n_unique_seeds"].min()) if n_completed else 0
         status = "Supported descriptive"
         evidence = (
             f"`reports/same_base_task_vector_report.md` records a same-base task-vector benchmark; "
-            f"best mean method `{row['method']}` with mean accuracy `{row['mean_average_test_accuracy']:.4f}`; "
-            "the report preserves the no-general-superiority boundary."
+            f"{n_completed} completed fixed settings with minimum `{min_seeds}` seeds; "
+            f"best mean method `{row['method']}` on `{row['dataset']}/{row['task_preset']}/W{int(row['width'])}` "
+            f"with mean accuracy `{row['mean_average_test_accuracy']:.4f}`; "
+            "the report preserves validation-only selection and no-broad-superiority boundaries."
         )
     audit_row = (
         "| Same-base task-vector baselines are evaluated separately from independent-seed rebasin baselines. "
@@ -1005,12 +1179,30 @@ def parse_float_list(text: str) -> list[float]:
     return [float(item.strip()) for item in str(text).split(",") if item.strip()]
 
 
+def parse_csv(text: str, cast=str) -> list:
+    return [cast(item.strip()) for item in str(text).split(",") if item.strip()]
+
+
+def parse_int_list(text: str) -> list[int]:
+    return [int(item.strip()) for item in str(text).split(",") if item.strip()]
+
+
+def compatible_task_preset(dataset_name: str, task_preset: str) -> bool:
+    if task_preset.startswith("fashion"):
+        return dataset_name == "fashion_mnist"
+    if task_preset.startswith("mnist"):
+        return dataset_name == "mnist"
+    return True
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--datasets", default="mnist")
     parser.add_argument("--task-preset", default="mnist_digit_subsets", choices=sorted(TASK_PRESETS))
+    parser.add_argument("--task-presets", default="")
     parser.add_argument("--architecture", default="mlp2", choices=["mlp2"])
     parser.add_argument("--width", type=int, default=64)
+    parser.add_argument("--widths", default="")
     parser.add_argument("--seeds", default="7200:7203")
     parser.add_argument("--base-epochs", type=int, default=3)
     parser.add_argument("--finetune-epochs", type=int, default=2)
@@ -1048,6 +1240,8 @@ def parse_args() -> argparse.Namespace:
     args.ties_scales = parse_float_list(args.ties_scales)
     args.dare_drop_rates = parse_float_list(args.dare_drop_rates)
     args.dare_scales = parse_float_list(args.dare_scales)
+    args.task_presets = parse_csv(args.task_presets, str) if args.task_presets else [args.task_preset]
+    args.width_list = parse_int_list(args.widths) if args.widths else [int(args.width)]
     args.command_string = " ".join([sys.executable, *sys.argv])
     return args
 
@@ -1056,14 +1250,25 @@ def main() -> None:
     args = parse_args()
     datasets = [item.strip() for item in args.datasets.split(",") if item.strip()]
     seeds = parse_seeds(args.seeds)
-    task_defs = TASK_PRESETS[args.task_preset]
     all_rows = []
+    all_candidate_rows = []
     for dataset_name in datasets:
-        for seed in seeds:
-            print(f"running {dataset_name} seed {seed}", flush=True)
-            rows, _extra = run_one_seed(args, dataset_name, seed, task_defs)
-            all_rows.extend(rows)
+        for task_preset in args.task_presets:
+            if not compatible_task_preset(dataset_name, task_preset):
+                print(f"skipping incompatible setting dataset={dataset_name} task_preset={task_preset}", flush=True)
+                continue
+            task_defs = TASK_PRESETS[task_preset]
+            for width in args.width_list:
+                run_args = argparse.Namespace(**vars(args))
+                run_args.task_preset = task_preset
+                run_args.width = int(width)
+                for seed in seeds:
+                    print(f"running {dataset_name} preset={task_preset} width={width} seed {seed}", flush=True)
+                    rows, candidate_rows = run_one_seed(run_args, dataset_name, seed, task_defs)
+                    all_rows.extend(rows)
+                    all_candidate_rows.extend(candidate_rows)
     rows_df = pd.DataFrame(all_rows)
+    candidate_df = pd.DataFrame(all_candidate_rows)
     summary_df = summarize(rows_df, args.bootstrap_samples)
 
     csv_dir = args.reports_dir / "csv"
@@ -1074,18 +1279,21 @@ def main() -> None:
     table_dir.mkdir(parents=True, exist_ok=True)
     rows_path = csv_dir / "same_base_task_vector_benchmark.csv"
     summary_path = csv_dir / "same_base_task_vector_summary.csv"
+    candidate_grid_path = csv_dir / "same_base_task_vector_candidate_grid.csv"
     report_path = args.reports_dir / "same_base_task_vector_report.md"
     plot_path = plot_dir / "same_base_task_vector_deltas.pdf"
     table_path = table_dir / "same_base_task_vector_table.tex"
     rows_df.to_csv(rows_path, index=False, lineterminator="\n")
     summary_df.to_csv(summary_path, index=False, lineterminator="\n")
+    candidate_df.to_csv(candidate_grid_path, index=False, lineterminator="\n")
     plot_deltas(summary_df, plot_path)
     write_latex(summary_df, table_path)
-    write_report(args, rows_df, summary_df, report_path)
+    write_report(args, rows_df, summary_df, candidate_df, report_path)
     if args.update_claims_audit:
         update_claims_audit(summary_df, args.reports_dir / "claims_audit.md")
     print(f"wrote {rows_path}")
     print(f"wrote {summary_path}")
+    print(f"wrote {candidate_grid_path}")
     print(f"wrote {report_path}")
     print(f"wrote {plot_path}")
     print(f"wrote {table_path}")
