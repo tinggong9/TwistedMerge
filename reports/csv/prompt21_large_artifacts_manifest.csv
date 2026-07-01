@@ -1,0 +1,3 @@
+source_csv,rows,shard_count,columns_moved,max_shard_bytes
+/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/prompt21_replication_runs.csv,1620,1,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json",575945
+/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/prompt21_replication_triangle_defects.csv,240,1,"pairwise_alignment_permutations_json,layerwise_alignment_permutations_json,p_ij,p_jk,p_ki,triangle_perm",444004
