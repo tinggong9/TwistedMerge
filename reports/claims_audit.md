@@ -650,6 +650,8 @@ This file tracks which claims are supported by current repository artifacts and 
 
 | Same-base task-vector baselines are evaluated separately from independent-seed rebasin baselines. | Supported descriptive | `reports/same_base_task_vector_report.md` records a same-base task-vector benchmark; best mean method `task_arithmetic` with mean accuracy `0.8600`; the report preserves the no-general-superiority boundary. |
 
+| SLERP is audited as a path-geometry baseline rather than a descent obstruction method. | Supported descriptive | `reports/slerp_barrier_geometry_report.md` compares SLERP against linear and aligned paths; mean validation max-loss barrier delta versus linear is `0.1901`; SLERP remains a path-geometry baseline, not a descent obstruction method. |
+
 <!-- prompt10-claim-audit:start -->
 ## Prompt 10 Verification Pipeline And Claim Boundary Audit
 
