@@ -1,0 +1,12 @@
+\begin{tabular}{llrllrrrl}
+\toprule
+Dataset & Task preset & Width & Best existing & Union mode & Mean delta & CI low & CI high & Claim decision \\
+\midrule
+fashion\_mnist & fashion\_class\_subsets & 64.0000 & dare & dare & -0.0001 & -0.0014 & 0.0012 & unsupported\_union\_below\_best\_existing \\
+fashion\_mnist & fashion\_class\_subsets & 128.0000 & dare & dare & -0.0011 & -0.0029 & 0.0003 & unsupported\_union\_below\_best\_existing \\
+mnist & mnist\_digit\_subsets & 64.0000 & task\_arithmetic & task\_arithmetic & 0.0000 & -0.0002 & 0.0003 & descriptive\_nonnegative\_mean\_ci\_crosses\_zero \\
+mnist & mnist\_digit\_subsets & 128.0000 & task\_arithmetic & task\_arithmetic & -0.0007 & -0.0018 & 0.0003 & unsupported\_union\_below\_best\_existing \\
+mnist & mnist\_four\_subsets & 64.0000 & task\_arithmetic & dare & -0.0008 & -0.0016 & 0.0001 & unsupported\_union\_below\_best\_existing \\
+mnist & mnist\_four\_subsets & 128.0000 & task\_arithmetic & dare & -0.0014 & -0.0026 & -0.0003 & unsupported\_union\_below\_best\_existing \\
+\bottomrule
+\end{tabular}
