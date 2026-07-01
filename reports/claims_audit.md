@@ -648,6 +648,8 @@ This file tracks which claims are supported by current repository artifacts and 
 
 | The full stepwise greedy-soup empirical descent theorem is directly auditable for the checkpointed activation-matching fixed-setting MLP2 trajectory run. | Supported limited | `reports/greedy_soup_trajectory_report.md` and `reports/csv/greedy_soup_trajectory.csv` log directly observed candidate-soup validation accuracy/loss for every accepted and rejected candidate in the checkpointed activation settings; decision `directly_supported_for_checkpointed_activation_settings`; test metrics are final-selection evaluation only and are not used for selection. |
 
+| Same-base task-vector baselines are evaluated separately from independent-seed rebasin baselines. | Supported descriptive | `reports/same_base_task_vector_report.md` records a same-base task-vector benchmark; best mean method `task_arithmetic` with mean accuracy `0.8600`; the report preserves the no-general-superiority boundary. |
+
 <!-- prompt10-claim-audit:start -->
 ## Prompt 10 Verification Pipeline And Claim Boundary Audit
 
