@@ -721,24 +721,100 @@ def average_models(models: list, architecture: str, spec: DatasetSpec, width: in
     return merged
 
 
-def greedy_soup(models: list, val_loader, test_loader, device, architecture: str, spec: DatasetSpec, width: int) -> tuple[object, list[int], dict[str, float]]:
+def greedy_soup(
+    models: list,
+    val_loader,
+    test_loader,
+    device,
+    architecture: str,
+    spec: DatasetSpec,
+    width: int,
+    return_trajectory: bool = False,
+) -> tuple[object, list[int], dict[str, float]] | tuple[object, list[int], dict[str, float], list[dict]]:
     scored = []
+    val_metrics_by_index = {}
     for idx, model in enumerate(models):
         metrics = evaluate_model(model, val_loader, device)
+        val_metrics_by_index[idx] = metrics
         scored.append((metrics["accuracy"], idx))
     order = [idx for _acc, idx in sorted(scored, reverse=True)]
     soup_indices = [order[0]]
     soup = clone_model(models[order[0]], architecture, spec, width)
-    best_acc = evaluate_model(soup, val_loader, device)["accuracy"]
-    for idx in order[1:]:
+    best_metrics = val_metrics_by_index[order[0]]
+    best_acc = best_metrics["accuracy"]
+    best_loss = best_metrics["loss"]
+    trajectory = [
+        {
+            "candidate_rank": 1,
+            "candidate_model_index": order[0],
+            "candidate_order": list(order),
+            "candidate_method": "local_model",
+            "candidate_source": "validation_ranked_local_model",
+            "soup_indices_before": [],
+            "soup_indices_after": list(soup_indices),
+            "validation_accuracy_before": float("nan"),
+            "validation_loss_before": float("nan"),
+            "candidate_soup_validation_accuracy": best_acc,
+            "candidate_soup_validation_loss": best_loss,
+            "validation_accuracy_margin_after_minus_before": float("nan"),
+            "validation_loss_margin_before_minus_after": float("nan"),
+            "accepted": True,
+            "decision_reason": "accepted_initial_best_validation_model",
+            "decision_metric": "validation_accuracy",
+            "decision_metric_source": "direct_local_validation_metric",
+            "is_final_selection": False,
+        }
+    ]
+    last_accepted_row = 0
+    for candidate_rank, idx in enumerate(order[1:], start=2):
+        before_indices = list(soup_indices)
+        before_acc = best_acc
+        before_loss = best_loss
         candidate_indices = soup_indices + [idx]
         candidate = average_models([models[item] for item in candidate_indices], architecture, spec, width)
-        candidate_acc = evaluate_model(candidate, val_loader, device)["accuracy"]
+        candidate_metrics = evaluate_model(candidate, val_loader, device)
+        candidate_acc = candidate_metrics["accuracy"]
+        candidate_loss = candidate_metrics["loss"]
+        accuracy_margin = candidate_acc - before_acc
+        loss_margin = before_loss - candidate_loss
+        accepted = bool(candidate_acc >= best_acc)
         if candidate_acc >= best_acc:
             soup = candidate
             soup_indices = candidate_indices
             best_acc = candidate_acc
-    return soup, soup_indices, evaluate_model(soup, test_loader, device)
+            best_loss = candidate_loss
+            last_accepted_row = len(trajectory)
+        trajectory.append(
+            {
+                "candidate_rank": candidate_rank,
+                "candidate_model_index": idx,
+                "candidate_order": list(order),
+                "candidate_method": "local_model",
+                "candidate_source": "validation_ranked_local_model",
+                "soup_indices_before": before_indices,
+                "soup_indices_after": list(soup_indices),
+                "validation_accuracy_before": before_acc,
+                "validation_loss_before": before_loss,
+                "candidate_soup_validation_accuracy": candidate_acc,
+                "candidate_soup_validation_loss": candidate_loss,
+                "validation_accuracy_margin_after_minus_before": accuracy_margin,
+                "validation_loss_margin_before_minus_after": loss_margin,
+                "accepted": accepted,
+                "decision_reason": (
+                    "accepted_validation_accuracy_non_decrease"
+                    if accepted
+                    else "rejected_validation_accuracy_decrease"
+                ),
+                "decision_metric": "validation_accuracy",
+                "decision_metric_source": "direct_candidate_soup_validation_metric",
+                "is_final_selection": False,
+            }
+        )
+    test_metrics = evaluate_model(soup, test_loader, device)
+    trajectory[last_accepted_row]["is_final_selection"] = True
+    if return_trajectory:
+        return soup, soup_indices, test_metrics, trajectory
+    return soup, soup_indices, test_metrics
 
 
 def rank_lifted_branch_models(

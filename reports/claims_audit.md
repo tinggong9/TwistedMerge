@@ -646,6 +646,8 @@ This file tracks which claims are supported by current repository artifacts and 
 
 | Rank-lift branch evidence is separated from branch-capacity matched non-obstruction controls. | Supported implementation | `src/rank_lift_baselines.py` adds random, validation-selected, and C2M3-cluster branch ensembles. `reports/csv/real_obstruction_paired_deltas.csv` marks rank-lift support only when observed paired CI lower bounds are positive against all three branch controls with at least 20 paired seeds. |
 
+| The full stepwise greedy-soup empirical descent theorem is directly auditable for the checkpointed activation-matching fixed-setting MLP2 trajectory run. | Supported limited | `reports/greedy_soup_trajectory_report.md` and `reports/csv/greedy_soup_trajectory.csv` log directly observed candidate-soup validation accuracy/loss for every accepted and rejected candidate in the checkpointed activation settings; decision `directly_supported_for_checkpointed_activation_settings`; test metrics are final-selection evaluation only and are not used for selection. |
+
 <!-- prompt10-claim-audit:start -->
 ## Prompt 10 Verification Pipeline And Claim Boundary Audit
 
