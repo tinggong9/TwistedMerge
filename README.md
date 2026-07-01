@@ -2,44 +2,63 @@
 
 Reproducible experiments for the paper project **"Twisted Sheaves and Descent Obstructions in Learning Theory."**
 
-The central question is empirical:
+The central empirical question is:
 
-> Do cohomological/cocycle obstruction scores predict failure of global model merging, and can twisted or rank-lifted merging reduce that failure?
+> Do cocycle or cohomological obstruction scores predict failure of global model merging, and can cycle-consistent, twisted, or rank-lifted procedures reduce that failure?
 
-This repository starts with independent synthetic obstruction experiments that do not require external model-merging repositories. MNIST/CIFAR and baseline wrappers are included as extension points, but the generated report only claims what has been run locally.
+This repository is intentionally claim-audited. Synthetic obstruction experiments are independent of external model-merging repositories. Real MNIST/Fashion-MNIST model-merging runs are included, but the reports only promote claims that pass the recorded gates.
+
+## Current Evidence Snapshot
+
+- Controlled synthetic `mu_2` and `H^2(mu_2)` experiments are implemented and reported.
+- The TwistedMerge prototype detects controlled finite central twist failures and a q=2 branch lift recovers prediction in that controlled setting.
+- The quality-gated real fixed-setting run has good individual models, but only one primary observed Fashion-MNIST setting passes the strict obstruction-prediction gate. The other observed settings remain unsupported.
+- The current real run does not support broad MNIST/Fashion-MNIST obstruction prediction, external-baseline superiority, or a claim that rank lifts are capacity-matched single-model improvements.
+- External baseline integrations are documented separately; do not read them as official validation unless the report says the official code ran for that exact setting.
+
+The most important claim-boundary files are:
+
+- `reports/claims_audit.md`
+- `reports/full_capacity_claim_audit.md`
+- `reports/fixed_setting_verification_report.md`
+- `reports/fixed_setting_full_run_interpretation.md`
+- `reports/real_obstruction_degradation_report.md`
 
 ## Repository Layout
 
 ```text
 src/
-  cocycles.py          # MU(2)/U(1) cocycle generation, obstruction scores, synchronization
-  alignment.py         # sign and phase alignment utilities
-  twisted_merge.py     # descended/global merge and rank-lifted merge routines
-  twisted_merge_algorithm.py # prototype TwistedMerge algorithm
-  synthetic_tasks.py   # reproducible synthetic binary classification tasks
-  models.py            # PyTorch model definitions for image experiments
-  metrics.py           # accuracy, losses, summaries, environment capture
-  plotting.py          # CSV-to-plot and LaTeX table helpers
+  cocycles.py
+  alignment.py
+  twisted_merge.py
+  twisted_merge_algorithm.py
+  monomial_gauge_alignment.py
+  model_merging_benchmark.py
+  synthetic_tasks.py
+  models.py
+  metrics.py
+  plotting.py
 experiments/
   synthetic_mu2_obstruction.py
   synthetic_u1_obstruction.py
   synthetic_h2_mu2_obstruction.py
   twisted_merge_algorithm_demo.py
-  rank_lift_ablation.py
   model_merging_benchmark.py
-  mnist_model_merging.py
-  cifar_model_merging.py
+  model_merging_fixed_setting_verification.py
+  compact_fixed_setting_outputs.py
+  train_quality_sweep.py
 reports/
   csv/
   plots/
   tables/
   configs/
-  summary.md
+external_baselines/
+tests/
 ```
 
 ## Install
 
-For the synthetic experiments:
+For synthetic experiments:
 
 ```bash
 python3 -m venv .venv
@@ -48,13 +67,16 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements-synthetic.txt
 ```
 
-For image experiments and PyTorch model merging:
+For PyTorch image/model-merging experiments:
 
 ```bash
+source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-## Run the Synthetic Experiments
+The code is CPU-runnable by design, but full repeated-seed runs can still take a while.
+
+## Synthetic Experiments
 
 ```bash
 source .venv/bin/activate
@@ -65,83 +87,128 @@ python experiments/twisted_merge_algorithm_demo.py
 python experiments/rank_lift_ablation.py
 ```
 
-Outputs are written under `reports/csv`, `reports/plots`, `reports/tables`, and `reports/configs`.
+Key outputs:
 
-## Run the Small Model-Merging Benchmark
+- `reports/synthetic_obstruction_report.md`
+- `reports/twisted_merge_algorithm_report.md`
+- `reports/twisted_merge_algorithm_verification.md`
+- `reports/csv/`
+- `reports/plots/`
+
+## Training Quality Sweep
+
+Use this before making real model-merging claims. It measures individual model quality only.
 
 ```bash
 source .venv/bin/activate
-python -m pip install -r requirements.txt
-python experiments/model_merging_benchmark.py \
-  --datasets mnist,cifar10 \
-  --model-counts 2,3 \
-  --widths 8,16 \
+PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig \
+.venv/bin/python experiments/train_quality_sweep.py
+```
+
+Key outputs:
+
+- `reports/csv/training_quality_sweep.csv`
+- `reports/training_quality_sweep_report.md`
+
+The current quality gate used `mlp2`, width `128`, AdamW, cosine scheduling, 10 epochs, and 10000 train samples.
+
+## Real Fixed-Setting Verification
+
+The current paper-grade real verification entry point is:
+
+```bash
+PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig \
+.venv/bin/python experiments/model_merging_fixed_setting_verification.py \
+  --datasets mnist,fashion_mnist \
+  --architecture mlp2 \
+  --model-counts 3,4 \
+  --widths 128 \
   --domain-shifts none,input_noise \
-  --epochs 1 \
-  --max-train-samples 384 \
-  --max-test-samples 256 \
+  --seeds 4100:4129 \
+  --epochs 10 \
+  --max-train-samples 10000 \
+  --max-test-samples 2000 \
   --batch-size 128 \
-  --device cpu
+  --lr 0.001 \
+  --optimizer adamw \
+  --weight-decay 0.0001 \
+  --scheduler cosine \
+  --matching activation,weight \
+  --bootstrap-samples 2000 \
+  --alignment-noise-levels 0.15 \
+  --rank-lift-branches 2 \
+  --feature-batches 8 \
+  --device auto
 ```
 
-Outputs are written to `reports/model_merging_report.md`, `reports/checkpoints/`, `reports/csv/`, and `reports/plots/`.
+Primary outputs:
 
-## What the Synthetic Experiments Test
+- `reports/csv/fixed_setting_verification_runs.csv`
+- `reports/csv/fixed_setting_verification_stats.csv`
+- `reports/csv/fixed_setting_triangle_defects.csv`
+- `reports/csv/fixed_setting_individual_models.csv`
+- `reports/csv/real_obstruction_predictor_regressions.csv`
+- `reports/fixed_setting_verification_report.md`
+- `reports/fixed_setting_full_run_interpretation.md`
 
-### H^2(mu_2) obstruction on a tetrahedral sphere
+Claim gate:
 
-`experiments/synthetic_h2_mu2_obstruction.py` uses the boundary of a tetrahedron, a triangulated 2-sphere with nontrivial `H^2(-, mu_2)`. It constructs a trivial face cocycle and a nontrivial face cocycle with one negative triangle. Pairwise edge alignments are locally exact, while triple-overlap defects carry the prescribed central twist. The report is written to `reports/synthetic_obstruction_report.md`.
+- Each fixed setting needs at least 20 observed seeds.
+- Individual mean accuracy should clear the dataset quality gate.
+- Predictor support requires positive Pearson, positive Spearman, and a positive bootstrap Pearson lower bound.
+- Injected-noise rows are controls, not primary evidence.
 
-### TwistedMerge prototype
+## Large Artifact Compaction
 
-`experiments/twisted_merge_algorithm_demo.py` runs the prototype `TwistedMerge` algorithm. It computes triangle defects, tries gauge trivialization, checks whether defects match a finite central `mu_2` twist, and builds a q=2 doubled branch representation with the central sign acting by a 2x2 branch-swap matrix. The report is written to `reports/twisted_merge_algorithm_report.md`.
+Full fixed-setting verifier outputs can contain large pairwise and layerwise permutation maps. To keep GitHub blobs below size limits, the current committed CSVs keep scalar metrics inline and move bulky map fields into deterministic gzip shards:
 
-### mu_2 / sign cocycle
-
-Local models are binary classifiers whose weights are related by hidden sign gauges. Pairwise alignment observations are corrupted by sign flips. The obstruction score is the fraction of frustrated triangles:
-
-```text
-s_ij * s_jk * s_ki = -1
+```bash
+.venv/bin/python experiments/compact_fixed_setting_outputs.py --rows-per-shard 2000
 ```
 
-The descended merge synchronizes a single global sign gauge and averages aligned weights. The rank-lifted merge keeps two sign branches and uses a validation split to select the branch for each local task.
+Manifest and shards:
 
-### U(1) / phase cocycle
+- `reports/csv/fixed_setting_large_artifacts_manifest.csv`
+- `reports/csv/fixed_setting_large_artifacts/*.csv.gz`
 
-Local models are binary classifiers with weights rotated in two-dimensional feature blocks. Pairwise alignments are phase observations corrupted by angular noise. The obstruction score is the mean normalized triangle holonomy:
+The compact CSVs include `large_field_shard` and `large_field_row` pointers back to the moved raw fields. Local checkpoints from long verifier runs are intentionally ignored by Git.
 
-```text
-abs(wrap(phi_ij + phi_jk + phi_ki)) / pi
-```
+## Monomial Gauge Experiments
 
-The descended merge phase-synchronizes a single global gauge. The rank-lifted merge keeps a finite bank of phase branches and validates the branch per task.
+Positive ReLU-compatible monomial gauges are implemented for supported MLP paths. These rows are separate from the Prompt 11 `activation,weight` fixed-setting run unless explicitly requested with monomial matching modes.
 
-## Baselines To Add Or Wrap
+Useful artifacts:
 
-`experiments/model_merging_benchmark.py` implements small in-repo MLP/CNN baselines:
+- `src/monomial_gauge_alignment.py`
+- `reports/monomial_gauge_alignment_report.md`
+- `reports/csv/monomial_fixed_setting_runs.csv`
+- `reports/csv/monomial_triangle_defects.csv`
+
+Implementation support is not the same as a performance claim. The claim audit remains authoritative.
+
+## External Baselines
+
+In-repo baselines include:
 
 - ordinary weight averaging,
 - greedy model soup,
-- Git-Re-Basin-style pairwise permutation alignment,
-- C2M3-style cycle-consistent permutation synchronization,
+- Git-ReBasin-style pairwise permutation alignment,
+- C2M3-style cycle-consistent synchronization,
 - ensemble upper bound,
 - cycle-aware rank-lifted branch ensemble.
 
-The first implementation intentionally does not vendor external code. These are the intended larger comparison points:
+External references:
 
 - Git Re-Basin: <https://github.com/samuela/git-re-basin>
 - C2M3 cycle-consistent model merging: <https://github.com/crisostomi/cycle-consistent-model-merging>
 - Model Soups: <https://github.com/mlfoundations/model-soups>
-- Optional: RegMean, TIES-Merging, mergekit/MergeBench.
 
-When those are added, reports should separate synthetic-only claims from image/model-merging claims.
+Current external integration reports separate official-code attempts from faithful in-repo surrogates:
+
+- `reports/external_baseline_comparison.md`
+- `reports/nsd_official_integration_report.md`
+- `external_baselines/NSD_INTEGRATION.md`
 
 ## Reporting Rule
 
-Do not claim success from theory or intent. A supported claim must cite generated data in `reports/summary.md`, including:
-
-1. exact commands run,
-2. hardware/software environment,
-3. metrics,
-4. tables,
-5. whether each claim is supported or unsupported.
+Do not claim success from theory or intent. A supported claim must cite generated data and exact commands. If a setting is negative, mixed, underpowered, extra-capacity, validation-selected, or only a smoke test, the report should say so plainly.

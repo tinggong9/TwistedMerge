@@ -83,6 +83,8 @@ OBSTRUCTION_PREDICTOR_TARGET_STATS_CSV = "obstruction_predictor_target_stats.csv
 MONOMIAL_RUNS_CSV = "monomial_fixed_setting_runs.csv"
 MONOMIAL_TRIANGLES_CSV = "monomial_triangle_defects.csv"
 MONOMIAL_PAIRED_DELTAS_CSV = "monomial_paired_deltas.csv"
+MONOMIAL_DELTA_VS_C2M3_PLOT = "monomial_delta_vs_c2m3.pdf"
+MONOMIAL_DELTA_VS_GREEDY_PLOT = "monomial_delta_vs_greedy.pdf"
 BRANCH_CAPACITY_BASELINES = (
     "random_branch_ensemble",
     "validation_branch_ensemble",
@@ -112,6 +114,7 @@ REGRESSION_PREDICTORS = (
     "combined_obstruction_score",
     "sync_disagreement",
 )
+_TRAINED_SEED_CACHE: dict[tuple, dict] = {}
 
 
 def parse_csv(text: str, cast=str) -> list:
@@ -1051,14 +1054,55 @@ def add_paired_deltas(rows: list[dict], single_best_accuracy: float, mean_indivi
         row.update(target_values)
 
 
-def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, width: int, domain_shift: str, matching: str, seed: int):
+def training_cache_key(
+    args,
+    dataset_name: str,
+    architecture: str,
+    n_models: int,
+    width: int,
+    domain_shift: str,
+    seed: int,
+) -> tuple:
+    return (
+        dataset_name,
+        architecture,
+        int(n_models),
+        int(width),
+        domain_shift,
+        int(seed),
+        int(args.epochs),
+        int(args.max_train_samples),
+        int(args.max_test_samples),
+        float(args.val_fraction),
+        int(args.batch_size),
+        float(args.lr),
+        str(args.optimizer),
+        float(args.weight_decay),
+        str(args.scheduler),
+        int(args.step_size),
+        float(args.gamma),
+        str(args.augmentation),
+        int(args.dataset_seed),
+        str(args.data_dir),
+        str(args.device),
+    )
+
+
+def get_trained_seed_bundle(
+    args,
+    dataset_name: str,
+    architecture: str,
+    n_models: int,
+    width: int,
+    domain_shift: str,
+    seed: int,
+) -> dict:
+    key = training_cache_key(args, dataset_name, architecture, n_models, width, domain_shift, seed)
+    if key in _TRAINED_SEED_CACHE:
+        return _TRAINED_SEED_CACHE[key]
+
     torch, _, _ = require_torch()
     device = device_from_arg(args.device)
-    if n_models < 3:
-        raise ValueError("fixed-setting verification requires N>=3 because N=2 has no triangle obstruction")
-
-    setting_id = fixed_setting_id(dataset_name, architecture, n_models, width, domain_shift, matching)
-    run_id = run_id_for(setting_id, seed)
     spec, train_base, test_base = load_dataset(
         dataset_name,
         args.data_dir,
@@ -1074,7 +1118,7 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
     match_loader = make_loader(val_subset, args.batch_size, shuffle=False, seed=args.dataset_seed + 300)
 
     models = []
-    individual_rows = []
+    individual_base_rows = []
     for model_idx in range(n_models):
         local_seed = seed + 1009 * model_idx + 37 * width + 101 * n_models
         set_seed(local_seed)
@@ -1097,14 +1141,12 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
         val_metrics = evaluate_model(model, val_loader, device)
         test_metrics = evaluate_model(model, test_loader, device)
         model.to("cpu")
-        checkpoint_path = args.reports_dir / "checkpoints" / "fixed_setting_verification" / setting_id / f"seed{seed}_model{model_idx}.pt"
-        checkpoint_metadata = {
+        metadata_base = {
             "dataset": dataset_name,
             "architecture": architecture,
             "n_models": n_models,
             "width": width,
             "domain_shift": domain_shift,
-            "matching": matching,
             "experiment_seed": seed,
             "local_seed": local_seed,
             "model_index": model_idx,
@@ -1119,11 +1161,56 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
             "max_test_samples": args.max_test_samples,
             "dataset_seed": args.dataset_seed,
             "train_split_seed": args.dataset_seed + 17,
+        }
+        models.append(model)
+        individual_base_rows.append(
+            {
+                "model_index": model_idx,
+                "local_seed": local_seed,
+                "val_loss": val_metrics["loss"],
+                "val_accuracy": val_metrics["accuracy"],
+                "test_loss": test_metrics["loss"],
+                "test_accuracy": test_metrics["accuracy"],
+                "checkpoint_metadata_base": metadata_base,
+            }
+        )
+
+    bundle = {
+        "spec": spec,
+        "val_loader": val_loader,
+        "test_loader": test_loader,
+        "match_loader": match_loader,
+        "models": models,
+        "individual_base_rows": individual_base_rows,
+    }
+    _TRAINED_SEED_CACHE[key] = bundle
+    return bundle
+
+
+def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, width: int, domain_shift: str, matching: str, seed: int):
+    device = device_from_arg(args.device)
+    if n_models < 3:
+        raise ValueError("fixed-setting verification requires N>=3 because N=2 has no triangle obstruction")
+
+    setting_id = fixed_setting_id(dataset_name, architecture, n_models, width, domain_shift, matching)
+    run_id = run_id_for(setting_id, seed)
+    bundle = get_trained_seed_bundle(args, dataset_name, architecture, n_models, width, domain_shift, seed)
+    spec = bundle["spec"]
+    val_loader = bundle["val_loader"]
+    test_loader = bundle["test_loader"]
+    match_loader = bundle["match_loader"]
+    models = bundle["models"]
+    individual_rows = []
+    for base_row in bundle["individual_base_rows"]:
+        model_idx = int(base_row["model_index"])
+        checkpoint_path = args.reports_dir / "checkpoints" / "fixed_setting_verification" / setting_id / f"seed{seed}_model{model_idx}.pt"
+        checkpoint_metadata = {
+            **base_row["checkpoint_metadata_base"],
+            "matching": matching,
             "checkpoint_saved": bool(args.save_checkpoints),
         }
         if args.save_checkpoints:
-            save_checkpoint(model, checkpoint_path, checkpoint_metadata)
-        models.append(model)
+            save_checkpoint(models[model_idx], checkpoint_path, checkpoint_metadata)
         individual_rows.append(
             {
                 "setting_id": setting_id,
@@ -1136,11 +1223,11 @@ def run_one_seed(args, dataset_name: str, architecture: str, n_models: int, widt
                 "matching": matching,
                 "seed": seed,
                 "model_index": model_idx,
-                "local_seed": local_seed,
-                "val_loss": val_metrics["loss"],
-                "val_accuracy": val_metrics["accuracy"],
-                "test_loss": test_metrics["loss"],
-                "test_accuracy": test_metrics["accuracy"],
+                "local_seed": base_row["local_seed"],
+                "val_loss": base_row["val_loss"],
+                "val_accuracy": base_row["val_accuracy"],
+                "test_loss": base_row["test_loss"],
+                "test_accuracy": base_row["test_accuracy"],
                 "checkpoint_saved": bool(args.save_checkpoints),
                 "checkpoint_path": str(checkpoint_path) if args.save_checkpoints else "",
                 "checkpoint_metadata_json": json.dumps(checkpoint_metadata, sort_keys=True, separators=(",", ":")),
@@ -1834,6 +1921,54 @@ def plot_delta_methods(runs: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
+def plot_monomial_delta_vs_baseline(paired_deltas: pd.DataFrame, baseline_method: str, path: Path) -> None:
+    import matplotlib.pyplot as plt
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(10.5, 5.6))
+    if paired_deltas.empty or "baseline_method" not in paired_deltas:
+        ax.text(0.5, 0.5, f"No monomial paired deltas vs {baseline_method}", ha="center", va="center")
+        ax.set_axis_off()
+    else:
+        data = paired_deltas[
+            (paired_deltas["baseline_method"].astype(str) == baseline_method)
+            & (paired_deltas.get("alignment_source", "observed").astype(str) == "observed")
+        ].copy()
+        if data.empty:
+            ax.text(0.5, 0.5, f"No observed monomial paired deltas vs {baseline_method}", ha="center", va="center")
+            ax.set_axis_off()
+        else:
+            data["mean_delta"] = pd.to_numeric(data["mean_delta"], errors="coerce")
+            data["bootstrap_ci_low"] = pd.to_numeric(data["bootstrap_ci_low"], errors="coerce")
+            data["bootstrap_ci_high"] = pd.to_numeric(data["bootstrap_ci_high"], errors="coerce")
+            data = data.sort_values(
+                ["dataset", "n_models", "domain_shift", "matching", "monomial_scale_method"],
+                kind="stable",
+            )
+            labels = [
+                f"{row.dataset}\nN={int(row.n_models)} {row.domain_shift}\n{row.monomial_scale_method}"
+                for row in data.itertuples()
+            ]
+            x = np.arange(len(data))
+            lower = (data["mean_delta"] - data["bootstrap_ci_low"]).clip(lower=0.0).fillna(0.0)
+            upper = (data["bootstrap_ci_high"] - data["mean_delta"]).clip(lower=0.0).fillna(0.0)
+            colors = [
+                "tab:green" if str(status).startswith("supported") else "tab:blue"
+                for status in data["claim_status"].astype(str)
+            ]
+            ax.bar(x, data["mean_delta"], color=colors, alpha=0.78)
+            ax.errorbar(x, data["mean_delta"], yerr=[lower, upper], fmt="none", ecolor="black", capsize=2.5, linewidth=0.8)
+            ax.axhline(0.0, color="black", linewidth=0.85)
+            ax.set_xticks(x)
+            ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=7)
+            ax.set_ylabel(f"Test accuracy delta vs {baseline_method}")
+            ax.set_title(f"Monomial same-capacity merge deltas vs {baseline_method}")
+            ax.grid(True, axis="y", alpha=0.25)
+    fig.tight_layout()
+    fig.savefig(path)
+    plt.close(fig)
+
+
 def plot_obstruction_predictor_target_grid(regressions: pd.DataFrame, path: Path) -> None:
     import matplotlib.pyplot as plt
 
@@ -2360,7 +2495,7 @@ def write_monomial_report(
     raw_activation_warning = "No raw activation-scale instability was detected from the generated rows."
     if not preservation.empty:
         raw_activation = preservation[
-            (preservation["matching"].astype(str) == "monomial_activation")
+            (preservation["matching"].astype(str).isin(["monomial_activation", "monomial_activation_mlp2"]))
             & (preservation["monomial_scale_method"].astype(str) == "raw")
         ].copy()
         if not raw_activation.empty:
@@ -2421,6 +2556,8 @@ Generated by `experiments/model_merging_fixed_setting_verification.py`.
 - `reports/csv/{MONOMIAL_TRIANGLES_CSV}`
 - `reports/csv/{MONOMIAL_PAIRED_DELTAS_CSV}`
 - `reports/monomial_gauge_alignment_report.md`
+- `reports/plots/{MONOMIAL_DELTA_VS_C2M3_PLOT}`
+- `reports/plots/{MONOMIAL_DELTA_VS_GREEDY_PLOT}`
 
 ## Conclusion
 
@@ -2550,6 +2687,11 @@ def main() -> None:
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
     parser.add_argument("--reports-dir", type=Path, default=ROOT / "reports")
     parser.add_argument("--update-claims-audit", action="store_true")
+    parser.add_argument(
+        "--monomial-only-outputs",
+        action="store_true",
+        help="Write monomial CSV/report/plot artifacts without overwriting broader fixed-setting verification outputs.",
+    )
     args = parser.parse_args()
     args.command_string = " ".join([sys.executable, *sys.argv])
 
@@ -2587,8 +2729,8 @@ def main() -> None:
         for n_models in model_counts:
             for width in widths:
                 for domain_shift in domain_shifts:
-                    for matching in matchings:
-                        for seed in seeds:
+                    for seed in seeds:
+                        for matching in matchings:
                             print(
                                 f"running dataset={dataset_name} arch={args.architecture} N={n_models} "
                                 f"W={width} shift={domain_shift} matching={matching} seed={seed}",
@@ -2607,6 +2749,7 @@ def main() -> None:
                             all_runs.extend(run_rows)
                             all_individuals.extend(individual_rows)
                             all_triangles.extend(triangle_rows_out)
+                        _TRAINED_SEED_CACHE.clear()
 
     runs = pd.DataFrame(all_runs)
     individuals = pd.DataFrame(all_individuals)
@@ -2640,59 +2783,65 @@ def main() -> None:
     monomial_runs_path = csv_dir / MONOMIAL_RUNS_CSV
     monomial_triangles_path = csv_dir / MONOMIAL_TRIANGLES_CSV
     monomial_paired_deltas_path = csv_dir / MONOMIAL_PAIRED_DELTAS_CSV
-    runs.to_csv(runs_path, index=False, lineterminator="\n")
-    stats.to_csv(stats_path, index=False, lineterminator="\n")
-    triangles.to_csv(triangles_path, index=False, lineterminator="\n")
-    individuals.to_csv(individuals_path, index=False, lineterminator="\n")
-    paired_deltas.to_csv(paired_deltas_path, index=False, lineterminator="\n")
-    regressions.to_csv(regressions_path, index=False, lineterminator="\n")
-    regressions.to_csv(predictor_target_path, index=False, lineterminator="\n")
+    if not args.monomial_only_outputs:
+        runs.to_csv(runs_path, index=False, lineterminator="\n")
+        stats.to_csv(stats_path, index=False, lineterminator="\n")
+        triangles.to_csv(triangles_path, index=False, lineterminator="\n")
+        individuals.to_csv(individuals_path, index=False, lineterminator="\n")
+        paired_deltas.to_csv(paired_deltas_path, index=False, lineterminator="\n")
+        regressions.to_csv(regressions_path, index=False, lineterminator="\n")
+        regressions.to_csv(predictor_target_path, index=False, lineterminator="\n")
     monomial_runs.to_csv(monomial_runs_path, index=False, lineterminator="\n")
     monomial_triangles.to_csv(monomial_triangles_path, index=False, lineterminator="\n")
     monomial_paired_deltas.to_csv(monomial_paired_deltas_path, index=False, lineterminator="\n")
-    runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
-    stats.to_csv(csv_dir / REAL_OBSTRUCTION_SUMMARY_CSV, index=False, lineterminator="\n")
-    triangles.to_csv(csv_dir / REAL_OBSTRUCTION_TRIANGLES_CSV, index=False, lineterminator="\n")
-    individuals.to_csv(csv_dir / REAL_OBSTRUCTION_INDIVIDUALS_CSV, index=False, lineterminator="\n")
+    if not args.monomial_only_outputs:
+        runs.to_csv(csv_dir / REAL_OBSTRUCTION_RUNS_CSV, index=False, lineterminator="\n")
+        stats.to_csv(csv_dir / REAL_OBSTRUCTION_SUMMARY_CSV, index=False, lineterminator="\n")
+        triangles.to_csv(csv_dir / REAL_OBSTRUCTION_TRIANGLES_CSV, index=False, lineterminator="\n")
+        individuals.to_csv(csv_dir / REAL_OBSTRUCTION_INDIVIDUALS_CSV, index=False, lineterminator="\n")
 
-    plot_cycle_vs_degradation(runs, plot_dir / "fixed_setting_cycle_vs_degradation.pdf")
-    plot_by_n_width(stats, plot_dir / "fixed_setting_by_N_width.pdf")
-    plot_delta_methods(runs, plot_dir / "fixed_setting_delta_methods.pdf")
-    plot_obstruction_predictor_target_grid(regressions, plot_dir / "obstruction_predictor_target_grid.pdf")
-    write_report(
-        args,
-        runs,
-        stats,
-        individuals,
-        triangles,
-        paired_deltas,
-        regressions,
-        args.reports_dir / "fixed_setting_verification_report.md",
-    )
-    write_report(
-        args,
-        runs,
-        stats,
-        individuals,
-        triangles,
-        paired_deltas,
-        regressions,
-        args.reports_dir / "real_obstruction_degradation_report.md",
-        title="Real Obstruction Degradation Verification",
-    )
-    write_full_run_interpretation(
-        args,
-        runs,
-        stats,
-        individuals,
-        regressions,
-        args.reports_dir / "fixed_setting_full_run_interpretation.md",
-    )
-    write_obstruction_predictor_target_report(
-        args,
-        regressions,
-        args.reports_dir / "obstruction_predictor_target_report.md",
-    )
+    if not args.monomial_only_outputs:
+        plot_cycle_vs_degradation(runs, plot_dir / "fixed_setting_cycle_vs_degradation.pdf")
+        plot_by_n_width(stats, plot_dir / "fixed_setting_by_N_width.pdf")
+        plot_delta_methods(runs, plot_dir / "fixed_setting_delta_methods.pdf")
+    plot_monomial_delta_vs_baseline(monomial_paired_deltas, "c2m3_synchronized", plot_dir / MONOMIAL_DELTA_VS_C2M3_PLOT)
+    plot_monomial_delta_vs_baseline(monomial_paired_deltas, "greedy_soup", plot_dir / MONOMIAL_DELTA_VS_GREEDY_PLOT)
+    if not args.monomial_only_outputs:
+        plot_obstruction_predictor_target_grid(regressions, plot_dir / "obstruction_predictor_target_grid.pdf")
+        write_report(
+            args,
+            runs,
+            stats,
+            individuals,
+            triangles,
+            paired_deltas,
+            regressions,
+            args.reports_dir / "fixed_setting_verification_report.md",
+        )
+        write_report(
+            args,
+            runs,
+            stats,
+            individuals,
+            triangles,
+            paired_deltas,
+            regressions,
+            args.reports_dir / "real_obstruction_degradation_report.md",
+            title="Real Obstruction Degradation Verification",
+        )
+        write_full_run_interpretation(
+            args,
+            runs,
+            stats,
+            individuals,
+            regressions,
+            args.reports_dir / "fixed_setting_full_run_interpretation.md",
+        )
+        write_obstruction_predictor_target_report(
+            args,
+            regressions,
+            args.reports_dir / "obstruction_predictor_target_report.md",
+        )
     write_monomial_report(
         args,
         runs,
@@ -2700,8 +2849,9 @@ def main() -> None:
         monomial_paired_deltas,
         args.reports_dir / "monomial_gauge_alignment_report.md",
     )
+    config_name = "monomial_fixed_setting_config.json" if args.monomial_only_outputs else "fixed_setting_verification_config.json"
     save_json(
-        args.reports_dir / "configs" / "fixed_setting_verification_config.json",
+        args.reports_dir / "configs" / config_name,
         {
             "argv": sys.argv,
             "parsed_seeds": summarize_seed_list(seeds),
@@ -2711,20 +2861,22 @@ def main() -> None:
     )
     if args.update_claims_audit:
         update_claims_audit(args.reports_dir / "claims_audit.md")
-    print(f"wrote {runs_path}")
-    print(f"wrote {stats_path}")
-    print(f"wrote {triangles_path}")
-    print(f"wrote {individuals_path}")
-    print(f"wrote {paired_deltas_path}")
-    print(f"wrote {regressions_path}")
-    print(f"wrote {predictor_target_path}")
+    if not args.monomial_only_outputs:
+        print(f"wrote {runs_path}")
+        print(f"wrote {stats_path}")
+        print(f"wrote {triangles_path}")
+        print(f"wrote {individuals_path}")
+        print(f"wrote {paired_deltas_path}")
+        print(f"wrote {regressions_path}")
+        print(f"wrote {predictor_target_path}")
     print(f"wrote {monomial_runs_path}")
     print(f"wrote {monomial_triangles_path}")
     print(f"wrote {monomial_paired_deltas_path}")
-    print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
-    print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
-    print(f"wrote {args.reports_dir / 'fixed_setting_full_run_interpretation.md'}")
-    print(f"wrote {args.reports_dir / 'obstruction_predictor_target_report.md'}")
+    if not args.monomial_only_outputs:
+        print(f"wrote {args.reports_dir / 'fixed_setting_verification_report.md'}")
+        print(f"wrote {args.reports_dir / 'real_obstruction_degradation_report.md'}")
+        print(f"wrote {args.reports_dir / 'fixed_setting_full_run_interpretation.md'}")
+        print(f"wrote {args.reports_dir / 'obstruction_predictor_target_report.md'}")
     print(f"wrote {args.reports_dir / 'monomial_gauge_alignment_report.md'}")
 
 
