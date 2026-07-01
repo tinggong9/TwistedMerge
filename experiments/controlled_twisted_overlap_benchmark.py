@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.controlled_twisted_overlaps import (  # noqa: E402
+    EXTRA_CONTROL_ALIASES,
     METHODS,
     bootstrap_mean_ci,
     build_controlled_case,
@@ -49,6 +50,15 @@ def parse_seeds(text: str) -> list[int]:
 
 def json_compact(value) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"))
+
+
+def parse_extra_controls(text: str) -> tuple[str, ...]:
+    controls = []
+    for item in parse_csv(text, str):
+        if item not in EXTRA_CONTROL_ALIASES:
+            raise ValueError(f"unknown extra control: {item}")
+        controls.append(EXTRA_CONTROL_ALIASES[item])
+    return tuple(dict.fromkeys(controls))
 
 
 def family_numeric_summary(case, triangle_rows: list[dict]) -> dict[str, float | int | bool | str]:
@@ -86,7 +96,7 @@ def run_case(args, family: str, width: int, seed: int):
     checkpoint_rows = save_local_checkpoints(case, args.reports_dir / "checkpoints" / "controlled_twisted_overlap")
     triangles = defect_rows_for_case(case)
     family_summary = family_numeric_summary(case, triangles)
-    method_rows = evaluate_methods(case)
+    method_rows = evaluate_methods(case, args.extra_controls_parsed)
     pairwise = pairwise_rows_for_case(case)
     base = {
         "family": family,
@@ -110,6 +120,8 @@ def run_case(args, family: str, width: int, seed: int):
     for row in method_rows:
         payload = {**base, **row}
         payload["branch_assignment_json"] = json_compact(payload.pop("branch_assignment"))
+        if isinstance(payload.get("router_branch_scores_json"), dict):
+            payload["router_branch_scores_json"] = json_compact(payload["router_branch_scores_json"])
         rows.append(payload)
     pairwise_rows = [{**base, **row} for row in pairwise]
     triangle_rows = [{**base, **row} for row in triangles]
@@ -125,6 +137,13 @@ def summarize(df: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
         acc = pd.to_numeric(group["test_accuracy"], errors="coerce").to_numpy()
         loss = pd.to_numeric(group["test_loss"], errors="coerce").to_numpy()
         acc_low, acc_high = bootstrap_mean_ci(acc, bootstrap_samples, rng)
+        method = str(meta["method"])
+        if bool(group.get("is_extra_control", pd.Series([False])).fillna(False).astype(bool).any()):
+            status = "control_method_descriptive"
+        elif method == "learned_context_router":
+            status = "learned_router_diagnostic"
+        else:
+            status = "method_descriptive"
         rows.append(
             {
                 "summary_type": "method",
@@ -139,7 +158,7 @@ def summarize(df: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
                 "mean_delta": float("nan"),
                 "delta_ci_low": float("nan"),
                 "delta_ci_high": float("nan"),
-                "claim_status": "method_descriptive",
+                "claim_status": status,
             }
         )
     comparisons = [
@@ -148,6 +167,12 @@ def summarize(df: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
         ("twisted_q2_branch", "random_branch_ensemble"),
         ("twisted_q2_branch", "validation_selected_branch_ensemble"),
         ("twisted_q2_branch", "c2m3_cluster_branch_ensemble"),
+        ("twisted_q2_branch", "wrong_twist_control"),
+        ("twisted_q2_branch", "wrong_context_control"),
+        ("twisted_q2_branch", "learned_context_router"),
+        ("twisted_q2_branch", "distilled_twisted_single_model"),
+        ("twisted_q2_branch", "parameter_matched_wide_control"),
+        ("twisted_q2_branch", "no_twist_branch_control"),
         ("c2m3_synchronized", "ordinary_weight_average"),
     ]
     for (family, width), group in df.groupby(["family", "width"], dropna=False):
@@ -159,7 +184,9 @@ def summarize(df: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
             low, high = bootstrap_mean_ci(delta, bootstrap_samples, rng)
             mean_delta = float(np.nanmean(delta)) if len(delta) else float("nan")
             comparison = f"{left}_vs_{right}"
-            if family == "mu2_coboundary" and comparison == "c2m3_synchronized_vs_ordinary_weight_average":
+            if family == "random_noncentral":
+                status = "noncentral_control_not_promoted"
+            elif family == "mu2_coboundary" and comparison == "c2m3_synchronized_vs_ordinary_weight_average":
                 status = "supported_coboundary_sync" if mean_delta > 0 and low > 0 else "descriptive"
             elif family == "mu2_nontrivial_h2" and left == "twisted_q2_branch" and right in {
                 "random_branch_ensemble",
@@ -168,8 +195,16 @@ def summarize(df: pd.DataFrame, bootstrap_samples: int) -> pd.DataFrame:
                 "c2m3_synchronized",
             }:
                 status = "supported_controlled_rank_lift" if mean_delta > 0 and low > 0 else "descriptive"
-            elif family == "random_noncentral":
-                status = "noncentral_control_not_promoted"
+            elif family == "mu2_nontrivial_h2" and right in {"wrong_twist_control", "wrong_context_control"}:
+                status = "supported_q2_beats_wrong_control" if mean_delta > 0 and low > 0 else "wrong_control_not_beaten"
+            elif family == "mu2_nontrivial_h2" and right == "no_twist_branch_control":
+                status = "supported_q2_beats_no_twist_branch" if mean_delta > 0 and low > 0 else "no_twist_branch_matches"
+            elif family == "mu2_nontrivial_h2" and right == "learned_context_router":
+                status = "learned_router_matches_supplied_context" if abs(mean_delta) <= 1e-12 else "learned_router_gap"
+            elif family == "mu2_nontrivial_h2" and right == "distilled_twisted_single_model":
+                status = "distillation_failed_branch_remains_extra_capacity" if mean_delta > 0 and low > 0 else "distillation_matches_single_model"
+            elif family == "mu2_nontrivial_h2" and right == "parameter_matched_wide_control":
+                status = "supported_not_explained_by_parameter_matched_wide" if mean_delta > 0 and low > 0 else "wide_control_matches_weaken_to_charted_representation"
             else:
                 status = "descriptive"
             rows.append(
@@ -295,7 +330,78 @@ def plot_rank_lift_delta(summary: pd.DataFrame, path: Path) -> None:
     plt.close(fig)
 
 
-def write_report(args, runs: pd.DataFrame, summary: pd.DataFrame, pairwise: pd.DataFrame, triangles: pd.DataFrame, report_path: Path) -> None:
+def hardening_gate_text(summary: pd.DataFrame) -> str:
+    nontrivial = summary[(summary["summary_type"] == "paired_delta") & (summary["family"] == "mu2_nontrivial_h2")].copy()
+    if nontrivial.empty:
+        return "No nontrivial `mu2_nontrivial_h2` hardening rows were produced."
+    statuses = set(nontrivial["claim_status"].astype(str))
+    wrong_controls = nontrivial[
+        nontrivial["comparison"].isin(
+            [
+                "twisted_q2_branch_vs_wrong_twist_control",
+                "twisted_q2_branch_vs_wrong_context_control",
+            ]
+        )
+    ]
+    wrong_ok = not wrong_controls.empty and bool((wrong_controls["claim_status"] == "supported_q2_beats_wrong_control").all())
+    router = nontrivial[nontrivial["comparison"] == "twisted_q2_branch_vs_learned_context_router"]
+    router_text = (
+        "The learned validation-only context router matches the supplied-context q=2 branch on held-out overlap samples."
+        if not router.empty and bool((router["claim_status"] == "learned_router_matches_supplied_context").all())
+        else "The learned validation-only context router does not fully match the supplied-context q=2 branch."
+        if not router.empty
+        else "The learned validation-only context router was not run."
+    )
+    distill = nontrivial[nontrivial["comparison"] == "twisted_q2_branch_vs_distilled_twisted_single_model"]
+    distill_text = (
+        "Distillation into a single context-free model fails to match the q=2 branch, so the branch result remains extra-capacity/charted."
+        if not distill.empty and bool((distill["claim_status"] == "distillation_failed_branch_remains_extra_capacity").all())
+        else "Distillation matches the q=2 branch in at least one setting, so no extra-capacity branch advantage is claimed there."
+        if not distill.empty
+        else "The distilled single-model control was not run."
+    )
+    wide = nontrivial[nontrivial["comparison"] == "twisted_q2_branch_vs_parameter_matched_wide_control"]
+    wide_text = (
+        "The q=2 branch beats the parameter-matched wide ordinary control, so this run is not explained by ordinary width alone."
+        if not wide.empty and bool((wide["claim_status"] == "supported_not_explained_by_parameter_matched_wide").all())
+        else "The parameter-matched wide control matches the q=2 branch in at least one setting; weaken to a charted-representation claim there."
+        if not wide.empty
+        else "The parameter-matched wide control was not run."
+    )
+    wrong_text = (
+        "The q=2 branch beats both wrong-twist and wrong-context controls in every nontrivial h2 setting."
+        if wrong_ok
+        else "The q=2 branch does not beat every wrong-twist/wrong-context control; treat supplied-context results as descriptive."
+    )
+    no_twist = nontrivial[nontrivial["comparison"] == "twisted_q2_branch_vs_no_twist_branch_control"]
+    no_twist_text = (
+        "The q=2 branch also beats the same-branch-count no-twist control."
+        if not no_twist.empty and bool((no_twist["claim_status"] == "supported_q2_beats_no_twist_branch").all())
+        else "The no-twist branch control was not beaten in every setting."
+        if not no_twist.empty
+        else "The no-twist branch control was not run."
+    )
+    return "\n".join(
+        [
+            f"- {wrong_text}",
+            f"- {router_text}",
+            f"- {distill_text}",
+            f"- {wide_text}",
+            f"- {no_twist_text}",
+            f"- Status labels present: `{', '.join(sorted(statuses))}`.",
+        ]
+    )
+
+
+def write_report(
+    args,
+    runs: pd.DataFrame,
+    summary: pd.DataFrame,
+    pairwise: pd.DataFrame,
+    triangles: pd.DataFrame,
+    controls: pd.DataFrame,
+    report_path: Path,
+) -> None:
     method_cols = [
         "family",
         "width",
@@ -309,6 +415,10 @@ def write_report(args, runs: pd.DataFrame, summary: pd.DataFrame, pairwise: pd.D
     delta_cols = ["family", "width", "comparison", "n_rows", "mean_delta", "delta_ci_low", "delta_ci_high", "claim_status"]
     method_summary = summary[summary["summary_type"] == "method"].copy()
     deltas = summary[summary["summary_type"] == "paired_delta"].copy()
+    control_summary = summary[
+        (summary["summary_type"] == "method")
+        & (summary["method"].astype(str).isin(controls["method"].astype(str).unique() if not controls.empty else []))
+    ].copy()
     local_exact = runs.groupby(["family", "width"])["local_model_accuracy"].mean().reset_index()
     pairwise_exact = pairwise.groupby(["family", "width"])["pairwise_alignment_residual"].mean().reset_index()
     triangle_exact = (
@@ -341,6 +451,7 @@ This is controlled obstruction evidence, not real-model evidence. It is delibera
 - `reports/csv/controlled_twisted_overlap_pairwise.csv`
 - `reports/csv/controlled_twisted_overlap_triangles.csv`
 - `reports/csv/controlled_twisted_overlap_summary.csv`
+- `reports/csv/controlled_twisted_overlap_controls.csv`
 - `reports/tables/controlled_twisted_overlap_table.tex`
 - `reports/plots/controlled_twisted_overlap_defect_vs_merge_loss.pdf`
 - `reports/plots/controlled_twisted_overlap_rank_lift_delta.pdf`
@@ -358,16 +469,24 @@ This is controlled obstruction evidence, not real-model evidence. It is delibera
 
 {md_table(deltas, delta_cols, 80)}
 
+## Hardening Controls
+
+{hardening_gate_text(summary)}
+
+{md_table(control_summary, method_cols, 80)}
+
 ## Claim Boundaries
 
 - Coboundary rows support the controlled claim that cycle-consistent synchronization can absorb an edge-coboundary central sign without a branch lift.
-- Nontrivial `mu2_nontrivial_h2` rows support only a controlled branch-prediction claim: the q=2 branch model uses the supplied triangle context and remains extra capacity.
+- Nontrivial `mu2_nontrivial_h2` rows support only a controlled branch-prediction claim. Supplied-context q=2 branch results are reported separately from validation-learned router results.
+- If the distilled single model or parameter-matched wide control matches q=2 in a setting, the corresponding claim is weakened to a charted-representation claim for that setting.
 - Random noncentral rows are negative controls and are not promoted to central-twist or Brauer/projective claims.
 - This benchmark does not claim that natural MNIST/Fashion/CIFAR model merging has the same obstruction.
 
 ## Row Counts
 
 - Main rows: `{len(runs)}`
+- Control rows: `{len(controls)}`
 - Pairwise rows: `{len(pairwise)}`
 - Triangle rows: `{len(triangles)}`
 
@@ -391,11 +510,13 @@ def main() -> None:
     parser.add_argument("--samples-per-chart", type=int, default=2000)
     parser.add_argument("--samples-per-overlap", type=int, default=1000)
     parser.add_argument("--branch-count", type=int, default=2)
+    parser.add_argument("--extra-controls", default="")
     parser.add_argument("--bootstrap-samples", type=int, default=5000)
     parser.add_argument("--device", default="auto")
     parser.add_argument("--reports-dir", type=Path, default=ROOT / "reports")
     args = parser.parse_args()
     args.command_string = " ".join([sys.executable, *sys.argv])
+    args.extra_controls_parsed = parse_extra_controls(args.extra_controls)
 
     families = parse_csv(args.twist_family, str)
     widths = parse_csv(args.widths, int)
@@ -416,6 +537,7 @@ def main() -> None:
     runs = pd.DataFrame(all_rows)
     pairwise = pd.DataFrame(all_pairwise)
     triangles = pd.DataFrame(all_triangles)
+    controls = runs[runs["is_extra_control"].fillna(False).astype(bool)].copy() if "is_extra_control" in runs else pd.DataFrame()
     summary = summarize(runs, args.bootstrap_samples)
 
     csv_dir = args.reports_dir / "csv"
@@ -429,14 +551,16 @@ def main() -> None:
     pairwise_path = csv_dir / "controlled_twisted_overlap_pairwise.csv"
     triangles_path = csv_dir / "controlled_twisted_overlap_triangles.csv"
     summary_path = csv_dir / "controlled_twisted_overlap_summary.csv"
-    runs.to_csv(runs_path, index=False)
-    pairwise.to_csv(pairwise_path, index=False)
-    triangles.to_csv(triangles_path, index=False)
-    summary.to_csv(summary_path, index=False)
+    controls_path = csv_dir / "controlled_twisted_overlap_controls.csv"
+    runs.to_csv(runs_path, index=False, lineterminator="\n")
+    pairwise.to_csv(pairwise_path, index=False, lineterminator="\n")
+    triangles.to_csv(triangles_path, index=False, lineterminator="\n")
+    summary.to_csv(summary_path, index=False, lineterminator="\n")
+    controls.to_csv(controls_path, index=False, lineterminator="\n")
     write_latex_table(summary, table_dir / "controlled_twisted_overlap_table.tex")
     plot_defect_vs_merge_loss(runs, plot_dir / "controlled_twisted_overlap_defect_vs_merge_loss.pdf")
     plot_rank_lift_delta(summary, plot_dir / "controlled_twisted_overlap_rank_lift_delta.pdf")
-    write_report(args, runs, summary, pairwise, triangles, args.reports_dir / "controlled_twisted_overlap_report.md")
+    write_report(args, runs, summary, pairwise, triangles, controls, args.reports_dir / "controlled_twisted_overlap_report.md")
     save_json(
         config_dir / "controlled_twisted_overlap_config.json",
         {
@@ -444,6 +568,7 @@ def main() -> None:
             "families": families,
             "widths": widths,
             "seeds": seeds,
+            "extra_controls": list(args.extra_controls_parsed),
             "args": {key: str(value) if isinstance(value, Path) else value for key, value in vars(args).items()},
             "environment": capture_environment(),
         },
@@ -452,6 +577,7 @@ def main() -> None:
     print(f"wrote {pairwise_path}")
     print(f"wrote {triangles_path}")
     print(f"wrote {summary_path}")
+    print(f"wrote {controls_path}")
     print(f"wrote {args.reports_dir / 'controlled_twisted_overlap_report.md'}")
 
 

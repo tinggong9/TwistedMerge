@@ -10,8 +10,8 @@ from src.controlled_twisted_overlaps import (
 )
 
 
-def method_lookup(case):
-    return {row["method"]: row for row in evaluate_methods(case)}
+def method_lookup(case, extra_controls=None):
+    return {row["method"]: row for row in evaluate_methods(case, extra_controls=extra_controls)}
 
 
 class ControlledTwistedOverlapTests(unittest.TestCase):
@@ -93,6 +93,38 @@ class ControlledTwistedOverlapTests(unittest.TestCase):
         self.assertTrue(all(row["defect_type"] == "noncentral_permutation" for row in triangles))
         self.assertTrue(all(row["centrality_residual"] > 0.0 for row in triangles))
         self.assertEqual(rows["twisted_q2_branch"]["claim_role"], "noncentral_control_not_mu2_claim")
+
+    def test_nontrivial_h2_hardening_controls(self):
+        case = build_controlled_case(
+            "mu2_nontrivial_h2",
+            width=32,
+            n_models=4,
+            seed=15,
+            samples_per_chart=256,
+            samples_per_overlap=256,
+            branch_count=2,
+        )
+        rows = method_lookup(
+            case,
+            extra_controls=[
+                "wrong_twist",
+                "wrong_context",
+                "learned_router",
+                "distilled_single",
+                "parameter_matched_wide",
+                "no_twist_branch",
+            ],
+        )
+
+        self.assertGreater(rows["twisted_q2_branch"]["test_accuracy"], 0.99)
+        self.assertGreater(rows["twisted_q2_branch"]["test_accuracy"], rows["wrong_twist_control"]["test_accuracy"] + 0.20)
+        self.assertGreater(rows["twisted_q2_branch"]["test_accuracy"], rows["wrong_context_control"]["test_accuracy"] + 0.20)
+        self.assertGreater(rows["twisted_q2_branch"]["test_accuracy"], rows["no_twist_branch_control"]["test_accuracy"] + 0.20)
+        self.assertAlmostEqual(rows["learned_context_router"]["test_accuracy"], rows["twisted_q2_branch"]["test_accuracy"], places=6)
+        self.assertLess(rows["distilled_twisted_single_model"]["test_accuracy"], rows["twisted_q2_branch"]["test_accuracy"] - 0.20)
+        self.assertLess(rows["parameter_matched_wide_control"]["test_accuracy"], rows["twisted_q2_branch"]["test_accuracy"] - 0.20)
+        self.assertTrue(rows["parameter_matched_wide_control"]["capacity_matched_to_rank_lift"])
+        self.assertTrue(rows["distilled_twisted_single_model"]["is_single_model"])
 
 
 if __name__ == "__main__":

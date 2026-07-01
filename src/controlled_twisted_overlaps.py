@@ -34,6 +34,23 @@ METHODS = (
     "ensemble_upper_bound",
 )
 
+EXTRA_CONTROL_ALIASES = {
+    "wrong_twist": "wrong_twist_control",
+    "wrong_twist_control": "wrong_twist_control",
+    "wrong_context": "wrong_context_control",
+    "wrong_context_control": "wrong_context_control",
+    "learned_router": "learned_context_router",
+    "learned_context_router": "learned_context_router",
+    "distilled_single": "distilled_twisted_single_model",
+    "distilled_twisted_single_model": "distilled_twisted_single_model",
+    "parameter_matched_wide": "parameter_matched_wide_control",
+    "parameter_matched_wide_control": "parameter_matched_wide_control",
+    "no_twist_branch": "no_twist_branch_control",
+    "no_twist_branch_control": "no_twist_branch_control",
+}
+
+EXTRA_CONTROL_METHODS = tuple(dict.fromkeys(EXTRA_CONTROL_ALIASES.values()))
+
 
 @dataclass(frozen=True)
 class ControlledMLP:
@@ -457,6 +474,99 @@ def twisted_branch_assignment(case: ControlledCase) -> dict[Face, int]:
     return {face: 0 for face in case.alpha_signs}
 
 
+def no_twist_branch_assignment(case: ControlledCase) -> dict[Face, int]:
+    return {face: 0 for face in case.alpha_signs}
+
+
+def wrong_twist_assignment(case: ControlledCase) -> dict[Face, int]:
+    faces = sorted(case.alpha_signs)
+    correct = twisted_branch_assignment(case)
+    if case.family == "mu2_nontrivial_h2":
+        negative_faces = [face for face in faces if correct[face] == 1]
+        if not negative_faces:
+            return {face: 1 - branch for face, branch in correct.items()}
+        true_negative = negative_faces[0]
+        wrong_negative = faces[(faces.index(true_negative) + 1) % len(faces)]
+        return {face: (1 if face == wrong_negative else 0) for face in faces}
+    return {face: 1 - int(correct[face]) for face in faces}
+
+
+def wrong_context_assignment(case: ControlledCase, rng: np.random.Generator) -> dict[Face, int]:
+    faces = sorted(case.alpha_signs)
+    correct = twisted_branch_assignment(case)
+    permuted = faces.copy()
+    for _ in range(16):
+        rng.shuffle(permuted)
+        assignment = {face: int(correct[source]) for face, source in zip(faces, permuted)}
+        if assignment != correct:
+            return assignment
+    return {face: int(correct[faces[(idx + 1) % len(faces)]]) for idx, face in enumerate(faces)}
+
+
+def learned_context_router_assignment(
+    case: ControlledCase,
+    base_model: ControlledMLP,
+) -> tuple[dict[Face, int], dict[str, object]]:
+    assignment: dict[Face, int] = {}
+    branch_scores: dict[str, dict[str, float]] = {}
+    correct = 0
+    total = 0
+    for face, (x, y) in case.val_face_data.items():
+        scores = {}
+        for branch in range(case.branch_count):
+            sign = branch_sign_from_assignment(branch)
+            logits = sign * base_model.logits(x)
+            scores[branch] = float(np.mean((logits >= 0.0).astype(np.int64) == y))
+        best = max(scores, key=lambda branch: (scores[branch], -branch))
+        assignment[face] = int(best)
+        branch_scores["-".join(map(str, face))] = {str(branch): float(score) for branch, score in scores.items()}
+        correct += int(round(scores[best] * len(y)))
+        total += int(len(y))
+    return assignment, {
+        "router_type": "validation_face_table",
+        "router_train_accuracy": float(correct / max(total, 1)),
+        "router_branch_scores": branch_scores,
+    }
+
+
+def distilled_twisted_scale(case: ControlledCase, base_model: ControlledMLP) -> tuple[float, dict[str, object]]:
+    assignment = twisted_branch_assignment(case)
+    numerator = 0.0
+    denominator = 0.0
+    teacher_losses = []
+    for face, (x, _y) in case.val_face_data.items():
+        z = base_model.logits(x)
+        teacher = branch_sign_from_assignment(assignment[face]) * z
+        numerator += float(np.sum(z * teacher))
+        denominator += float(np.sum(z * z))
+        teacher_losses.append(float(np.mean((teacher - z) ** 2)))
+    scale = numerator / max(denominator, 1e-12)
+    return float(scale), {
+        "distillation_target": "twisted_q2_branch_logits",
+        "distillation_scale": float(scale),
+        "distillation_teacher_mse_against_base": float(np.mean(teacher_losses)) if teacher_losses else float("nan"),
+    }
+
+
+def make_parameter_matched_wide_model(base_model: ControlledMLP, target_parameter_count: int) -> ControlledMLP:
+    input_dim = base_model.input_dim
+    width = base_model.width
+    while width * input_dim + 2 * width + 1 < target_parameter_count:
+        width += 2
+    repeats = int(np.ceil(width / base_model.width))
+    hidden = np.tile(base_model.hidden_weight, (repeats, 1))[:width].copy()
+    bias = np.tile(base_model.hidden_bias, repeats)[:width].copy()
+    out = np.tile(base_model.output_weight / repeats, repeats)[:width].copy()
+    return ControlledMLP(
+        hidden_weight=hidden,
+        hidden_bias=bias,
+        output_weight=out,
+        output_bias=float(base_model.output_bias),
+        model_index=-2,
+        hidden_permutation=identity_perm(width),
+    )
+
+
 def evaluate_branch_assignment(
     case: ControlledCase,
     base_model: ControlledMLP,
@@ -469,43 +579,102 @@ def evaluate_branch_assignment(
     )
 
 
-def method_capacity_metadata(method: str, case: ControlledCase, base_model: ControlledMLP) -> dict[str, object]:
+def method_capacity_metadata(
+    method: str,
+    case: ControlledCase,
+    base_model: ControlledMLP,
+    *,
+    parameter_count: int | None = None,
+) -> dict[str, object]:
     base_params = base_model.parameter_count
-    if method in {"ordinary_weight_average", "git_rebasin_pairwise", "c2m3_synchronized"}:
+    if method in {
+        "ordinary_weight_average",
+        "git_rebasin_pairwise",
+        "c2m3_synchronized",
+        "distilled_twisted_single_model",
+    }:
         branch_count = 1
-        param_mult = 1.0
+        params = int(parameter_count or base_params)
+        param_mult = float(params / max(base_params, 1))
+        infer_mult = 1.0
+        single = True
+        branch_model = False
+    elif method == "parameter_matched_wide_control":
+        branch_count = 1
+        params = int(parameter_count or round(base_params * case.branch_count))
+        param_mult = float(params / max(base_params, 1))
         infer_mult = 1.0
         single = True
         branch_model = False
     elif method == "ensemble_upper_bound":
         branch_count = case.n_models
-        param_mult = float(case.n_models)
+        params = int(round(base_params * case.n_models))
+        param_mult = float(params / max(base_params, 1))
         infer_mult = float(case.n_models)
         single = False
         branch_model = False
     else:
         branch_count = case.branch_count
-        param_mult = float(case.branch_count)
+        params = int(parameter_count or round(base_params * case.branch_count))
+        param_mult = float(params / max(base_params, 1))
         infer_mult = float(case.branch_count)
         single = False
         branch_model = True
     return {
-        "parameter_count": int(round(base_params * param_mult)),
+        "parameter_count": int(params),
         "branch_count": int(branch_count),
         "parameter_multiplier": float(param_mult),
         "inference_time_multiplier": float(infer_mult),
         "is_single_model": bool(single),
         "is_branch_model": bool(branch_model),
         "capacity_matched_to_weight_average": bool(param_mult == 1.0),
-        "capacity_matched_to_rank_lift": bool(method != "ensemble_upper_bound" and param_mult == float(case.branch_count)),
-        "uses_validation_data": method == "validation_selected_branch_ensemble",
+        "capacity_matched_to_rank_lift": bool(
+            method != "ensemble_upper_bound"
+            and np.isclose(param_mult, float(case.branch_count), rtol=0.05, atol=0.05)
+        ),
+        "uses_validation_data": method in {
+            "validation_selected_branch_ensemble",
+            "learned_context_router",
+            "distilled_twisted_single_model",
+        },
         "uses_obstruction_residual": method == "twisted_q2_branch",
-        "uses_triangle_context": method == "twisted_q2_branch",
-        "exact_controlled_relu_symmetry": method in {"git_rebasin_pairwise", "c2m3_synchronized", "twisted_q2_branch"},
+        "uses_triangle_context": method in {
+            "twisted_q2_branch",
+            "wrong_twist_control",
+            "wrong_context_control",
+            "learned_context_router",
+        },
+        "exact_controlled_relu_symmetry": method in {
+            "git_rebasin_pairwise",
+            "c2m3_synchronized",
+            "twisted_q2_branch",
+            "wrong_twist_control",
+            "wrong_context_control",
+            "learned_context_router",
+            "no_twist_branch_control",
+        },
+        "uses_distillation": method == "distilled_twisted_single_model",
+        "uses_wrong_twist": method == "wrong_twist_control",
+        "uses_wrong_context": method == "wrong_context_control",
     }
 
 
-def evaluate_methods(case: ControlledCase) -> list[dict[str, object]]:
+def normalize_extra_controls(extra_controls: tuple[str, ...] | list[str] | None) -> tuple[str, ...]:
+    if not extra_controls:
+        return ()
+    normalized = []
+    for control in extra_controls:
+        if not control:
+            continue
+        key = str(control).strip()
+        if key not in EXTRA_CONTROL_ALIASES:
+            raise ValueError(f"unknown extra control: {control}")
+        normalized.append(EXTRA_CONTROL_ALIASES[key])
+    return tuple(dict.fromkeys(normalized))
+
+
+def evaluate_methods(case: ControlledCase, extra_controls: tuple[str, ...] | list[str] | None = None) -> list[dict[str, object]]:
+    extra_controls = normalize_extra_controls(extra_controls)
     aligned_models = [align_hidden_to_base(model) for model in case.local_models]
     ordinary = average_models(case.local_models)
     aligned = average_models(aligned_models)
@@ -517,14 +686,45 @@ def evaluate_methods(case: ControlledCase) -> list[dict[str, object]]:
         "validation_selected_branch_ensemble": global_validation_branch_assignment(case, aligned),
         "c2m3_cluster_branch_ensemble": {face: 0 for face in case.alpha_signs},
     }
+    control_details: dict[str, dict[str, object]] = {}
+    if "wrong_twist_control" in extra_controls:
+        assignments["wrong_twist_control"] = wrong_twist_assignment(case)
+        control_details["wrong_twist_control"] = {"control_type": "wrong_twist"}
+    if "wrong_context_control" in extra_controls:
+        assignments["wrong_context_control"] = wrong_context_assignment(case, rng)
+        control_details["wrong_context_control"] = {"control_type": "wrong_context"}
+    if "learned_context_router" in extra_controls:
+        assignment, details = learned_context_router_assignment(case, aligned)
+        assignments["learned_context_router"] = assignment
+        control_details["learned_context_router"] = {"control_type": "learned_router", **details}
+    if "no_twist_branch_control" in extra_controls:
+        assignments["no_twist_branch_control"] = no_twist_branch_assignment(case)
+        control_details["no_twist_branch_control"] = {"control_type": "no_twist_branch"}
+    distilled_scale = 1.0
+    if "distilled_twisted_single_model" in extra_controls:
+        distilled_scale, details = distilled_twisted_scale(case, aligned)
+        control_details["distilled_twisted_single_model"] = {"control_type": "distilled_single", **details}
+    wide_model = None
+    if "parameter_matched_wide_control" in extra_controls:
+        wide_model = make_parameter_matched_wide_model(aligned, aligned.parameter_count * case.branch_count)
+        control_details["parameter_matched_wide_control"] = {
+            "control_type": "parameter_matched_wide",
+            "wide_hidden_width": wide_model.width,
+        }
     predictors: dict[str, Callable[[Face, np.ndarray], np.ndarray]] = {
         "ordinary_weight_average": lambda _face, x: ordinary.logits(x),
         "git_rebasin_pairwise": lambda _face, x: aligned.logits(x),
         "c2m3_synchronized": lambda _face, x: aligned.logits(x),
         "ensemble_upper_bound": lambda _face, x: np.stack([model.logits(x) for model in case.local_models]).mean(axis=0),
     }
+    if "distilled_twisted_single_model" in extra_controls:
+        predictors["distilled_twisted_single_model"] = lambda _face, x: distilled_scale * aligned.logits(x)
+    if "parameter_matched_wide_control" in extra_controls:
+        assert wide_model is not None
+        predictors["parameter_matched_wide_control"] = lambda _face, x: wide_model.logits(x)
     rows = []
-    for method in METHODS:
+    methods = tuple(METHODS) + tuple(control for control in extra_controls if control not in METHODS)
+    for method in methods:
         if method in assignments:
             val_metrics = evaluate_branch_assignment(case, aligned, case.val_face_data, assignments[method])
             test_metrics = evaluate_branch_assignment(case, aligned, case.test_face_data, assignments[method])
@@ -533,15 +733,21 @@ def evaluate_methods(case: ControlledCase) -> list[dict[str, object]]:
             val_metrics = evaluate_face_predictor(case.val_face_data, predictors[method])
             test_metrics = evaluate_face_predictor(case.test_face_data, predictors[method])
             branch_assignment = {}
-        meta = method_capacity_metadata(method, case, aligned)
+        parameter_count = wide_model.parameter_count if method == "parameter_matched_wide_control" and wide_model is not None else None
+        meta = method_capacity_metadata(method, case, aligned, parameter_count=parameter_count)
         if case.family == "random_noncentral" and method == "twisted_q2_branch":
             claim_role = "noncentral_control_not_mu2_claim"
         elif case.family == "mu2_nontrivial_h2" and method == "twisted_q2_branch":
             claim_role = "controlled_central_h2_branch_evidence"
         elif case.family == "mu2_coboundary" and method == "c2m3_synchronized":
             claim_role = "controlled_coboundary_single_model_evidence"
+        elif method == "learned_context_router":
+            claim_role = "validation_only_router_diagnostic"
+        elif method in EXTRA_CONTROL_METHODS:
+            claim_role = "hardening_control"
         else:
             claim_role = "baseline_or_diagnostic"
+        details = control_details.get(method, {})
         rows.append(
             {
                 "method": method,
@@ -553,6 +759,18 @@ def evaluate_methods(case: ControlledCase) -> list[dict[str, object]]:
                 "local_model_loss": local_metrics["loss"],
                 "branch_assignment": {("-".join(map(str, face))): int(branch) for face, branch in branch_assignment.items()},
                 "claim_role": claim_role,
+                "is_extra_control": method in EXTRA_CONTROL_METHODS,
+                "control_type": details.get("control_type", ""),
+                "router_type": details.get("router_type", ""),
+                "router_train_accuracy": details.get("router_train_accuracy", float("nan")),
+                "router_branch_scores_json": details.get("router_branch_scores", {}),
+                "distillation_scale": details.get("distillation_scale", float("nan")),
+                "distillation_target": details.get("distillation_target", ""),
+                "distillation_teacher_mse_against_base": details.get(
+                    "distillation_teacher_mse_against_base",
+                    float("nan"),
+                ),
+                "wide_hidden_width": details.get("wide_hidden_width", float("nan")),
                 **meta,
             }
         )
@@ -563,6 +781,13 @@ def evaluate_methods(case: ControlledCase) -> list[dict[str, object]]:
         row["delta_vs_random_branch"] = float(row["test_accuracy"] - lookup["random_branch_ensemble"]["test_accuracy"])
         row["delta_vs_validation_branch"] = float(row["test_accuracy"] - lookup["validation_selected_branch_ensemble"]["test_accuracy"])
         row["delta_vs_c2m3_cluster_branch"] = float(row["test_accuracy"] - lookup["c2m3_cluster_branch_ensemble"]["test_accuracy"])
+        for control_method in EXTRA_CONTROL_METHODS:
+            key = f"delta_vs_{control_method}"
+            row[key] = (
+                float(row["test_accuracy"] - lookup[control_method]["test_accuracy"])
+                if control_method in lookup
+                else float("nan")
+            )
     return rows
 
 
