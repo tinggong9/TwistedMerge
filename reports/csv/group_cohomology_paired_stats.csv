@@ -1,0 +1,5 @@
+comparison,baseline,n_pairs,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,accuracy_wins,accuracy_ties,accuracy_losses,sign_test_two_sided_p,selection_used_validation_only,selected_lift_count
+group_cohomology_torsion_safe_selector_vs_weight_average,weight_average,160,0.23266874999999998,0.21950718749999998,0.24654289062499996,-0.6641853249669076,160,0,0,1.3684555315672042e-48,True,0
+group_cohomology_torsion_safe_selector_vs_c2m3_synchronized,c2m3_synchronized,160,0.03588124999999999,0.03299960937499998,0.03887546874999999,-0.10966268508434296,159,0,1,2.2032134058231987e-46,True,0
+group_cohomology_torsion_safe_selector_vs_greedy_soup,greedy_soup,160,0.0,0.0,0.0,0.0,0,160,0,,True,0
+group_cohomology_torsion_safe_selector_vs_best_fallback,best_fallback,160,0.0,0.0,0.0,0.0,0,160,0,,True,0
