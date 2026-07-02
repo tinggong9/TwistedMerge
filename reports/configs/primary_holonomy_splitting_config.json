@@ -1,7 +1,7 @@
 {
   "args": {
-    "bootstrap_ci_samples": 500,
-    "bootstrap_samples": 100,
+    "bootstrap_ci_samples": 2000,
+    "bootstrap_samples": 500,
     "datasets": "mnist,fashion_mnist",
     "entropy_threshold": 0.1,
     "lambda_branch_values": "0.0,0.001,0.002",
@@ -12,14 +12,14 @@
     "max_exact_order": 256,
     "max_generators": 12,
     "max_group_order": 5000,
-    "max_settings": 80,
+    "max_settings": 0,
     "min_relation_count": 4,
     "model_counts": "3,4",
     "no_update_claims_audit": false,
     "nontrivial_threshold": 0.1,
     "pooling_thresholds": "1e-8,1e-6,1e-4,1e-2",
     "q_orders": "2,4,8,16,32,3,9,27,6,12,18,36",
-    "random_restarts": 8,
+    "random_restarts": 32,
     "relation_threshold": 0.01,
     "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
     "seed": 31991,
@@ -35,29 +35,29 @@
     "--model-counts",
     "3,4",
     "--max-settings",
-    "80",
+    "0",
     "--bootstrap-samples",
-    "100",
-    "--bootstrap-ci-samples",
     "500",
+    "--bootstrap-ci-samples",
+    "2000",
     "--random-restarts",
-    "8"
+    "32"
   ],
   "artifact_row_counts": {
-    "bootstrap": 2136,
-    "candidates": 2136,
-    "groups": 89,
-    "lifts": 3387,
-    "nested": 2972,
+    "bootstrap": 24264,
+    "candidates": 24264,
+    "groups": 1011,
+    "lifts": 46107,
+    "nested": 35532,
     "nulls": 6,
-    "paired": 9,
-    "pooling": 8544,
-    "regret": 23904,
-    "selector": 23904
+    "paired": 11,
+    "pooling": 97056,
+    "regret": 277344,
+    "selector": 277344
   },
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/primary_holonomy_splitting.py --datasets mnist,fashion_mnist --model-counts 3,4 --max-settings 80 --bootstrap-samples 100 --bootstrap-ci-samples 500 --random-restarts 8",
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/primary_holonomy_splitting.py --datasets mnist,fashion_mnist --model-counts 3,4 --max-settings 0 --bootstrap-samples 500 --bootstrap-ci-samples 2000 --random-restarts 32",
   "environment": {
-    "git_commit": "931d41b",
+    "git_commit": "2427acf",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
@@ -70,6 +70,6 @@
     "processor": "arm",
     "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
   },
-  "git_commit": "931d41b",
-  "git_status_short": "M reports/claims_audit.md\n?? experiments/primary_holonomy_splitting.py\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W64_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7300/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7301/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7302/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7303/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7304/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7305/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7306/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7307/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7308/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7309/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7310/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7311/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7312/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7313/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7314/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7315/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7316/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7317/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7318/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7319/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W128_N4/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W64_N4/\n?? reports/configs/primary_holonomy_splitting_config.json\n?? reports/csv/primary_holonomy_bootstrap.csv\n?? reports/csv/primary_holonomy_candidates.csv\n?? reports/csv/primary_holonomy_claims.csv\n?? reports/csv/primary_holonomy_groups.csv\n?? reports/csv/primary_holonomy_lift_candidates.csv\n?? reports/csv/primary_holonomy_nested_sequence.csv\n?? reports/csv/primary_holonomy_null_controls.csv\n?? reports/csv/primary_holonomy_paired_stats.csv\n?? reports/csv/primary_holonomy_pooling_residuals.csv\n?? reports/csv/primary_holonomy_selector_results.csv\n?? reports/plots/primary_holonomy_delta_vs_depth.pdf\n?? reports/plots/primary_holonomy_delta_vs_random_control.pdf\n?? reports/plots/primary_holonomy_nested_accuracy.pdf\n?? reports/plots/primary_holonomy_null_vs_real.pdf\n?? reports/plots/primary_holonomy_pooling_residuals.pdf\n?? reports/plots/primary_holonomy_selector_regret.pdf\n?? reports/primary_holonomy_splitting_report.md\n?? src/primary_branch_lift.py\n?? src/primary_holonomy.py\n?? src/primary_splitting_selector.py\n?? tests/test_primary_holonomy.py"
+  "git_commit": "2427acf",
+  "git_status_short": "M experiments/primary_holonomy_splitting.py\n M reports/claims_audit.md\n M reports/configs/primary_holonomy_splitting_config.json\n M reports/csv/primary_holonomy_bootstrap.csv\n M reports/csv/primary_holonomy_candidates.csv\n M reports/csv/primary_holonomy_claims.csv\n M reports/csv/primary_holonomy_groups.csv\n M reports/csv/primary_holonomy_lift_candidates.csv\n M reports/csv/primary_holonomy_nested_sequence.csv\n M reports/csv/primary_holonomy_null_controls.csv\n M reports/csv/primary_holonomy_paired_stats.csv\n M reports/csv/primary_holonomy_pooling_residuals.csv\n M reports/csv/primary_holonomy_selector_results.csv\n M reports/plots/primary_holonomy_delta_vs_depth.pdf\n M reports/plots/primary_holonomy_delta_vs_random_control.pdf\n M reports/plots/primary_holonomy_nested_accuracy.pdf\n M reports/plots/primary_holonomy_null_vs_real.pdf\n M reports/plots/primary_holonomy_pooling_residuals.pdf\n M reports/plots/primary_holonomy_selector_regret.pdf\n M reports/primary_holonomy_splitting_report.md\n M src/primary_branch_lift.py\n M src/primary_holonomy.py\n M src/primary_splitting_selector.py\n M tests/test_primary_holonomy.py\n?? experiments/primary_residual_peeling_smoke.py\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W64_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7300/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7301/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7302/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7303/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7304/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7305/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7306/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7307/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7308/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7309/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7310/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7311/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7312/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7313/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7314/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7315/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7316/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7317/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7318/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7319/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W128_N4/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W64_N4/\n?? reports/csv/primary_residual_peeling_smoke.csv\n?? reports/csv/primary_residual_peeling_smoke_paired_stats.csv\n?? reports/csv/primary_residual_peeling_smoke_selected_settings.csv\n?? reports/primary_residual_peeling_smoke_report.md\n?? tests/test_primary_residual_peeling_smoke.py"
 }

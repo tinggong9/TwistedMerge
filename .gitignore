@@ -4,6 +4,7 @@ __pycache__/
 .DS_Store
 .pytest_cache/
 reports/tmp/
+reports/csv/primary_holonomy_selector_results.csv
 data/
 checkpoints/
 !reports/checkpoints/

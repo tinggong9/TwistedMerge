@@ -1,10 +1,12 @@
 comparison,n_pairs,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,wins,ties,losses,sign_test_p,number_of_certified_primary_quotients,number_of_implemented_primary_lifts,number_of_validation_selected_primary_lifts,selected_depth_distribution
-primary_safe_selector_vs_best_fallback,80,0.0,0.0,0.0,0.0,0,80,0,,65,249,0,"{""0"": 80}"
-primary_safe_selector_vs_greedy_soup,80,0.0,0.0,0.0,0.0,0,80,0,,65,249,0,"{""0"": 80}"
-primary_safe_selector_vs_c2m3_permutation,80,0.027350000000000006,0.023083906250000008,0.0330075,-0.10336926268339157,80,0,0,1.6543612251060553e-24,65,249,0,"{""0"": 80}"
-primary_safe_selector_vs_monomial_scale,80,0.018774999999999993,0.016005312499999994,0.02153999999999999,-0.08003101608753205,79,0,1,1.3400325923359048e-22,65,249,0,"{""0"": 80}"
-selected_primary_lift_vs_random_same_branch_count_control,0,,,,,0,0,0,,65,249,0,{}
-selected_primary_lift_vs_wrong_primary_factor_control,0,,,,,0,0,0,,65,249,0,{}
-C2_lift_vs_C4_lift,0,,,,,0,0,0,,65,249,0,{}
-C4_lift_vs_C8_lift,0,,,,,0,0,0,,65,249,0,{}
-C3_lift_vs_C9_lift,0,,,,,0,0,0,,65,249,0,{}
+selected_prime_lift_vs_best_fallback,13,-0.000846153846153864,-0.002807692307692323,0.0011538461538461208,0.02396568533090443,3,2,8,0.2265625,1103,2867,13,"{""1"": 13}"
+selected_prime_lift_vs_greedy_soup,13,-0.000846153846153864,-0.0027692307692307803,0.0011548076923076703,0.02396568533090443,3,2,8,0.2265625,1103,2867,13,"{""1"": 13}"
+selected_prime_lift_vs_c2m3_permutation,13,0.018384615384615367,0.012922115384615344,0.02508173076923073,-0.08970514532235954,13,0,0,0.000244140625,1103,2867,13,"{""1"": 13}"
+selected_prime_lift_vs_monomial_scale,13,0.018,0.013192307692307682,0.02330865384615386,-0.060281329448406515,13,0,0,0.000244140625,1103,2867,13,"{""1"": 13}"
+selected_prime_lift_vs_random_same_branch_count_control,13,0.004884615384615376,0.0013076923076923088,0.009539423076923072,-0.012311426969674919,9,3,1,0.021484375,1103,2867,13,"{""1"": 13}"
+selected_prime_lift_vs_wrong_prime_or_depth_control,13,0.0006923076923076673,-0.0017692307692307964,0.003500961538461515,0.021064876042879543,8,0,5,0.5810546875,1103,2867,13,"{""1"": 13}"
+C2_then_C3_vs_C2_only,0,,,,,0,0,0,,1103,2867,0,{}
+C2_then_C3_vs_C3_only,0,,,,,0,0,0,,1103,2867,0,{}
+depth_C4_control_vs_C2_headline,0,,,,,0,0,0,,1103,2867,0,{}
+depth_C8_control_vs_C4_control,0,,,,,0,0,0,,1103,2867,0,{}
+depth_C9_control_vs_C3_headline,0,,,,,0,0,0,,1103,2867,0,{}

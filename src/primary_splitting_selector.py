@@ -8,13 +8,20 @@ import pandas as pd
 from src.validation_gated_period_index_lift import SelectorPolicy, best_overall_fallback, torsion_safe_selector
 
 
-STRUCTURED_METHOD_PREFIXES = ("primary_C", "mixed_C")
+REAL_HEADLINE_METHOD_PREFIXES = ("prime_C",)
+CONTROLLED_STRUCTURED_METHOD_PREFIXES = ("prime_C", "depth_C")
 
 
 def _num(rows: pd.DataFrame, column: str, default: float = np.nan) -> pd.Series:
     if column not in rows:
         return pd.Series([default] * len(rows), index=rows.index, dtype=float)
     return pd.to_numeric(rows[column], errors="coerce")
+
+
+def _bool_col(rows: pd.DataFrame, column: str, default: bool = False) -> pd.Series:
+    if column not in rows:
+        return pd.Series([default] * len(rows), index=rows.index, dtype=bool)
+    return rows[column].fillna(default).astype(bool)
 
 
 def primary_holonomy_safe_selector(
@@ -38,6 +45,8 @@ def primary_holonomy_safe_selector(
         selected["selected_primary_lift"] = False
         selected["selected_depth"] = 0
         selected["selector_no_test_leakage"] = True
+        selected["selected_by_validation"] = False
+        selected["control_gate_passed"] = False
         return selected
 
     lifts["val_accuracy"] = _num(lifts, "val_accuracy")
@@ -49,12 +58,28 @@ def primary_holonomy_safe_selector(
         - float(lambda_branch) * np.log(np.maximum(1.0, lifts["branch_count"]))
         - float(lambda_residual) * lifts["pooling_residual_q"].fillna(np.inf)
     )
+    candidate_method = lifts["candidate_method"].astype(str)
+    residual_source = lifts.get("residual_source", pd.Series(["real"] * len(lifts), index=lifts.index)).astype(str)
+    relation_status = lifts.get("relation_count_status", pd.Series(["sufficient"] * len(lifts), index=lifts.index)).astype(str)
+    real_headline_selectable = (
+        ~residual_source.eq("controlled_sanity")
+        & candidate_method.str.startswith(REAL_HEADLINE_METHOD_PREFIXES)
+        & _bool_col(lifts, "is_prime_headline", False)
+        & _bool_col(lifts, "eligible_by_observed_primary_depth", False)
+        & ~_bool_col(lifts, "is_depth_control", False)
+        & ~_bool_col(lifts, "is_mixed_control", False)
+        & ~relation_status.eq("underconstrained")
+    )
+    controlled_selectable = (
+        residual_source.eq("controlled_sanity")
+        & candidate_method.str.startswith(CONTROLLED_STRUCTURED_METHOD_PREFIXES)
+    )
 
     eligible = lifts[
         (lifts.get("quotient_certified", False) == True)  # noqa: E712
         & (lifts.get("lift_implemented", False) == True)  # noqa: E712
         & (lifts["pooling_residual_q"] <= float(pooling_threshold))
-        & (lifts["candidate_method"].astype(str).str.startswith(STRUCTURED_METHOD_PREFIXES))
+        & (real_headline_selectable | controlled_selectable)
     ].copy()
     if eligible.empty:
         selected = torsion_safe_selector(fallback_rows, pd.DataFrame(), policy)
@@ -66,6 +91,8 @@ def primary_holonomy_safe_selector(
         selected["pooling_threshold"] = float(pooling_threshold)
         selected["lambda_branch"] = float(lambda_branch)
         selected["lambda_residual"] = float(lambda_residual)
+        selected["selected_by_validation"] = False
+        selected["control_gate_passed"] = False
         return selected
 
     selections = []
@@ -81,6 +108,9 @@ def primary_holonomy_safe_selector(
                 "selected_lift": False,
                 "selected_q_order": 1,
                 "selected_depth": 0,
+                "selected_prime_axis": "none",
+                "selected_by_validation": False,
+                "control_gate_passed": False,
                 "selector_no_test_leakage": True,
                 "selector_epsilon": float(policy.epsilon),
                 "selector_epsilon_control": float(epsilon_control),
@@ -101,22 +131,56 @@ def primary_holonomy_safe_selector(
             lifts["run_id"].astype(str).eq(run_id)
             & lifts["candidate_method"].astype(str).eq("random_same_branch_count_control")
         ].copy()
+        wrong_controls = lifts[
+            lifts["run_id"].astype(str).eq(run_id)
+            & (
+                lifts["candidate_method"].astype(str).eq("wrong_primary_factor_control")
+                | lifts.get("candidate_role", pd.Series([""] * len(lifts), index=lifts.index)).astype(str).str.contains(
+                    "wrong", case=False, na=False
+                )
+                | (
+                    ~lifts.get("residual_source", pd.Series(["real"] * len(lifts), index=lifts.index)).astype(str).eq("controlled_sanity")
+                    & (
+                        _bool_col(lifts, "is_depth_control", False)
+                        | _bool_col(lifts, "is_mixed_control", False)
+                    )
+                )
+            )
+        ].copy()
         control_best = {}
         for q_order, group in controls.groupby("q_order", sort=False):
             group = group.sort_values(["val_accuracy", "val_loss"], ascending=[False, True])
             control_best[int(q_order)] = float(group.iloc[0].get("val_accuracy", -np.inf))
+        wrong_control_best = {}
+        if not wrong_controls.empty:
+            wrong_controls["val_accuracy"] = pd.to_numeric(wrong_controls["val_accuracy"], errors="coerce")
+            wrong_controls["val_loss"] = pd.to_numeric(wrong_controls["val_loss"], errors="coerce")
+            valid_wrong = wrong_controls[wrong_controls["val_accuracy"].notna()].copy()
+            if not valid_wrong.empty:
+                wrong_control_best["all"] = float(valid_wrong["val_accuracy"].max())
+                for q_order, group in valid_wrong.groupby("q_order", sort=False):
+                    group = group.sort_values(["val_accuracy", "val_loss"], ascending=[False, True])
+                    wrong_control_best[int(q_order)] = float(group.iloc[0].get("val_accuracy", -np.inf))
 
         passing_rows = []
         for _, lift in pool.iterrows():
             q_order = int(lift.get("q_order", 1))
             control_val = control_best.get(q_order, -np.inf)
+            wrong_val = max(
+                wrong_control_best.get(q_order, -np.inf),
+                wrong_control_best.get("all", -np.inf),
+            )
             if (
                 float(lift.get("val_accuracy", np.nan)) >= float(base["val_accuracy"]) + float(policy.epsilon)
                 and float(lift.get("val_loss", np.nan)) <= float(base["val_loss"]) + float(policy.loss_slack)
                 and float(lift.get("val_accuracy", np.nan)) >= control_val + float(epsilon_control)
+                and float(lift.get("val_accuracy", np.nan)) >= wrong_val + float(epsilon_control)
             ):
                 lifted = lift.copy()
                 lifted["best_random_same_branch_val_accuracy"] = control_val
+                lifted["best_wrong_prime_or_depth_val_accuracy"] = wrong_val
+                lifted["control_gate_passed"] = True
+                lifted["selected_by_validation"] = True
                 passing_rows.append(lifted)
         if passing_rows:
             passing = pd.DataFrame(passing_rows).sort_values(
@@ -133,6 +197,9 @@ def primary_holonomy_safe_selector(
                     "selected_lift": True,
                     "selected_q_order": int(lift.get("q_order", 1)),
                     "selected_depth": int(lift.get("primary_depth", 0)),
+                    "selected_prime_axis": lift.get("prime_axis", "none"),
+                    "selected_by_validation": True,
+                    "control_gate_passed": True,
                     "selector_no_test_leakage": True,
                     "selector_epsilon": float(policy.epsilon),
                     "selector_epsilon_control": float(epsilon_control),

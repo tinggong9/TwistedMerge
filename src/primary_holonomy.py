@@ -61,6 +61,44 @@ def primary_type_and_depth(q_order: int) -> tuple[str, int]:
     return "mixed", max(p_adic_valuation(q, 2), p_adic_valuation(q, 3))
 
 
+def prime_axis_metadata(q_order: int, observed_order: int) -> dict:
+    """Classify q as a headline prime axis, depth control, or mixed control."""
+
+    q = int(q_order)
+    v2_q = p_adic_valuation(q, 2)
+    v3_q = p_adic_valuation(q, 3)
+    v2_obs = p_adic_valuation(observed_order, 2)
+    v3_obs = p_adic_valuation(observed_order, 3)
+    is_mixed = bool(v2_q > 0 and v3_q > 0)
+    is_prime_headline = q in {2, 3}
+    is_depth_control = bool((q in PRIMARY_Q_2 and q != 2) or (q in PRIMARY_Q_3 and q != 3))
+    is_mixed_control = bool(is_mixed)
+    if v2_q > 0 and v3_q == 0:
+        prime_axis = "C2"
+        observed_depth = v2_obs
+        eligible = v2_obs >= v2_q
+    elif v3_q > 0 and v2_q == 0:
+        prime_axis = "C3"
+        observed_depth = v3_obs
+        eligible = v3_obs >= v3_q
+    elif is_mixed:
+        prime_axis = "C2_then_C3"
+        observed_depth = min(v2_obs, v3_obs)
+        eligible = bool(v2_obs >= v2_q and v3_obs >= v3_q)
+    else:
+        prime_axis = "none"
+        observed_depth = 0
+        eligible = False
+    return {
+        "prime_axis": prime_axis,
+        "is_prime_headline": bool(is_prime_headline),
+        "is_depth_control": bool(is_depth_control),
+        "is_mixed_control": bool(is_mixed_control),
+        "v_p_observed_order": int(observed_depth),
+        "eligible_by_observed_primary_depth": bool(eligible),
+    }
+
+
 def lcm(left: int, right: int) -> int:
     if left == 0 or right == 0:
         return 0
@@ -113,15 +151,25 @@ def candidate_q_orders_for_source(observed_order: int, group_exponent: int | Non
     rows = []
     for q_order in DEFAULT_Q_ORDERS:
         p_type, depth = primary_type_and_depth(q_order)
+        axis = prime_axis_metadata(q_order, observed_order)
         divides = q_divides_primary_source(q_order, observed_order, group_exponent)
+        if divides and axis["eligible_by_observed_primary_depth"] and axis["is_prime_headline"]:
+            role = "prime_headline"
+        elif divides and axis["eligible_by_observed_primary_depth"] and axis["is_depth_control"]:
+            role = "depth_control"
+        elif divides and axis["eligible_by_observed_primary_depth"] and axis["is_mixed_control"]:
+            role = "mixed_control"
+        else:
+            role = "wrong_prime_or_depth_control"
         rows.append(
             {
                 "q_order": int(q_order),
                 "q_name": f"C{int(q_order)}",
                 "primary_type": p_type,
                 "primary_depth": int(depth),
+                **axis,
                 "divides_primary_source": bool(divides),
-                "candidate_role": "primary_candidate" if divides else "wrong_factor_control",
+                "candidate_role": role,
             }
         )
     return rows
@@ -150,6 +198,10 @@ def _primary_residue_from_order(order: int, q_order: int) -> int:
 def _complete_assignment(relations: tuple[TriangleRelation, ...], q_order: int) -> tuple[dict[Permutation, int], int]:
     assignment: dict[Permutation, int] = {}
     conflicts = 0
+    for relation in relations:
+        for element in (relation.first, relation.second, relation.third, relation.holonomy):
+            if element == identity_permutation(len(element)):
+                assignment[element] = 0
     for relation in relations:
         h_residue = _primary_residue_from_order(permutation_order(relation.holonomy), q_order)
         old = assignment.get(relation.holonomy)
@@ -224,6 +276,9 @@ def fit_primary_quotient(
     for _ in range(int(random_restarts)):
         trial = dict(best_assignment)
         for element in elements:
+            if element == identity_permutation(len(element)):
+                trial[element] = 0
+                continue
             if rng.random() < 0.1:
                 trial[element] = int(rng.integers(0, q))
         evaluation = evaluate_primary_assignment(rels, q, trial)

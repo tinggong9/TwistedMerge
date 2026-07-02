@@ -359,6 +359,7 @@ def fit_primary_tables(args: argparse.Namespace, groups: pd.DataFrame, relation_
                         min_relation_count=args.min_relation_count,
                     )
                     and bool(q_meta["divides_primary_source"])
+                    and bool(q_meta["eligible_by_observed_primary_depth"])
                     and activation_eligible
                 )
                 base = {
@@ -462,6 +463,45 @@ def build_selector_outputs(args, run_rows: pd.DataFrame, lifts: pd.DataFrame):
     return selected_df, regret_df, paired
 
 
+def mark_selected_lifts(lifts: pd.DataFrame, selector: pd.DataFrame) -> pd.DataFrame:
+    if lifts.empty:
+        return lifts
+    out = lifts.copy()
+    if "selected_by_validation" not in out:
+        out["selected_by_validation"] = False
+    if "control_gate_passed" not in out:
+        out["control_gate_passed"] = False
+    if selector.empty:
+        return out
+    selected = selector[
+        selector.get("selected_primary_lift", pd.Series(dtype=bool)).fillna(False)
+        & selector.get("selected_by_validation", pd.Series(dtype=bool)).fillna(False)
+    ].copy()
+    if selected.empty:
+        return out
+    selected_keys = {
+        (
+            str(row.get("run_id")),
+            int(row.get("selected_q_order", row.get("q_order", -1))),
+            str(row.get("selected_candidate_method")),
+        )
+        for _, row in selected.iterrows()
+        if pd.notna(row.get("selected_q_order", row.get("q_order", np.nan)))
+    }
+    mask = out.apply(
+        lambda row: (
+            str(row.get("run_id")),
+            int(row.get("q_order", -1)) if pd.notna(row.get("q_order", np.nan)) else -1,
+            str(row.get("candidate_method")),
+        )
+        in selected_keys,
+        axis=1,
+    )
+    out.loc[mask, "selected_by_validation"] = True
+    out.loc[mask, "control_gate_passed"] = True
+    return out
+
+
 def build_nested_sequence(run_rows: pd.DataFrame, lifts: pd.DataFrame) -> pd.DataFrame:
     fallback = best_overall_fallback(run_rows)
     rows = []
@@ -482,7 +522,7 @@ def build_nested_sequence(run_rows: pd.DataFrame, lifts: pd.DataFrame) -> pd.Dat
             }
         )
     structured = lifts[
-        lifts["candidate_method"].astype(str).str.startswith(("primary_C", "mixed_C"))
+        lifts["candidate_method"].astype(str).str.startswith(("prime_C", "depth_C", "mixed_C"))
     ].copy()
     controls = lifts[lifts["candidate_method"].astype(str).eq("random_same_branch_count_control")].copy()
     if not structured.empty:
@@ -541,6 +581,34 @@ def paired_stats(args, selected: pd.DataFrame, fallback_rows: pd.DataFrame, lift
     if default.empty:
         default = selected.copy()
     default = default[~default["run_id"].astype(str).str.startswith("controlled_")].drop_duplicates("run_id")
+    selected_prime = default[default.get("selected_primary_lift", pd.Series(dtype=bool)).fillna(False)].copy()
+    if selected_prime.empty:
+        selected_prime = selected[
+            ~selected["run_id"].astype(str).str.startswith("controlled_")
+            & selected.get("selected_primary_lift", pd.Series(dtype=bool)).fillna(False)
+        ].copy()
+        if not selected_prime.empty:
+            for column in ["selector_epsilon", "selector_epsilon_control", "lambda_branch", "lambda_residual"]:
+                if column in selected_prime:
+                    selected_prime[column] = pd.to_numeric(selected_prime[column], errors="coerce")
+            selected_prime["_finite_loss_slack"] = selected_prime.get("selector_loss_slack", pd.Series(np.inf, index=selected_prime.index)).map(
+                lambda value: float(value) if str(value) != "inf" else np.inf
+            )
+            selected_prime = selected_prime.sort_values(
+                [
+                    "run_id",
+                    "selector_epsilon",
+                    "selector_epsilon_control",
+                    "_finite_loss_slack",
+                    "lambda_branch",
+                    "lambda_residual",
+                    "val_accuracy",
+                    "val_loss",
+                ],
+                ascending=[True, True, True, True, True, True, False, True],
+            ).drop_duplicates("run_id")
+    if not selected_prime.empty and "is_prime_headline" in selected_prime:
+        selected_prime = selected_prime[selected_prime["is_prime_headline"].fillna(False)].copy()
     comparisons = {
         "best_fallback": None,
         "greedy_soup": "greedy_soup",
@@ -557,22 +625,63 @@ def paired_stats(args, selected: pd.DataFrame, fallback_rows: pd.DataFrame, lift
             baseline = fallback_rows[fallback_rows["method"].astype(str).eq(method)].copy()
         baseline = baseline[~baseline["run_id"].astype(str).str.startswith("controlled_")]
         if baseline.empty:
+            rows.append(_empty_paired_row(f"selected_prime_lift_vs_{label}", lifts))
             continue
         baseline = baseline.sort_values(["run_id", "val_accuracy", "val_loss"], ascending=[True, False, True]).drop_duplicates("run_id")
-        merged = default.merge(
+        merged = selected_prime.merge(
             baseline[["run_id", "test_accuracy", "test_loss"]].rename(
                 columns={"test_accuracy": "baseline_test_accuracy", "test_loss": "baseline_test_loss"}
             ),
             on="run_id",
             how="inner",
         )
-        rows.append(_paired_row(args, f"primary_safe_selector_vs_{label}", merged, lifts))
+        rows.append(_paired_row(args, f"selected_prime_lift_vs_{label}", merged, lifts))
+
+    random_control = lifts[
+        ~lifts.get("run_id", pd.Series(dtype=str)).astype(str).str.startswith("controlled_")
+        & lifts.get("candidate_method", pd.Series(dtype=str)).astype(str).eq("random_same_branch_count_control")
+    ].copy()
+    if selected_prime.empty or random_control.empty:
+        rows.append(_empty_paired_row("selected_prime_lift_vs_random_same_branch_count_control", lifts))
+    else:
+        random_control = random_control.sort_values(["run_id", "q_order", "val_accuracy", "val_loss"], ascending=[True, True, False, True]).drop_duplicates(["run_id", "q_order"])
+        merged = selected_prime.merge(
+            random_control[["run_id", "q_order", "test_accuracy", "test_loss"]].rename(
+                columns={"test_accuracy": "baseline_test_accuracy", "test_loss": "baseline_test_loss"}
+            ),
+            on=["run_id", "q_order"],
+            how="inner",
+        )
+        rows.append(_paired_row(args, "selected_prime_lift_vs_random_same_branch_count_control", merged, lifts))
+
+    wrong_control = lifts[
+        ~lifts.get("run_id", pd.Series(dtype=str)).astype(str).str.startswith("controlled_")
+        & (
+            lifts.get("candidate_method", pd.Series(dtype=str)).astype(str).eq("wrong_primary_factor_control")
+            | lifts.get("candidate_role", pd.Series(dtype=str)).astype(str).str.contains("wrong", case=False, na=False)
+            | lifts.get("is_depth_control", pd.Series(dtype=bool)).fillna(False).astype(bool)
+            | lifts.get("is_mixed_control", pd.Series(dtype=bool)).fillna(False).astype(bool)
+        )
+    ].copy()
+    if selected_prime.empty or wrong_control.empty:
+        rows.append(_empty_paired_row("selected_prime_lift_vs_wrong_prime_or_depth_control", lifts))
+    else:
+        wrong_control = wrong_control.sort_values(["run_id", "val_accuracy", "val_loss"], ascending=[True, False, True]).drop_duplicates("run_id")
+        merged = selected_prime.merge(
+            wrong_control[["run_id", "test_accuracy", "test_loss"]].rename(
+                columns={"test_accuracy": "baseline_test_accuracy", "test_loss": "baseline_test_loss"}
+            ),
+            on="run_id",
+            how="inner",
+        )
+        rows.append(_paired_row(args, "selected_prime_lift_vs_wrong_prime_or_depth_control", merged, lifts))
+
     for name in [
-        "selected_primary_lift_vs_random_same_branch_count_control",
-        "selected_primary_lift_vs_wrong_primary_factor_control",
-        "C2_lift_vs_C4_lift",
-        "C4_lift_vs_C8_lift",
-        "C3_lift_vs_C9_lift",
+        "C2_then_C3_vs_C2_only",
+        "C2_then_C3_vs_C3_only",
+        "depth_C4_control_vs_C2_headline",
+        "depth_C8_control_vs_C4_control",
+        "depth_C9_control_vs_C3_headline",
     ]:
         rows.append(_empty_paired_row(name, lifts))
     return pd.DataFrame(rows)
@@ -648,7 +757,8 @@ def _implemented_primary_lift_count(lifts: pd.DataFrame) -> int:
         return 0
     rows = lifts[
         lifts["lift_implemented"].fillna(False)
-        & lifts["candidate_method"].astype(str).str.startswith(("primary_C", "mixed_C"))
+        & lifts.get("residual_source", pd.Series(["real"] * len(lifts), index=lifts.index)).astype(str).eq("real")
+        & lifts["candidate_method"].astype(str).str.startswith("prime_C")
     ].copy()
     key_cols = [col for col in ["run_id", "relation_set_id", "q_order", "candidate_method"] if col in rows]
     if not key_cols:
@@ -658,7 +768,7 @@ def _implemented_primary_lift_count(lifts: pd.DataFrame) -> int:
 
 def build_null_controls(candidates: pd.DataFrame, pooling: pd.DataFrame, selector: pd.DataFrame) -> pd.DataFrame:
     rows = []
-    wrong = candidates[candidates["candidate_role"].astype(str).eq("wrong_factor_control")] if not candidates.empty else pd.DataFrame()
+    wrong = candidates[candidates["candidate_role"].astype(str).str.contains("wrong", case=False, na=False)] if not candidates.empty else pd.DataFrame()
     for family in [
         "random_same_branch_count_control",
         "wrong_primary_factor_control",
@@ -671,7 +781,7 @@ def build_null_controls(candidates: pd.DataFrame, pooling: pd.DataFrame, selecto
             {
                 "null_family": family,
                 "false_primary_certification_rate": float(wrong["quotient_certified"].mean()) if not wrong.empty else 0.0,
-                "false_pooling_pass_rate": float(pooling[pooling["candidate_role"].astype(str).eq("wrong_factor_control")]["pooling_gate_passed"].mean()) if not pooling.empty else 0.0,
+                "false_pooling_pass_rate": float(pooling[pooling["candidate_role"].astype(str).str.contains("wrong", case=False, na=False)]["pooling_gate_passed"].mean()) if not pooling.empty else 0.0,
                 "false_lift_activation_rate": 0.0,
                 "false_validation_selection_rate": float(selector.get("selected_primary_lift", pd.Series(dtype=bool)).mean()) if not selector.empty and family == "wrong_primary_factor_control" else 0.0,
                 "null_delta_vs_fallback": np.nan,
@@ -681,7 +791,7 @@ def build_null_controls(candidates: pd.DataFrame, pooling: pd.DataFrame, selecto
     return pd.DataFrame(rows)
 
 
-def build_claims(groups, candidates, lifts, selector) -> pd.DataFrame:
+def build_claims(groups, candidates, lifts, selector, paired: pd.DataFrame | None = None) -> pd.DataFrame:
     controlled_selected = selector[
         selector["run_id"].astype(str).str.startswith("controlled_")
         & selector.get("selected_primary_lift", pd.Series(dtype=bool)).fillna(False)
@@ -694,32 +804,49 @@ def build_claims(groups, candidates, lifts, selector) -> pd.DataFrame:
     real_certified = candidates[
         candidates["residual_source"].astype(str).eq("real")
         & candidates["quotient_certified"].fillna(False)
+        & candidates["candidate_role"].astype(str).isin(["prime_headline", "depth_control", "mixed_control"])
     ] if not candidates.empty else pd.DataFrame()
+    paired = pd.DataFrame() if paired is None else paired
+    required_positive = [
+        "selected_prime_lift_vs_best_fallback",
+        "selected_prime_lift_vs_random_same_branch_count_control",
+        "selected_prime_lift_vs_wrong_prime_or_depth_control",
+    ]
+    if not paired.empty:
+        paired_index = paired.set_index("comparison", drop=False)
+        real_paired_gate = all(
+            comparison in paired_index.index
+            and float(paired_index.loc[comparison, "n_pairs"]) > 0
+            and float(paired_index.loc[comparison, "paired_accuracy_delta_ci_low"]) > 0.0
+            for comparison in required_positive
+        )
+    else:
+        real_paired_gate = False
     return pd.DataFrame(
         [
             {
-                "claim_id": "controlled_primary_sanity_check",
+                "claim_id": "controlled_prime_primary_sanity_check",
                 "status": "Supported" if {"controlled_C2_primary", "controlled_C3_primary", "controlled_C4_primary"}.issubset(controlled_selected_runs) else "Supported negative",
-                "safe_wording": "Controlled C2/C3/C4 primary sanity rows select the correct implemented primary branch lift by validation." if {"controlled_C2_primary", "controlled_C3_primary", "controlled_C4_primary"}.issubset(controlled_selected_runs) else "Controlled primary sanity did not fully pass; real primary results should not be interpreted as structural wins.",
-                "evidence": "reports/csv/primary_holonomy_selector_results.csv",
+                "safe_wording": "Controlled C2/C3 headline and C4 depth-control sanity rows select the correct implemented branch lift by validation." if {"controlled_C2_primary", "controlled_C3_primary", "controlled_C4_primary"}.issubset(controlled_selected_runs) else "Controlled prime-primary sanity did not fully pass; real primary results should not be interpreted as structural wins.",
+                "evidence": "reports/csv/primary_holonomy_selector_results_manifest.csv",
             },
             {
-                "claim_id": "stable_real_primary_quotients",
+                "claim_id": "stable_real_prime_primary_quotients",
                 "status": "Supported descriptive" if not real_certified.empty else "Supported negative",
-                "safe_wording": "Some real relation sets have certified heuristic 2/3-primary quotient candidates; this is descriptive unless paired lift controls pass.",
+                "safe_wording": "Some real relation sets have certified heuristic C2/C3 headline, depth-control, or mixed-control quotient candidates; this is descriptive unless paired real lift controls pass.",
                 "evidence": "reports/csv/primary_holonomy_candidates.csv",
             },
             {
-                "claim_id": "primary_branch_lift_accuracy_real",
-                "status": "Supported limited" if not real_selected.empty else "Supported negative",
-                "safe_wording": "Real implemented primary branch lifts are only supported when validation-selected and paired controls pass; otherwise the selector falls back.",
+                "claim_id": "prime_primary_branch_lift_accuracy_real",
+                "status": "Supported limited" if real_paired_gate else "Supported negative",
+                "safe_wording": "Real implemented C2/C3 headline branch lift performance is supported only when validation-selected paired deltas have positive lower confidence bounds versus fallback and branch/depth controls.",
                 "evidence": "reports/csv/primary_holonomy_paired_stats.csv",
             },
             {
-                "claim_id": "selector_avoids_harmful_primary_lifts",
+                "claim_id": "selector_avoids_harmful_prime_primary_lifts",
                 "status": "Supported" if real_selected.empty else "Supported limited",
-                "safe_wording": "The validation-only selector falls back on real settings when implemented primary lifts do not clear fallback and same-branch control gates.",
-                "evidence": "reports/csv/primary_holonomy_selector_results.csv",
+                "safe_wording": "The validation-only selector mostly falls back on real settings; selected headline lifts must still clear paired fallback, same-branch, and wrong-prime/depth gates before becoming performance evidence.",
+                "evidence": "reports/csv/primary_holonomy_selector_results_manifest.csv",
             },
             {
                 "claim_id": "real_brauer_or_period_index_residuals",
@@ -815,13 +942,13 @@ def update_claims_audit(reports_dir: Path, claims: pd.DataFrame) -> None:
     end = "<!-- primary-holonomy-splitting:end -->"
     block = [
         start,
-        "## Primary-Factor Holonomy Splitting Audit",
+        "## Prime-Primary Holonomy Splitting Audit",
         "",
-        "Generated by `experiments/primary_holonomy_splitting.py`. This audit covers observed holonomy order, group exponent when available, p-primary factors, and prediction-level branch lifts. It does not support real Brauer/projective, full holonomy splitting, capacity-matched, broad model-merging, or test-selected claims.",
+        "Generated by `experiments/primary_holonomy_splitting.py`. This audit covers observed holonomy order, group exponent when available, headline C2/C3 axes, C4/C8... depth controls, mixed C6/C12... compatibility controls, and prediction-level branch lifts. It does not support real Brauer/projective, full holonomy splitting, capacity-matched, broad model-merging, or test-selected claims.",
         "",
         md_table(claims.to_dict("records"), ["claim_id", "status", "safe_wording", "evidence"]),
         "",
-        "Forbidden wording: real residuals are central Brauer/projective classes; full holonomy is split; primary branch lifts are capacity-matched unless compressed; broad natural model-merging wins; test accuracy was used for selection.",
+        "Forbidden wording: C4/C8 are new prime axes; C6/C12 are new primary phenomena; real residuals are central Brauer/projective classes; full holonomy is split; primary branch lifts are capacity-matched unless compressed; broad natural model-merging wins; test accuracy was used for selection.",
         end,
     ]
     text = path.read_text(encoding="utf-8")
@@ -845,12 +972,41 @@ def write_report(args, outputs, claims):
         ~selector["run_id"].astype(str).str.startswith("controlled_")
         & selector.get("selected_primary_lift", pd.Series(dtype=bool)).fillna(False)
     ] if not selector.empty else pd.DataFrame()
+    axis_counts = []
+    if not candidates.empty:
+        for (source, axis, role), group in candidates.groupby(["residual_source", "prime_axis", "candidate_role"], dropna=False, sort=True):
+            axis_counts.append(
+                {
+                    "residual_source": source,
+                    "prime_axis": axis,
+                    "candidate_role": role,
+                    "candidate_rows": int(len(group)),
+                    "certified_rows": int(group["quotient_certified"].fillna(False).sum()) if "quotient_certified" in group else 0,
+                }
+            )
+    implemented_real = lifts[
+        lifts.get("residual_source", pd.Series(["real"] * len(lifts), index=lifts.index)).astype(str).eq("real")
+        & lifts.get("lift_implemented", pd.Series(dtype=bool)).fillna(False)
+        & lifts.get("is_prime_headline", pd.Series(dtype=bool)).fillna(False)
+    ] if not lifts.empty else pd.DataFrame()
+    implemented_real_summary = []
+    if not implemented_real.empty:
+        for q_order, group in implemented_real.groupby("q_order", sort=True):
+            implemented_real_summary.append(
+                {
+                    "q_order": int(q_order),
+                    "candidate_method": ",".join(sorted(group["candidate_method"].astype(str).unique())),
+                    "rows": int(len(group)),
+                    "unique_runs": int(group["run_id"].astype(str).nunique()),
+                    "selected_by_validation_rows": int(group.get("selected_by_validation", pd.Series(dtype=bool)).fillna(False).sum()),
+                }
+            )
     interpretation = (
-        "Case C: implemented real C2 branch-lift rows exist, but the real validation-safe selector falls back; primary quotient evidence remains descriptive for real data."
+        "Case C: implemented real C2 branch-lift rows exist, real C3 branch-lift rows are not implemented/found, and the real validation-safe selector falls back; prime-primary quotient evidence remains descriptive for real data."
         if real_selected.empty
-        else "Case B: primary lifts are selected in limited real settings and must be judged against same-branch controls."
+        else "Case B: headline prime lifts are selected in limited real settings and must be judged against fallback, same-branch, and wrong-prime/depth controls."
     )
-    report = f"""# Primary Holonomy Splitting Report
+    report = f"""# Prime-Primary Holonomy Splitting Report
 
 Generated by `experiments/primary_holonomy_splitting.py`.
 
@@ -869,11 +1025,19 @@ Generated by `experiments/primary_holonomy_splitting.py`.
 {git_output("status", "--short")}
 ```
 
-## Primary Decomposition
+## Prime-Primary Decomposition
 
-This experiment estimates observed holonomy order and, where exact closure is available, group exponent.  It tests nested cyclic primary branch factors `1 -> 2 -> 4 -> 8 -> 16 -> 32` and `1 -> 3 -> 9 -> 27`, plus mixed controls.  This differs from the previous arbitrary small-quotient scan because branch factors are tied to `v2` and `v3` content of the observed holonomy order or exact exponent.
+This experiment estimates observed holonomy order and, where exact closure is available, group exponent.  The headline axes are `C2` and `C3`.  Powers such as `C4`, `C8`, `C9`, and `C27` are depth controls, not new prime axes.  Mixed orders such as `C6`, `C12`, `C18`, and `C36` are compatibility controls for combined 2/3-primary content, not new primary phenomena.
 
 This is not a central Brauer/projective or real period-index experiment.
+
+## Axis and Control Counts
+
+{md_table(axis_counts, ["residual_source", "prime_axis", "candidate_role", "candidate_rows", "certified_rows"], 80)}
+
+## Implemented Real Headline Lifts
+
+{md_table(implemented_real_summary, ["q_order", "candidate_method", "rows", "unique_runs", "selected_by_validation_rows"], 20)}
 
 ## Controlled Sanity Check
 
@@ -887,7 +1051,7 @@ This is not a central Brauer/projective or real period-index experiment.
 
 ## Primary Quotient Candidates
 
-{md_table(candidates.to_dict("records"), ["residual_source", "aggregation_level", "relation_set_id", "q_name", "primary_type", "primary_depth", "candidate_role", "relation_violation_rate", "quotient_holonomy_nontrivial_rate", "quotient_holonomy_entropy", "quotient_certified", "quotient_status"], 80)}
+{md_table(candidates.to_dict("records"), ["residual_source", "aggregation_level", "relation_set_id", "q_name", "prime_axis", "is_prime_headline", "is_depth_control", "is_mixed_control", "primary_depth", "v_p_observed_order", "eligible_by_observed_primary_depth", "candidate_role", "relation_violation_rate", "quotient_holonomy_nontrivial_rate", "quotient_holonomy_entropy", "quotient_certified", "quotient_status"], 80)}
 
 ## Bootstrap Stability
 
@@ -907,7 +1071,7 @@ See `reports/csv/primary_holonomy_bootstrap.csv` for bootstrap rates and relatio
 
 ## Selector Table
 
-{md_table(selector.to_dict("records"), ["run_id", "selected_candidate_method", "selected_primary_lift", "selected_q_order", "selected_depth", "val_accuracy", "test_accuracy", "selector_no_test_leakage"], 80)}
+{md_table(selector.to_dict("records"), ["run_id", "selected_candidate_method", "selected_primary_lift", "selected_q_order", "selected_prime_axis", "selected_depth", "selected_by_validation", "control_gate_passed", "val_accuracy", "test_accuracy", "selector_no_test_leakage"], 80)}
 
 ## Paired Statistics
 
@@ -921,6 +1085,7 @@ See `reports/csv/primary_holonomy_bootstrap.csv` for bootstrap rates and relatio
 
 - Do not claim real residuals are central Brauer/projective classes.
 - Do not claim full holonomy is split.
+- Do not claim `C4`/`C8` are new prime axes or `C6`/`C12` are new primary phenomena.
 - Do not call primary branch lifts capacity-matched unless compressed/capacity-matched models are implemented.
 - Do not claim broad natural model-merging wins.
 - Test accuracy is report-only; selection uses validation only.
@@ -940,6 +1105,37 @@ def stringify(df: pd.DataFrame) -> pd.DataFrame:
         if out[col].map(lambda value: isinstance(value, (dict, list, tuple))).any():
             out[col] = out[col].map(lambda value: json.dumps(value, sort_keys=True) if isinstance(value, (dict, list, tuple)) else value)
     return out
+
+
+def write_sharded_csv(df: pd.DataFrame, path: Path, rows_per_shard: int = 50_000) -> Path:
+    """Write a large CSV as GitHub-safe shard files plus a manifest."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    for stale in path.parent.glob(f"{path.stem}_part_*.csv"):
+        stale.unlink()
+    if path.exists():
+        path.unlink()
+    rows = []
+    total_rows = int(len(df))
+    n_shards = max(1, math.ceil(total_rows / int(rows_per_shard)))
+    for shard_idx in range(n_shards):
+        start = shard_idx * int(rows_per_shard)
+        stop = min(total_rows, start + int(rows_per_shard))
+        shard_path = path.parent / f"{path.stem}_part_{shard_idx:03d}.csv"
+        df.iloc[start:stop].to_csv(shard_path, index=False, lineterminator="\n")
+        rows.append(
+            {
+                "artifact": path.name,
+                "shard_path": str(shard_path.relative_to(ROOT)),
+                "row_start_inclusive": int(start),
+                "row_stop_exclusive": int(stop),
+                "row_count": int(stop - start),
+                "byte_size": int(shard_path.stat().st_size),
+            }
+        )
+    manifest = path.parent / f"{path.stem}_manifest.csv"
+    pd.DataFrame(rows).to_csv(manifest, index=False, lineterminator="\n")
+    return manifest
 
 
 def main() -> None:
@@ -985,6 +1181,7 @@ def main() -> None:
     run_rows = load_run_rows(args, run_ids)
     lifts = build_lift_tables(args, pooling, run_rows, relation_members)
     selector, regret, paired = build_selector_outputs(args, run_rows, lifts)
+    lifts = mark_selected_lifts(lifts, selector)
     nested = build_nested_sequence(pd.concat([run_rows, controlled_fallback_rows()], ignore_index=True, sort=False), lifts)
     nulls = build_null_controls(candidates, pooling, selector)
     outputs = {
@@ -999,7 +1196,7 @@ def main() -> None:
         "nulls": nulls,
         "paired": paired,
     }
-    claims = build_claims(groups, candidates, lifts, selector)
+    claims = build_claims(groups, candidates, lifts, selector, paired)
 
     csv_dir = args.reports_dir / "csv"
     stringify(groups).to_csv(csv_dir / "primary_holonomy_groups.csv", index=False, lineterminator="\n")
@@ -1008,7 +1205,7 @@ def main() -> None:
     stringify(pooling).to_csv(csv_dir / "primary_holonomy_pooling_residuals.csv", index=False, lineterminator="\n")
     stringify(lifts).to_csv(csv_dir / "primary_holonomy_lift_candidates.csv", index=False, lineterminator="\n")
     stringify(nested).to_csv(csv_dir / "primary_holonomy_nested_sequence.csv", index=False, lineterminator="\n")
-    stringify(selector).to_csv(csv_dir / "primary_holonomy_selector_results.csv", index=False, lineterminator="\n")
+    write_sharded_csv(stringify(selector), csv_dir / "primary_holonomy_selector_results.csv")
     stringify(nulls).to_csv(csv_dir / "primary_holonomy_null_controls.csv", index=False, lineterminator="\n")
     stringify(paired).to_csv(csv_dir / "primary_holonomy_paired_stats.csv", index=False, lineterminator="\n")
     stringify(claims).to_csv(csv_dir / "primary_holonomy_claims.csv", index=False, lineterminator="\n")

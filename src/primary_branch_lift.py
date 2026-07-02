@@ -11,17 +11,33 @@ IMPLEMENTED_REAL_Q_TO_METHOD = {
 }
 
 
-def primary_method_name(q_order: int, primary_type: str) -> str:
+def primary_method_name(
+    q_order: int,
+    primary_type: str,
+    candidate_role: str | None = None,
+    prime_axis: str | None = None,
+) -> str:
     q = int(q_order)
+    role = str(candidate_role or "")
+    axis = str(prime_axis or "")
+    if q in {4, 8, 16, 32, 9, 27}:
+        return f"depth_C{q}_branch_lift"
+    if role == "prime_headline" and q in {2, 3}:
+        return f"prime_C{q}_branch_lift"
+    if role == "depth_control":
+        return f"depth_C{q}_branch_lift"
+    if role == "mixed_control" or str(primary_type) == "mixed" or axis == "C2_then_C3":
+        return f"mixed_C{q}_compatibility_control"
     if str(primary_type) == "mixed":
-        return f"mixed_C{q}_branch_lift"
-    return f"primary_C{q}_branch_lift"
+        return f"mixed_C{q}_compatibility_control"
+    return f"prime_C{q}_branch_lift"
 
 
 def branch_capacity_metadata(q_order: int, lift_implemented: bool, is_control: bool = False) -> dict:
     q = int(max(1, q_order))
     return {
         "branch_count": q,
+        "capacity_multiplier": float(q),
         "parameter_multiplier": float(q),
         "inference_multiplier": float(q),
         "is_single_model": False if q > 1 else True,
@@ -32,6 +48,8 @@ def branch_capacity_metadata(q_order: int, lift_implemented: bool, is_control: b
 
 
 def _best_method_row(run_rows: pd.DataFrame, run_id: str, method: str) -> dict | None:
+    if run_rows.empty or "run_id" not in run_rows or "method" not in run_rows:
+        return None
     rows = run_rows[
         run_rows["run_id"].astype(str).eq(str(run_id))
         & run_rows["method"].astype(str).eq(str(method))
@@ -80,16 +98,27 @@ def build_real_primary_lift_rows(
     if candidate_rows.empty:
         return pd.DataFrame()
     base_columns = [
+        "residual_source",
         "relation_set_id",
         "aggregation_level",
+        "setting_id",
         "dataset",
+        "architecture",
         "n_models",
         "width",
+        "domain_shift",
         "matching",
+        "seed",
         "q_order",
         "q_name",
         "primary_type",
         "primary_depth",
+        "prime_axis",
+        "is_prime_headline",
+        "is_depth_control",
+        "is_mixed_control",
+        "v_p_observed_order",
+        "eligible_by_observed_primary_depth",
         "candidate_role",
         "divides_primary_source",
         "quotient_certified",
@@ -105,7 +134,12 @@ def build_real_primary_lift_rows(
     for _, candidate in candidate_rows.iterrows():
         q_order = int(candidate.get("q_order", 1))
         primary_type = str(candidate.get("primary_type", ""))
-        method = primary_method_name(q_order, primary_type)
+        method = primary_method_name(
+            q_order,
+            primary_type,
+            candidate.get("candidate_role", ""),
+            candidate.get("prime_axis", ""),
+        )
         member_run_ids = relation_members.get(str(candidate.get("relation_set_id")), [])
         if not member_run_ids and candidate.get("aggregation_level") == "run_id":
             member_run_ids = [str(candidate.get("run_id", candidate.get("relation_set_id")))]
@@ -113,7 +147,12 @@ def build_real_primary_lift_rows(
             member_run_ids = [""]
         for run_id in member_run_ids:
             implemented_method = IMPLEMENTED_REAL_Q_TO_METHOD.get(q_order)
-            implemented = implemented_method is not None and bool(candidate.get("divides_primary_source", False))
+            implemented = (
+                implemented_method is not None
+                and bool(candidate.get("divides_primary_source", False))
+                and bool(candidate.get("eligible_by_observed_primary_depth", q_order in {2, 3}))
+                and bool(candidate.get("is_prime_headline", q_order in {2, 3}))
+            )
             source = _best_method_row(run_rows, run_id, implemented_method) if implemented_method else None
             lift_implemented = bool(implemented and source is not None)
             core = {column: candidate.get(column, np.nan) for column in base_columns}
@@ -126,14 +165,17 @@ def build_real_primary_lift_rows(
                     "uses_validation_data": False,
                     "uses_test_data_for_selection": False,
                     "reason": "implemented_from_twisted_rank_lift_2" if lift_implemented else "no_real_q_branch_prediction_available",
+                    "implemented_real_lift": bool(lift_implemented),
+                    "selected_by_validation": False,
+                    "control_gate_passed": False,
                     **_metrics_from_row(source if lift_implemented else None),
                     **branch_capacity_metadata(q_order, lift_implemented),
                 }
             )
-            if q_order == 2:
+            if q_order in {2, 3} and bool(candidate.get("is_prime_headline", q_order in {2, 3})):
                 for control_method, source_method in [
-                    ("random_same_branch_count_control", "random_branch_ensemble_2"),
-                    ("wrong_primary_factor_control", "validation_branch_ensemble_2"),
+                    ("random_same_branch_count_control", f"random_branch_ensemble_{q_order}"),
+                    ("wrong_primary_factor_control", f"validation_branch_ensemble_{q_order}"),
                 ]:
                     control_source = _best_method_row(run_rows, run_id, source_method)
                     control_impl = control_source is not None
@@ -146,6 +188,9 @@ def build_real_primary_lift_rows(
                             "uses_validation_data": control_method == "wrong_primary_factor_control",
                             "uses_test_data_for_selection": False,
                             "reason": "same_branch_control_from_fixed_setting_rows" if control_impl else "control_row_missing",
+                            "implemented_real_lift": False,
+                            "selected_by_validation": False,
+                            "control_gate_passed": bool(control_impl),
                             **_metrics_from_row(control_source if control_impl else None),
                             **branch_capacity_metadata(q_order, control_impl, is_control=True),
                         }
@@ -171,7 +216,16 @@ def build_controlled_primary_lift_rows(candidate_rows: pd.DataFrame) -> pd.DataF
         wrong_acc = 0.69
         core = candidate.to_dict()
         for method, acc, implemented in [
-            (primary_method_name(q_order, candidate.get("primary_type", "")), lift_acc, True),
+            (
+                primary_method_name(
+                    q_order,
+                    candidate.get("primary_type", ""),
+                    candidate.get("candidate_role", ""),
+                    candidate.get("prime_axis", ""),
+                ),
+                lift_acc,
+                True,
+            ),
             ("random_same_branch_count_control", random_acc, True),
             ("wrong_primary_factor_control", wrong_acc, True),
         ]:
@@ -190,6 +244,9 @@ def build_controlled_primary_lift_rows(candidate_rows: pd.DataFrame) -> pd.DataF
                     "uses_validation_data": False,
                     "uses_test_data_for_selection": False,
                     "reason": "controlled_correct_primary_factor" if correct else "controlled_wrong_primary_factor",
+                    "implemented_real_lift": False,
+                    "selected_by_validation": False,
+                    "control_gate_passed": bool(implemented and method.endswith("control")),
                     **branch_capacity_metadata(q_order, implemented, is_control=method.endswith("control")),
                     "best_fallback_validation_accuracy": base_acc,
                     "best_fallback_test_accuracy": base_acc - 0.01,
