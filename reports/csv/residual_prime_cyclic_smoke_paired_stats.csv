@@ -1,0 +1,5 @@
+dataset,certification_status,n_rows,n_prime_residual_rows,implemented_corrected_merge_rows,implemented_branch_lift_rows,selected_by_validation_rows,mean_validation_delta_vs_baseline,claim_status
+fashion_mnist,certified_cyclic_Cp_quotient,4,4,0,0,0,,diagnostic_smoke_summary
+fashion_mnist,not_prime_residual,2,0,0,0,0,,diagnostic_smoke_summary
+mnist,certified_cyclic_Cp_quotient,4,4,0,0,0,,diagnostic_smoke_summary
+mnist,not_prime_residual,2,0,0,0,0,,diagnostic_smoke_summary
