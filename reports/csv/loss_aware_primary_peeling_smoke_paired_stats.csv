@@ -1,0 +1,11 @@
+dataset,candidate_role,n_rows,n_finite_validation_delta,mean_validation_delta_vs_baseline,best_validation_delta_vs_baseline,mean_test_delta_vs_baseline,selected_by_validation_rows,claim_status
+fashion_mnist,best_permutation_cycle,6,6,-0.01191666666666665,0.0,-0.014833333333333365,0,real_negative_or_control_blocked
+fashion_mnist,best_quotient_residual,6,6,-0.0032499999999999938,0.0,-0.0037500000000000124,0,real_negative_or_control_blocked
+fashion_mnist,combined_objective,6,6,-0.008666666666666656,0.0,-0.011083333333333353,0,real_negative_or_control_blocked
+fashion_mnist,minimal_displacement,6,6,-0.0032499999999999938,0.0,-0.0037500000000000124,0,real_negative_or_control_blocked
+fashion_mnist,no_correction_baseline,6,6,0.0,0.0,0.0,0,real_negative_or_control_blocked
+mnist,best_permutation_cycle,6,6,0.003333333333333336,0.0050000000000000044,0.006000000000000005,0,real_negative_or_control_blocked
+mnist,best_quotient_residual,6,6,0.0025000000000000022,0.0050000000000000044,0.004500000000000004,0,real_negative_or_control_blocked
+mnist,combined_objective,6,6,0.0025000000000000022,0.0050000000000000044,0.004500000000000004,0,real_negative_or_control_blocked
+mnist,minimal_displacement,6,6,0.0025000000000000022,0.0050000000000000044,0.004500000000000004,0,real_negative_or_control_blocked
+mnist,no_correction_baseline,6,6,0.0,0.0,0.0,0,real_negative_or_control_blocked
