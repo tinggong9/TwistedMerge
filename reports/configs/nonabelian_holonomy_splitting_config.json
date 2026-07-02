@@ -1,0 +1,43 @@
+{
+  "args": {
+    "bootstrap_ci_samples": 500,
+    "bootstrap_samples": 100,
+    "certification_reduction_threshold": 0.25,
+    "datasets": "mnist,fashion_mnist",
+    "max_exact_representation_order": 256,
+    "max_generators": 12,
+    "max_group_order": 512,
+    "max_settings": 160,
+    "model_counts": "3,4",
+    "no_update_claims_audit": false,
+    "nulls_per_family": 30,
+    "reduction_thresholds": "0.1,0.25,0.5",
+    "reports_dir": "reports",
+    "seed": 11491,
+    "selector_epsilons": "0.0,0.0005,0.001,0.002",
+    "selector_loss_slacks": "0.0,0.005,0.01,inf",
+    "widths": ""
+  },
+  "argv": [
+    "experiments/nonabelian_holonomy_splitting.py",
+    "--reports-dir",
+    "reports"
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/nonabelian_holonomy_splitting.py --reports-dir reports",
+  "environment": {
+    "git_commit": "f923323",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "git_commit": "f923323",
+  "git_status_short": "M reports/claims_audit.md\n?? experiments/nonabelian_holonomy_splitting.py\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W64_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7300/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7301/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7302/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7303/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7304/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7305/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7306/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7307/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7308/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7309/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7310/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7311/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7312/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7313/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7314/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7315/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7316/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7317/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7318/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7319/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W128_N4/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W64_N4/\n?? reports/configs/nonabelian_holonomy_splitting_config.json\n?? reports/csv/nonabelian_holonomy_bootstrap.csv\n?? reports/csv/nonabelian_holonomy_claims.csv\n?? reports/csv/nonabelian_holonomy_groups.csv\n?? reports/csv/nonabelian_holonomy_lift_candidates.csv\n?? reports/csv/nonabelian_holonomy_null_controls.csv\n?? reports/csv/nonabelian_holonomy_paired_stats.csv\n?? reports/csv/nonabelian_holonomy_representations.csv\n?? reports/csv/nonabelian_holonomy_selector_results.csv\n?? reports/csv/nonabelian_holonomy_splitting_scores.csv\n?? reports/nonabelian_holonomy_splitting_report.md\n?? reports/plots/nonabelian_group_order_vs_split_gain.pdf\n?? reports/plots/nonabelian_holonomy_reduction.pdf\n?? reports/plots/nonabelian_lift_delta_vs_fallback.pdf\n?? reports/plots/nonabelian_null_vs_real_split.pdf\n?? reports/plots/nonabelian_selector_regret.pdf\n?? src/nonabelian_holonomy.py\n?? src/nonabelian_lift_candidates.py\n?? src/nonabelian_representation_index.py\n?? tests/test_nonabelian_holonomy.py"
+}

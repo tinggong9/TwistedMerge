@@ -1,0 +1,7 @@
+claim_id,status,safe_wording,evidence
+real_noncentral_holonomy,Supported,Real residuals contain noncentral holonomy under the tested permutation structure group.,reports/csv/nonabelian_holonomy_groups.csv
+finite_nonabelian_group_inference,Supported descriptive,Finite nonabelian holonomy groups are inferred exactly only for the listed bounded settings; large closures are descriptive/truncated.,reports/csv/nonabelian_holonomy_groups.csv
+representation_splitting_diagnostic,Supported negative,The tested bounded representation candidates do not reduce diagnostic holonomy residuals in this run.,reports/csv/nonabelian_holonomy_splitting_scores.csv
+nonabelian_model_lift_performance,Supported negative,"No implemented nonabelian model lift was available in this run, so no model-level lift improvement is claimed.",reports/csv/nonabelian_holonomy_lift_candidates.csv
+nonabelian_safe_selector,Supported,The validation-safe selector falls back to ordinary validated baselines when no implemented lift passes gates.,reports/csv/nonabelian_holonomy_selector_results.csv
+real_brauer_projective_residuals,Not supported,Do not claim real residuals are central Brauer/projective or period-index classes from this nonabelian experiment.,reports/nonabelian_holonomy_splitting_report.md

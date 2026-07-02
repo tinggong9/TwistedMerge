@@ -1,0 +1,7 @@
+comparison,baseline,n_pairs,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,accuracy_wins,accuracy_ties,accuracy_losses,sign_test_two_sided_p,number_of_detected_noncentral_groups,number_of_diagnostic_split_successes,number_of_implemented_lifts,number_of_validation_selected_lifts,selection_used_validation_only
+nonabelian_holonomy_safe_selector_vs_best_fallback,best_fallback,160,0.0,0.0,0.0,0.0,0,160,0,,160,0,0,0,True
+nonabelian_holonomy_safe_selector_vs_greedy_soup,greedy_soup,160,-1.8750000000000015e-05,-5.625000000000005e-05,0.0,0.0003036874592304225,0,159,1,1.0,160,0,0,0,True
+nonabelian_holonomy_safe_selector_vs_c2m3_permutation,c2m3_permutation,160,0.025859375,0.022888359375000004,0.029356015625000002,-0.09768947827219962,158,2,0,5.473822126268817e-48,160,0,0,0,True
+nonabelian_holonomy_safe_selector_vs_monomial_scale,monomial_scale,160,0.01998749999999999,0.018145078124999995,0.022059765624999984,-0.0815703527867794,157,1,2,3.481624563413281e-44,160,0,0,0,True
+best_nonabelian_lift_vs_random_same_rank_lift_control,random_same_rank_lift_control,0,,,,,0,0,0,,160,0,0,0,True
+best_nonabelian_lift_vs_same_rank_widened_control,same_rank_widened_control,0,,,,,0,0,0,,160,0,0,0,True

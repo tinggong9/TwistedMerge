@@ -1,0 +1,7 @@
+null_family,n_null,false_split_rate,false_lift_rate,false_validation_selection_rate,null_holonomy_reduction_mean,null_holonomy_reduction_ci_low,null_holonomy_reduction_ci_high,diagnostic_only
+random_permutation_group_same_degree,30,0.0,0.0,0.0,0.0,0.0,0.0,True
+shuffled_edge_maps_unrelated_settings,30,0.0,0.0,0.0,0.0,0.0,0.0,True
+noncentral_random_holonomy_no_consistent_action,30,0.0,0.0,0.0,0.0,0.0,0.0,True
+fake_finite_group_randomized_labels,30,0.0,0.0,0.0,0.0,0.0,0.0,True
+same_group_random_edge_assignment,30,0.0,0.0,0.0,0.0,0.0,0.0,True
+same_dimension_random_action,30,0.0,0.0,0.0,0.0,0.0,0.0,True
