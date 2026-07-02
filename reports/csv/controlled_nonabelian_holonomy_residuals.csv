@@ -1,0 +1,901 @@
+run_id,group_name,family,seed,hidden_width,group_order,holonomy_element,holonomy_order,is_holonomy_central,stable_group_action,ordinary_sync_residual,branch_action_residual,naive_representation_residual,invariant_pooling_residual,pre_lift_connection_residual,post_lift_connection_residual,invariant_projection_residual
+S3_trivial_coboundary_W12_seed0,S3,trivial_coboundary,0,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed1,S3,trivial_coboundary,1,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed2,S3,trivial_coboundary,2,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed3,S3,trivial_coboundary,3,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed4,S3,trivial_coboundary,4,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed5,S3,trivial_coboundary,5,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed6,S3,trivial_coboundary,6,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed7,S3,trivial_coboundary,7,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed8,S3,trivial_coboundary,8,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed9,S3,trivial_coboundary,9,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed10,S3,trivial_coboundary,10,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed11,S3,trivial_coboundary,11,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed12,S3,trivial_coboundary,12,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed13,S3,trivial_coboundary,13,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed14,S3,trivial_coboundary,14,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed15,S3,trivial_coboundary,15,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed16,S3,trivial_coboundary,16,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed17,S3,trivial_coboundary,17,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed18,S3,trivial_coboundary,18,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed19,S3,trivial_coboundary,19,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed20,S3,trivial_coboundary,20,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed21,S3,trivial_coboundary,21,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed22,S3,trivial_coboundary,22,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed23,S3,trivial_coboundary,23,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed24,S3,trivial_coboundary,24,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed25,S3,trivial_coboundary,25,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed26,S3,trivial_coboundary,26,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed27,S3,trivial_coboundary,27,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed28,S3,trivial_coboundary,28,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed29,S3,trivial_coboundary,29,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed30,S3,trivial_coboundary,30,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed31,S3,trivial_coboundary,31,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed32,S3,trivial_coboundary,32,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed33,S3,trivial_coboundary,33,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed34,S3,trivial_coboundary,34,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed35,S3,trivial_coboundary,35,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed36,S3,trivial_coboundary,36,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed37,S3,trivial_coboundary,37,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed38,S3,trivial_coboundary,38,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed39,S3,trivial_coboundary,39,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed40,S3,trivial_coboundary,40,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed41,S3,trivial_coboundary,41,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed42,S3,trivial_coboundary,42,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed43,S3,trivial_coboundary,43,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed44,S3,trivial_coboundary,44,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed45,S3,trivial_coboundary,45,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed46,S3,trivial_coboundary,46,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed47,S3,trivial_coboundary,47,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed48,S3,trivial_coboundary,48,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W12_seed49,S3,trivial_coboundary,49,12,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed0,S3,trivial_coboundary,0,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed1,S3,trivial_coboundary,1,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed2,S3,trivial_coboundary,2,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed3,S3,trivial_coboundary,3,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed4,S3,trivial_coboundary,4,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed5,S3,trivial_coboundary,5,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed6,S3,trivial_coboundary,6,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed7,S3,trivial_coboundary,7,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed8,S3,trivial_coboundary,8,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed9,S3,trivial_coboundary,9,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed10,S3,trivial_coboundary,10,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed11,S3,trivial_coboundary,11,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed12,S3,trivial_coboundary,12,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed13,S3,trivial_coboundary,13,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed14,S3,trivial_coboundary,14,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed15,S3,trivial_coboundary,15,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed16,S3,trivial_coboundary,16,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed17,S3,trivial_coboundary,17,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed18,S3,trivial_coboundary,18,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed19,S3,trivial_coboundary,19,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed20,S3,trivial_coboundary,20,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed21,S3,trivial_coboundary,21,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed22,S3,trivial_coboundary,22,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed23,S3,trivial_coboundary,23,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed24,S3,trivial_coboundary,24,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed25,S3,trivial_coboundary,25,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed26,S3,trivial_coboundary,26,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed27,S3,trivial_coboundary,27,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed28,S3,trivial_coboundary,28,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed29,S3,trivial_coboundary,29,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed30,S3,trivial_coboundary,30,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed31,S3,trivial_coboundary,31,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed32,S3,trivial_coboundary,32,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed33,S3,trivial_coboundary,33,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed34,S3,trivial_coboundary,34,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed35,S3,trivial_coboundary,35,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed36,S3,trivial_coboundary,36,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed37,S3,trivial_coboundary,37,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed38,S3,trivial_coboundary,38,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed39,S3,trivial_coboundary,39,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed40,S3,trivial_coboundary,40,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed41,S3,trivial_coboundary,41,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed42,S3,trivial_coboundary,42,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed43,S3,trivial_coboundary,43,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed44,S3,trivial_coboundary,44,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed45,S3,trivial_coboundary,45,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed46,S3,trivial_coboundary,46,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed47,S3,trivial_coboundary,47,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed48,S3,trivial_coboundary,48,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W24_seed49,S3,trivial_coboundary,49,24,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed0,S3,trivial_coboundary,0,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed1,S3,trivial_coboundary,1,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed2,S3,trivial_coboundary,2,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed3,S3,trivial_coboundary,3,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed4,S3,trivial_coboundary,4,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed5,S3,trivial_coboundary,5,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed6,S3,trivial_coboundary,6,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed7,S3,trivial_coboundary,7,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed8,S3,trivial_coboundary,8,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed9,S3,trivial_coboundary,9,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed10,S3,trivial_coboundary,10,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed11,S3,trivial_coboundary,11,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed12,S3,trivial_coboundary,12,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed13,S3,trivial_coboundary,13,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed14,S3,trivial_coboundary,14,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed15,S3,trivial_coboundary,15,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed16,S3,trivial_coboundary,16,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed17,S3,trivial_coboundary,17,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed18,S3,trivial_coboundary,18,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed19,S3,trivial_coboundary,19,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed20,S3,trivial_coboundary,20,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed21,S3,trivial_coboundary,21,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed22,S3,trivial_coboundary,22,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed23,S3,trivial_coboundary,23,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed24,S3,trivial_coboundary,24,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed25,S3,trivial_coboundary,25,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed26,S3,trivial_coboundary,26,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed27,S3,trivial_coboundary,27,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed28,S3,trivial_coboundary,28,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed29,S3,trivial_coboundary,29,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed30,S3,trivial_coboundary,30,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed31,S3,trivial_coboundary,31,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed32,S3,trivial_coboundary,32,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed33,S3,trivial_coboundary,33,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed34,S3,trivial_coboundary,34,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed35,S3,trivial_coboundary,35,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed36,S3,trivial_coboundary,36,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed37,S3,trivial_coboundary,37,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed38,S3,trivial_coboundary,38,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed39,S3,trivial_coboundary,39,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed40,S3,trivial_coboundary,40,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed41,S3,trivial_coboundary,41,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed42,S3,trivial_coboundary,42,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed43,S3,trivial_coboundary,43,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed44,S3,trivial_coboundary,44,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed45,S3,trivial_coboundary,45,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed46,S3,trivial_coboundary,46,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed47,S3,trivial_coboundary,47,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed48,S3,trivial_coboundary,48,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_trivial_coboundary_W48_seed49,S3,trivial_coboundary,49,48,6,"[0, 1, 2]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed0,S3,planted_nonabelian_holonomy,0,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed1,S3,planted_nonabelian_holonomy,1,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed2,S3,planted_nonabelian_holonomy,2,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed3,S3,planted_nonabelian_holonomy,3,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed4,S3,planted_nonabelian_holonomy,4,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed5,S3,planted_nonabelian_holonomy,5,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed6,S3,planted_nonabelian_holonomy,6,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed7,S3,planted_nonabelian_holonomy,7,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed8,S3,planted_nonabelian_holonomy,8,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed9,S3,planted_nonabelian_holonomy,9,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed10,S3,planted_nonabelian_holonomy,10,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed11,S3,planted_nonabelian_holonomy,11,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed12,S3,planted_nonabelian_holonomy,12,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed13,S3,planted_nonabelian_holonomy,13,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed14,S3,planted_nonabelian_holonomy,14,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed15,S3,planted_nonabelian_holonomy,15,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed16,S3,planted_nonabelian_holonomy,16,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed17,S3,planted_nonabelian_holonomy,17,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed18,S3,planted_nonabelian_holonomy,18,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed19,S3,planted_nonabelian_holonomy,19,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed20,S3,planted_nonabelian_holonomy,20,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed21,S3,planted_nonabelian_holonomy,21,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed22,S3,planted_nonabelian_holonomy,22,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed23,S3,planted_nonabelian_holonomy,23,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed24,S3,planted_nonabelian_holonomy,24,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed25,S3,planted_nonabelian_holonomy,25,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed26,S3,planted_nonabelian_holonomy,26,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed27,S3,planted_nonabelian_holonomy,27,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed28,S3,planted_nonabelian_holonomy,28,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed29,S3,planted_nonabelian_holonomy,29,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed30,S3,planted_nonabelian_holonomy,30,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed31,S3,planted_nonabelian_holonomy,31,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed32,S3,planted_nonabelian_holonomy,32,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed33,S3,planted_nonabelian_holonomy,33,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed34,S3,planted_nonabelian_holonomy,34,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed35,S3,planted_nonabelian_holonomy,35,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed36,S3,planted_nonabelian_holonomy,36,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed37,S3,planted_nonabelian_holonomy,37,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed38,S3,planted_nonabelian_holonomy,38,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed39,S3,planted_nonabelian_holonomy,39,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed40,S3,planted_nonabelian_holonomy,40,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed41,S3,planted_nonabelian_holonomy,41,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed42,S3,planted_nonabelian_holonomy,42,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed43,S3,planted_nonabelian_holonomy,43,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed44,S3,planted_nonabelian_holonomy,44,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed45,S3,planted_nonabelian_holonomy,45,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed46,S3,planted_nonabelian_holonomy,46,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed47,S3,planted_nonabelian_holonomy,47,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed48,S3,planted_nonabelian_holonomy,48,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W12_seed49,S3,planted_nonabelian_holonomy,49,12,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed0,S3,planted_nonabelian_holonomy,0,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed1,S3,planted_nonabelian_holonomy,1,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed2,S3,planted_nonabelian_holonomy,2,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed3,S3,planted_nonabelian_holonomy,3,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed4,S3,planted_nonabelian_holonomy,4,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed5,S3,planted_nonabelian_holonomy,5,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed6,S3,planted_nonabelian_holonomy,6,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed7,S3,planted_nonabelian_holonomy,7,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed8,S3,planted_nonabelian_holonomy,8,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed9,S3,planted_nonabelian_holonomy,9,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed10,S3,planted_nonabelian_holonomy,10,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed11,S3,planted_nonabelian_holonomy,11,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed12,S3,planted_nonabelian_holonomy,12,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed13,S3,planted_nonabelian_holonomy,13,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed14,S3,planted_nonabelian_holonomy,14,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed15,S3,planted_nonabelian_holonomy,15,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed16,S3,planted_nonabelian_holonomy,16,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed17,S3,planted_nonabelian_holonomy,17,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed18,S3,planted_nonabelian_holonomy,18,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed19,S3,planted_nonabelian_holonomy,19,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed20,S3,planted_nonabelian_holonomy,20,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed21,S3,planted_nonabelian_holonomy,21,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed22,S3,planted_nonabelian_holonomy,22,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed23,S3,planted_nonabelian_holonomy,23,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed24,S3,planted_nonabelian_holonomy,24,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed25,S3,planted_nonabelian_holonomy,25,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed26,S3,planted_nonabelian_holonomy,26,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed27,S3,planted_nonabelian_holonomy,27,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed28,S3,planted_nonabelian_holonomy,28,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed29,S3,planted_nonabelian_holonomy,29,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed30,S3,planted_nonabelian_holonomy,30,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed31,S3,planted_nonabelian_holonomy,31,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed32,S3,planted_nonabelian_holonomy,32,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed33,S3,planted_nonabelian_holonomy,33,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed34,S3,planted_nonabelian_holonomy,34,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed35,S3,planted_nonabelian_holonomy,35,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed36,S3,planted_nonabelian_holonomy,36,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed37,S3,planted_nonabelian_holonomy,37,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed38,S3,planted_nonabelian_holonomy,38,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed39,S3,planted_nonabelian_holonomy,39,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed40,S3,planted_nonabelian_holonomy,40,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed41,S3,planted_nonabelian_holonomy,41,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed42,S3,planted_nonabelian_holonomy,42,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed43,S3,planted_nonabelian_holonomy,43,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed44,S3,planted_nonabelian_holonomy,44,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed45,S3,planted_nonabelian_holonomy,45,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed46,S3,planted_nonabelian_holonomy,46,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed47,S3,planted_nonabelian_holonomy,47,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed48,S3,planted_nonabelian_holonomy,48,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W24_seed49,S3,planted_nonabelian_holonomy,49,24,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed0,S3,planted_nonabelian_holonomy,0,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed1,S3,planted_nonabelian_holonomy,1,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed2,S3,planted_nonabelian_holonomy,2,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed3,S3,planted_nonabelian_holonomy,3,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed4,S3,planted_nonabelian_holonomy,4,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed5,S3,planted_nonabelian_holonomy,5,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed6,S3,planted_nonabelian_holonomy,6,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed7,S3,planted_nonabelian_holonomy,7,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed8,S3,planted_nonabelian_holonomy,8,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed9,S3,planted_nonabelian_holonomy,9,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed10,S3,planted_nonabelian_holonomy,10,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed11,S3,planted_nonabelian_holonomy,11,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed12,S3,planted_nonabelian_holonomy,12,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed13,S3,planted_nonabelian_holonomy,13,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed14,S3,planted_nonabelian_holonomy,14,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed15,S3,planted_nonabelian_holonomy,15,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed16,S3,planted_nonabelian_holonomy,16,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed17,S3,planted_nonabelian_holonomy,17,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed18,S3,planted_nonabelian_holonomy,18,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed19,S3,planted_nonabelian_holonomy,19,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed20,S3,planted_nonabelian_holonomy,20,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed21,S3,planted_nonabelian_holonomy,21,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed22,S3,planted_nonabelian_holonomy,22,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed23,S3,planted_nonabelian_holonomy,23,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed24,S3,planted_nonabelian_holonomy,24,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed25,S3,planted_nonabelian_holonomy,25,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed26,S3,planted_nonabelian_holonomy,26,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed27,S3,planted_nonabelian_holonomy,27,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed28,S3,planted_nonabelian_holonomy,28,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed29,S3,planted_nonabelian_holonomy,29,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed30,S3,planted_nonabelian_holonomy,30,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed31,S3,planted_nonabelian_holonomy,31,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed32,S3,planted_nonabelian_holonomy,32,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed33,S3,planted_nonabelian_holonomy,33,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed34,S3,planted_nonabelian_holonomy,34,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed35,S3,planted_nonabelian_holonomy,35,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed36,S3,planted_nonabelian_holonomy,36,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed37,S3,planted_nonabelian_holonomy,37,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed38,S3,planted_nonabelian_holonomy,38,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed39,S3,planted_nonabelian_holonomy,39,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed40,S3,planted_nonabelian_holonomy,40,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed41,S3,planted_nonabelian_holonomy,41,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed42,S3,planted_nonabelian_holonomy,42,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed43,S3,planted_nonabelian_holonomy,43,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed44,S3,planted_nonabelian_holonomy,44,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed45,S3,planted_nonabelian_holonomy,45,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed46,S3,planted_nonabelian_holonomy,46,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed47,S3,planted_nonabelian_holonomy,47,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed48,S3,planted_nonabelian_holonomy,48,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_planted_nonabelian_holonomy_W48_seed49,S3,planted_nonabelian_holonomy,49,48,6,"[2, 0, 1]",3,False,True,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed0,S3,random_noncoherent_null,0,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed1,S3,random_noncoherent_null,1,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed2,S3,random_noncoherent_null,2,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed3,S3,random_noncoherent_null,3,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed4,S3,random_noncoherent_null,4,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed5,S3,random_noncoherent_null,5,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed6,S3,random_noncoherent_null,6,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed7,S3,random_noncoherent_null,7,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed8,S3,random_noncoherent_null,8,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed9,S3,random_noncoherent_null,9,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed10,S3,random_noncoherent_null,10,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed11,S3,random_noncoherent_null,11,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed12,S3,random_noncoherent_null,12,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed13,S3,random_noncoherent_null,13,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed14,S3,random_noncoherent_null,14,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed15,S3,random_noncoherent_null,15,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed16,S3,random_noncoherent_null,16,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed17,S3,random_noncoherent_null,17,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed18,S3,random_noncoherent_null,18,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed19,S3,random_noncoherent_null,19,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed20,S3,random_noncoherent_null,20,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed21,S3,random_noncoherent_null,21,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed22,S3,random_noncoherent_null,22,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed23,S3,random_noncoherent_null,23,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed24,S3,random_noncoherent_null,24,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed25,S3,random_noncoherent_null,25,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed26,S3,random_noncoherent_null,26,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed27,S3,random_noncoherent_null,27,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed28,S3,random_noncoherent_null,28,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed29,S3,random_noncoherent_null,29,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed30,S3,random_noncoherent_null,30,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed31,S3,random_noncoherent_null,31,12,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W12_seed32,S3,random_noncoherent_null,32,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed33,S3,random_noncoherent_null,33,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed34,S3,random_noncoherent_null,34,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed35,S3,random_noncoherent_null,35,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed36,S3,random_noncoherent_null,36,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed37,S3,random_noncoherent_null,37,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed38,S3,random_noncoherent_null,38,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed39,S3,random_noncoherent_null,39,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed40,S3,random_noncoherent_null,40,12,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed41,S3,random_noncoherent_null,41,12,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed42,S3,random_noncoherent_null,42,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed43,S3,random_noncoherent_null,43,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed44,S3,random_noncoherent_null,44,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed45,S3,random_noncoherent_null,45,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed46,S3,random_noncoherent_null,46,12,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed47,S3,random_noncoherent_null,47,12,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W12_seed48,S3,random_noncoherent_null,48,12,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W12_seed49,S3,random_noncoherent_null,49,12,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed0,S3,random_noncoherent_null,0,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed1,S3,random_noncoherent_null,1,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed2,S3,random_noncoherent_null,2,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed3,S3,random_noncoherent_null,3,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed4,S3,random_noncoherent_null,4,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed5,S3,random_noncoherent_null,5,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed6,S3,random_noncoherent_null,6,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed7,S3,random_noncoherent_null,7,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed8,S3,random_noncoherent_null,8,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed9,S3,random_noncoherent_null,9,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed10,S3,random_noncoherent_null,10,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed11,S3,random_noncoherent_null,11,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed12,S3,random_noncoherent_null,12,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed13,S3,random_noncoherent_null,13,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed14,S3,random_noncoherent_null,14,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed15,S3,random_noncoherent_null,15,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed16,S3,random_noncoherent_null,16,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed17,S3,random_noncoherent_null,17,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed18,S3,random_noncoherent_null,18,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed19,S3,random_noncoherent_null,19,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed20,S3,random_noncoherent_null,20,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed21,S3,random_noncoherent_null,21,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed22,S3,random_noncoherent_null,22,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed23,S3,random_noncoherent_null,23,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed24,S3,random_noncoherent_null,24,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed25,S3,random_noncoherent_null,25,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed26,S3,random_noncoherent_null,26,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed27,S3,random_noncoherent_null,27,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed28,S3,random_noncoherent_null,28,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed29,S3,random_noncoherent_null,29,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed30,S3,random_noncoherent_null,30,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed31,S3,random_noncoherent_null,31,24,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W24_seed32,S3,random_noncoherent_null,32,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed33,S3,random_noncoherent_null,33,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed34,S3,random_noncoherent_null,34,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed35,S3,random_noncoherent_null,35,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed36,S3,random_noncoherent_null,36,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed37,S3,random_noncoherent_null,37,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed38,S3,random_noncoherent_null,38,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed39,S3,random_noncoherent_null,39,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed40,S3,random_noncoherent_null,40,24,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed41,S3,random_noncoherent_null,41,24,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed42,S3,random_noncoherent_null,42,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed43,S3,random_noncoherent_null,43,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed44,S3,random_noncoherent_null,44,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed45,S3,random_noncoherent_null,45,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed46,S3,random_noncoherent_null,46,24,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed47,S3,random_noncoherent_null,47,24,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W24_seed48,S3,random_noncoherent_null,48,24,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W24_seed49,S3,random_noncoherent_null,49,24,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed0,S3,random_noncoherent_null,0,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed1,S3,random_noncoherent_null,1,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed2,S3,random_noncoherent_null,2,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed3,S3,random_noncoherent_null,3,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed4,S3,random_noncoherent_null,4,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed5,S3,random_noncoherent_null,5,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed6,S3,random_noncoherent_null,6,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed7,S3,random_noncoherent_null,7,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed8,S3,random_noncoherent_null,8,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed9,S3,random_noncoherent_null,9,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed10,S3,random_noncoherent_null,10,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed11,S3,random_noncoherent_null,11,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed12,S3,random_noncoherent_null,12,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed13,S3,random_noncoherent_null,13,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed14,S3,random_noncoherent_null,14,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed15,S3,random_noncoherent_null,15,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed16,S3,random_noncoherent_null,16,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed17,S3,random_noncoherent_null,17,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed18,S3,random_noncoherent_null,18,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed19,S3,random_noncoherent_null,19,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed20,S3,random_noncoherent_null,20,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed21,S3,random_noncoherent_null,21,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed22,S3,random_noncoherent_null,22,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed23,S3,random_noncoherent_null,23,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed24,S3,random_noncoherent_null,24,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed25,S3,random_noncoherent_null,25,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed26,S3,random_noncoherent_null,26,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed27,S3,random_noncoherent_null,27,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed28,S3,random_noncoherent_null,28,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed29,S3,random_noncoherent_null,29,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed30,S3,random_noncoherent_null,30,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed31,S3,random_noncoherent_null,31,48,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W48_seed32,S3,random_noncoherent_null,32,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed33,S3,random_noncoherent_null,33,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed34,S3,random_noncoherent_null,34,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed35,S3,random_noncoherent_null,35,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed36,S3,random_noncoherent_null,36,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed37,S3,random_noncoherent_null,37,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed38,S3,random_noncoherent_null,38,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed39,S3,random_noncoherent_null,39,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed40,S3,random_noncoherent_null,40,48,6,"[1, 0, 2]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed41,S3,random_noncoherent_null,41,48,6,"[0, 2, 1]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed42,S3,random_noncoherent_null,42,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed43,S3,random_noncoherent_null,43,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed44,S3,random_noncoherent_null,44,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed45,S3,random_noncoherent_null,45,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed46,S3,random_noncoherent_null,46,48,6,"[2, 0, 1]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed47,S3,random_noncoherent_null,47,48,6,"[2, 1, 0]",2,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+S3_random_noncoherent_null_W48_seed48,S3,random_noncoherent_null,48,48,6,"[0, 1, 2]",1,True,False,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+S3_random_noncoherent_null_W48_seed49,S3,random_noncoherent_null,49,48,6,"[1, 2, 0]",3,False,False,1.4142135623730951,1.4142135623730951,1.4142135623730951,0.0,1.4142135623730951,0.0,0.0
+D4_trivial_coboundary_W12_seed0,D4,trivial_coboundary,0,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed1,D4,trivial_coboundary,1,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed2,D4,trivial_coboundary,2,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed3,D4,trivial_coboundary,3,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed4,D4,trivial_coboundary,4,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed5,D4,trivial_coboundary,5,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed6,D4,trivial_coboundary,6,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed7,D4,trivial_coboundary,7,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed8,D4,trivial_coboundary,8,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed9,D4,trivial_coboundary,9,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed10,D4,trivial_coboundary,10,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed11,D4,trivial_coboundary,11,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed12,D4,trivial_coboundary,12,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed13,D4,trivial_coboundary,13,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed14,D4,trivial_coboundary,14,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed15,D4,trivial_coboundary,15,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed16,D4,trivial_coboundary,16,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed17,D4,trivial_coboundary,17,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed18,D4,trivial_coboundary,18,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed19,D4,trivial_coboundary,19,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed20,D4,trivial_coboundary,20,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed21,D4,trivial_coboundary,21,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed22,D4,trivial_coboundary,22,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed23,D4,trivial_coboundary,23,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed24,D4,trivial_coboundary,24,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed25,D4,trivial_coboundary,25,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed26,D4,trivial_coboundary,26,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed27,D4,trivial_coboundary,27,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed28,D4,trivial_coboundary,28,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed29,D4,trivial_coboundary,29,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed30,D4,trivial_coboundary,30,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed31,D4,trivial_coboundary,31,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed32,D4,trivial_coboundary,32,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed33,D4,trivial_coboundary,33,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed34,D4,trivial_coboundary,34,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed35,D4,trivial_coboundary,35,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed36,D4,trivial_coboundary,36,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed37,D4,trivial_coboundary,37,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed38,D4,trivial_coboundary,38,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed39,D4,trivial_coboundary,39,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed40,D4,trivial_coboundary,40,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed41,D4,trivial_coboundary,41,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed42,D4,trivial_coboundary,42,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed43,D4,trivial_coboundary,43,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed44,D4,trivial_coboundary,44,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed45,D4,trivial_coboundary,45,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed46,D4,trivial_coboundary,46,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed47,D4,trivial_coboundary,47,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed48,D4,trivial_coboundary,48,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W12_seed49,D4,trivial_coboundary,49,12,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed0,D4,trivial_coboundary,0,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed1,D4,trivial_coboundary,1,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed2,D4,trivial_coboundary,2,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed3,D4,trivial_coboundary,3,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed4,D4,trivial_coboundary,4,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed5,D4,trivial_coboundary,5,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed6,D4,trivial_coboundary,6,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed7,D4,trivial_coboundary,7,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed8,D4,trivial_coboundary,8,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed9,D4,trivial_coboundary,9,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed10,D4,trivial_coboundary,10,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed11,D4,trivial_coboundary,11,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed12,D4,trivial_coboundary,12,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed13,D4,trivial_coboundary,13,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed14,D4,trivial_coboundary,14,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed15,D4,trivial_coboundary,15,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed16,D4,trivial_coboundary,16,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed17,D4,trivial_coboundary,17,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed18,D4,trivial_coboundary,18,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed19,D4,trivial_coboundary,19,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed20,D4,trivial_coboundary,20,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed21,D4,trivial_coboundary,21,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed22,D4,trivial_coboundary,22,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed23,D4,trivial_coboundary,23,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed24,D4,trivial_coboundary,24,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed25,D4,trivial_coboundary,25,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed26,D4,trivial_coboundary,26,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed27,D4,trivial_coboundary,27,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed28,D4,trivial_coboundary,28,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed29,D4,trivial_coboundary,29,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed30,D4,trivial_coboundary,30,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed31,D4,trivial_coboundary,31,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed32,D4,trivial_coboundary,32,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed33,D4,trivial_coboundary,33,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed34,D4,trivial_coboundary,34,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed35,D4,trivial_coboundary,35,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed36,D4,trivial_coboundary,36,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed37,D4,trivial_coboundary,37,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed38,D4,trivial_coboundary,38,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed39,D4,trivial_coboundary,39,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed40,D4,trivial_coboundary,40,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed41,D4,trivial_coboundary,41,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed42,D4,trivial_coboundary,42,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed43,D4,trivial_coboundary,43,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed44,D4,trivial_coboundary,44,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed45,D4,trivial_coboundary,45,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed46,D4,trivial_coboundary,46,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed47,D4,trivial_coboundary,47,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed48,D4,trivial_coboundary,48,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W24_seed49,D4,trivial_coboundary,49,24,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed0,D4,trivial_coboundary,0,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed1,D4,trivial_coboundary,1,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed2,D4,trivial_coboundary,2,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed3,D4,trivial_coboundary,3,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed4,D4,trivial_coboundary,4,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed5,D4,trivial_coboundary,5,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed6,D4,trivial_coboundary,6,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed7,D4,trivial_coboundary,7,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed8,D4,trivial_coboundary,8,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed9,D4,trivial_coboundary,9,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed10,D4,trivial_coboundary,10,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed11,D4,trivial_coboundary,11,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed12,D4,trivial_coboundary,12,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed13,D4,trivial_coboundary,13,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed14,D4,trivial_coboundary,14,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed15,D4,trivial_coboundary,15,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed16,D4,trivial_coboundary,16,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed17,D4,trivial_coboundary,17,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed18,D4,trivial_coboundary,18,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed19,D4,trivial_coboundary,19,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed20,D4,trivial_coboundary,20,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed21,D4,trivial_coboundary,21,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed22,D4,trivial_coboundary,22,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed23,D4,trivial_coboundary,23,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed24,D4,trivial_coboundary,24,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed25,D4,trivial_coboundary,25,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed26,D4,trivial_coboundary,26,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed27,D4,trivial_coboundary,27,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed28,D4,trivial_coboundary,28,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed29,D4,trivial_coboundary,29,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed30,D4,trivial_coboundary,30,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed31,D4,trivial_coboundary,31,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed32,D4,trivial_coboundary,32,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed33,D4,trivial_coboundary,33,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed34,D4,trivial_coboundary,34,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed35,D4,trivial_coboundary,35,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed36,D4,trivial_coboundary,36,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed37,D4,trivial_coboundary,37,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed38,D4,trivial_coboundary,38,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed39,D4,trivial_coboundary,39,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed40,D4,trivial_coboundary,40,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed41,D4,trivial_coboundary,41,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed42,D4,trivial_coboundary,42,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed43,D4,trivial_coboundary,43,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed44,D4,trivial_coboundary,44,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed45,D4,trivial_coboundary,45,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed46,D4,trivial_coboundary,46,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed47,D4,trivial_coboundary,47,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed48,D4,trivial_coboundary,48,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_trivial_coboundary_W48_seed49,D4,trivial_coboundary,49,48,8,"[0, 1, 2, 3]",1,True,True,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed0,D4,planted_nonabelian_holonomy,0,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed1,D4,planted_nonabelian_holonomy,1,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed2,D4,planted_nonabelian_holonomy,2,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed3,D4,planted_nonabelian_holonomy,3,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed4,D4,planted_nonabelian_holonomy,4,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed5,D4,planted_nonabelian_holonomy,5,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed6,D4,planted_nonabelian_holonomy,6,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed7,D4,planted_nonabelian_holonomy,7,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed8,D4,planted_nonabelian_holonomy,8,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed9,D4,planted_nonabelian_holonomy,9,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed10,D4,planted_nonabelian_holonomy,10,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed11,D4,planted_nonabelian_holonomy,11,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed12,D4,planted_nonabelian_holonomy,12,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed13,D4,planted_nonabelian_holonomy,13,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed14,D4,planted_nonabelian_holonomy,14,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed15,D4,planted_nonabelian_holonomy,15,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed16,D4,planted_nonabelian_holonomy,16,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed17,D4,planted_nonabelian_holonomy,17,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed18,D4,planted_nonabelian_holonomy,18,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed19,D4,planted_nonabelian_holonomy,19,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed20,D4,planted_nonabelian_holonomy,20,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed21,D4,planted_nonabelian_holonomy,21,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed22,D4,planted_nonabelian_holonomy,22,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed23,D4,planted_nonabelian_holonomy,23,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed24,D4,planted_nonabelian_holonomy,24,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed25,D4,planted_nonabelian_holonomy,25,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed26,D4,planted_nonabelian_holonomy,26,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed27,D4,planted_nonabelian_holonomy,27,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed28,D4,planted_nonabelian_holonomy,28,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed29,D4,planted_nonabelian_holonomy,29,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed30,D4,planted_nonabelian_holonomy,30,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed31,D4,planted_nonabelian_holonomy,31,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed32,D4,planted_nonabelian_holonomy,32,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed33,D4,planted_nonabelian_holonomy,33,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed34,D4,planted_nonabelian_holonomy,34,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed35,D4,planted_nonabelian_holonomy,35,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed36,D4,planted_nonabelian_holonomy,36,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed37,D4,planted_nonabelian_holonomy,37,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed38,D4,planted_nonabelian_holonomy,38,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed39,D4,planted_nonabelian_holonomy,39,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed40,D4,planted_nonabelian_holonomy,40,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed41,D4,planted_nonabelian_holonomy,41,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed42,D4,planted_nonabelian_holonomy,42,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed43,D4,planted_nonabelian_holonomy,43,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed44,D4,planted_nonabelian_holonomy,44,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed45,D4,planted_nonabelian_holonomy,45,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed46,D4,planted_nonabelian_holonomy,46,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed47,D4,planted_nonabelian_holonomy,47,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed48,D4,planted_nonabelian_holonomy,48,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W12_seed49,D4,planted_nonabelian_holonomy,49,12,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed0,D4,planted_nonabelian_holonomy,0,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed1,D4,planted_nonabelian_holonomy,1,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed2,D4,planted_nonabelian_holonomy,2,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed3,D4,planted_nonabelian_holonomy,3,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed4,D4,planted_nonabelian_holonomy,4,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed5,D4,planted_nonabelian_holonomy,5,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed6,D4,planted_nonabelian_holonomy,6,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed7,D4,planted_nonabelian_holonomy,7,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed8,D4,planted_nonabelian_holonomy,8,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed9,D4,planted_nonabelian_holonomy,9,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed10,D4,planted_nonabelian_holonomy,10,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed11,D4,planted_nonabelian_holonomy,11,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed12,D4,planted_nonabelian_holonomy,12,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed13,D4,planted_nonabelian_holonomy,13,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed14,D4,planted_nonabelian_holonomy,14,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed15,D4,planted_nonabelian_holonomy,15,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed16,D4,planted_nonabelian_holonomy,16,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed17,D4,planted_nonabelian_holonomy,17,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed18,D4,planted_nonabelian_holonomy,18,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed19,D4,planted_nonabelian_holonomy,19,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed20,D4,planted_nonabelian_holonomy,20,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed21,D4,planted_nonabelian_holonomy,21,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed22,D4,planted_nonabelian_holonomy,22,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed23,D4,planted_nonabelian_holonomy,23,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed24,D4,planted_nonabelian_holonomy,24,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed25,D4,planted_nonabelian_holonomy,25,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed26,D4,planted_nonabelian_holonomy,26,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed27,D4,planted_nonabelian_holonomy,27,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed28,D4,planted_nonabelian_holonomy,28,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed29,D4,planted_nonabelian_holonomy,29,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed30,D4,planted_nonabelian_holonomy,30,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed31,D4,planted_nonabelian_holonomy,31,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed32,D4,planted_nonabelian_holonomy,32,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed33,D4,planted_nonabelian_holonomy,33,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed34,D4,planted_nonabelian_holonomy,34,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed35,D4,planted_nonabelian_holonomy,35,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed36,D4,planted_nonabelian_holonomy,36,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed37,D4,planted_nonabelian_holonomy,37,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed38,D4,planted_nonabelian_holonomy,38,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed39,D4,planted_nonabelian_holonomy,39,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed40,D4,planted_nonabelian_holonomy,40,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed41,D4,planted_nonabelian_holonomy,41,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed42,D4,planted_nonabelian_holonomy,42,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed43,D4,planted_nonabelian_holonomy,43,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed44,D4,planted_nonabelian_holonomy,44,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed45,D4,planted_nonabelian_holonomy,45,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed46,D4,planted_nonabelian_holonomy,46,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed47,D4,planted_nonabelian_holonomy,47,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed48,D4,planted_nonabelian_holonomy,48,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W24_seed49,D4,planted_nonabelian_holonomy,49,24,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed0,D4,planted_nonabelian_holonomy,0,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed1,D4,planted_nonabelian_holonomy,1,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed2,D4,planted_nonabelian_holonomy,2,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed3,D4,planted_nonabelian_holonomy,3,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed4,D4,planted_nonabelian_holonomy,4,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed5,D4,planted_nonabelian_holonomy,5,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed6,D4,planted_nonabelian_holonomy,6,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed7,D4,planted_nonabelian_holonomy,7,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed8,D4,planted_nonabelian_holonomy,8,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed9,D4,planted_nonabelian_holonomy,9,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed10,D4,planted_nonabelian_holonomy,10,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed11,D4,planted_nonabelian_holonomy,11,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed12,D4,planted_nonabelian_holonomy,12,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed13,D4,planted_nonabelian_holonomy,13,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed14,D4,planted_nonabelian_holonomy,14,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed15,D4,planted_nonabelian_holonomy,15,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed16,D4,planted_nonabelian_holonomy,16,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed17,D4,planted_nonabelian_holonomy,17,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed18,D4,planted_nonabelian_holonomy,18,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed19,D4,planted_nonabelian_holonomy,19,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed20,D4,planted_nonabelian_holonomy,20,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed21,D4,planted_nonabelian_holonomy,21,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed22,D4,planted_nonabelian_holonomy,22,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed23,D4,planted_nonabelian_holonomy,23,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed24,D4,planted_nonabelian_holonomy,24,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed25,D4,planted_nonabelian_holonomy,25,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed26,D4,planted_nonabelian_holonomy,26,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed27,D4,planted_nonabelian_holonomy,27,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed28,D4,planted_nonabelian_holonomy,28,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed29,D4,planted_nonabelian_holonomy,29,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed30,D4,planted_nonabelian_holonomy,30,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed31,D4,planted_nonabelian_holonomy,31,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed32,D4,planted_nonabelian_holonomy,32,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed33,D4,planted_nonabelian_holonomy,33,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed34,D4,planted_nonabelian_holonomy,34,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed35,D4,planted_nonabelian_holonomy,35,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed36,D4,planted_nonabelian_holonomy,36,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed37,D4,planted_nonabelian_holonomy,37,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed38,D4,planted_nonabelian_holonomy,38,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed39,D4,planted_nonabelian_holonomy,39,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed40,D4,planted_nonabelian_holonomy,40,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed41,D4,planted_nonabelian_holonomy,41,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed42,D4,planted_nonabelian_holonomy,42,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed43,D4,planted_nonabelian_holonomy,43,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed44,D4,planted_nonabelian_holonomy,44,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed45,D4,planted_nonabelian_holonomy,45,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed46,D4,planted_nonabelian_holonomy,46,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed47,D4,planted_nonabelian_holonomy,47,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed48,D4,planted_nonabelian_holonomy,48,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_planted_nonabelian_holonomy_W48_seed49,D4,planted_nonabelian_holonomy,49,48,8,"[3, 0, 1, 2]",4,False,True,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed0,D4,random_noncoherent_null,0,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed1,D4,random_noncoherent_null,1,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed2,D4,random_noncoherent_null,2,12,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed3,D4,random_noncoherent_null,3,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed4,D4,random_noncoherent_null,4,12,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed5,D4,random_noncoherent_null,5,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed6,D4,random_noncoherent_null,6,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed7,D4,random_noncoherent_null,7,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed8,D4,random_noncoherent_null,8,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed9,D4,random_noncoherent_null,9,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed10,D4,random_noncoherent_null,10,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed11,D4,random_noncoherent_null,11,12,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed12,D4,random_noncoherent_null,12,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed13,D4,random_noncoherent_null,13,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed14,D4,random_noncoherent_null,14,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed15,D4,random_noncoherent_null,15,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed16,D4,random_noncoherent_null,16,12,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed17,D4,random_noncoherent_null,17,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed18,D4,random_noncoherent_null,18,12,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed19,D4,random_noncoherent_null,19,12,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed20,D4,random_noncoherent_null,20,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed21,D4,random_noncoherent_null,21,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed22,D4,random_noncoherent_null,22,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed23,D4,random_noncoherent_null,23,12,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed24,D4,random_noncoherent_null,24,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed25,D4,random_noncoherent_null,25,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed26,D4,random_noncoherent_null,26,12,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed27,D4,random_noncoherent_null,27,12,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed28,D4,random_noncoherent_null,28,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed29,D4,random_noncoherent_null,29,12,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed30,D4,random_noncoherent_null,30,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed31,D4,random_noncoherent_null,31,12,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed32,D4,random_noncoherent_null,32,12,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed33,D4,random_noncoherent_null,33,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed34,D4,random_noncoherent_null,34,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed35,D4,random_noncoherent_null,35,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed36,D4,random_noncoherent_null,36,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed37,D4,random_noncoherent_null,37,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed38,D4,random_noncoherent_null,38,12,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed39,D4,random_noncoherent_null,39,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed40,D4,random_noncoherent_null,40,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed41,D4,random_noncoherent_null,41,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed42,D4,random_noncoherent_null,42,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed43,D4,random_noncoherent_null,43,12,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed44,D4,random_noncoherent_null,44,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed45,D4,random_noncoherent_null,45,12,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed46,D4,random_noncoherent_null,46,12,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed47,D4,random_noncoherent_null,47,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed48,D4,random_noncoherent_null,48,12,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W12_seed49,D4,random_noncoherent_null,49,12,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed0,D4,random_noncoherent_null,0,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed1,D4,random_noncoherent_null,1,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed2,D4,random_noncoherent_null,2,24,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed3,D4,random_noncoherent_null,3,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed4,D4,random_noncoherent_null,4,24,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed5,D4,random_noncoherent_null,5,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed6,D4,random_noncoherent_null,6,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed7,D4,random_noncoherent_null,7,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed8,D4,random_noncoherent_null,8,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed9,D4,random_noncoherent_null,9,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed10,D4,random_noncoherent_null,10,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed11,D4,random_noncoherent_null,11,24,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed12,D4,random_noncoherent_null,12,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed13,D4,random_noncoherent_null,13,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed14,D4,random_noncoherent_null,14,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed15,D4,random_noncoherent_null,15,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed16,D4,random_noncoherent_null,16,24,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed17,D4,random_noncoherent_null,17,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed18,D4,random_noncoherent_null,18,24,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed19,D4,random_noncoherent_null,19,24,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed20,D4,random_noncoherent_null,20,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed21,D4,random_noncoherent_null,21,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed22,D4,random_noncoherent_null,22,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed23,D4,random_noncoherent_null,23,24,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed24,D4,random_noncoherent_null,24,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed25,D4,random_noncoherent_null,25,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed26,D4,random_noncoherent_null,26,24,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed27,D4,random_noncoherent_null,27,24,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed28,D4,random_noncoherent_null,28,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed29,D4,random_noncoherent_null,29,24,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed30,D4,random_noncoherent_null,30,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed31,D4,random_noncoherent_null,31,24,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed32,D4,random_noncoherent_null,32,24,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed33,D4,random_noncoherent_null,33,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed34,D4,random_noncoherent_null,34,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed35,D4,random_noncoherent_null,35,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed36,D4,random_noncoherent_null,36,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed37,D4,random_noncoherent_null,37,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed38,D4,random_noncoherent_null,38,24,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed39,D4,random_noncoherent_null,39,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed40,D4,random_noncoherent_null,40,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed41,D4,random_noncoherent_null,41,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed42,D4,random_noncoherent_null,42,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed43,D4,random_noncoherent_null,43,24,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed44,D4,random_noncoherent_null,44,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed45,D4,random_noncoherent_null,45,24,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed46,D4,random_noncoherent_null,46,24,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed47,D4,random_noncoherent_null,47,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed48,D4,random_noncoherent_null,48,24,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W24_seed49,D4,random_noncoherent_null,49,24,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed0,D4,random_noncoherent_null,0,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed1,D4,random_noncoherent_null,1,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed2,D4,random_noncoherent_null,2,48,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed3,D4,random_noncoherent_null,3,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed4,D4,random_noncoherent_null,4,48,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed5,D4,random_noncoherent_null,5,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed6,D4,random_noncoherent_null,6,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed7,D4,random_noncoherent_null,7,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed8,D4,random_noncoherent_null,8,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed9,D4,random_noncoherent_null,9,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed10,D4,random_noncoherent_null,10,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed11,D4,random_noncoherent_null,11,48,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed12,D4,random_noncoherent_null,12,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed13,D4,random_noncoherent_null,13,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed14,D4,random_noncoherent_null,14,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed15,D4,random_noncoherent_null,15,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed16,D4,random_noncoherent_null,16,48,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed17,D4,random_noncoherent_null,17,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed18,D4,random_noncoherent_null,18,48,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed19,D4,random_noncoherent_null,19,48,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed20,D4,random_noncoherent_null,20,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed21,D4,random_noncoherent_null,21,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed22,D4,random_noncoherent_null,22,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed23,D4,random_noncoherent_null,23,48,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed24,D4,random_noncoherent_null,24,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed25,D4,random_noncoherent_null,25,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed26,D4,random_noncoherent_null,26,48,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed27,D4,random_noncoherent_null,27,48,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed28,D4,random_noncoherent_null,28,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed29,D4,random_noncoherent_null,29,48,8,"[3, 0, 1, 2]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed30,D4,random_noncoherent_null,30,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed31,D4,random_noncoherent_null,31,48,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed32,D4,random_noncoherent_null,32,48,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed33,D4,random_noncoherent_null,33,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed34,D4,random_noncoherent_null,34,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed35,D4,random_noncoherent_null,35,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed36,D4,random_noncoherent_null,36,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed37,D4,random_noncoherent_null,37,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed38,D4,random_noncoherent_null,38,48,8,"[2, 3, 0, 1]",2,True,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed39,D4,random_noncoherent_null,39,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed40,D4,random_noncoherent_null,40,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed41,D4,random_noncoherent_null,41,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed42,D4,random_noncoherent_null,42,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed43,D4,random_noncoherent_null,43,48,8,"[1, 0, 3, 2]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed44,D4,random_noncoherent_null,44,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed45,D4,random_noncoherent_null,45,48,8,"[1, 2, 3, 0]",4,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed46,D4,random_noncoherent_null,46,48,8,"[3, 2, 1, 0]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed47,D4,random_noncoherent_null,47,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed48,D4,random_noncoherent_null,48,48,8,"[2, 1, 0, 3]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0
+D4_random_noncoherent_null_W48_seed49,D4,random_noncoherent_null,49,48,8,"[0, 3, 2, 1]",2,False,False,1.414213562373095,1.414213562373095,1.414213562373095,0.0,1.414213562373095,0.0,0.0

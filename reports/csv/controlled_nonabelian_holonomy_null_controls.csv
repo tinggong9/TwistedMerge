@@ -1,0 +1,7 @@
+null_family,n_null,false_split_rate,false_validation_selection_rate,null_accuracy_delta,null_invariant_pooling_residual
+random_edge_maps_no_group_structure,300,0.0,0.0,-0.01344333333333334,1.0
+shuffled_holonomy_edges,300,0.0,0.0,-0.01344333333333334,1.0
+random_same_branch_action,300,0.0,0.0,-0.01344333333333334,1.0
+wrong_group_lift,300,0.0,0.0,-0.01344333333333334,1.0
+wrong_representation_lift,300,0.0,0.0,-0.01344333333333334,1.0
+random_same_branch_count_control,300,0.0,0.0,-0.01344333333333334,1.0
