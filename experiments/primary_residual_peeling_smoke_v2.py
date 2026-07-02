@@ -51,6 +51,14 @@ from src.primary_holonomy import (  # noqa: E402
     relation_count_status,
     triangle_relation_from_perms,
 )
+from src.primary_residual_peeling import (  # noqa: E402
+    RepresentativeChoice,
+    quotient_defect_labels_from_pairwise,
+    quotient_residual_from_labels,
+    relations_from_pairwise,
+    solve_and_correct_pairwise,
+    triangle_defects_from_pairwise,
+)
 
 
 PREFERRED_RUN_IDS = {
@@ -217,42 +225,6 @@ class SelectedSetting:
     primary_source_order: int
     primary_source_order_source: str
     model_source: str
-
-
-@dataclass(frozen=True)
-class EdgeCochainSolution:
-    solved_exact: bool
-    edge_labels: dict[tuple[int, int], int]
-    quotient_residual_before: float
-    quotient_residual_after: float
-    n_equations: int
-    n_variables: int
-    rank: int
-    solve_status: str
-    sign: int
-
-
-@dataclass(frozen=True)
-class RepresentativeChoice:
-    label: int
-    representative: np.ndarray | None
-    representative_label: int | None
-    generator_label: int | None
-    disagreement_from_identity: float
-    status: str
-
-
-@dataclass(frozen=True)
-class CorrectionResult:
-    corrections: dict[tuple[int, int], np.ndarray]
-    corrected: dict[tuple[int, int], np.ndarray]
-    edge_labels: dict[tuple[int, int], int]
-    representative_choices: dict[tuple[int, int], RepresentativeChoice]
-    solution: EdgeCochainSolution
-    edge_cochain_solve_status: str
-    representative_selection_status: str
-    implemented: bool
-    inverse_consistency_ok: bool
 
 
 def parse_csv(text: str, cast=str) -> list:
@@ -627,337 +599,6 @@ def cycle_residual(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -
         defect = compose_perm(compose_perm(pairwise[(i, j)], pairwise[(j, k)]), pairwise[(k, i)])
         residuals.append(permutation_disagreement(defect, identity))
     return float(np.mean(residuals)) if residuals else 0.0
-
-
-def permutation_power(perm: Iterable[int], exponent: int) -> np.ndarray:
-    base = np.asarray(tuple(int(item) for item in perm), dtype=int)
-    width = len(base)
-    identity = np.arange(width, dtype=int)
-    exp = int(exponent)
-    if exp == 0:
-        return identity.copy()
-    if exp < 0:
-        base = invert_perm(base)
-        exp = -exp
-    out = identity.copy()
-    for _ in range(exp):
-        out = compose_perm(out, base)
-    return out
-
-
-def triangle_defects_from_pairwise(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> dict[tuple[int, int, int], np.ndarray]:
-    defects: dict[tuple[int, int, int], np.ndarray] = {}
-    for i, j, k in combinations(range(int(n_models)), 3):
-        defects[(i, j, k)] = compose_perm(compose_perm(pairwise[(i, j)], pairwise[(j, k)]), pairwise[(k, i)])
-    return defects
-
-
-def relations_from_pairwise(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> tuple:
-    relations = []
-    for (i, j, k), hol in triangle_defects_from_pairwise(pairwise, n_models).items():
-        relations.append(triangle_relation_from_perms(pairwise[(i, j)], pairwise[(j, k)], pairwise[(k, i)], hol))
-    return tuple(relations)
-
-
-def quotient_label_from_fit(perm: Iterable[int], fit, p: int) -> int:
-    if fit is None:
-        return 0
-    key = tuple(int(item) for item in perm)
-    return int(fit.assignment.get(key, 0)) % int(p)
-
-
-def quotient_defect_labels_from_pairwise(
-    pairwise: dict[tuple[int, int], np.ndarray],
-    fit,
-    n_models: int,
-    prime: int,
-) -> dict[tuple[int, int, int], int]:
-    defects = triangle_defects_from_pairwise(pairwise, n_models)
-    return {tri: quotient_label_from_fit(defect, fit, prime) for tri, defect in defects.items()}
-
-
-def quotient_residual_from_labels(labels: dict[tuple[int, int, int], int], p: int) -> float:
-    if not labels:
-        return 0.0
-    return float(np.mean([int(value) % int(p) != 0 for value in labels.values()]))
-
-
-def _edge_variable_index(n_models: int) -> dict[tuple[int, int], int]:
-    return {edge: idx for idx, edge in enumerate(combinations(range(int(n_models)), 2))}
-
-
-def _oriented_edge_value(edge_labels: dict[tuple[int, int], int], i: int, j: int, p: int) -> int:
-    if i == j:
-        return 0
-    if i < j:
-        return int(edge_labels.get((i, j), 0)) % int(p)
-    return (-int(edge_labels.get((j, i), 0))) % int(p)
-
-
-def _rref_solve_mod_p(matrix: list[list[int]], rhs: list[int], p: int) -> tuple[bool, list[int], int]:
-    p = int(p)
-    if not matrix:
-        return True, [], 0
-    n_rows = len(matrix)
-    n_cols = len(matrix[0]) if matrix[0] else 0
-    aug = [[int(value) % p for value in row] + [int(rhs[idx]) % p] for idx, row in enumerate(matrix)]
-    row = 0
-    pivots: list[int] = []
-    for col in range(n_cols):
-        pivot = next((candidate for candidate in range(row, n_rows) if aug[candidate][col] % p), None)
-        if pivot is None:
-            continue
-        aug[row], aug[pivot] = aug[pivot], aug[row]
-        inv = pow(int(aug[row][col]) % p, -1, p)
-        aug[row] = [(value * inv) % p for value in aug[row]]
-        for other in range(n_rows):
-            if other == row:
-                continue
-            factor = aug[other][col] % p
-            if factor:
-                aug[other] = [(aug[other][idx] - factor * aug[row][idx]) % p for idx in range(n_cols + 1)]
-        pivots.append(col)
-        row += 1
-        if row == n_rows:
-            break
-    inconsistent = any(all(aug[r][c] % p == 0 for c in range(n_cols)) and aug[r][-1] % p != 0 for r in range(n_rows))
-    solution = [0 for _ in range(n_cols)]
-    if not inconsistent:
-        for pivot_row, pivot_col in enumerate(pivots):
-            solution[pivot_col] = int(aug[pivot_row][-1]) % p
-    return not inconsistent, solution, len(pivots)
-
-
-def solve_edge_cochain_mod_p(
-    triangle_defect_labels: dict[tuple[int, int, int], int],
-    n_models: int,
-    p: int,
-    sign: int = 1,
-) -> EdgeCochainSolution:
-    """Solve d(edge_label) = sign * triangle_defect_label over F_p."""
-
-    p = int(p)
-    variables = _edge_variable_index(n_models)
-    rows: list[list[int]] = []
-    rhs: list[int] = []
-    for i, j, k in sorted(triangle_defect_labels):
-        row = [0 for _ in variables]
-        for a, b in ((i, j), (j, k), (k, i)):
-            if a == b:
-                continue
-            if a < b:
-                row[variables[(a, b)]] = (row[variables[(a, b)]] + 1) % p
-            else:
-                row[variables[(b, a)]] = (row[variables[(b, a)]] - 1) % p
-        rows.append(row)
-        rhs.append((int(sign) * int(triangle_defect_labels[(i, j, k)])) % p)
-    exact, vector, rank = _rref_solve_mod_p(rows, rhs, p)
-    edge_labels = {edge: int(vector[idx]) % p for edge, idx in variables.items()} if vector else {edge: 0 for edge in variables}
-    residuals = []
-    for (i, j, k), label in sorted(triangle_defect_labels.items()):
-        lhs = (
-            _oriented_edge_value(edge_labels, i, j, p)
-            + _oriented_edge_value(edge_labels, j, k, p)
-            + _oriented_edge_value(edge_labels, k, i, p)
-        ) % p
-        residuals.append((lhs - int(sign) * int(label)) % p)
-    residual_after = float(np.mean([value % p != 0 for value in residuals])) if residuals else 0.0
-    residual_before = quotient_residual_from_labels(triangle_defect_labels, p)
-    solved_exact = bool(exact and residual_after <= 0.0)
-    status = "exact_quotient_cochain_solve" if solved_exact else "quotient_cochain_inconsistent"
-    return EdgeCochainSolution(
-        solved_exact=solved_exact,
-        edge_labels=edge_labels,
-        quotient_residual_before=float(residual_before),
-        quotient_residual_after=float(residual_after),
-        n_equations=int(len(rows)),
-        n_variables=int(len(variables)),
-        rank=int(rank),
-        solve_status=f"{status}_sign_{int(sign)}",
-        sign=int(sign),
-    )
-
-
-def solve_best_edge_cochain_mod_p(
-    triangle_defect_labels: dict[tuple[int, int, int], int],
-    n_models: int,
-    p: int,
-) -> EdgeCochainSolution:
-    candidates = [
-        solve_edge_cochain_mod_p(triangle_defect_labels, n_models, p, sign=1),
-        solve_edge_cochain_mod_p(triangle_defect_labels, n_models, p, sign=-1),
-    ]
-    candidates.sort(key=lambda item: (not item.solved_exact, item.quotient_residual_after, 0 if item.sign == 1 else 1))
-    return candidates[0]
-
-
-def representative_for_cp_label(
-    label: int,
-    fit,
-    observed_holonomies: Iterable[np.ndarray],
-    width: int,
-    p: int,
-) -> RepresentativeChoice:
-    p = int(p)
-    label = int(label) % p
-    identity = np.arange(width, dtype=int)
-    if label == 0:
-        return RepresentativeChoice(
-            label=0,
-            representative=identity.copy(),
-            representative_label=0,
-            generator_label=0,
-            disagreement_from_identity=0.0,
-            status="identity_representative",
-        )
-    best: RepresentativeChoice | None = None
-    for holonomy in observed_holonomies:
-        generator = np.asarray(holonomy, dtype=int)
-        if not is_valid_permutation(generator):
-            continue
-        generator_label = quotient_label_from_fit(generator, fit, p)
-        if generator_label % p == 0:
-            continue
-        try:
-            inv_label = pow(generator_label, -1, p)
-        except ValueError:
-            continue
-        exponent = (inv_label * label) % p
-        representative = permutation_power(generator, exponent)
-        rep_label = (generator_label * exponent) % p
-        if rep_label != label:
-            continue
-        disagreement = permutation_disagreement(representative, identity)
-        choice = RepresentativeChoice(
-            label=label,
-            representative=representative,
-            representative_label=int(rep_label),
-            generator_label=int(generator_label),
-            disagreement_from_identity=float(disagreement),
-            status="observed_holonomy_power_representative",
-        )
-        if best is None or choice.disagreement_from_identity < best.disagreement_from_identity:
-            best = choice
-    if best is None:
-        return RepresentativeChoice(
-            label=label,
-            representative=None,
-            representative_label=None,
-            generator_label=None,
-            disagreement_from_identity=float("nan"),
-            status="no_representative_correction_available",
-        )
-    return best
-
-
-def apply_edge_label_corrections(
-    pairwise: dict[tuple[int, int], np.ndarray],
-    representatives: dict[tuple[int, int], np.ndarray],
-) -> dict[tuple[int, int], np.ndarray]:
-    return {
-        edge: compose_perm(invert_perm(representatives[edge]), np.asarray(pairwise[edge], dtype=int))
-        for edge in pairwise
-    }
-
-
-def _inverse_consistency_ok(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> bool:
-    for i, j in product(range(int(n_models)), repeat=2):
-        if not np.array_equal(pairwise[(j, i)], invert_perm(pairwise[(i, j)])):
-            return False
-    return True
-
-
-def solve_and_correct_pairwise(
-    pairwise: dict[tuple[int, int], np.ndarray],
-    fit,
-    n_models: int,
-    prime: int,
-) -> CorrectionResult:
-    width = len(next(iter(pairwise.values())))
-    identity = np.arange(width, dtype=int)
-    defects = triangle_defects_from_pairwise(pairwise, n_models)
-    labels = {tri: quotient_label_from_fit(defect, fit, prime) for tri, defect in defects.items()}
-    solution = solve_best_edge_cochain_mod_p(labels, n_models, prime)
-    edge_labels: dict[tuple[int, int], int] = {}
-    corrections = {(idx, idx): identity.copy() for idx in range(int(n_models))}
-    representative_choices: dict[tuple[int, int], RepresentativeChoice] = {}
-    for i, j in product(range(int(n_models)), repeat=2):
-        if i == j:
-            edge_labels[(i, j)] = 0
-            representative_choices[(i, j)] = RepresentativeChoice(
-                label=0,
-                representative=identity.copy(),
-                representative_label=0,
-                generator_label=0,
-                disagreement_from_identity=0.0,
-                status="identity_representative",
-            )
-            continue
-        edge_labels[(i, j)] = _oriented_edge_value(solution.edge_labels, i, j, prime)
-    if not solution.solved_exact:
-        corrected = {edge: value.copy() for edge, value in pairwise.items()}
-        for i, j in product(range(int(n_models)), repeat=2):
-            corrections[(i, j)] = identity.copy()
-            representative_choices.setdefault(
-                (i, j),
-                RepresentativeChoice(
-                    label=edge_labels.get((i, j), 0),
-                    representative=identity.copy(),
-                    representative_label=0,
-                    generator_label=0,
-                    disagreement_from_identity=0.0,
-                    status=solution.solve_status,
-                ),
-            )
-        return CorrectionResult(
-            corrections=corrections,
-            corrected=corrected,
-            edge_labels=edge_labels,
-            representative_choices=representative_choices,
-            solution=solution,
-            edge_cochain_solve_status=solution.solve_status,
-            representative_selection_status="quotient_cochain_inconsistent",
-            implemented=False,
-            inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
-        )
-
-    observed_holonomies = list(defects.values())
-    representative_statuses = []
-    for i, j in product(range(int(n_models)), repeat=2):
-        if i == j:
-            continue
-        choice = representative_for_cp_label(edge_labels[(i, j)], fit, observed_holonomies, width, prime)
-        representative_choices[(i, j)] = choice
-        representative_statuses.append(choice.status)
-        if choice.representative is not None:
-            corrections[(i, j)] = choice.representative.copy()
-    if any(status == "no_representative_correction_available" for status in representative_statuses):
-        corrected = {edge: value.copy() for edge, value in pairwise.items()}
-        for i, j in product(range(int(n_models)), repeat=2):
-            corrections.setdefault((i, j), identity.copy())
-        return CorrectionResult(
-            corrections=corrections,
-            corrected=corrected,
-            edge_labels=edge_labels,
-            representative_choices=representative_choices,
-            solution=solution,
-            edge_cochain_solve_status=solution.solve_status,
-            representative_selection_status="no_representative_correction_available",
-            implemented=False,
-            inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
-        )
-    corrected = apply_edge_label_corrections(pairwise, corrections)
-    return CorrectionResult(
-        corrections=corrections,
-        corrected=corrected,
-        edge_labels=edge_labels,
-        representative_choices=representative_choices,
-        solution=solution,
-        edge_cochain_solve_status=solution.solve_status,
-        representative_selection_status="representative_correction_available",
-        implemented=True,
-        inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
-    )
 
 
 def shuffled_correction_maps(
@@ -1907,36 +1548,30 @@ def main(argv: list[str] | None = None) -> int:
     else:
         final_interpretation = "implementation_invalid: quotient cochain solve evidence missing"
     print(f"Audit classification: {status}")
-    print(f"Run status: {status}")
-    print("\nSelected settings:")
+    print("Selected settings:")
     for setting in settings:
         print(f"- {setting.dataset}: {setting.run_id} (N={setting.n_models}, W={setting.width}, source={setting.model_source})")
-    print("\nEligible primes:")
+    print("Eligible primes:")
     for dataset in datasets:
         print(f"- {dataset}: {eligible.get(dataset, [])}")
-    print("\nCorrected map rows:")
-    print(f"- count: {len(maps_out)}")
-    print(f"- quotient residual reduction rate: {quotient_reduction_rate:.6g}")
-    print(f"- permutation residual safe-correction rate: {permutation_safe_rate:.6g}")
-    print(f"- exact quotient cochain solves: {exact_solve_count}")
-    print(f"- representative corrections available: {representative_available_count}")
-    print("\nCorrected merge rows:")
-    print(f"- implemented count: {len(implemented)}")
-    print(f"- finite validation metrics count: {int(finite_val.sum())}")
-    print(f"- finite test metrics count: {int(finite_test.sum())}")
-    print("\nBest validation deltas:")
+    print(f"Exact quotient cochain solves: {exact_solve_count}")
+    print(f"Representatives available: {representative_available_count}")
+    print(f"Quotient residual reduction rate: {quotient_reduction_rate:.6g}")
+    print(f"Permutation-safe correction rate: {permutation_safe_rate:.6g}")
+    print(f"Corrected merge metric rows: {int((finite_val & finite_test).sum())}")
+    print("Best validation delta vs baseline:")
     print(f"- peeled C2M3 vs unpeeled C2M3: {float(best_peeled.max()) if len(best_peeled) else 'not_run'}")
     print(f"- cumulative peeled C2M3 vs unpeeled C2M3: {float(best_cum.max()) if len(best_cum) else 'not_run'}")
     print(f"- peeled monomial vs unpeeled monomial: {float(best_mono.max()) if len(best_mono) else 'not_run'}")
-    print("\nControls:")
+    print("Controls passed:")
     print(f"- wrong-prime control available: {'yes' if rows['wrong_prime_control_validation_accuracy'].notna().any() else 'no'}")
     print(f"- shuffled control available: {'yes' if rows['shuffled_control_validation_accuracy'].notna().any() else 'no'}")
     print(f"- random residual control available: {'yes' if rows['random_residual_control_validation_accuracy'].notna().any() else 'no'}")
-    print(f"- controls passed: {controls_passed}")
-    print("\nSelected methods:")
+    print(f"- selected rows passing all controls: {controls_passed}")
+    print("Selected methods:")
     print(f"- count: {len(selected_rows)}")
     print(f"- details: {', '.join(selected_rows['method'].astype(str).tolist()) if len(selected_rows) else 'none'}")
-    print("\nFinal interpretation:")
+    print("Final interpretation:")
     print(f"- {final_interpretation}")
     return 0
 
