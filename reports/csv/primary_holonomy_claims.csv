@@ -1,0 +1,6 @@
+claim_id,status,safe_wording,evidence
+controlled_primary_sanity_check,Supported,Controlled C2/C3/C4 primary sanity rows select the correct implemented primary branch lift by validation.,reports/csv/primary_holonomy_selector_results.csv
+stable_real_primary_quotients,Supported descriptive,Some real relation sets have certified heuristic 2/3-primary quotient candidates; this is descriptive unless paired lift controls pass.,reports/csv/primary_holonomy_candidates.csv
+primary_branch_lift_accuracy_real,Supported negative,Real implemented primary branch lifts are only supported when validation-selected and paired controls pass; otherwise the selector falls back.,reports/csv/primary_holonomy_paired_stats.csv
+selector_avoids_harmful_primary_lifts,Supported,The validation-only selector falls back on real settings when implemented primary lifts do not clear fallback and same-branch control gates.,reports/csv/primary_holonomy_selector_results.csv
+real_brauer_or_period_index_residuals,Not supported,Do not claim real residuals are central Brauer/projective or period-index classes from this primary-factor experiment.,reports/primary_holonomy_splitting_report.md

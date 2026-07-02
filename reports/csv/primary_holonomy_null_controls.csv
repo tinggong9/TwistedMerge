@@ -1,0 +1,7 @@
+null_family,false_primary_certification_rate,false_pooling_pass_rate,false_lift_activation_rate,false_validation_selection_rate,null_delta_vs_fallback,null_delta_vs_random_same_branch
+random_same_branch_count_control,0.0,1.0,0.0,0.0,,
+wrong_primary_factor_control,0.0,1.0,0.0,0.03614457831325301,,
+shuffled_edge_maps,0.0,1.0,0.0,0.0,,
+randomized_quotient_assignment,0.0,1.0,0.0,0.0,,
+relation_violating_quotient,0.0,1.0,0.0,0.0,,
+random_Cq_action,0.0,1.0,0.0,0.0,,
