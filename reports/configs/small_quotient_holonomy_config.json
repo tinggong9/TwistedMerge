@@ -1,0 +1,71 @@
+{
+  "args": {
+    "bootstrap_ci_samples": 500,
+    "bootstrap_samples": 100,
+    "candidate_Q": "C2,C3,C4,V4,S3,D4",
+    "datasets": "mnist,fashion_mnist",
+    "include_controlled_sanity": true,
+    "max_exact_order": 256,
+    "max_generators": 12,
+    "max_group_order": 5000,
+    "max_settings": 160,
+    "model_counts": "3,4",
+    "no_update_claims_audit": false,
+    "nontrivial_thresholds": "0.05,0.10,0.25",
+    "nulls_per_family": 20,
+    "pooling_thresholds": "1e-8,1e-6,1e-4,1e-2",
+    "random_restarts": 64,
+    "relation_thresholds": "0,0.01,0.05",
+    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "seed": 27119,
+    "selector_epsilon_controls": "0.0,0.0005,0.001",
+    "selector_epsilons": "0.0,0.0005,0.001,0.002",
+    "selector_loss_slacks": "0.0,0.005,0.01,inf",
+    "widths": ""
+  },
+  "argv": [
+    "experiments/small_quotient_holonomy_splitting.py",
+    "--datasets",
+    "mnist,fashion_mnist",
+    "--model-counts",
+    "3,4",
+    "--max-settings",
+    "160",
+    "--random-restarts",
+    "64",
+    "--bootstrap-samples",
+    "100",
+    "--bootstrap-ci-samples",
+    "500",
+    "--nulls-per-family",
+    "20"
+  ],
+  "artifact_row_counts": {
+    "bootstrap": 8748,
+    "candidates": 8748,
+    "groups": 162,
+    "lifts": 209952,
+    "nulls": 4800,
+    "paired": 7,
+    "pooling": 34992,
+    "regret": 30720,
+    "selector": 30720
+  },
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/small_quotient_holonomy_splitting.py --datasets mnist,fashion_mnist --model-counts 3,4 --max-settings 160 --random-restarts 64 --bootstrap-samples 100 --bootstrap-ci-samples 500 --nulls-per-family 20",
+  "environment": {
+    "git_commit": "8693d66",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "git_commit": "8693d66",
+  "git_status_short": "M reports/claims_audit.md\n?? experiments/small_quotient_holonomy_splitting.py\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W64_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7300/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7301/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7302/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7303/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7304/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7305/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7306/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7307/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7308/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7309/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7310/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7311/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7312/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7313/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7314/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7315/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7316/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7317/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7318/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7319/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W128_N4/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W64_N4/\n?? reports/configs/small_quotient_holonomy_config.json\n?? reports/csv/small_quotient_bootstrap.csv\n?? reports/csv/small_quotient_candidates.csv\n?? reports/csv/small_quotient_claims.csv\n?? reports/csv/small_quotient_holonomy_groups.csv\n?? reports/csv/small_quotient_lift_candidates.csv\n?? reports/csv/small_quotient_null_controls.csv\n?? reports/csv/small_quotient_paired_stats.csv\n?? reports/csv/small_quotient_pooling_residuals.csv\n?? reports/csv/small_quotient_selector_results.csv\n?? reports/plots/small_quotient_accuracy_delta.pdf\n?? reports/plots/small_quotient_fit_quality.pdf\n?? reports/plots/small_quotient_null_vs_real.pdf\n?? reports/plots/small_quotient_pooling_residuals.pdf\n?? reports/plots/small_quotient_selector_regret.pdf\n?? reports/small_quotient_holonomy_report.md\n?? src/small_quotient_branch_lift.py\n?? src/small_quotient_holonomy.py\n?? src/small_quotient_selector.py\n?? tests/test_small_quotient_holonomy.py"
+}

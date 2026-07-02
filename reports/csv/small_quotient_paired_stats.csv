@@ -1,0 +1,8 @@
+comparison,n_pairs,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,wins,ties,losses,sign_test_p,number_of_certified_quotients,number_of_implemented_Q_lifts,number_of_validation_selected_Q_lifts,number_of_test_improving_selected_Q_lifts,selection_used_validation_only
+small_quotient_safe_selector_vs_best_fallback,160,0.0,0.0,0.0,0.0,0,160,0,,8046,0,0,0,True
+small_quotient_safe_selector_vs_greedy_soup,160,-1.8750000000000015e-05,-5.625000000000005e-05,0.0,0.0003036874592304225,0,159,1,1.0,8046,0,0,0,True
+small_quotient_safe_selector_vs_c2m3_permutation,160,0.025859375,0.022698437500000005,0.029338828124999997,-0.09768947827219962,158,2,0,5.473822126268817e-48,8046,0,0,0,True
+small_quotient_safe_selector_vs_monomial_scale,160,0.01998749999999999,0.018067812499999992,0.021967265624999992,-0.0815703527867794,157,1,2,3.481624563413281e-44,8046,0,0,0,True
+best_Q_branch_lift_vs_random_same_Q_branch_control,0,,,,,0,0,0,,8046,0,0,0,True
+best_Q_branch_lift_vs_wrong_Q_lift_control,0,,,,,0,0,0,,8046,0,0,0,True
+best_Q_branch_lift_vs_best_fallback,0,,,,,0,0,0,,8046,0,0,0,True

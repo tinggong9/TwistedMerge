@@ -1,0 +1,7 @@
+claim_id,status,safe_wording,evidence
+stable_small_quotient_holonomy_real,Supported descriptive,"Stable small quotient candidates are observed in the listed real residual settings, but they are heuristic/descriptive and must be reported with null-control rates and relation-count limits.",reports/csv/small_quotient_candidates.csv
+invariant_pooling_kills_quotient_branch_holonomy,Supported descriptive,"For candidate quotient branch actions, invariant pooling gives the listed residuals; this is diagnostic unless a model lift is implemented.",reports/csv/small_quotient_pooling_residuals.csv
+Q_branch_lift_accuracy_real,Supported negative,"No real model-level small-quotient branch lift is implemented in this run, so no Q-branch accuracy improvement is claimed.",reports/csv/small_quotient_lift_candidates.csv
+validation_safe_selector_avoids_unimplemented_Q_lifts,Supported,The validation-only selector falls back unless a certified implemented Q-lift beats fallbacks and random same-Q controls.,reports/csv/small_quotient_selector_results.csv
+controlled_quotient_sanity_check,Supported descriptive,The controlled S3/D4 sanity rows exercise the quotient fitting and pooling diagnostics; they are not real-data performance evidence.,reports/csv/small_quotient_candidates.csv
+real_brauer_or_period_index_residuals,Not supported,Do not claim real residuals are central Brauer/projective or period-index classes from this small-quotient nonabelian experiment.,reports/small_quotient_holonomy_report.md
