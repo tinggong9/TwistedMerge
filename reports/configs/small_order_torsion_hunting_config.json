@@ -1,0 +1,83 @@
+{
+  "args": {
+    "bootstrap_ci_samples": 500,
+    "bootstrap_samples": 100,
+    "datasets": "mnist,fashion_mnist",
+    "max_bootstrap_candidates": 40,
+    "max_monomial_diagnostics": 4000,
+    "max_real_residuals": 0,
+    "model_counts": "3,4",
+    "no_update_claims_audit": false,
+    "nulls_per_family": 40,
+    "orders": "2,3,4,5,6,8",
+    "reports_dir": "reports",
+    "seed": 9173,
+    "selector_epsilons": "0.0,0.0005,0.001,0.002",
+    "selector_loss_slacks": "0.0,0.005,0.01,inf",
+    "widths": ""
+  },
+  "argv": [
+    "experiments/small_order_torsion_hunting.py",
+    "--reports-dir",
+    "reports"
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/small_order_torsion_hunting.py --reports-dir reports",
+  "environment": {
+    "git_commit": "d2ac323",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "git_commit": "d2ac323",
+  "git_status_short": "M reports/claims_audit.md\n?? experiments/small_order_torsion_hunting.py\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/fashion_mnist_fashion_class_subsets_mlp2_W64_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W128_N3/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7300/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7301/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7302/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7303/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7304/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7305/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7306/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7307/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7308/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7309/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7310/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7311/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7312/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7313/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7314/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7315/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7316/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7317/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7318/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_digit_subsets_mlp2_W64_N3/seed7319/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W128_N4/\n?? reports/checkpoints/same_base_task_vector/mnist_mnist_four_subsets_mlp2_W64_N4/\n?? reports/configs/small_order_torsion_hunting_config.json\n?? reports/csv/period_index_lift_candidates.csv\n?? reports/csv/period_index_lift_paired_stats.csv\n?? reports/csv/small_order_torsion_bootstrap.csv\n?? reports/csv/small_order_torsion_candidates.csv\n?? reports/csv/small_order_torsion_hunting.csv\n?? reports/csv/small_order_torsion_hunting_summary.csv\n?? reports/csv/small_order_torsion_null_controls.csv\n?? reports/csv/torsion_safe_selector_regret.csv\n?? reports/period_index_lift_validation_report.md\n?? reports/plots/period_index_lift_delta.pdf\n?? reports/plots/small_order_torsion_residuals.pdf\n?? reports/plots/torsion_candidate_orders.pdf\n?? reports/plots/torsion_null_vs_real.pdf\n?? reports/plots/torsion_safe_selector_regret.pdf\n?? reports/small_order_torsion_hunting_report.md\n?? src/small_order_torsion.py\n?? src/validation_gated_period_index_lift.py\n?? tests/test_small_order_torsion.py",
+  "orders": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8
+  ],
+  "threshold_policies": [
+    {
+      "activates_lift": true,
+      "centrality_threshold": 0.001,
+      "name": "strict_fpr_0",
+      "order_threshold": 0.001,
+      "scalar_threshold": 0.001,
+      "target_false_positive_rate": 0.0
+    },
+    {
+      "activates_lift": true,
+      "centrality_threshold": 0.001,
+      "name": "strict_fpr_001",
+      "order_threshold": 0.001,
+      "scalar_threshold": 0.001,
+      "target_false_positive_rate": 0.01
+    },
+    {
+      "activates_lift": false,
+      "centrality_threshold": 0.01,
+      "name": "loose_1e-2",
+      "order_threshold": 0.01,
+      "scalar_threshold": 0.01,
+      "target_false_positive_rate": 0.01
+    },
+    {
+      "activates_lift": false,
+      "centrality_threshold": 0.05,
+      "name": "diagnostic_5e-2",
+      "order_threshold": 0.05,
+      "scalar_threshold": 0.05,
+      "target_false_positive_rate": 0.01
+    }
+  ]
+}

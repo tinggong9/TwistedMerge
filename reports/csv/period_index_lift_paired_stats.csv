@@ -1,0 +1,6 @@
+comparison,baseline,n_pairs,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,accuracy_wins,accuracy_ties,accuracy_losses,sign_test_two_sided_p,number_of_certified_candidates,number_of_attempted_lifts,number_of_validation_selected_lifts,number_of_test_improving_lifts
+torsion_safe_selector_vs_best_fallback,best_fallback,960,0.0,0.0,0.0,0.0,0,960,0,,0,0,0,0
+torsion_safe_selector_vs_greedy_soup,greedy_soup,960,-5.208333333333338e-06,-1.3541666666666678e-05,0.0,9.159902532895394e-05,0,958,2,0.5,0,0,0,0
+torsion_safe_selector_vs_c2m3_permutation,c2m3_permutation,960,0.023877604166666667,0.02278962239583333,0.024998333333333327,-0.09484296702047189,955,3,2,7.526144351449523e-283,0,0,0,0
+torsion_safe_selector_vs_monomial_scale,monomial_scale,960,0.021569791666666664,0.020683697916666664,0.022437630208333326,-0.0826226627210776,953,2,5,5.491357714268676e-276,0,0,0,0
+torsion_safe_selector_vs_random_same_rank_lift_control,random_same_rank_lift_control,960,0.00989583333333333,0.009371718749999994,0.010377395833333329,-0.04081535486777623,888,12,60,6.528938140365177e-190,0,0,0,0
