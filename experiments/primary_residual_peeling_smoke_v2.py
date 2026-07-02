@@ -136,6 +136,14 @@ MAIN_COLUMNS = [
     "quotient_relation_violation_rate",
     "edge_correction_status",
     "representative_correction_status",
+    "quotient_residual_before",
+    "quotient_residual_after",
+    "quotient_residual_reduction",
+    "permutation_cycle_residual_before",
+    "permutation_cycle_residual_after",
+    "permutation_cycle_residual_reduction",
+    "edge_cochain_solve_status",
+    "representative_selection_status",
     "corrected_cycle_residual_before",
     "corrected_cycle_residual_after",
     "correction_reduces_residual",
@@ -171,13 +179,21 @@ CORRECTED_MAP_COLUMNS = [
     "prime",
     "peel_mode",
     "edge",
+    "quotient_edge_label",
+    "representative_label",
+    "representative_generator_label",
+    "representative_disagreement_from_identity",
+    "edge_cochain_solve_status",
+    "representative_selection_status",
     "original_map",
     "correction_map",
     "corrected_map",
     "map_valid",
     "map_type",
-    "cycle_residual_before",
-    "cycle_residual_after",
+    "quotient_residual_before",
+    "quotient_residual_after",
+    "permutation_cycle_residual_before",
+    "permutation_cycle_residual_after",
     "residual_reduction",
 ]
 
@@ -201,6 +217,42 @@ class SelectedSetting:
     primary_source_order: int
     primary_source_order_source: str
     model_source: str
+
+
+@dataclass(frozen=True)
+class EdgeCochainSolution:
+    solved_exact: bool
+    edge_labels: dict[tuple[int, int], int]
+    quotient_residual_before: float
+    quotient_residual_after: float
+    n_equations: int
+    n_variables: int
+    rank: int
+    solve_status: str
+    sign: int
+
+
+@dataclass(frozen=True)
+class RepresentativeChoice:
+    label: int
+    representative: np.ndarray | None
+    representative_label: int | None
+    generator_label: int | None
+    disagreement_from_identity: float
+    status: str
+
+
+@dataclass(frozen=True)
+class CorrectionResult:
+    corrections: dict[tuple[int, int], np.ndarray]
+    corrected: dict[tuple[int, int], np.ndarray]
+    edge_labels: dict[tuple[int, int], int]
+    representative_choices: dict[tuple[int, int], RepresentativeChoice]
+    solution: EdgeCochainSolution
+    edge_cochain_solve_status: str
+    representative_selection_status: str
+    implemented: bool
+    inverse_consistency_ok: bool
 
 
 def parse_csv(text: str, cast=str) -> list:
@@ -577,28 +629,335 @@ def cycle_residual(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -
     return float(np.mean(residuals)) if residuals else 0.0
 
 
-def edge_self_corrected_maps(
+def permutation_power(perm: Iterable[int], exponent: int) -> np.ndarray:
+    base = np.asarray(tuple(int(item) for item in perm), dtype=int)
+    width = len(base)
+    identity = np.arange(width, dtype=int)
+    exp = int(exponent)
+    if exp == 0:
+        return identity.copy()
+    if exp < 0:
+        base = invert_perm(base)
+        exp = -exp
+    out = identity.copy()
+    for _ in range(exp):
+        out = compose_perm(out, base)
+    return out
+
+
+def triangle_defects_from_pairwise(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> dict[tuple[int, int, int], np.ndarray]:
+    defects: dict[tuple[int, int, int], np.ndarray] = {}
+    for i, j, k in combinations(range(int(n_models)), 3):
+        defects[(i, j, k)] = compose_perm(compose_perm(pairwise[(i, j)], pairwise[(j, k)]), pairwise[(k, i)])
+    return defects
+
+
+def relations_from_pairwise(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> tuple:
+    relations = []
+    for (i, j, k), hol in triangle_defects_from_pairwise(pairwise, n_models).items():
+        relations.append(triangle_relation_from_perms(pairwise[(i, j)], pairwise[(j, k)], pairwise[(k, i)], hol))
+    return tuple(relations)
+
+
+def quotient_label_from_fit(perm: Iterable[int], fit, p: int) -> int:
+    if fit is None:
+        return 0
+    key = tuple(int(item) for item in perm)
+    return int(fit.assignment.get(key, 0)) % int(p)
+
+
+def quotient_defect_labels_from_pairwise(
     pairwise: dict[tuple[int, int], np.ndarray],
     fit,
     n_models: int,
     prime: int,
-) -> tuple[dict[tuple[int, int], np.ndarray], dict[tuple[int, int], np.ndarray], str]:
+) -> dict[tuple[int, int, int], int]:
+    defects = triangle_defects_from_pairwise(pairwise, n_models)
+    return {tri: quotient_label_from_fit(defect, fit, prime) for tri, defect in defects.items()}
+
+
+def quotient_residual_from_labels(labels: dict[tuple[int, int, int], int], p: int) -> float:
+    if not labels:
+        return 0.0
+    return float(np.mean([int(value) % int(p) != 0 for value in labels.values()]))
+
+
+def _edge_variable_index(n_models: int) -> dict[tuple[int, int], int]:
+    return {edge: idx for idx, edge in enumerate(combinations(range(int(n_models)), 2))}
+
+
+def _oriented_edge_value(edge_labels: dict[tuple[int, int], int], i: int, j: int, p: int) -> int:
+    if i == j:
+        return 0
+    if i < j:
+        return int(edge_labels.get((i, j), 0)) % int(p)
+    return (-int(edge_labels.get((j, i), 0))) % int(p)
+
+
+def _rref_solve_mod_p(matrix: list[list[int]], rhs: list[int], p: int) -> tuple[bool, list[int], int]:
+    p = int(p)
+    if not matrix:
+        return True, [], 0
+    n_rows = len(matrix)
+    n_cols = len(matrix[0]) if matrix[0] else 0
+    aug = [[int(value) % p for value in row] + [int(rhs[idx]) % p] for idx, row in enumerate(matrix)]
+    row = 0
+    pivots: list[int] = []
+    for col in range(n_cols):
+        pivot = next((candidate for candidate in range(row, n_rows) if aug[candidate][col] % p), None)
+        if pivot is None:
+            continue
+        aug[row], aug[pivot] = aug[pivot], aug[row]
+        inv = pow(int(aug[row][col]) % p, -1, p)
+        aug[row] = [(value * inv) % p for value in aug[row]]
+        for other in range(n_rows):
+            if other == row:
+                continue
+            factor = aug[other][col] % p
+            if factor:
+                aug[other] = [(aug[other][idx] - factor * aug[row][idx]) % p for idx in range(n_cols + 1)]
+        pivots.append(col)
+        row += 1
+        if row == n_rows:
+            break
+    inconsistent = any(all(aug[r][c] % p == 0 for c in range(n_cols)) and aug[r][-1] % p != 0 for r in range(n_rows))
+    solution = [0 for _ in range(n_cols)]
+    if not inconsistent:
+        for pivot_row, pivot_col in enumerate(pivots):
+            solution[pivot_col] = int(aug[pivot_row][-1]) % p
+    return not inconsistent, solution, len(pivots)
+
+
+def solve_edge_cochain_mod_p(
+    triangle_defect_labels: dict[tuple[int, int, int], int],
+    n_models: int,
+    p: int,
+    sign: int = 1,
+) -> EdgeCochainSolution:
+    """Solve d(edge_label) = sign * triangle_defect_label over F_p."""
+
+    p = int(p)
+    variables = _edge_variable_index(n_models)
+    rows: list[list[int]] = []
+    rhs: list[int] = []
+    for i, j, k in sorted(triangle_defect_labels):
+        row = [0 for _ in variables]
+        for a, b in ((i, j), (j, k), (k, i)):
+            if a == b:
+                continue
+            if a < b:
+                row[variables[(a, b)]] = (row[variables[(a, b)]] + 1) % p
+            else:
+                row[variables[(b, a)]] = (row[variables[(b, a)]] - 1) % p
+        rows.append(row)
+        rhs.append((int(sign) * int(triangle_defect_labels[(i, j, k)])) % p)
+    exact, vector, rank = _rref_solve_mod_p(rows, rhs, p)
+    edge_labels = {edge: int(vector[idx]) % p for edge, idx in variables.items()} if vector else {edge: 0 for edge in variables}
+    residuals = []
+    for (i, j, k), label in sorted(triangle_defect_labels.items()):
+        lhs = (
+            _oriented_edge_value(edge_labels, i, j, p)
+            + _oriented_edge_value(edge_labels, j, k, p)
+            + _oriented_edge_value(edge_labels, k, i, p)
+        ) % p
+        residuals.append((lhs - int(sign) * int(label)) % p)
+    residual_after = float(np.mean([value % p != 0 for value in residuals])) if residuals else 0.0
+    residual_before = quotient_residual_from_labels(triangle_defect_labels, p)
+    solved_exact = bool(exact and residual_after <= 0.0)
+    status = "exact_quotient_cochain_solve" if solved_exact else "quotient_cochain_inconsistent"
+    return EdgeCochainSolution(
+        solved_exact=solved_exact,
+        edge_labels=edge_labels,
+        quotient_residual_before=float(residual_before),
+        quotient_residual_after=float(residual_after),
+        n_equations=int(len(rows)),
+        n_variables=int(len(variables)),
+        rank=int(rank),
+        solve_status=f"{status}_sign_{int(sign)}",
+        sign=int(sign),
+    )
+
+
+def solve_best_edge_cochain_mod_p(
+    triangle_defect_labels: dict[tuple[int, int, int], int],
+    n_models: int,
+    p: int,
+) -> EdgeCochainSolution:
+    candidates = [
+        solve_edge_cochain_mod_p(triangle_defect_labels, n_models, p, sign=1),
+        solve_edge_cochain_mod_p(triangle_defect_labels, n_models, p, sign=-1),
+    ]
+    candidates.sort(key=lambda item: (not item.solved_exact, item.quotient_residual_after, 0 if item.sign == 1 else 1))
+    return candidates[0]
+
+
+def representative_for_cp_label(
+    label: int,
+    fit,
+    observed_holonomies: Iterable[np.ndarray],
+    width: int,
+    p: int,
+) -> RepresentativeChoice:
+    p = int(p)
+    label = int(label) % p
+    identity = np.arange(width, dtype=int)
+    if label == 0:
+        return RepresentativeChoice(
+            label=0,
+            representative=identity.copy(),
+            representative_label=0,
+            generator_label=0,
+            disagreement_from_identity=0.0,
+            status="identity_representative",
+        )
+    best: RepresentativeChoice | None = None
+    for holonomy in observed_holonomies:
+        generator = np.asarray(holonomy, dtype=int)
+        if not is_valid_permutation(generator):
+            continue
+        generator_label = quotient_label_from_fit(generator, fit, p)
+        if generator_label % p == 0:
+            continue
+        try:
+            inv_label = pow(generator_label, -1, p)
+        except ValueError:
+            continue
+        exponent = (inv_label * label) % p
+        representative = permutation_power(generator, exponent)
+        rep_label = (generator_label * exponent) % p
+        if rep_label != label:
+            continue
+        disagreement = permutation_disagreement(representative, identity)
+        choice = RepresentativeChoice(
+            label=label,
+            representative=representative,
+            representative_label=int(rep_label),
+            generator_label=int(generator_label),
+            disagreement_from_identity=float(disagreement),
+            status="observed_holonomy_power_representative",
+        )
+        if best is None or choice.disagreement_from_identity < best.disagreement_from_identity:
+            best = choice
+    if best is None:
+        return RepresentativeChoice(
+            label=label,
+            representative=None,
+            representative_label=None,
+            generator_label=None,
+            disagreement_from_identity=float("nan"),
+            status="no_representative_correction_available",
+        )
+    return best
+
+
+def apply_edge_label_corrections(
+    pairwise: dict[tuple[int, int], np.ndarray],
+    representatives: dict[tuple[int, int], np.ndarray],
+) -> dict[tuple[int, int], np.ndarray]:
+    return {
+        edge: compose_perm(invert_perm(representatives[edge]), np.asarray(pairwise[edge], dtype=int))
+        for edge in pairwise
+    }
+
+
+def _inverse_consistency_ok(pairwise: dict[tuple[int, int], np.ndarray], n_models: int) -> bool:
+    for i, j in product(range(int(n_models)), repeat=2):
+        if not np.array_equal(pairwise[(j, i)], invert_perm(pairwise[(i, j)])):
+            return False
+    return True
+
+
+def solve_and_correct_pairwise(
+    pairwise: dict[tuple[int, int], np.ndarray],
+    fit,
+    n_models: int,
+    prime: int,
+) -> CorrectionResult:
     width = len(next(iter(pairwise.values())))
     identity = np.arange(width, dtype=int)
-    corrections = {}
-    corrected = {}
+    defects = triangle_defects_from_pairwise(pairwise, n_models)
+    labels = {tri: quotient_label_from_fit(defect, fit, prime) for tri, defect in defects.items()}
+    solution = solve_best_edge_cochain_mod_p(labels, n_models, prime)
+    edge_labels: dict[tuple[int, int], int] = {}
+    corrections = {(idx, idx): identity.copy() for idx in range(int(n_models))}
+    representative_choices: dict[tuple[int, int], RepresentativeChoice] = {}
     for i, j in product(range(int(n_models)), repeat=2):
-        original = np.asarray(pairwise[(i, j)], dtype=int)
         if i == j:
-            correction = identity
-        else:
-            residue = int(fit.assignment.get(tuple(int(x) for x in original), 0)) % int(prime)
-            correction = original.copy() if residue else identity.copy()
-        corrected_map = compose_perm(invert_perm(correction), original)
-        corrections[(i, j)] = correction
-        corrected[(i, j)] = corrected_map
-    status = "observed_edge_representative_permutation"
-    return corrections, corrected, status
+            edge_labels[(i, j)] = 0
+            representative_choices[(i, j)] = RepresentativeChoice(
+                label=0,
+                representative=identity.copy(),
+                representative_label=0,
+                generator_label=0,
+                disagreement_from_identity=0.0,
+                status="identity_representative",
+            )
+            continue
+        edge_labels[(i, j)] = _oriented_edge_value(solution.edge_labels, i, j, prime)
+    if not solution.solved_exact:
+        corrected = {edge: value.copy() for edge, value in pairwise.items()}
+        for i, j in product(range(int(n_models)), repeat=2):
+            corrections[(i, j)] = identity.copy()
+            representative_choices.setdefault(
+                (i, j),
+                RepresentativeChoice(
+                    label=edge_labels.get((i, j), 0),
+                    representative=identity.copy(),
+                    representative_label=0,
+                    generator_label=0,
+                    disagreement_from_identity=0.0,
+                    status=solution.solve_status,
+                ),
+            )
+        return CorrectionResult(
+            corrections=corrections,
+            corrected=corrected,
+            edge_labels=edge_labels,
+            representative_choices=representative_choices,
+            solution=solution,
+            edge_cochain_solve_status=solution.solve_status,
+            representative_selection_status="quotient_cochain_inconsistent",
+            implemented=False,
+            inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
+        )
+
+    observed_holonomies = list(defects.values())
+    representative_statuses = []
+    for i, j in product(range(int(n_models)), repeat=2):
+        if i == j:
+            continue
+        choice = representative_for_cp_label(edge_labels[(i, j)], fit, observed_holonomies, width, prime)
+        representative_choices[(i, j)] = choice
+        representative_statuses.append(choice.status)
+        if choice.representative is not None:
+            corrections[(i, j)] = choice.representative.copy()
+    if any(status == "no_representative_correction_available" for status in representative_statuses):
+        corrected = {edge: value.copy() for edge, value in pairwise.items()}
+        for i, j in product(range(int(n_models)), repeat=2):
+            corrections.setdefault((i, j), identity.copy())
+        return CorrectionResult(
+            corrections=corrections,
+            corrected=corrected,
+            edge_labels=edge_labels,
+            representative_choices=representative_choices,
+            solution=solution,
+            edge_cochain_solve_status=solution.solve_status,
+            representative_selection_status="no_representative_correction_available",
+            implemented=False,
+            inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
+        )
+    corrected = apply_edge_label_corrections(pairwise, corrections)
+    return CorrectionResult(
+        corrections=corrections,
+        corrected=corrected,
+        edge_labels=edge_labels,
+        representative_choices=representative_choices,
+        solution=solution,
+        edge_cochain_solve_status=solution.solve_status,
+        representative_selection_status="representative_correction_available",
+        implemented=True,
+        inverse_consistency_ok=_inverse_consistency_ok(corrected, n_models),
+    )
 
 
 def shuffled_correction_maps(
@@ -680,13 +1039,20 @@ def map_rows_for(
     original: dict[tuple[int, int], np.ndarray],
     corrections: dict[tuple[int, int], np.ndarray],
     corrected: dict[tuple[int, int], np.ndarray],
-    before: float,
-    after: float,
+    quotient_before: float,
+    quotient_after: float,
+    permutation_before: float,
+    permutation_after: float,
+    edge_labels: dict[tuple[int, int], int] | None = None,
+    representative_choices: dict[tuple[int, int], RepresentativeChoice] | None = None,
+    edge_cochain_solve_status: str = "",
+    representative_selection_status: str = "",
 ) -> list[dict]:
     rows = []
     for edge in sorted(original):
         corr = corrections.get(edge)
         out = corrected.get(edge)
+        choice = representative_choices.get(edge) if representative_choices else None
         valid = corr is not None and out is not None and is_valid_permutation(corr) and is_valid_permutation(out)
         rows.append(
             {
@@ -695,14 +1061,22 @@ def map_rows_for(
                 "prime": int(prime),
                 "peel_mode": peel_mode,
                 "edge": f"{edge[0]}->{edge[1]}",
+                "quotient_edge_label": int(edge_labels.get(edge, 0)) if edge_labels else np.nan,
+                "representative_label": choice.representative_label if choice else np.nan,
+                "representative_generator_label": choice.generator_label if choice else np.nan,
+                "representative_disagreement_from_identity": choice.disagreement_from_identity if choice else np.nan,
+                "edge_cochain_solve_status": edge_cochain_solve_status,
+                "representative_selection_status": choice.status if choice else representative_selection_status,
                 "original_map": permutation_json(original[edge]),
                 "correction_map": permutation_json(corr if corr is not None else np.asarray([], dtype=int)),
                 "corrected_map": permutation_json(out if out is not None else np.asarray([], dtype=int)),
                 "map_valid": bool(valid),
                 "map_type": "permutation" if valid else "invalid",
-                "cycle_residual_before": float(before),
-                "cycle_residual_after": float(after),
-                "residual_reduction": float(before - after),
+                "quotient_residual_before": float(quotient_before),
+                "quotient_residual_after": float(quotient_after),
+                "permutation_cycle_residual_before": float(permutation_before),
+                "permutation_cycle_residual_after": float(permutation_after),
+                "residual_reduction": float(quotient_before - quotient_after),
             }
         )
     return rows
@@ -712,7 +1086,25 @@ def no_lift_capacity_metadata() -> dict:
     return {"capacity_multiplier": 1.0, "inference_multiplier": 1.0}
 
 
-def make_base_row(setting: SelectedSetting, peel: dict, prime: int, peel_mode: str, cumulative_primes: str, fit, before: float, after: float, reduces: bool) -> dict:
+def make_base_row(
+    setting: SelectedSetting,
+    peel: dict,
+    prime: int,
+    peel_mode: str,
+    cumulative_primes: str,
+    fit,
+    before: float,
+    after: float,
+    reduces: bool,
+    quotient_before: float | None = None,
+    quotient_after: float | None = None,
+    edge_cochain_solve_status: str = "",
+    representative_selection_status: str = "",
+) -> dict:
+    q_before = float(before if quotient_before is None else quotient_before)
+    q_after = float(after if quotient_after is None else quotient_after)
+    p_before = float(before)
+    p_after = float(after)
     return {
         **setting.__dict__,
         **peel,
@@ -723,8 +1115,16 @@ def make_base_row(setting: SelectedSetting, peel: dict, prime: int, peel_mode: s
         "quotient_relation_violation_rate": float(fit.relation_violation_rate) if fit is not None else float("nan"),
         "edge_correction_status": "edge_correction_found" if reduces else "no_residual_reduction",
         "representative_correction_status": "",
-        "corrected_cycle_residual_before": float(before),
-        "corrected_cycle_residual_after": float(after),
+        "quotient_residual_before": q_before,
+        "quotient_residual_after": q_after,
+        "quotient_residual_reduction": float(q_before - q_after),
+        "permutation_cycle_residual_before": p_before,
+        "permutation_cycle_residual_after": p_after,
+        "permutation_cycle_residual_reduction": float(p_before - p_after),
+        "edge_cochain_solve_status": edge_cochain_solve_status,
+        "representative_selection_status": representative_selection_status,
+        "corrected_cycle_residual_before": p_before,
+        "corrected_cycle_residual_after": p_after,
         "correction_reduces_residual": bool(reduces),
         **no_lift_capacity_metadata(),
         "uses_test_for_selection": False,
@@ -746,8 +1146,16 @@ def selection_decision(row: dict) -> tuple[bool, str]:
         return False, row.get("na_reason") or "corrected_merge_not_implemented"
     if not is_finite(row.get("validation_accuracy")):
         return False, "missing_corrected_validation_metric"
-    if not bool(row.get("correction_reduces_residual", False)):
-        return False, "correction_did_not_reduce_residual"
+    if not is_finite(row.get("test_accuracy")):
+        return False, "missing_corrected_test_metric"
+    q_before = safe_float(row.get("quotient_residual_before"))
+    q_after = safe_float(row.get("quotient_residual_after"))
+    p_before = safe_float(row.get("permutation_cycle_residual_before"))
+    p_after = safe_float(row.get("permutation_cycle_residual_after"))
+    if not (math.isfinite(q_before) and math.isfinite(q_after) and q_after < q_before):
+        return False, "metric_produced_but_not_claimable"
+    if math.isfinite(p_before) and math.isfinite(p_after) and p_after > p_before + 1e-12:
+        return False, "quotient_peel_not_permutation_safe"
     if safe_float(row.get("capacity_multiplier")) != 1.0 or safe_float(row.get("inference_multiplier")) != 1.0:
         return False, "not_capacity_matched_no_lift"
     val = safe_float(row.get("validation_accuracy"))
@@ -789,8 +1197,26 @@ def accuracy_row(
     na_reason: str = "",
     control_metrics: dict | None = None,
     force_claim_status: str | None = None,
+    quotient_before: float | None = None,
+    quotient_after: float | None = None,
+    edge_cochain_solve_status: str = "",
+    representative_selection_status: str = "",
 ) -> dict:
-    row = make_base_row(setting, peel, int(peel["prime"]), peel_mode, cumulative_primes, fit, before, after, reduces)
+    row = make_base_row(
+        setting,
+        peel,
+        int(peel["prime"]),
+        peel_mode,
+        cumulative_primes,
+        fit,
+        before,
+        after,
+        reduces,
+        quotient_before=quotient_before,
+        quotient_after=quotient_after,
+        edge_cochain_solve_status=edge_cochain_solve_status,
+        representative_selection_status=representative_selection_status,
+    )
     row.update(
         {
             "representative_correction_status": representative_status,
@@ -873,7 +1299,6 @@ def evaluate_prime_family(
     primes: list[int],
 ) -> tuple[list[dict], list[dict]]:
     pairwise = reconstruct_pairwise_perms(group)
-    relations = relations_from_group(group)
     before = cycle_residual(pairwise, setting.n_models)
     rows = []
     corrected_map_rows = []
@@ -916,53 +1341,136 @@ def evaluate_prime_family(
             rows.append(dummy)
             continue
 
+        relations = relations_from_pairwise(pairwise, setting.n_models)
         fit = fit_primary_quotient(relations, prime, random_restarts=8, seed=setting.seed + prime)
-        corrections, corrected, representative_status = edge_self_corrected_maps(pairwise, fit, setting.n_models, prime)
-        after = cycle_residual(corrected, setting.n_models)
-        reduces = bool(after < before)
-        corrected_map_rows.extend(map_rows_for(setting, prime, "peel_p_only", pairwise, corrections, corrected, before, after))
+        result = solve_and_correct_pairwise(pairwise, fit, setting.n_models, prime)
+        after = cycle_residual(result.corrected, setting.n_models)
+        quotient_reduces = bool(result.solution.quotient_residual_after < result.solution.quotient_residual_before)
+        permutation_safe = bool(after <= before + 1e-12)
+        reduces = bool(result.implemented and quotient_reduces and permutation_safe)
+        corrected_map_rows.extend(
+            map_rows_for(
+                setting,
+                prime,
+                "peel_p_only",
+                pairwise,
+                result.corrections,
+                result.corrected,
+                result.solution.quotient_residual_before,
+                result.solution.quotient_residual_after,
+                before,
+                after,
+                edge_labels=result.edge_labels,
+                representative_choices=result.representative_choices,
+                edge_cochain_solve_status=result.edge_cochain_solve_status,
+                representative_selection_status=result.representative_selection_status,
+            )
+        )
 
         wrong_prime = next((candidate for candidate in primes if candidate != prime and setting.primary_source_order % int(candidate) != 0), None)
         wrong_metrics = None
+        wrong_after = float("nan")
+        wrong_result = None
         if wrong_prime is not None:
             wrong_fit = fit_primary_quotient(relations, int(wrong_prime), random_restarts=4, seed=setting.seed + 997 + int(wrong_prime))
-            wrong_corrections, wrong_corrected, _ = edge_self_corrected_maps(pairwise, wrong_fit, setting.n_models, int(wrong_prime))
-            wrong_metrics = evaluate_c2m3_from_pairwise(setting, bundle, wrong_corrected)
+            wrong_result = solve_and_correct_pairwise(pairwise, wrong_fit, setting.n_models, int(wrong_prime))
+            wrong_after = cycle_residual(wrong_result.corrected, setting.n_models)
+            if wrong_result.implemented:
+                wrong_metrics = evaluate_c2m3_from_pairwise(setting, bundle, wrong_result.corrected)
             corrected_map_rows.extend(
                 map_rows_for(
                     setting,
                     prime,
                     "wrong_prime_peel_control",
                     pairwise,
-                    wrong_corrections,
-                    wrong_corrected,
+                    wrong_result.corrections,
+                    wrong_result.corrected,
+                    wrong_result.solution.quotient_residual_before,
+                    wrong_result.solution.quotient_residual_after,
                     before,
-                    cycle_residual(wrong_corrected, setting.n_models),
+                    wrong_after,
+                    edge_labels=wrong_result.edge_labels,
+                    representative_choices=wrong_result.representative_choices,
+                    edge_cochain_solve_status=wrong_result.edge_cochain_solve_status,
+                    representative_selection_status=wrong_result.representative_selection_status,
                 )
             )
 
-        shuffled_corrections, shuffled = shuffled_correction_maps(pairwise, corrections, setting.n_models, setting.seed + 2000 + prime)
-        shuffled_metrics = evaluate_c2m3_from_pairwise(setting, bundle, shuffled)
-        shuffled_after = cycle_residual(shuffled, setting.n_models)
-        corrected_map_rows.extend(
-            map_rows_for(setting, prime, "shuffled_quotient_peel_control", pairwise, shuffled_corrections, shuffled, before, shuffled_after)
-        )
+        shuffled_metrics = None
+        random_metrics = None
+        shuffled_after = float("nan")
+        random_after = float("nan")
+        shuffled_q_after = float("nan")
+        random_q_after = float("nan")
+        if result.implemented:
+            shuffled_corrections, shuffled = shuffled_correction_maps(pairwise, result.corrections, setting.n_models, setting.seed + 2000 + prime)
+            shuffled_metrics = evaluate_c2m3_from_pairwise(setting, bundle, shuffled)
+            shuffled_after = cycle_residual(shuffled, setting.n_models)
+            shuffled_q_after = quotient_residual_from_labels(
+                quotient_defect_labels_from_pairwise(shuffled, fit, setting.n_models, prime),
+                prime,
+            )
+            corrected_map_rows.extend(
+                map_rows_for(
+                    setting,
+                    prime,
+                    "shuffled_quotient_peel_control",
+                    pairwise,
+                    shuffled_corrections,
+                    shuffled,
+                    result.solution.quotient_residual_before,
+                    shuffled_q_after,
+                    before,
+                    shuffled_after,
+                    edge_labels=result.edge_labels,
+                    edge_cochain_solve_status=result.edge_cochain_solve_status,
+                    representative_selection_status="shuffled_quotient_control",
+                )
+            )
 
-        random_corrections, random_maps = random_same_residual_norm_maps(pairwise, corrections, setting.n_models, setting.seed + 3000 + prime)
-        random_metrics = evaluate_c2m3_from_pairwise(setting, bundle, random_maps)
-        random_after = cycle_residual(random_maps, setting.n_models)
-        corrected_map_rows.extend(
-            map_rows_for(setting, prime, "random_same_residual_norm_peel_control", pairwise, random_corrections, random_maps, before, random_after)
-        )
+            random_corrections, random_maps = random_same_residual_norm_maps(pairwise, result.corrections, setting.n_models, setting.seed + 3000 + prime)
+            random_metrics = evaluate_c2m3_from_pairwise(setting, bundle, random_maps)
+            random_after = cycle_residual(random_maps, setting.n_models)
+            random_q_after = quotient_residual_from_labels(
+                quotient_defect_labels_from_pairwise(random_maps, fit, setting.n_models, prime),
+                prime,
+            )
+            corrected_map_rows.extend(
+                map_rows_for(
+                    setting,
+                    prime,
+                    "random_same_residual_norm_peel_control",
+                    pairwise,
+                    random_corrections,
+                    random_maps,
+                    result.solution.quotient_residual_before,
+                    random_q_after,
+                    before,
+                    random_after,
+                    edge_labels=result.edge_labels,
+                    edge_cochain_solve_status=result.edge_cochain_solve_status,
+                    representative_selection_status="random_same_residual_norm_control",
+                )
+            )
 
         control_metrics = {
-            "shuffled_control": shuffled_metrics,
-            "random_residual_control": random_metrics,
+            "shuffled_control": shuffled_metrics or {},
+            "random_residual_control": random_metrics or {},
         }
         if wrong_metrics is not None:
             control_metrics["wrong_prime_control"] = wrong_metrics
 
-        metrics = evaluate_c2m3_from_pairwise(setting, bundle, corrected)
+        metrics = evaluate_c2m3_from_pairwise(setting, bundle, result.corrected) if result.implemented else None
+        if not result.solution.solved_exact:
+            na_reason = "quotient_cochain_inconsistent"
+        elif not result.implemented:
+            na_reason = result.representative_selection_status
+        elif not quotient_reduces:
+            na_reason = "metric_produced_but_not_claimable"
+        elif not permutation_safe:
+            na_reason = "quotient_peel_not_permutation_safe"
+        else:
+            na_reason = ""
         rows.append(
             accuracy_row(
                 setting,
@@ -977,17 +1485,26 @@ def evaluate_prime_family(
                 fit,
                 "peel_p_only",
                 str(prime),
-                representative_status,
-                implemented=True,
-                na_reason="",
+                result.representative_selection_status,
+                implemented=result.implemented,
+                na_reason=na_reason,
                 control_metrics=control_metrics,
+                quotient_before=result.solution.quotient_residual_before,
+                quotient_after=result.solution.quotient_residual_after,
+                edge_cochain_solve_status=result.edge_cochain_solve_status,
+                representative_selection_status=result.representative_selection_status,
             )
         )
         for control_method, control_peel_mode, control_values, control_after, control_status in [
-            ("wrong_prime_peel_c2m3_control", "wrong_prime_peel_control", wrong_metrics, cycle_residual(pairwise, setting.n_models), "wrong_prime_control"),
+            ("wrong_prime_peel_c2m3_control", "wrong_prime_peel_control", wrong_metrics, wrong_after, "wrong_prime_control"),
             ("shuffled_quotient_peel_c2m3_control", "shuffled_quotient_peel_control", shuffled_metrics, shuffled_after, "shuffled_control"),
             ("random_same_residual_norm_peel_control", "random_same_residual_norm_peel_control", random_metrics, random_after, "random_residual_control"),
         ]:
+            control_q_after = {
+                "wrong_prime_peel_c2m3_control": wrong_result.solution.quotient_residual_after if wrong_result else float("nan"),
+                "shuffled_quotient_peel_c2m3_control": shuffled_q_after,
+                "random_same_residual_norm_peel_control": random_q_after,
+            }[control_method]
             rows.append(
                 accuracy_row(
                     setting,
@@ -998,7 +1515,7 @@ def evaluate_prime_family(
                     baseline,
                     before,
                     control_after,
-                    bool(control_after < before),
+                    bool(math.isfinite(control_after) and control_after <= before + 1e-12 and math.isfinite(control_q_after) and control_q_after < result.solution.quotient_residual_before),
                     fit,
                     control_peel_mode,
                     str(prime),
@@ -1007,30 +1524,54 @@ def evaluate_prime_family(
                     na_reason="control_metric_unavailable" if control_values is None else "",
                     control_metrics=control_metrics,
                     force_claim_status="control_real_evaluation_not_selectable" if control_values is not None else "control_unavailable",
+                    quotient_before=result.solution.quotient_residual_before,
+                    quotient_after=control_q_after,
+                    edge_cochain_solve_status=result.edge_cochain_solve_status,
+                    representative_selection_status=control_status,
                 )
             )
 
-        cumulative_primes.append(prime)
-        cumulative_corrections, cumulative_pairwise, cumulative_status = edge_self_corrected_maps(
-            cumulative_pairwise,
-            fit,
-            setting.n_models,
-            prime,
-        )
-        cumulative_after = cycle_residual(cumulative_pairwise, setting.n_models)
+        cumulative_before = cycle_residual(cumulative_pairwise, setting.n_models)
+        cumulative_relations = relations_from_pairwise(cumulative_pairwise, setting.n_models)
+        cumulative_fit = fit_primary_quotient(cumulative_relations, prime, random_restarts=8, seed=setting.seed + 5000 + prime)
+        cumulative_result = solve_and_correct_pairwise(cumulative_pairwise, cumulative_fit, setting.n_models, prime)
+        cumulative_after = cycle_residual(cumulative_result.corrected, setting.n_models)
+        cumulative_q_reduces = bool(cumulative_result.solution.quotient_residual_after < cumulative_result.solution.quotient_residual_before)
+        cumulative_perm_safe = bool(cumulative_after <= cumulative_before + 1e-12)
+        cumulative_reduces = bool(cumulative_result.implemented and cumulative_q_reduces and cumulative_perm_safe)
+        cumulative_original = {edge: value.copy() for edge, value in cumulative_pairwise.items()}
+        if cumulative_result.implemented and cumulative_q_reduces:
+            cumulative_pairwise = {edge: value.copy() for edge, value in cumulative_result.corrected.items()}
+            cumulative_primes.append(prime)
         corrected_map_rows.extend(
             map_rows_for(
                 setting,
                 prime,
                 "cumulative_peel",
-                pairwise,
-                cumulative_corrections,
-                cumulative_pairwise,
-                before,
+                cumulative_original,
+                cumulative_result.corrections,
+                cumulative_result.corrected,
+                cumulative_result.solution.quotient_residual_before,
+                cumulative_result.solution.quotient_residual_after,
+                cumulative_before,
                 cumulative_after,
+                edge_labels=cumulative_result.edge_labels,
+                representative_choices=cumulative_result.representative_choices,
+                edge_cochain_solve_status=cumulative_result.edge_cochain_solve_status,
+                representative_selection_status=cumulative_result.representative_selection_status,
             )
         )
-        cumulative_metrics = evaluate_c2m3_from_pairwise(setting, bundle, cumulative_pairwise)
+        cumulative_metrics = evaluate_c2m3_from_pairwise(setting, bundle, cumulative_pairwise) if cumulative_result.implemented else None
+        if not cumulative_result.solution.solved_exact:
+            cumulative_na_reason = "quotient_cochain_inconsistent"
+        elif not cumulative_result.implemented:
+            cumulative_na_reason = cumulative_result.representative_selection_status
+        elif not cumulative_q_reduces:
+            cumulative_na_reason = "metric_produced_but_not_claimable"
+        elif not cumulative_perm_safe:
+            cumulative_na_reason = "quotient_peel_not_permutation_safe"
+        else:
+            cumulative_na_reason = ""
         rows.append(
             accuracy_row(
                 setting,
@@ -1039,16 +1580,20 @@ def evaluate_prime_family(
                 "baseline_c2m3_permutation",
                 cumulative_metrics,
                 baseline,
-                before,
+                cumulative_before,
                 cumulative_after,
-                bool(cumulative_after < before),
-                fit,
+                cumulative_reduces,
+                cumulative_fit,
                 "cumulative",
                 ",".join(str(item) for item in cumulative_primes),
-                cumulative_status,
-                implemented=True,
-                na_reason="",
+                cumulative_result.representative_selection_status,
+                implemented=cumulative_result.implemented,
+                na_reason=cumulative_na_reason,
                 control_metrics=control_metrics,
+                quotient_before=cumulative_result.solution.quotient_residual_before,
+                quotient_after=cumulative_result.solution.quotient_residual_after,
+                edge_cochain_solve_status=cumulative_result.edge_cochain_solve_status,
+                representative_selection_status=cumulative_result.representative_selection_status,
             )
         )
 
@@ -1070,6 +1615,10 @@ def evaluate_prime_family(
             na_reason="monomial_correction_adapter_not_available",
             control_metrics=None,
             force_claim_status="monomial_correction_adapter_not_available",
+            quotient_before=result.solution.quotient_residual_before,
+            quotient_after=result.solution.quotient_residual_after,
+            edge_cochain_solve_status=result.edge_cochain_solve_status,
+            representative_selection_status="monomial_correction_adapter_not_available",
         )
         rows.append(mono)
     return rows, corrected_map_rows
@@ -1095,7 +1644,7 @@ def paired_stats(rows: pd.DataFrame) -> pd.DataFrame:
                 "best_validation_delta_vs_baseline": float(vals.max()) if len(vals) else float("nan"),
                 "mean_test_delta_vs_baseline": float(tests.mean()) if len(tests) else float("nan"),
                 "selected_by_validation_rows": int(group["selected_by_validation"].fillna(False).sum()),
-                "claim_status": "smoke_positive" if group["selected_by_validation"].fillna(False).any() else "smoke_negative_real_metrics",
+                "claim_status": "real_positive" if group["selected_by_validation"].fillna(False).any() else "real_negative_or_diagnostic_only",
             }
         )
     return pd.DataFrame(out)
@@ -1125,6 +1674,19 @@ def md_table(df: pd.DataFrame, columns: list[str], max_rows: int | None = None) 
 
 
 def run_status(rows: pd.DataFrame) -> str:
+    if rows.empty:
+        return "implementation_invalid"
+    if rows["selected_by_validation"].fillna(False).any():
+        return "real_positive"
+    evidence = rows[rows["method"].astype(str).isin(["peeled_p_c2m3_permutation", "cumulative_peeled_c2m3_permutation"])].copy()
+    solve_status = evidence["edge_cochain_solve_status"].astype(str) if "edge_cochain_solve_status" in evidence else pd.Series(dtype=str)
+    if evidence.empty or not solve_status.str.contains("exact_quotient_cochain_solve|quotient_cochain_inconsistent", regex=True).any():
+        return "implementation_invalid"
+    exact = solve_status.str.contains("exact_quotient_cochain_solve", regex=False)
+    if not exact.any():
+        return "diagnostic_only"
+    if not evidence["implemented_corrected_merge"].fillna(False).any():
+        return "diagnostic_only"
     implemented = rows[rows["implemented_corrected_merge"].fillna(False)]
     finite_val = pd.to_numeric(implemented["validation_accuracy"], errors="coerce").notna()
     finite_test = pd.to_numeric(implemented["test_accuracy"], errors="coerce").notna()
@@ -1133,10 +1695,8 @@ def run_status(rows: pd.DataFrame) -> str:
         errors="coerce",
     ).eq(1.0)
     if bool((finite_val & finite_test & no_lift).any()):
-        return "completed_with_corrected_merge_metrics"
-    if len(rows):
-        return "completed_diagnostic_only"
-    return "failed_to_run_corrected_merge"
+        return "real_negative"
+    return "diagnostic_only"
 
 
 def write_report(args, settings: list[SelectedSetting], rows: pd.DataFrame, stats: pd.DataFrame, maps: pd.DataFrame) -> None:
@@ -1151,12 +1711,21 @@ def write_report(args, settings: list[SelectedSetting], rows: pd.DataFrame, stat
     implemented = rows[rows["implemented_corrected_merge"].fillna(False)]
     finite_val = pd.to_numeric(implemented["validation_accuracy"], errors="coerce").notna()
     finite_test = pd.to_numeric(implemented["test_accuracy"], errors="coerce").notna()
-    map_reduction_rate = float(pd.to_numeric(maps["residual_reduction"], errors="coerce").gt(0).mean()) if len(maps) else float("nan")
+    q_before = pd.to_numeric(rows.get("quotient_residual_before", pd.Series(dtype=float)), errors="coerce")
+    q_after = pd.to_numeric(rows.get("quotient_residual_after", pd.Series(dtype=float)), errors="coerce")
+    p_before = pd.to_numeric(rows.get("permutation_cycle_residual_before", pd.Series(dtype=float)), errors="coerce")
+    p_after = pd.to_numeric(rows.get("permutation_cycle_residual_after", pd.Series(dtype=float)), errors="coerce")
+    quotient_reduction_rate = float((q_after < q_before).mean()) if len(rows) else float("nan")
+    permutation_safe_rate = float((p_after <= p_before + 1e-12).mean()) if len(rows) else float("nan")
     selected_rows = rows[rows["selected_by_validation"].fillna(False)]
+    exact_solve_count = int(rows["edge_cochain_solve_status"].astype(str).str.contains("exact_quotient_cochain_solve", regex=False).sum())
+    representative_available_count = int(rows["representative_selection_status"].astype(str).eq("representative_correction_available").sum())
     best_peeled = rows[rows["method"].astype(str).eq("peeled_p_c2m3_permutation")]["validation_delta_vs_baseline"].dropna()
     best_cum = rows[rows["method"].astype(str).eq("cumulative_peeled_c2m3_permutation")]["validation_delta_vs_baseline"].dropna()
     best_mono = rows[rows["method"].astype(str).str.contains("monomial")]["validation_delta_vs_baseline"].dropna()
     text = f"""# Primary Residual Peeling Smoke V2
+
+audit_classification: `{status}`
 
 run_status: `{status}`
 
@@ -1191,11 +1760,11 @@ Generated by `experiments/primary_residual_peeling_smoke_v2.py`.
 
 ## Correction Diagnostics
 
-{md_table(rows[rows["method"].astype(str).eq("peeled_p_c2m3_permutation")], ["dataset", "prime", "eligible", "quotient_fit_status", "quotient_relation_violation_rate", "edge_correction_status", "representative_correction_status", "corrected_cycle_residual_before", "corrected_cycle_residual_after", "correction_reduces_residual", "implemented_corrected_merge", "na_reason"], 40)}
+{md_table(rows[rows["method"].astype(str).eq("peeled_p_c2m3_permutation")], ["dataset", "prime", "eligible", "quotient_fit_status", "quotient_relation_violation_rate", "edge_cochain_solve_status", "representative_selection_status", "quotient_residual_before", "quotient_residual_after", "quotient_residual_reduction", "permutation_cycle_residual_before", "permutation_cycle_residual_after", "permutation_cycle_residual_reduction", "correction_reduces_residual", "implemented_corrected_merge", "na_reason"], 40)}
 
 ## Corrected Merge Accuracy
 
-{md_table(rows[rows["method"].astype(str).isin(["baseline_c2m3_permutation", "peeled_p_c2m3_permutation", "cumulative_peeled_c2m3_permutation"])], ["dataset", "prime", "method", "validation_accuracy", "test_accuracy", "baseline_validation_accuracy", "baseline_test_accuracy", "validation_delta_vs_baseline", "test_delta_vs_baseline", "capacity_multiplier", "inference_multiplier", "selected_by_validation", "claim_status", "na_reason"], 80)}
+{md_table(rows[rows["method"].astype(str).isin(["baseline_c2m3_permutation", "peeled_p_c2m3_permutation", "cumulative_peeled_c2m3_permutation"])], ["dataset", "prime", "method", "validation_accuracy", "test_accuracy", "baseline_validation_accuracy", "baseline_test_accuracy", "validation_delta_vs_baseline", "test_delta_vs_baseline", "quotient_residual_reduction", "permutation_cycle_residual_reduction", "capacity_multiplier", "inference_multiplier", "selected_by_validation", "claim_status", "na_reason"], 80)}
 
 ## Controls
 
@@ -1207,9 +1776,13 @@ Generated by `experiments/primary_residual_peeling_smoke_v2.py`.
 
 ## Final Interpretation
 
+- Audit classification: `{status}`
 - Run status: `{status}`
 - Corrected map rows: `{len(maps)}`
-- Corrected map residual reduction rate: `{map_reduction_rate:.6g}`
+- Exact quotient cochain solves: `{exact_solve_count}`
+- Representative corrections available: `{representative_available_count}`
+- Quotient residual reduction rate: `{quotient_reduction_rate:.6g}`
+- Permutation residual safe-correction rate: `{permutation_safe_rate:.6g}`
 - Corrected merge implemented count: `{len(implemented)}`
 - Finite validation metrics count: `{int(finite_val.sum())}`
 - Finite test metrics count: `{int(finite_test.sum())}`
@@ -1223,17 +1796,17 @@ Generated by `experiments/primary_residual_peeling_smoke_v2.py`.
 - Selected methods details: `{", ".join(selected_rows["method"].astype(str).tolist()) if len(selected_rows) else "none"}`
 
 Final interpretation:
-- `{"smoke positive" if len(selected_rows) else "smoke negative"}`
-- The smoke test produced real corrected C2M3 validation/test metrics. Selection remains validation-gated and test metrics are evaluation-only.
+- `{"real_positive" if len(selected_rows) else status}`
+- Selection remains validation-gated and test metrics are evaluation-only.
 """
     (args.reports_dir / "primary_residual_peeling_smoke_v2_report.md").write_text(text, encoding="utf-8")
 
 
 def assert_completed_with_metrics(rows: pd.DataFrame) -> None:
     status = run_status(rows)
-    if status != "completed_with_corrected_merge_metrics":
+    if status == "implementation_invalid":
         raise RuntimeError(
-            f"failed_to_run_corrected_merge: status={status}; no implemented no-lift corrected merge row has finite validation/test metrics"
+            f"primary_residual_peeling_smoke_v2 implementation_invalid: quotient cochain solve evidence was not produced"
         )
 
 
@@ -1315,7 +1888,25 @@ def main(argv: list[str] | None = None) -> int:
     best_peeled = rows[rows["method"].astype(str).eq("peeled_p_c2m3_permutation")]["validation_delta_vs_baseline"].dropna()
     best_cum = rows[rows["method"].astype(str).eq("cumulative_peeled_c2m3_permutation")]["validation_delta_vs_baseline"].dropna()
     best_mono = rows[rows["method"].astype(str).str.contains("monomial")]["validation_delta_vs_baseline"].dropna()
-    map_reduction_rate = float(pd.to_numeric(maps_out["residual_reduction"], errors="coerce").gt(0).mean()) if len(maps_out) else float("nan")
+    q_before = pd.to_numeric(rows["quotient_residual_before"], errors="coerce")
+    q_after = pd.to_numeric(rows["quotient_residual_after"], errors="coerce")
+    p_before = pd.to_numeric(rows["permutation_cycle_residual_before"], errors="coerce")
+    p_after = pd.to_numeric(rows["permutation_cycle_residual_after"], errors="coerce")
+    quotient_reduction_rate = float((q_after < q_before).mean()) if len(rows) else float("nan")
+    permutation_safe_rate = float((p_after <= p_before + 1e-12).mean()) if len(rows) else float("nan")
+    exact_solve_count = int(rows["edge_cochain_solve_status"].astype(str).str.contains("exact_quotient_cochain_solve", regex=False).sum())
+    representative_available_count = int(rows["representative_selection_status"].astype(str).eq("representative_correction_available").sum())
+    controls_passed = int(selected_rows["selected_by_validation"].fillna(False).sum())
+    if status == "diagnostic_only":
+        blockers = sorted(set(rows["na_reason"].dropna().astype(str)) - {""})
+        final_interpretation = "diagnostic_only: " + (", ".join(blockers[:5]) if blockers else "no selectable corrected rows")
+    elif status == "real_negative":
+        final_interpretation = "real_negative: quotient cochain corrections ran but no validation-selected correction beat baseline and controls"
+    elif status == "real_positive":
+        final_interpretation = "real_positive: at least one validation-selected no-lift correction beat baseline and controls"
+    else:
+        final_interpretation = "implementation_invalid: quotient cochain solve evidence missing"
+    print(f"Audit classification: {status}")
     print(f"Run status: {status}")
     print("\nSelected settings:")
     for setting in settings:
@@ -1325,7 +1916,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"- {dataset}: {eligible.get(dataset, [])}")
     print("\nCorrected map rows:")
     print(f"- count: {len(maps_out)}")
-    print(f"- residual reduction rate: {map_reduction_rate:.6g}")
+    print(f"- quotient residual reduction rate: {quotient_reduction_rate:.6g}")
+    print(f"- permutation residual safe-correction rate: {permutation_safe_rate:.6g}")
+    print(f"- exact quotient cochain solves: {exact_solve_count}")
+    print(f"- representative corrections available: {representative_available_count}")
     print("\nCorrected merge rows:")
     print(f"- implemented count: {len(implemented)}")
     print(f"- finite validation metrics count: {int(finite_val.sum())}")
@@ -1338,11 +1932,12 @@ def main(argv: list[str] | None = None) -> int:
     print(f"- wrong-prime control available: {'yes' if rows['wrong_prime_control_validation_accuracy'].notna().any() else 'no'}")
     print(f"- shuffled control available: {'yes' if rows['shuffled_control_validation_accuracy'].notna().any() else 'no'}")
     print(f"- random residual control available: {'yes' if rows['random_residual_control_validation_accuracy'].notna().any() else 'no'}")
+    print(f"- controls passed: {controls_passed}")
     print("\nSelected methods:")
     print(f"- count: {len(selected_rows)}")
     print(f"- details: {', '.join(selected_rows['method'].astype(str).tolist()) if len(selected_rows) else 'none'}")
     print("\nFinal interpretation:")
-    print(f"- {'smoke positive' if len(selected_rows) else 'smoke negative'}")
+    print(f"- {final_interpretation}")
     return 0
 
 
