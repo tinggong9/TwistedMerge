@@ -39,6 +39,8 @@ class RepresentativeChoice:
     generator_label: int | None
     disagreement_from_identity: float
     status: str
+    representative_label_verified: bool | None = None
+    representative_fit_label: int | None = None
 
 
 @dataclass(frozen=True)
@@ -285,6 +287,12 @@ def representative_for_cp_label(
     label = int(label) % p
     identity = np.arange(width, dtype=int)
     if label == 0:
+        fit_label = None
+        verified = None
+        key = tuple(int(item) for item in identity)
+        if fit is not None and key in getattr(fit, "assignment", {}):
+            fit_label = int(fit.assignment[key]) % p
+            verified = bool(fit_label == label)
         return RepresentativeChoice(
             label=0,
             representative=identity.copy(),
@@ -292,8 +300,11 @@ def representative_for_cp_label(
             generator_label=0,
             disagreement_from_identity=0.0,
             status="identity_representative",
+            representative_label_verified=verified,
+            representative_fit_label=fit_label,
         )
     best: RepresentativeChoice | None = None
+    saw_verification_failure = False
     for holonomy in observed_holonomies:
         generator = np.asarray(holonomy, dtype=int)
         if not is_valid_permutation(generator):
@@ -310,6 +321,15 @@ def representative_for_cp_label(
         rep_label = (generator_label * exponent) % p
         if rep_label != label:
             continue
+        rep_key = tuple(int(item) for item in representative)
+        rep_fit_label = None
+        rep_verified = None
+        if fit is not None and rep_key in getattr(fit, "assignment", {}):
+            rep_fit_label = int(fit.assignment[rep_key]) % p
+            rep_verified = bool(rep_fit_label == label)
+            if not rep_verified:
+                saw_verification_failure = True
+                continue
         disagreement = permutation_disagreement(representative, identity)
         choice = RepresentativeChoice(
             label=label,
@@ -318,6 +338,8 @@ def representative_for_cp_label(
             generator_label=int(generator_label),
             disagreement_from_identity=float(disagreement),
             status="observed_holonomy_power_representative",
+            representative_label_verified=rep_verified,
+            representative_fit_label=rep_fit_label,
         )
         if best is None or choice.disagreement_from_identity < best.disagreement_from_identity:
             best = choice
@@ -328,7 +350,9 @@ def representative_for_cp_label(
             representative_label=None,
             generator_label=None,
             disagreement_from_identity=float("nan"),
-            status="no_representative_correction_available",
+            status="representative_label_verification_failed" if saw_verification_failure else "no_representative_correction_available",
+            representative_label_verified=False if saw_verification_failure else None,
+            representative_fit_label=None,
         )
     return best
 
@@ -347,16 +371,18 @@ def lift_cp_edge_labels_to_permutations(
     statuses = []
     for i, j in product(range(int(n_models)), repeat=2):
         if i == j:
-            choice = RepresentativeChoice(0, identity.copy(), 0, 0, 0.0, "identity_representative")
+            choice = representative_for_cp_label(0, fit, observed_holonomies, width, p)
         else:
             choice = representative_for_cp_label(edge_labels[(i, j)], fit, observed_holonomies, width, p)
         choices[(i, j)] = choice
         statuses.append(choice.status)
         if choice.representative is not None:
             representatives[(i, j)] = choice.representative.copy()
-    if any(status == "no_representative_correction_available" for status in statuses):
+    if any(status in {"no_representative_correction_available", "representative_label_verification_failed"} for status in statuses):
         for i, j in product(range(int(n_models)), repeat=2):
             representatives.setdefault((i, j), identity.copy())
+        if any(status == "representative_label_verification_failed" for status in statuses):
+            return representatives, choices, "representative_label_verification_failed"
         return representatives, choices, "no_representative_correction_available"
     return representatives, choices, "representative_correction_available"
 
@@ -394,7 +420,7 @@ def solve_and_correct_pairwise(
     for i, j in product(range(int(n_models)), repeat=2):
         if i == j:
             edge_labels[(i, j)] = 0
-            representative_choices[(i, j)] = RepresentativeChoice(0, identity.copy(), 0, 0, 0.0, "identity_representative")
+            representative_choices[(i, j)] = representative_for_cp_label(0, fit, defects.values(), width, prime)
             continue
         edge_labels[(i, j)] = oriented_edge_value(solution.edge_labels, i, j, prime)
     if not solution.solved_exact:
@@ -411,6 +437,8 @@ def solve_and_correct_pairwise(
                     generator_label=0,
                     disagreement_from_identity=0.0,
                     status=solution.solve_status,
+                    representative_label_verified=None,
+                    representative_fit_label=None,
                 ),
             )
         return CorrectionResult(
@@ -433,7 +461,7 @@ def solve_and_correct_pairwise(
         prime,
         n_models,
     )
-    if representative_status == "no_representative_correction_available":
+    if representative_status in {"no_representative_correction_available", "representative_label_verification_failed"}:
         corrected = {edge: value.copy() for edge, value in pairwise.items()}
         return CorrectionResult(
             corrections=corrections,

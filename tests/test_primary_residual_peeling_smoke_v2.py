@@ -1,4 +1,5 @@
 from itertools import permutations
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -7,6 +8,7 @@ from experiments.primary_residual_peeling_smoke_v2 import (
     SelectedSetting,
     accuracy_row,
     cycle_residual,
+    cumulative_update_allowed,
     no_lift_capacity_metadata,
     permutation_json,
     prime_peeling_plan,
@@ -181,6 +183,46 @@ def test_representative_generator_normalization_uses_inverse_label():
     assert np.array_equal(choice.representative, permutation_power(cycle, 2))
 
 
+def test_representative_label_verification_passes_when_assignment_matches():
+    cycle = np.array([1, 2, 0])
+    fit = SimpleNamespace(assignment={tuple(cycle.tolist()): 1})
+
+    choice = representative_for_cp_label(1, fit, [cycle], width=3, p=3)
+
+    assert choice.status == "observed_holonomy_power_representative"
+    assert choice.representative_fit_label == 1
+    assert choice.representative_label_verified is True
+
+
+def test_representative_label_verification_fails_when_assignment_disagrees():
+    cycle = np.array([1, 2, 0])
+    cycle_squared = permutation_power(cycle, 2)
+    fit = SimpleNamespace(
+        assignment={
+            tuple(cycle.tolist()): 1,
+            tuple(cycle_squared.tolist()): 1,
+        }
+    )
+
+    choice = representative_for_cp_label(2, fit, [cycle], width=3, p=3)
+
+    assert choice.status == "representative_label_verification_failed"
+    assert choice.representative is None
+    assert choice.representative_label_verified is False
+
+
+def test_representative_missing_from_assignment_is_unknown_not_verified():
+    cycle = np.array([1, 2, 0])
+    fit = SimpleNamespace(assignment={tuple(cycle.tolist()): 1})
+
+    choice = representative_for_cp_label(2, fit, [cycle], width=3, p=3)
+
+    assert choice.status == "observed_holonomy_power_representative"
+    assert np.array_equal(choice.representative, permutation_power(cycle, 2))
+    assert choice.representative_fit_label is None
+    assert choice.representative_label_verified is None
+
+
 def test_correction_original_shortcut_is_forbidden_by_representative_lift():
     swap = np.array([1, 0, 2])
     identity = np.arange(3)
@@ -225,6 +267,14 @@ def test_safe_correction_rows_cannot_have_increased_permutation_cycle_residual()
     assert reason == "quotient_peel_not_permutation_safe"
 
 
+def test_cumulative_update_requires_quotient_reduction_and_permutation_safety():
+    result = SimpleNamespace(implemented=True)
+
+    assert cumulative_update_allowed(result, quotient_reduces=True, permutation_safe=True) is True
+    assert cumulative_update_allowed(result, quotient_reduces=True, permutation_safe=False) is False
+    assert cumulative_update_allowed(result, quotient_reduces=False, permutation_safe=True) is False
+
+
 def test_triangle_defects_are_recomputed_from_corrected_maps():
     identity = np.arange(3)
     cycle = np.array([1, 2, 0])
@@ -244,6 +294,25 @@ def test_test_accuracy_is_never_used_for_selection():
 
     assert selected is False
     assert reason == "not_selected_fails_unpeeled_baseline_gate"
+
+
+def test_selection_requires_residual_metric_capacity_validation_and_controls():
+    blocked_cases = [
+        ({"quotient_residual_after": 1.0}, "metric_produced_but_not_claimable"),
+        ({"validation_accuracy": np.nan}, "missing_corrected_validation_metric"),
+        ({"test_accuracy": np.nan}, "missing_corrected_test_metric"),
+        ({"capacity_multiplier": 2.0}, "not_capacity_matched_no_lift"),
+        ({"inference_multiplier": 2.0}, "not_capacity_matched_no_lift"),
+        ({"validation_accuracy": 0.80}, "not_selected_fails_unpeeled_baseline_gate"),
+        ({"wrong_prime_control_validation_accuracy": 0.85}, "not_selected_fails_wrong_prime_control"),
+        ({"shuffled_control_validation_accuracy": 0.85}, "not_selected_fails_shuffled_control"),
+        ({"random_residual_control_validation_accuracy": 0.85}, "not_selected_fails_random_residual_control"),
+        ({"uses_test_for_selection": True}, "blocked_test_metric_selection_forbidden"),
+    ]
+    for updates, expected_reason in blocked_cases:
+        selected, reason = selection_decision(_selectable_row(**updates))
+        assert selected is False
+        assert reason == expected_reason
 
 
 def test_no_lift_rows_have_capacity_and_inference_multipliers_one():
@@ -320,3 +389,13 @@ def test_mock_path_can_produce_selected_no_lift_row():
     assert row["capacity_multiplier"] == 1.0
     assert row["inference_multiplier"] == 1.0
     assert permutation_json(np.arange(3)) == "[0,1,2]"
+
+
+def test_old_edge_self_correction_shortcut_remains_absent():
+    root = Path(__file__).resolve().parents[1]
+    bad_name = "edge_" + "self_corrected_maps"
+    bad_shortcut = "correction = " + "original"
+    for rel in ("experiments/primary_residual_peeling_smoke_v2.py", "src/primary_residual_peeling.py"):
+        text = (root / rel).read_text(encoding="utf-8")
+        assert bad_name not in text
+        assert bad_shortcut not in text
