@@ -1,64 +1,82 @@
 # TwistedMerge
 
-Reproducible experiments for the paper project **"Twisted Sheaves and Descent Obstructions in Learning Theory."**
+Code and reproducible artifacts for the paper project **"Descent Obstructions and Twisted Sheaves in Learning Theory."**
 
-The central empirical question is:
+TwistedMerge studies model merging as a descent problem. Pairwise alignments between models define transition maps; triangle products define cycle defects; residual structure controls which merges are ordinary, cycle-consistent, diagnostic, or lift-based.
 
-> Do cocycle or cohomological obstruction scores predict failure of global model merging, and can cycle-consistent, twisted, or rank-lifted procedures reduce that failure?
+At a high level, the evidence pipeline is:
 
-This repository is intentionally claim-audited. Synthetic obstruction experiments are independent of external model-merging repositories. Real MNIST/Fashion-MNIST model-merging runs are included, but the reports only promote claims that pass the recorded gates.
+```text
+pairwise alignments -> triangle defects -> residual type -> merge operator or diagnostic gate
+```
 
-## Current Evidence Snapshot
+## Project Status
 
-- Controlled synthetic `mu_2` and `H^2(mu_2)` experiments are implemented and reported.
-- The TwistedMerge prototype detects controlled finite central twist failures and a q=2 branch lift recovers prediction in that controlled setting.
-- The quality-gated real fixed-setting run has good individual models, but only one primary observed Fashion-MNIST setting passes the strict obstruction-prediction gate. The other observed settings remain unsupported.
-- The current real run does not support broad MNIST/Fashion-MNIST obstruction prediction, external-baseline superiority, or a claim that rank lifts are capacity-matched single-model improvements.
-- External baseline integrations are documented separately; do not read them as official validation unless the report says the official code ran for that exact setting.
+This repository is research code with generated evidence reports. The strongest results are controlled obstruction witnesses and conservative diagnostics. Practical neural-network results are intentionally scoped to the exact datasets, architectures, seeds, and gates recorded in `reports/`.
 
-The most important claim-boundary files are:
+Current evidence supports these public-facing themes:
+
+- Controlled `mu_2`, finite-index, period-index, time-frequency, and nonabelian holonomy experiments realize explicit obstruction and rank-threshold behavior.
+- Controlled twisted-overlap and planted-obstruction runs connect cycle defects with merge degradation in settings where the obstruction is known.
+- ReLU-compatible exact gauges for MLPs and small CNNs give limited validation-gated improvements over internal C2M3-style synchronization on selected MNIST and Fashion-MNIST settings.
+- Greedy soup remains the main boundary baseline across practical neural-network experiments.
+- Real MNIST, Fashion-MNIST, and CIFAR residual diagnostics mostly fall into noncentral, diagnostic, or negative categories under the tested structure groups.
+- CIFAR experiments pass a bounded no-BatchNorm base-accuracy gate; exact-gauge effects there are descriptive appendix evidence.
+- Official external-code integration attempts are documented separately from faithful in-repo baseline comparisons.
+
+For claim status, start with:
 
 - `reports/claims_audit.md`
 - `reports/full_capacity_claim_audit.md`
-- `reports/fixed_setting_verification_report.md`
-- `reports/fixed_setting_full_run_interpretation.md`
-- `reports/real_obstruction_degradation_report.md`
+- `reports/final_evidence_freeze_manifest.md`
+- `reports/final_claim_ledger.md`
 
-## Repository Layout
+## Repository Map
 
 ```text
 src/
-  cocycles.py
-  alignment.py
-  twisted_merge.py
-  twisted_merge_algorithm.py
-  monomial_gauge_alignment.py
-  model_merging_benchmark.py
-  synthetic_tasks.py
-  models.py
-  metrics.py
-  plotting.py
+  Core libraries for cocycles, pairwise alignment, model merging,
+  monomial/channel gauges, holonomy diagnostics, period-index detectors,
+  block gauges, residual peeling, metrics, and plotting.
+
 experiments/
-  synthetic_mu2_obstruction.py
-  synthetic_u1_obstruction.py
-  synthetic_h2_mu2_obstruction.py
-  twisted_merge_algorithm_demo.py
-  model_merging_benchmark.py
-  model_merging_fixed_setting_verification.py
-  compact_fixed_setting_outputs.py
-  train_quality_sweep.py
+  Reproducible experiment entry points. The scripts write reports,
+  CSVs, plots, and config snapshots under reports/.
+
 reports/
-  csv/
-  plots/
-  tables/
-  configs/
+  Generated evidence, tables, plots, LaTeX snippets, configs, and
+  claim-audit files. This is the main public record of completed runs.
+
 external_baselines/
+  Documentation for official-code integration attempts and external
+  baseline provenance.
+
 tests/
+  Unit and smoke tests for controlled algebraic cases, detector gates,
+  exact-gauge preservation, selectors, and report-generation helpers.
 ```
 
-## Install
+## Conceptual Layers
 
-For synthetic experiments:
+The repository is easiest to read in three layers:
+
+- Theory: cocycles, descent defects, period-index thresholds, finite-index lifts, and controlled obstruction witnesses.
+- Merge operators: weight averaging, Git-ReBasin-style alignment, C2M3-style synchronization, exact monomial/channel gauges, soups, and branch/rank-lift comparisons.
+- Diagnostics: residual taxonomy, cycle scores, block gauges, holonomy splitting, time-frequency chart recovery, capacity audits, and claim ledgers.
+
+This split keeps model-producing methods separate from diagnostics that measure residual structure. The main practical reading frame is:
+
+| Residual type | Repository treatment |
+| --- | --- |
+| Permutation residual | Git-ReBasin-style alignment and C2M3-style synchronization |
+| Positive scale or channel gauge residual | Exact ReLU-compatible monomial and CNN channel gauge merges |
+| Controlled central or projective residual | Finite-index, period-index, and rank-lift controlled experiments |
+| Noncentral or unstable residual | Diagnostic report, fallback selector, or abstention |
+| Extra-capacity lift | Branch comparisons with capacity metadata and matched baselines |
+
+## Setup
+
+Synthetic and algebraic experiments use a small dependency set:
 
 ```bash
 python3 -m venv .venv
@@ -67,16 +85,20 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements-synthetic.txt
 ```
 
-For PyTorch image/model-merging experiments:
+Image/model-merging experiments use the PyTorch dependency set:
 
 ```bash
 source .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
 
-The code is CPU-runnable by design, but full repeated-seed runs can still take a while.
+The scripts run on CPU. Repeated-seed image experiments can take substantial time.
 
-## Synthetic Experiments
+## Main Experiment Families
+
+### Controlled obstruction witnesses
+
+These scripts cover explicit synthetic cocycle, central twist, period-index, time-frequency, nonabelian holonomy, and block-gauge cases.
 
 ```bash
 source .venv/bin/activate
@@ -84,35 +106,24 @@ python experiments/synthetic_mu2_obstruction.py
 python experiments/synthetic_u1_obstruction.py
 python experiments/synthetic_h2_mu2_obstruction.py
 python experiments/twisted_merge_algorithm_demo.py
-python experiments/rank_lift_ablation.py
+python experiments/finite_index_twist_absorption.py
+python experiments/period_index_central_benchmark.py
+python experiments/time_frequency_period_index_benchmark.py
+python experiments/controlled_nonabelian_holonomy.py
+python experiments/block_gauge_phase_diagram.py
 ```
 
-Key outputs:
+Representative outputs:
 
 - `reports/synthetic_obstruction_report.md`
 - `reports/twisted_merge_algorithm_report.md`
-- `reports/twisted_merge_algorithm_verification.md`
-- `reports/csv/`
-- `reports/plots/`
+- `reports/finite_index_twist_report.md`
+- `reports/period_index_central_report.md`
+- `reports/time_frequency_period_index_report.md`
+- `reports/controlled_nonabelian_holonomy_report.md`
+- `reports/block_gauge_phase_diagram_report.md`
 
-## Training Quality Sweep
-
-Use this before making real model-merging claims. It measures individual model quality only.
-
-```bash
-source .venv/bin/activate
-PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig \
-.venv/bin/python experiments/train_quality_sweep.py
-```
-
-Key outputs:
-
-- `reports/csv/training_quality_sweep.csv`
-- `reports/training_quality_sweep_report.md`
-
-The current quality gate used `mlp2`, width `128`, AdamW, cosine scheduling, 10 epochs, and 10000 train samples.
-
-## Real Fixed-Setting Verification
+### Real fixed-setting verification
 
 The current paper-grade real verification entry point is:
 
@@ -143,72 +154,136 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconf
 
 Primary outputs:
 
+- `reports/fixed_setting_verification_report.md`
+- `reports/fixed_setting_full_run_interpretation.md`
+- `reports/real_obstruction_degradation_report.md`
 - `reports/csv/fixed_setting_verification_runs.csv`
 - `reports/csv/fixed_setting_verification_stats.csv`
 - `reports/csv/fixed_setting_triangle_defects.csv`
-- `reports/csv/fixed_setting_individual_models.csv`
 - `reports/csv/real_obstruction_predictor_regressions.csv`
-- `reports/fixed_setting_verification_report.md`
-- `reports/fixed_setting_full_run_interpretation.md`
 
-Claim gate:
+The recorded gates track individual-model quality, observed-seed count, bootstrap confidence intervals, injected-noise controls, selector validation usage, and capacity metadata.
 
-- Each fixed setting needs at least 20 observed seeds.
-- Individual mean accuracy should clear the dataset quality gate.
-- Predictor support requires positive Pearson, positive Spearman, and a positive bootstrap Pearson lower bound.
-- Injected-noise rows are controls, not primary evidence.
+### Exact ReLU-compatible gauges
 
-## Large Artifact Compaction
+The ReLU-compatible gauge experiments cover positive monomial gauges for MLPs and positive channel gauges for small CNNs.
 
-Full fixed-setting verifier outputs can contain large pairwise and layerwise permutation maps. To keep GitHub blobs below size limits, the current committed CSVs keep scalar metrics inline and move bulky map fields into deterministic gzip shards:
+Useful entry points and artifacts:
 
-```bash
-.venv/bin/python experiments/compact_fixed_setting_outputs.py --rows-per-shard 2000
-```
+- `src/monomial_gauge_alignment.py`
+- `src/cnn_channel_gauge.py`
+- `experiments/greedy_aware_monomial_benchmark.py`
+- `experiments/fashion_mnist_cnn_channel_gauge_confirmatory.py`
+- `reports/monomial_gauge_alignment_report.md`
+- `reports/fashion_mnist_improved_ladder_report.md`
+- `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md`
 
-Manifest and shards:
+These experiments report same-capacity gauge-preserving merges separately from branch ensembles, soups, and upper-bound ensembles.
+
+### Holonomy, quotient, and residual-peeling diagnostics
+
+The repository includes several conservative residual-analysis pipelines:
+
+- `experiments/small_quotient_holonomy_splitting.py`
+- `experiments/group_cohomology_torsion_hunting.py`
+- `experiments/nonabelian_holonomy_splitting.py`
+- `experiments/primary_holonomy_splitting.py`
+- `experiments/loss_aware_primary_peeling_smoke.py`
+- `experiments/primary_residual_peeling_smoke_v2.py`
+
+Recent large selector output from `primary_holonomy_splitting.py` is stored as GitHub-safe shards:
+
+- `reports/csv/primary_holonomy_selector_results_manifest.csv`
+- `reports/csv/primary_holonomy_selector_results_part_000.csv`
+- `reports/csv/primary_holonomy_selector_results_part_001.csv`
+- `reports/csv/primary_holonomy_selector_results_part_002.csv`
+- `reports/csv/primary_holonomy_selector_results_part_003.csv`
+- `reports/csv/primary_holonomy_selector_results_part_004.csv`
+- `reports/csv/primary_holonomy_selector_results_part_005.csv`
+
+The manifest gives row ranges and byte sizes for each shard.
+
+### Bridge and boundary datasets
+
+Fashion-MNIST, rotated-MNIST, colored-MNIST, and CIFAR runs are organized as boundary checks for practical exact-gauge behavior:
+
+- `reports/fashion_mnist_improved_ladder_report.md`
+- `reports/fashion_mnist_cnn_channel_gauge_confirmatory_report.md`
+- `reports/bridge_dataset_channel_gauge_expansion.md`
+- `reports/cifar_rescue_or_no_go_report.md`
+- `reports/cifar_final_channel_gauge_confirmatory_report.md`
+- `reports/cifar_bridge_boundary_summary.md`
+
+These reports separate internal C2M3-style comparisons, greedy-soup comparisons, exact-gauge diagnostics, and base-accuracy gates.
+
+### External baselines
+
+Official-code integration status lives in:
+
+- `external_baselines/README.md`
+- `external_baselines/OFFICIAL_INTEGRATION.md`
+- `external_baselines/NSD_INTEGRATION.md`
+- `reports/external_baseline_comparison.md`
+- `reports/official_external_baseline_attempt.md`
+- `reports/nsd_official_integration_report.md`
+
+The official-code documents record repository URLs, licenses, commit hashes, environment checks, integration blockers, and exact settings where official code was attempted.
+
+## Recommended Reading Order
+
+1. `reports/final_evidence_freeze_manifest.md`
+2. `reports/final_claim_ledger.md`
+3. `reports/claims_audit.md`
+4. `reports/full_capacity_claim_audit.md`
+5. `reports/paper_level_decision_after_35791f7.md`
+6. `reports/results_narrative_after_35791f7.md`
+7. Dataset-specific reports listed in the relevant section above
+
+## Reproducibility Conventions
+
+Each substantial experiment records:
+
+- command-line arguments,
+- random seeds,
+- environment metadata where available,
+- generated CSV row counts,
+- validation/test split usage,
+- bootstrap intervals,
+- paired deltas,
+- capacity and inference multipliers when relevant.
+
+Smoke tests are plumbing checks. Paper-grade runs use the report-specific gates and repeated-seed settings described in the corresponding markdown report.
+
+## Artifact Hygiene
+
+Large local data, virtual environments, caches, and long-run checkpoints are ignored by Git. Public CSV artifacts are kept below GitHub blob limits through compact scalar tables, gzip shards, or plain CSV shards with manifests.
+
+Relevant compaction artifacts:
 
 - `reports/csv/fixed_setting_large_artifacts_manifest.csv`
 - `reports/csv/fixed_setting_large_artifacts/*.csv.gz`
+- `reports/csv/primary_holonomy_selector_results_manifest.csv`
 
-The compact CSVs include `large_field_shard` and `large_field_row` pointers back to the moved raw fields. Local checkpoints from long verifier runs are intentionally ignored by Git.
+Large local checkpoint directories under `reports/checkpoints/`, including repeated-seed task-vector checkpoints, can be regenerated from the recorded commands. They are useful for audit and reruns on the same machine.
 
-## Monomial Gauge Experiments
+## Development Checks
 
-Positive ReLU-compatible monomial gauges are implemented for supported MLP paths. These rows are separate from the Prompt 11 `activation,weight` fixed-setting run unless explicitly requested with monomial matching modes.
+Run focused tests while editing a method family:
 
-Useful artifacts:
+```bash
+source .venv/bin/activate
+PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache python -m pytest tests/test_primary_holonomy.py
+PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache python -m pytest tests/test_monomial_gauge_alignment.py
+PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache python -m pytest tests/test_cnn_channel_gauge.py
+```
 
-- `src/monomial_gauge_alignment.py`
-- `reports/monomial_gauge_alignment_report.md`
-- `reports/csv/monomial_fixed_setting_runs.csv`
-- `reports/csv/monomial_triangle_defects.csv`
+Before publishing changes:
 
-Implementation support is not the same as a performance claim. The claim audit remains authoritative.
+```bash
+git diff --check
+git rev-list --objects origin/main..HEAD \
+  | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
+  | awk '$1=="blob" && $3 >= 95000000 {printf "%.1f MB %s\n", $3/1048576, $4}'
+```
 
-## External Baselines
-
-In-repo baselines include:
-
-- ordinary weight averaging,
-- greedy model soup,
-- Git-ReBasin-style pairwise permutation alignment,
-- C2M3-style cycle-consistent synchronization,
-- ensemble upper bound,
-- cycle-aware rank-lifted branch ensemble.
-
-External references:
-
-- Git Re-Basin: <https://github.com/samuela/git-re-basin>
-- C2M3 cycle-consistent model merging: <https://github.com/crisostomi/cycle-consistent-model-merging>
-- Model Soups: <https://github.com/mlfoundations/model-soups>
-
-Current external integration reports separate official-code attempts from faithful in-repo surrogates:
-
-- `reports/external_baseline_comparison.md`
-- `reports/nsd_official_integration_report.md`
-- `external_baselines/NSD_INTEGRATION.md`
-
-## Reporting Rule
-
-Do not claim success from theory or intent. A supported claim must cite generated data and exact commands. If a setting is negative, mixed, underpowered, extra-capacity, validation-selected, or only a smoke test, the report should say so plainly.
+The second command prints oversized blobs in commits waiting to be pushed.
