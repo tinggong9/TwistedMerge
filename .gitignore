@@ -10,4 +10,5 @@ checkpoints/
 !reports/checkpoints/
 !reports/checkpoints/**
 reports/checkpoints/fixed_setting_verification/
+reports/checkpoints/same_base_task_vector/
 reports/monomial_mlp2_prompt*/
