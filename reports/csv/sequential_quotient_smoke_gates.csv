@@ -1,0 +1,6 @@
+gate,passed,reason
+actual_model_logits,True,all candidate logits came from executed probe models and branch tensors
+label_leakage_regression,True,permuting labels after branch-logit production did not change logits
+expected_chains_recovered,True,controlled quotient signatures match preregistered C2/C3 chains
+coset_actions_verified,True,coset action multiplication residual is zero where stages exist
+correct_lift_beats_wrong_or_random_controls,False,"failed honestly: exact gauge-copy branches tie controls, so this is only a functional sanity check"

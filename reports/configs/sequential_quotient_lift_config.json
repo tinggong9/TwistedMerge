@@ -1,11 +1,11 @@
 {
   "completed_settings": {
-    "controlled_prediction_level": true,
-    "natural_existing_artifact_scan": true
+    "controlled_smoke_actual_mnist_logits": true,
+    "natural_mnist": false
   },
-  "dirty_status": "",
+  "dirty_status": "M experiments/sequential_quotient_lift_benchmark.py\n M reports/plots/sequential_quotient_accuracy_by_depth.pdf\n M reports/plots/sequential_quotient_delta_vs_controls.pdf\n M reports/plots/sequential_quotient_residual_by_depth.pdf\n M src/sequential_quotient_lift.py\n M tests/test_sequential_quotient_lift.py",
   "environment": {
-    "git_commit": "1ae7ad4",
+    "git_commit": "9e743a0",
     "machine": "arm64",
     "packages": {
       "matplotlib": "3.11.0",
@@ -18,63 +18,30 @@
     "processor": "arm",
     "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
   },
-  "exact_command": ".venv/bin/python experiments/sequential_quotient_lift_benchmark.py --reports-dir reports",
-  "git_commit": "1ae7ad4",
+  "exact_command": ".venv/bin/python experiments/sequential_quotient_lift_benchmark.py --mode smoke --groups C2xC2,C4,D4,S3 --seeds 0:2 --noise-levels 0.0,0.25 --bootstrap-samples 200 --max-train-samples 512 --max-test-samples 384 --n-val 128 --width 32 --epochs 1 --batch-size 128 --device cpu",
+  "git_commit": "9e743a0",
   "groups": [
-    "C2",
     "C2xC2",
     "C4",
     "D4",
     "S3"
   ],
+  "invalidated_commit": "9e743a0fd2cefced2c155e47e64466c23c4c9128",
   "missing_settings": [
-    "natural_N6_N8_30_seed_quotient_routed_prediction_lift",
-    "natural_parameter_level_quotient_lift"
+    "destructive_controlled_planted_holonomy_merge",
+    "full_controlled_30_seed_width_noise_bootstrap",
+    "natural_N6_N8_quotient_routed_prediction_tensor",
+    "parameter_level_sequential_quotient_lift"
   ],
-  "natural_requested_model_counts": [
-    6,
-    8
-  ],
+  "mode": "smoke",
   "noise_levels": [
     0.0,
-    0.25,
-    0.5
+    0.25
   ],
   "seeds": [
     0,
     1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29
+    2
   ],
-  "thresholds": {
-    "bootstrap_stability_preferred": 0.8,
-    "paired_ci_lower_bound_positive": true
-  },
-  "total_runtime_seconds": 8.104004144668579
+  "total_runtime_seconds": 179.2296679019928
 }

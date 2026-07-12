@@ -1,17 +1,19 @@
-"""Certified quotient discovery and prediction-level sequential branch lifts.
+"""Certified quotient chains and auditable prediction-level branch lifts.
 
-This module is intentionally conservative.  It certifies finite quotients by
-checking actual homomorphisms against the multiplication table when the closure
-is exact, or by using the universally valid permutation-sign character for
-large/truncated permutation groups.  It does not treat element-order divisibility
-as quotient evidence.
+The routines here are deliberately conservative.  They certify C2/C3 quotient
+factors from exact multiplication tables, represent the lift by the coset action
+on ``Gamma / K_j``, and expose residuals that are recomputed from the current
+kernel rather than hard-coded to zero.  Truncated groups may use the ambient
+permutation sign character as a first C2 certificate, but the code does not
+pretend to know the exact kernel order or recurse into an incomplete kernel.
 """
 
 from __future__ import annotations
 
+from collections import Counter
 from dataclasses import dataclass
 from itertools import product
-from typing import Iterable, Mapping, Sequence
+from typing import Callable, Iterable, Mapping, Sequence
 
 import numpy as np
 
@@ -37,12 +39,23 @@ class QuotientCertificate:
     assignment: dict[Permutation, int]
     homomorphism_residual: float
     kernel: tuple[Permutation, ...]
-    kernel_order: int
-    kernel_normal: bool
+    kernel_order: int | None
+    kernel_normal: bool | None
     image_size: int
     certified: bool
     certification_method: str
     rejection_reason: str = ""
+
+
+@dataclass(frozen=True)
+class CosetActionRepresentation:
+    cosets: tuple[tuple[Permutation, ...], ...]
+    action: dict[Permutation, Permutation]
+    law_residual: float
+    kernel: tuple[Permutation, ...]
+    kernel_order: int
+    stabilizer_matches_subgroup: bool
+    permutation_conjugate_to_regular: bool
 
 
 @dataclass(frozen=True)
@@ -53,6 +66,12 @@ class QuotientChainStage:
     residual_before: float
     residual_after: float
     branch_multiplier: int
+    residual_group_order: int | None = None
+    coset_count: int | None = None
+    coset_action_law_residual: float | None = None
+    coset_action_kernel_order: int | None = None
+    stabilizer_matches_kernel: bool | None = None
+    final_regular_representation_verified: bool = False
 
 
 @dataclass(frozen=True)
@@ -62,7 +81,7 @@ class SequentialQuotientChain:
     closure_status: str
     truncated: bool
     stages: tuple[QuotientChainStage, ...]
-    final_kernel_order: int
+    final_kernel_order: int | None
     stopped_reason: str
 
 
@@ -90,15 +109,22 @@ def homomorphism_residual(group: FinitePermutationGroup, assignment: Mapping[Per
     failures = 0
     total = 0
     for left, right in product(group.elements, repeat=2):
+        product_element = group.multiply(left, right)
+        if product_element not in assignment:
+            failures += 1
+            total += 1
+            continue
         total += 1
         lhs = (int(assignment.get(left, 0)) + int(assignment.get(right, 0))) % int(q)
-        rhs = int(assignment.get(group.multiply(left, right), 0)) % int(q)
+        rhs = int(assignment.get(product_element, 0)) % int(q)
         failures += int(lhs != rhs)
     return float(failures / max(1, total))
 
 
 def kernel_is_normal(group: FinitePermutationGroup, kernel: Iterable[Permutation]) -> bool:
     kernel_set = set(kernel)
+    if not kernel_set:
+        return False
     for g in group.elements:
         g_inv = group.inverse(g)
         for k in kernel_set:
@@ -145,23 +171,23 @@ def _bruteforce_homomorphisms(group: FinitePermutationGroup, q: int, max_assignm
         cert = _certificate(group, q, assignment, "exact_multiplication_table_bruteforce")
         if cert.certified:
             out.append(cert)
-    out.sort(key=lambda cert: (cert.kernel_order, tuple(cert.assignment[element] for element in group.elements)))
+    out.sort(key=lambda cert: (cert.quotient_order, cert.kernel_order or 10**9, tuple(cert.assignment[e] for e in group.elements)))
     return out
 
 
 def _sign_certificate(group: FinitePermutationGroup) -> QuotientCertificate:
     assignment = {element: permutation_parity(element) for element in group.elements}
+    image = set(assignment.values())
     if group.truncated:
         kernel = tuple(sorted(element for element in group.elements if assignment[element] == 0))
-        image = set(assignment.values())
         return QuotientCertificate(
             quotient_name="C2",
             quotient_order=2,
             assignment=assignment,
             homomorphism_residual=0.0,
             kernel=kernel,
-            kernel_order=len(kernel),
-            kernel_normal=True,
+            kernel_order=None,
+            kernel_normal=None,
             image_size=len(image),
             certified=len(image) == 2,
             certification_method="ambient_permutation_sign_character_truncated_group",
@@ -202,9 +228,13 @@ def certified_cyclic_quotients(
     if not group.truncated and group.order <= int(max_exact_order):
         for q in targets:
             for cert in _bruteforce_homomorphisms(group, q, max_assignments=max_assignments):
-                if not any(cert.assignment == existing.assignment and cert.quotient_order == existing.quotient_order for existing in out):
+                duplicate = any(
+                    cert.assignment == existing.assignment and cert.quotient_order == existing.quotient_order
+                    for existing in out
+                )
+                if not duplicate:
                     out.append(cert)
-    out.sort(key=lambda cert: (cert.quotient_order, cert.kernel_order, cert.certification_method))
+    out.sort(key=lambda cert: (cert.quotient_order, cert.kernel_order or 10**9, cert.certification_method))
     return out
 
 
@@ -220,6 +250,68 @@ def subgroup_from_elements(elements: Sequence[Permutation], parent: FinitePermut
     )
 
 
+def _coset_key(coset: Iterable[Permutation]) -> frozenset[Permutation]:
+    return frozenset(coset)
+
+
+def left_cosets(group: FinitePermutationGroup, subgroup: Sequence[Permutation]) -> tuple[tuple[Permutation, ...], ...]:
+    subgroup_tuple = tuple(sorted(set(subgroup)))
+    if not subgroup_tuple:
+        raise ValueError("subgroup cannot be empty")
+    remaining = set(group.elements)
+    cosets: list[tuple[Permutation, ...]] = []
+    while remaining:
+        representative = min(remaining)
+        coset = tuple(sorted(group.multiply(representative, element) for element in subgroup_tuple))
+        cosets.append(coset)
+        remaining.difference_update(coset)
+    return tuple(cosets)
+
+
+def coset_action_representation(
+    group: FinitePermutationGroup,
+    subgroup: Sequence[Permutation],
+) -> CosetActionRepresentation:
+    """Return the left action of ``group`` on cosets ``group / subgroup``."""
+
+    subgroup_tuple = tuple(sorted(set(subgroup)))
+    cosets = left_cosets(group, subgroup_tuple)
+    coset_index = {_coset_key(coset): idx for idx, coset in enumerate(cosets)}
+    action: dict[Permutation, Permutation] = {}
+    for element in group.elements:
+        image = []
+        for coset in cosets:
+            acted = tuple(sorted(group.multiply(element, member) for member in coset))
+            image.append(coset_index[_coset_key(acted)])
+        action[element] = tuple(image)
+
+    failures = 0
+    total = 0
+    for left, right in product(group.elements, repeat=2):
+        total += 1
+        product_action = action[group.multiply(left, right)]
+        # The repository's permutation convention composes as ``right after
+        # left``.  The coset action is a left action, so the action of the
+        # product uses the reversed tuple-composition order here.
+        composed = compose_permutations(action[right], action[left])
+        failures += int(product_action != composed)
+    law_residual = float(failures / max(1, total))
+    identity_action = identity_permutation(len(cosets))
+    kernel = tuple(sorted(element for element in group.elements if action[element] == identity_action))
+    subgroup_set = set(subgroup_tuple)
+    kernel_matches = set(kernel) == subgroup_set
+    regular_verified = bool(len(cosets) == group.order and len(kernel) == 1 and law_residual == 0.0)
+    return CosetActionRepresentation(
+        cosets=cosets,
+        action=action,
+        law_residual=law_residual,
+        kernel=kernel,
+        kernel_order=len(kernel),
+        stabilizer_matches_subgroup=kernel_matches,
+        permutation_conjugate_to_regular=regular_verified,
+    )
+
+
 def triangle_residual(elements: Sequence[Permutation], group: FinitePermutationGroup) -> float:
     identity = group.identity
     vals = [element != identity for element in elements]
@@ -227,7 +319,11 @@ def triangle_residual(elements: Sequence[Permutation], group: FinitePermutationG
 
 
 def quotient_residual(elements: Sequence[Permutation], cert: QuotientCertificate) -> float:
-    vals = [int(cert.assignment.get(element, 0)) % cert.quotient_order != 0 for element in elements]
+    vals = [
+        int(cert.assignment.get(element, 0)) % cert.quotient_order != 0
+        for element in elements
+        if element in cert.assignment
+    ]
     return float(np.mean(vals)) if vals else 0.0
 
 
@@ -238,12 +334,12 @@ def build_successive_quotient_chain(
     max_depth: int = 4,
     max_exact_order: int = 64,
 ) -> SequentialQuotientChain:
-    """Peel certified prime quotients recursively on kernels."""
+    """Build an exact normal series by recursively taking certified kernels."""
 
+    original = group
     current = group
-    holonomies = tuple(triangle_holonomies or group.elements)
+    current_holonomies = tuple(triangle_holonomies or group.elements)
     stages: list[QuotientChainStage] = []
-    branch_multiplier = 1
     stopped_reason = "max_depth_reached"
     for depth in range(1, int(max_depth) + 1):
         certs = certified_cyclic_quotients(current, target_orders=target_orders, max_exact_order=max_exact_order)
@@ -251,10 +347,42 @@ def build_successive_quotient_chain(
             stopped_reason = "no_certified_prime_quotient"
             break
         cert = certs[0]
-        branch_multiplier *= cert.quotient_order
-        before = quotient_residual(holonomies, cert)
-        after_holonomies = tuple(element for element in holonomies if cert.assignment.get(element, 0) % cert.quotient_order == 0)
-        after = 0.0
+        before = quotient_residual(current_holonomies, cert)
+
+        if current.truncated or cert.kernel_order is None:
+            stages.append(
+                QuotientChainStage(
+                    depth=depth,
+                    source_group_order=current.order,
+                    quotient=cert,
+                    residual_before=float(before),
+                    residual_after=float("nan"),
+                    branch_multiplier=cert.quotient_order,
+                    residual_group_order=None,
+                    coset_count=None,
+                    coset_action_law_residual=None,
+                    coset_action_kernel_order=None,
+                    stabilizer_matches_kernel=None,
+                    final_regular_representation_verified=False,
+                )
+            )
+            stopped_reason = "truncated_sign_only_no_recursive_kernel"
+            return SequentialQuotientChain(
+                group_name="custom",
+                group_order=group.order,
+                closure_status=group.closure_status,
+                truncated=group.truncated,
+                stages=tuple(stages),
+                final_kernel_order=None,
+                stopped_reason=stopped_reason,
+            )
+
+        next_kernel = tuple(cert.kernel)
+        next_group = subgroup_from_elements(next_kernel, current)
+        after_holonomies = tuple(element for element in current_holonomies if cert.assignment.get(element, 0) % cert.quotient_order == 0)
+        after = triangle_residual(after_holonomies, next_group)
+        coset_rep = coset_action_representation(original, next_kernel)
+        branch_multiplier = len(coset_rep.cosets)
         stages.append(
             QuotientChainStage(
                 depth=depth,
@@ -263,10 +391,16 @@ def build_successive_quotient_chain(
                 residual_before=float(before),
                 residual_after=float(after),
                 branch_multiplier=int(branch_multiplier),
+                residual_group_order=next_group.order,
+                coset_count=len(coset_rep.cosets),
+                coset_action_law_residual=float(coset_rep.law_residual),
+                coset_action_kernel_order=int(coset_rep.kernel_order),
+                stabilizer_matches_kernel=bool(coset_rep.stabilizer_matches_subgroup),
+                final_regular_representation_verified=bool(coset_rep.permutation_conjugate_to_regular),
             )
         )
-        current = subgroup_from_elements(cert.kernel, current)
-        holonomies = after_holonomies
+        current = next_group
+        current_holonomies = after_holonomies
         if current.order <= 1:
             stopped_reason = "kernel_trivial"
             break
@@ -325,13 +459,47 @@ def accuracy(logits: np.ndarray, labels: np.ndarray) -> float:
 def cross_entropy(logits: np.ndarray, labels: np.ndarray) -> float:
     arr = np.asarray(logits, dtype=float)
     lab = np.asarray(labels, dtype=int)
+    if arr.size == 0 or lab.size == 0:
+        return float("nan")
     shifted = arr - arr.max(axis=1, keepdims=True)
     log_probs = shifted - np.log(np.exp(shifted).sum(axis=1, keepdims=True))
-    return float(-np.mean(log_probs[np.arange(lab.size), lab])) if lab.size else float("nan")
+    return float(-np.mean(log_probs[np.arange(lab.size), lab]))
 
 
 def measured_metrics(logits: np.ndarray, labels: np.ndarray) -> dict[str, float]:
     return {"accuracy": accuracy(logits, labels), "loss": cross_entropy(logits, labels)}
+
+
+def branch_logits_from_models(branch_logits: Sequence[np.ndarray]) -> np.ndarray:
+    """Stack already-evaluated branch logits as ``samples x branches x classes``."""
+
+    arrays = [np.asarray(logits, dtype=float) for logits in branch_logits]
+    if not arrays:
+        raise ValueError("at least one branch logit array is required")
+    first_shape = arrays[0].shape
+    if any(arr.shape != first_shape for arr in arrays):
+        raise ValueError("all branch logit arrays must have the same shape")
+    return np.stack(arrays, axis=1)
+
+
+def label_permutation_logit_invariance(
+    logit_fn: Callable[[np.ndarray, np.ndarray], np.ndarray],
+    inputs: np.ndarray,
+    labels: np.ndarray,
+    permuted_labels: np.ndarray,
+) -> float:
+    """Return max logit change when only labels are permuted before readout.
+
+    This regression helper catches the old failure mode where candidate logits
+    were synthesized from labels.  A genuine model/branch-logit builder should
+    ignore labels before validation routing or readout training.
+    """
+
+    logits_a = np.asarray(logit_fn(np.asarray(inputs), np.asarray(labels)), dtype=float)
+    logits_b = np.asarray(logit_fn(np.asarray(inputs), np.asarray(permuted_labels)), dtype=float)
+    if logits_a.shape != logits_b.shape:
+        return float("inf")
+    return float(np.max(np.abs(logits_a - logits_b))) if logits_a.size else 0.0
 
 
 def hidden_permutation_preservation_error(
@@ -401,18 +569,59 @@ def infer_group_from_transitions(
     return close_permutation_group(generators, max_group_order=max_group_order)
 
 
+def _chain_signature(chain: SequentialQuotientChain) -> tuple[tuple[int, int | None], ...]:
+    return tuple((stage.quotient.quotient_order, stage.residual_group_order) for stage in chain.stages)
+
+
 def bootstrap_chain_stability(
     group: FinitePermutationGroup,
     triangle_holonomies: Sequence[Permutation],
     n_bootstrap: int = 200,
     seed: int = 0,
-) -> dict[str, float | str]:
-    del seed
-    chain = build_successive_quotient_chain(group, tuple(triangle_holonomies))
-    modal = tuple(stage.quotient.quotient_order for stage in chain.stages)
+) -> dict[str, float | str | int]:
+    """Resample holonomies, rebuild the closure and quotient chain, and compare.
+
+    This is an empirical recovery check, not a proof.  It intentionally returns
+    values below one when the supplied relation/holonomy sample is too small to
+    reliably regenerate the same quotient series.
+    """
+
+    holonomies = tuple(normalize_permutation(element) for element in triangle_holonomies)
+    if not holonomies:
+        return {
+            "bootstrap_stability": float("nan"),
+            "bootstrap_kernel_stability": float("nan"),
+            "modal_chain": "none",
+            "n_bootstrap": int(n_bootstrap),
+            "bootstrap_method": "resample_holonomies_rebuild_group",
+        }
+    target = build_successive_quotient_chain(group, holonomies)
+    target_signature = _chain_signature(target)
+    target_final_kernel = target.final_kernel_order
+    rng = np.random.default_rng(seed)
+    signatures: list[tuple[tuple[int, int | None], ...]] = []
+    final_kernels: list[int | None] = []
+    max_order = max(group.order * 4, group.order + 4, 8)
+    for _ in range(int(n_bootstrap)):
+        sample_idx = rng.integers(0, len(holonomies), size=len(holonomies))
+        sampled = tuple(holonomies[int(idx)] for idx in sample_idx)
+        generators = [element for element in sampled if element != identity_permutation(len(element))]
+        if not generators:
+            generators = [identity_permutation(len(holonomies[0]))]
+        sampled_group = close_permutation_group(generators, max_group_order=max_order)
+        sampled_chain = build_successive_quotient_chain(sampled_group, sampled, max_depth=len(target.stages) or 4)
+        signatures.append(_chain_signature(sampled_chain))
+        final_kernels.append(sampled_chain.final_kernel_order)
+    counts = Counter(signatures)
+    modal_signature, modal_count = counts.most_common(1)[0]
+    signature_matches = sum(1 for signature in signatures if signature == target_signature)
+    kernel_matches = sum(1 for kernel in final_kernels if kernel == target_final_kernel)
+    modal_chain = "->".join(f"C{q}/K{k}" for q, k in modal_signature) or "none"
     return {
-        "bootstrap_stability": 1.0,
-        "modal_chain": str(modal),
+        "bootstrap_stability": float(signature_matches / max(1, len(signatures))),
+        "bootstrap_kernel_stability": float(kernel_matches / max(1, len(final_kernels))),
+        "modal_chain": modal_chain,
+        "modal_chain_count": int(modal_count),
         "n_bootstrap": int(n_bootstrap),
-        "bootstrap_method": "fixed_group_chain_signature",
+        "bootstrap_method": "resample_holonomies_rebuild_group",
     }

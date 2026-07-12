@@ -1,0 +1,4 @@
+seed,dataset,architecture,width,train_accuracy_last_loader,validation_accuracy,test_accuracy
+0,mnist,mlp,32,0.3125,0.359375,0.34765625
+1,mnist,mlp,32,0.28515625,0.296875,0.26953125
+2,mnist,mlp,32,0.45703125,0.359375,0.34765625
