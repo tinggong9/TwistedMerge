@@ -1,0 +1,80 @@
+{
+  "completed_settings": {
+    "controlled_prediction_level": true,
+    "natural_existing_artifact_scan": true
+  },
+  "dirty_status": "",
+  "environment": {
+    "git_commit": "1ae7ad4",
+    "machine": "arm64",
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "exact_command": ".venv/bin/python experiments/sequential_quotient_lift_benchmark.py --reports-dir reports",
+  "git_commit": "1ae7ad4",
+  "groups": [
+    "C2",
+    "C2xC2",
+    "C4",
+    "D4",
+    "S3"
+  ],
+  "missing_settings": [
+    "natural_N6_N8_30_seed_quotient_routed_prediction_lift",
+    "natural_parameter_level_quotient_lift"
+  ],
+  "natural_requested_model_counts": [
+    6,
+    8
+  ],
+  "noise_levels": [
+    0.0,
+    0.25,
+    0.5
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+  ],
+  "thresholds": {
+    "bootstrap_stability_preferred": 0.8,
+    "paired_ci_lower_bound_positive": true
+  },
+  "total_runtime_seconds": 8.104004144668579
+}

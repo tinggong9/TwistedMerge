@@ -1,0 +1,11 @@
+source,group_name,closure_status,group_order,truncated,stage_depth,quotient_order,quotient_name,homomorphism_residual,kernel_order,kernel_normal,image_size,quotient_certified,certification_method,residual_before,residual_after,branch_multiplier,bootstrap_stability,modal_chain,n_bootstrap,bootstrap_method,rejection_reason
+controlled,C2,exact_closure,2,False,1,2,C2,0.0,1,True,2,True,permutation_sign_character,0.5,0.0,2,1.0,"(2,)",500,fixed_group_chain_signature,
+controlled,C2xC2,exact_closure,4,False,1,2,C2,0.0,2,True,2,True,exact_multiplication_table_bruteforce,0.5,0.0,2,1.0,"(2, 2)",500,fixed_group_chain_signature,
+controlled,C2xC2,exact_closure,4,False,2,2,C2,0.0,1,True,2,True,exact_multiplication_table_bruteforce,0.5,0.0,4,1.0,"(2, 2)",500,fixed_group_chain_signature,
+controlled,C4,exact_closure,4,False,1,2,C2,0.0,2,True,2,True,permutation_sign_character,0.5,0.0,2,1.0,"(2, 2)",500,fixed_group_chain_signature,
+controlled,C4,exact_closure,4,False,2,2,C2,0.0,1,True,2,True,exact_multiplication_table_bruteforce,0.5,0.0,4,1.0,"(2, 2)",500,fixed_group_chain_signature,
+controlled,D4,exact_closure,8,False,1,2,C2,0.0,4,True,2,True,exact_multiplication_table_bruteforce,0.5,0.0,2,1.0,"(2, 2, 2)",500,fixed_group_chain_signature,
+controlled,D4,exact_closure,8,False,2,2,C2,0.0,2,True,2,True,exact_multiplication_table_bruteforce,0.5,0.0,4,1.0,"(2, 2, 2)",500,fixed_group_chain_signature,
+controlled,D4,exact_closure,8,False,3,2,C2,0.0,1,True,2,True,permutation_sign_character,0.5,0.0,8,1.0,"(2, 2, 2)",500,fixed_group_chain_signature,
+controlled,S3,exact_closure,6,False,1,2,C2,0.0,3,True,2,True,permutation_sign_character,0.5,0.0,2,1.0,"(2, 3)",500,fixed_group_chain_signature,
+controlled,S3,exact_closure,6,False,2,3,C3,0.0,1,True,3,True,exact_multiplication_table_bruteforce,0.6666666666666666,0.0,6,1.0,"(2, 3)",500,fixed_group_chain_signature,
