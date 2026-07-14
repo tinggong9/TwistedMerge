@@ -1,0 +1,15 @@
+group_name,comparison,n_pairs,paired_mean_accuracy_delta,ci_low,ci_high,wins,ties,losses
+D4,branch_regular_lift_with_invariant_pooling_vs_git_rebasin_pairwise,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_c2m3_strict_synchronization,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_greedy_soup,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_random_same_branch_count_control,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_wrong_generator_control,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_wrong_order_control,100,0.0,0.0,0.0,0,100,0
+D4,branch_regular_lift_with_invariant_pooling_vs_wrong_group_action_control,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_git_rebasin_pairwise,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_c2m3_strict_synchronization,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_greedy_soup,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_random_same_branch_count_control,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_wrong_generator_control,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_wrong_order_control,100,0.0,0.0,0.0,0,100,0
+S3,branch_regular_lift_with_invariant_pooling_vs_wrong_group_action_control,100,0.0,0.0,0.0,0,100,0

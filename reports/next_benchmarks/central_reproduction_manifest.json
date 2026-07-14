@@ -1,0 +1,67 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000",
+  "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
+  "mu2": {
+    "families": [
+      "mu2_coboundary",
+      "mu2_nontrivial_h2",
+      "random_noncentral"
+    ],
+    "widths": [
+      32,
+      64
+    ],
+    "seeds": [
+      0,
+      29
+    ],
+    "samples_per_overlap": 2000,
+    "saved_logits": "reports/next_benchmarks/logits/central_mu2_logits.npz",
+    "saved_logits_sha256": "5b763efe57dd776d419c854b5ae6b75748c16910211575107ef64793e33bcba0",
+    "label_permutation_regression_passed": true
+  },
+  "period_index_cases": [
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      4,
+      2
+    ]
+  ],
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "8c369a6"
+  }
+}

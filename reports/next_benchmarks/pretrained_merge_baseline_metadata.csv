@@ -1,0 +1,6 @@
+method,official_repository,license,exact_commit,installed_version,implementation
+ResNet-18 pretrained backbone,https://github.com/pytorch/vision,BSD-3-Clause,not pinned; installed wheel,0.27.1,official torchvision model and weights
+Task Arithmetic,not integrated in smoke,not recorded,not pinned,,internal vector arithmetic
+TIES,not integrated in smoke,not recorded,not pinned,,internal faithful trim-elect-merge
+DARE,not integrated in smoke,not recorded,not pinned,,internal faithful drop-rescale merge
+SLERP,not integrated in smoke,not recorded,not pinned,,internal vector interpolation

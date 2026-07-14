@@ -1,0 +1,14 @@
+method,n_rows,n_settings,n_seeds,mean_test_accuracy,mean_validation_accuracy,mean_parameter_multiplier,mean_inference_multiplier,mean_candidate_count,mean_selected_candidate_count,validation_budget,fresh_inference_on_current_commit,coverage_status
+c2m3_greedy_soup,120,120,20,0.8568683333333333,0.84775,1.0,1.0,1.0,1.05,1000,False,complete_primary_grid
+c2m3_synchronization_alone,120,120,20,0.8118941666666667,0.8013166666666667,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+git_rebasin_style_pairwise,20,20,5,0.8459749999999999,0.8288499999999999,1.0,1.0,1.0,1.0,1000,False,partial_grid
+global_monomial,120,120,20,0.82689,0.819875,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+improved_twistedmerge_exact_gauge_soup_selector,120,120,20,0.8557349999999999,0.8493833333333334,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+monomial_greedy_soup,120,120,20,0.85698,0.8478666666666667,1.0,1.0,1.0,1.0666666666666667,1000,False,complete_primary_grid
+optimized_monomial,120,120,20,0.8206275000000001,0.8143416666666667,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+ordinary_greedy_soup,120,120,20,0.857245,0.8476,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+ordinary_weight_average,120,120,20,0.6662675,0.6611666666666667,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+randomly_augmented_candidate_union,120,120,20,0.8564158333333334,0.8491,1.0,1.0,12.0,1.0,1000,False,complete_primary_grid
+raw_monomial_alignment_alone,120,120,20,0.8197425,0.8098500000000001,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+shrinkage_monomial,120,120,20,0.8267625,0.8204083333333333,1.0,1.0,1.0,1.0,1000,False,complete_primary_grid
+union_candidate_soup,120,120,20,0.8565875,0.8489583333333334,1.0,1.0,14.0,2.4916666666666667,1000,False,complete_primary_grid

@@ -1,0 +1,4 @@
+model,heldout_r2,harmful_merge_auc
+all_diagnostics_plus_validation,0.97528898776896,
+validation_only_baseline,0.9757001737407738,
+pairwise_alignment_only_baseline,0.38719797327788363,

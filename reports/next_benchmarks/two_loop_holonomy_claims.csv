@@ -1,0 +1,2 @@
+claim_id,status,decision,safe_wording
+executed_two_loop_noncommuting_holonomy,supported with limitations,"B. Structural noncommuting holonomy supported, but accuracy advantage unsupported.",Executed S3/D4 models certify two noncommuting loop holonomies and invariant pooling; no lift accuracy advantage is claimed when controls tie.

@@ -1,0 +1,3 @@
+method,evaluation_status,blocker,n_settings
+always_on_branch_candidate,not_run_exact_blocker,No certified central or nonabelian branch tensor exists for any primary-grid setting; constructing one without a certificate would violate the benchmark gate.,0
+obstruction_gated_branch_candidate,not_run_exact_blocker,No certified central or nonabelian branch tensor exists for any primary-grid setting; constructing one without a certificate would violate the benchmark gate.,0

@@ -1,0 +1,9 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/matched_selector_budget_benchmark.py",
+  "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
+  "source": "reports/csv/improved_validated_ladder_merge_benchmark.csv",
+  "source_rows": 1920,
+  "primary_settings": 120,
+  "fresh_inference_on_current_commit": false,
+  "test_used_for_selection": false
+}

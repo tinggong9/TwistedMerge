@@ -1,0 +1,9 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000",
+  "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
+  "primary_target": "weight_average_degradation",
+  "primary_predictor": "cycle_residual",
+  "harm_threshold": 0.01,
+  "split": "leave_one_complete_n_models_width_setting_out",
+  "decision": "unsupported"
+}

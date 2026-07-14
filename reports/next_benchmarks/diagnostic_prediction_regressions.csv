@@ -1,0 +1,181 @@
+target,predictor,heldout_setting,train_rows,test_rows,intercept,coefficient
+weight_average_degradation,pairwise_alignment_loss,N3_W16,100,20,-0.5660850603011683,0.9709655962926743
+weight_average_degradation,pairwise_alignment_loss,N3_W32,100,20,-0.5620337967110007,0.9790804194058293
+weight_average_degradation,pairwise_alignment_loss,N3_W64,100,20,-0.5268488086044881,0.9287164203849034
+weight_average_degradation,pairwise_alignment_loss,N4_W16,100,20,-0.5549138541341706,0.9578153850373431
+weight_average_degradation,pairwise_alignment_loss,N4_W32,100,20,-0.5833740376427631,0.9944661168816344
+weight_average_degradation,pairwise_alignment_loss,N4_W64,100,20,-0.6309645004842216,1.0520009657663805
+weight_average_degradation,inverse_consistency_residual,N3_W16,100,20,0.019016755518185005,0.6449568282835626
+weight_average_degradation,inverse_consistency_residual,N3_W32,100,20,0.1974308140589913,-0.004637978819622318
+weight_average_degradation,inverse_consistency_residual,N3_W64,100,20,0.21573959598485193,-0.05174665404507957
+weight_average_degradation,inverse_consistency_residual,N4_W16,100,20,0.17184345914007337,-0.025289882222515415
+weight_average_degradation,inverse_consistency_residual,N4_W32,100,20,0.14443309818454578,0.18199994861629942
+weight_average_degradation,inverse_consistency_residual,N4_W64,100,20,0.0753939174701631,0.5642686299060091
+weight_average_degradation,cycle_residual,N3_W16,100,20,0.5670513523747907,-0.32480722386996835
+weight_average_degradation,cycle_residual,N3_W32,100,20,0.761220479238453,-0.459916437960491
+weight_average_degradation,cycle_residual,N3_W64,100,20,0.38134442688488945,-0.14616543139790866
+weight_average_degradation,cycle_residual,N4_W16,100,20,0.38099145951878455,-0.1746011887303343
+weight_average_degradation,cycle_residual,N4_W32,100,20,0.5183689120559224,-0.2734119097522934
+weight_average_degradation,cycle_residual,N4_W64,100,20,0.4719041690744077,-0.22917366861174596
+weight_average_degradation,centrality_residual,N3_W16,100,20,-0.20477642419183578,0.38287570053526526
+weight_average_degradation,centrality_residual,N3_W32,100,20,1.081690476453496,-0.9048001085162893
+weight_average_degradation,centrality_residual,N3_W64,100,20,0.28107275078985766,-0.0793273793994686
+weight_average_degradation,centrality_residual,N4_W16,100,20,0.5599976815388342,-0.40486013716941277
+weight_average_degradation,centrality_residual,N4_W32,100,20,0.265074160322511,-0.0841566216702117
+weight_average_degradation,centrality_residual,N4_W64,100,20,0.20259897535378532,-0.009953403029899499
+weight_average_degradation,synchronization_disagreement,N3_W16,100,20,0.019016755518185005,0.6449568282835626
+weight_average_degradation,synchronization_disagreement,N3_W32,100,20,0.1974308140589913,-0.004637978819622318
+weight_average_degradation,synchronization_disagreement,N3_W64,100,20,0.21573959598485193,-0.05174665404507957
+weight_average_degradation,synchronization_disagreement,N4_W16,100,20,0.17184345914007337,-0.025289882222515415
+weight_average_degradation,synchronization_disagreement,N4_W32,100,20,0.14443309818454578,0.18199994861629942
+weight_average_degradation,synchronization_disagreement,N4_W64,100,20,0.0753939174701631,0.5642686299060091
+weight_average_degradation,log_scale_variance,N3_W16,100,20,0.1469114556658226,0.1243946453873895
+weight_average_degradation,log_scale_variance,N3_W32,100,20,0.1783501153057845,0.08645723909597934
+weight_average_degradation,log_scale_variance,N3_W64,100,20,0.19056887640488132,0.06108442107665005
+weight_average_degradation,log_scale_variance,N4_W16,100,20,0.16498678328749083,0.008646725057118335
+weight_average_degradation,log_scale_variance,N4_W32,100,20,0.16307980384102097,0.0910204408725076
+weight_average_degradation,log_scale_variance,N4_W64,100,20,0.1772505272272274,0.07394153189215831
+weight_average_degradation,individual_model_accuracy_variance,N3_W16,100,20,0.15319207200020185,300.8114698784501
+weight_average_degradation,individual_model_accuracy_variance,N3_W32,100,20,0.18217653685988017,151.08240350223855
+weight_average_degradation,individual_model_accuracy_variance,N3_W64,100,20,0.1913336207265548,129.18898339527934
+weight_average_degradation,individual_model_accuracy_variance,N4_W16,100,20,0.159403348980719,126.53324236488521
+weight_average_degradation,individual_model_accuracy_variance,N4_W32,100,20,0.16632735123697978,179.35749716068716
+weight_average_degradation,individual_model_accuracy_variance,N4_W64,100,20,0.17792687080717712,155.01012009326413
+weight_average_degradation,validation_loss,N3_W16,100,20,-0.3888638537425743,0.3750674497508061
+weight_average_degradation,validation_loss,N3_W32,100,20,-0.40484478559535625,0.3921950790027355
+weight_average_degradation,validation_loss,N3_W64,100,20,-0.5509553428994943,0.47967232088643047
+weight_average_degradation,validation_loss,N4_W16,100,20,-0.4380819295894106,0.41364121131915116
+weight_average_degradation,validation_loss,N4_W32,100,20,-0.41724545028475946,0.4001573442763605
+weight_average_degradation,validation_loss,N4_W64,100,20,-0.4114969976394078,0.3942717759403004
+weight_average_degradation,validation_delta,N3_W16,100,20,-0.0073665909797844265,-1.005268433326801
+weight_average_degradation,validation_delta,N3_W32,100,20,-0.005195612602899336,-1.004363488961366
+weight_average_degradation,validation_delta,N3_W64,100,20,-0.002038950156615482,-0.9923457271730147
+weight_average_degradation,validation_delta,N4_W16,100,20,-0.006863096079718068,-1.0040340085646218
+weight_average_degradation,validation_delta,N4_W32,100,20,-0.006764998117483656,-1.0075313519058922
+weight_average_degradation,validation_delta,N4_W64,100,20,-0.006615304645238096,-1.0096609980016795
+synchronized_merge_degradation,pairwise_alignment_loss,N3_W16,100,20,-0.26444895634349996,0.3939960705281509
+synchronized_merge_degradation,pairwise_alignment_loss,N3_W32,100,20,-0.2325540956111811,0.35353745597007863
+synchronized_merge_degradation,pairwise_alignment_loss,N3_W64,100,20,-0.24412315718661115,0.3676288545389158
+synchronized_merge_degradation,pairwise_alignment_loss,N4_W16,100,20,-0.1842390398193888,0.28671363351918494
+synchronized_merge_degradation,pairwise_alignment_loss,N4_W32,100,20,-0.23803203209147947,0.36235153949201865
+synchronized_merge_degradation,pairwise_alignment_loss,N4_W64,100,20,-0.22498679612412148,0.3447440958088652
+synchronized_merge_degradation,inverse_consistency_residual,N3_W16,100,20,0.016233309451860103,0.07621732868007072
+synchronized_merge_degradation,inverse_consistency_residual,N3_W32,100,20,0.06856164090868551,-0.11680736307564298
+synchronized_merge_degradation,inverse_consistency_residual,N3_W64,100,20,0.07816680061133843,-0.1437748523303962
+synchronized_merge_degradation,inverse_consistency_residual,N4_W16,100,20,0.06959629559449963,-0.17584471592769696
+synchronized_merge_degradation,inverse_consistency_residual,N4_W32,100,20,0.04964404710159406,-0.03925329364422242
+synchronized_merge_degradation,inverse_consistency_residual,N4_W64,100,20,0.025119787928609028,0.0954659011085441
+synchronized_merge_degradation,cycle_residual,N3_W16,100,20,0.2086420218397083,-0.1426556260491501
+synchronized_merge_degradation,cycle_residual,N3_W32,100,20,0.2864336954383669,-0.19959399585203264
+synchronized_merge_degradation,cycle_residual,N3_W64,100,20,0.16834741209750342,-0.10147480154690902
+synchronized_merge_degradation,cycle_residual,N4_W16,100,20,0.16501188746881257,-0.10848218559836578
+synchronized_merge_degradation,cycle_residual,N4_W32,100,20,0.2142247341504012,-0.14107615335763896
+synchronized_merge_degradation,cycle_residual,N4_W64,100,20,0.17402167042453826,-0.10598399310394706
+synchronized_merge_degradation,centrality_residual,N3_W16,100,20,-0.012106360180576198,0.047182962652043886
+synchronized_merge_degradation,centrality_residual,N3_W32,100,20,0.47493357319709784,-0.4431729615614196
+synchronized_merge_degradation,centrality_residual,N3_W64,100,20,0.20091982694409471,-0.16003700854354042
+synchronized_merge_degradation,centrality_residual,N4_W16,100,20,0.3537460185547968,-0.3312763426067213
+synchronized_merge_degradation,centrality_residual,N4_W32,100,20,0.2056312503001887,-0.16892981135635515
+synchronized_merge_degradation,centrality_residual,N4_W64,100,20,0.13852205312089363,-0.09621081351434249
+synchronized_merge_degradation,synchronization_disagreement,N3_W16,100,20,0.016233309451860103,0.07621732868007072
+synchronized_merge_degradation,synchronization_disagreement,N3_W32,100,20,0.06856164090868551,-0.11680736307564298
+synchronized_merge_degradation,synchronization_disagreement,N3_W64,100,20,0.07816680061133843,-0.1437748523303962
+synchronized_merge_degradation,synchronization_disagreement,N4_W16,100,20,0.06959629559449963,-0.17584471592769696
+synchronized_merge_degradation,synchronization_disagreement,N4_W32,100,20,0.04964404710159406,-0.03925329364422242
+synchronized_merge_degradation,synchronization_disagreement,N4_W64,100,20,0.025119787928609028,0.0954659011085441
+synchronized_merge_degradation,log_scale_variance,N3_W16,100,20,0.0260516016879218,0.043945738770627546
+synchronized_merge_degradation,log_scale_variance,N3_W32,100,20,0.032232361511142164,0.043515384558883076
+synchronized_merge_degradation,log_scale_variance,N3_W64,100,20,0.03736247201290185,0.03568899335748178
+synchronized_merge_degradation,log_scale_variance,N4_W16,100,20,0.025897406977147288,0.03561588085059846
+synchronized_merge_degradation,log_scale_variance,N4_W32,100,20,0.032374529975245564,0.040300235448103516
+synchronized_merge_degradation,log_scale_variance,N4_W64,100,20,0.03689350366131346,0.03826264152586137
+synchronized_merge_degradation,individual_model_accuracy_variance,N3_W16,100,20,0.026621104735301406,136.8119603774186
+synchronized_merge_degradation,individual_model_accuracy_variance,N3_W32,100,20,0.03142100884413901,105.22427865276191
+synchronized_merge_degradation,individual_model_accuracy_variance,N3_W64,100,20,0.035708572557119476,97.17028002997418
+synchronized_merge_degradation,individual_model_accuracy_variance,N4_W16,100,20,0.026035762075948807,102.16655919340276
+synchronized_merge_degradation,individual_model_accuracy_variance,N4_W32,100,20,0.03129993166501806,106.12038883772719
+synchronized_merge_degradation,individual_model_accuracy_variance,N4_W64,100,20,0.035578108008743496,97.42652930636706
+synchronized_merge_degradation,validation_loss,N3_W16,100,20,-0.1298955773785918,0.11011156715834935
+synchronized_merge_degradation,validation_loss,N3_W32,100,20,-0.14188867416754428,0.11949938273243026
+synchronized_merge_degradation,validation_loss,N3_W64,100,20,-0.17391718068388262,0.13919668641778257
+synchronized_merge_degradation,validation_loss,N4_W16,100,20,-0.09762614205038173,0.08848232414174821
+synchronized_merge_degradation,validation_loss,N4_W32,100,20,-0.14163393951493383,0.12190205374493543
+synchronized_merge_degradation,validation_loss,N4_W64,100,20,-0.12105006024843186,0.10831932899532905
+synchronized_merge_degradation,validation_delta,N3_W16,100,20,0.0014766720680015777,-0.18497309429369804
+synchronized_merge_degradation,validation_delta,N3_W32,100,20,0.006782581056168274,-0.17196772252592202
+synchronized_merge_degradation,validation_delta,N3_W64,100,20,0.01518145685959786,-0.14429816251999283
+synchronized_merge_degradation,validation_delta,N4_W16,100,20,0.011068980460110093,-0.11942689174474269
+synchronized_merge_degradation,validation_delta,N4_W32,100,20,0.006201142551977829,-0.18606587085405657
+synchronized_merge_degradation,validation_delta,N4_W64,100,20,0.013015594348989952,-0.1618607769107958
+monomial_benefit_over_permutation,pairwise_alignment_loss,N3_W16,100,20,-0.009421877535361903,0.01979086405045838
+monomial_benefit_over_permutation,pairwise_alignment_loss,N3_W32,100,20,-0.020456541147295178,0.03644856501997463
+monomial_benefit_over_permutation,pairwise_alignment_loss,N3_W64,100,20,-0.021056989046427995,0.03758997969694771
+monomial_benefit_over_permutation,pairwise_alignment_loss,N4_W16,100,20,-0.046524343835462535,0.07294569085467927
+monomial_benefit_over_permutation,pairwise_alignment_loss,N4_W32,100,20,-0.023309374622379427,0.04040707164343869
+monomial_benefit_over_permutation,pairwise_alignment_loss,N4_W64,100,20,-0.012871925078023889,0.027900850201596522
+monomial_benefit_over_permutation,inverse_consistency_residual,N3_W16,100,20,0.011181688511286383,-0.024061394777129933
+monomial_benefit_over_permutation,inverse_consistency_residual,N3_W32,100,20,0.027672025367933974,-0.08521993548652856
+monomial_benefit_over_permutation,inverse_consistency_residual,N3_W64,100,20,0.028018869642192454,-0.08483962264141695
+monomial_benefit_over_permutation,inverse_consistency_residual,N4_W16,100,20,0.02258455942636587,-0.06573676286179479
+monomial_benefit_over_permutation,inverse_consistency_residual,N4_W32,100,20,0.02380656111734596,-0.07496816650490835
+monomial_benefit_over_permutation,inverse_consistency_residual,N4_W64,100,20,0.021064751592714086,-0.05802430046075341
+monomial_benefit_over_permutation,cycle_residual,N3_W16,100,20,0.02542499778732919,-0.016219310126556453
+monomial_benefit_over_permutation,cycle_residual,N3_W32,100,20,0.06537074239114028,-0.046893360429767834
+monomial_benefit_over_permutation,cycle_residual,N3_W64,100,20,0.055783999216717485,-0.038922199701025784
+monomial_benefit_over_permutation,cycle_residual,N4_W16,100,20,0.07261235416825836,-0.05223625985754159
+monomial_benefit_over_permutation,cycle_residual,N4_W32,100,20,0.05191846756664505,-0.03595835231171505
+monomial_benefit_over_permutation,cycle_residual,N4_W64,100,20,0.04649747239000504,-0.030820294946299624
+monomial_benefit_over_permutation,centrality_residual,N3_W16,100,20,0.02937425945321936,-0.024355344517375907
+monomial_benefit_over_permutation,centrality_residual,N3_W32,100,20,0.23245576475653615,-0.229617668800291
+monomial_benefit_over_permutation,centrality_residual,N3_W64,100,20,0.1427150114190412,-0.13784608614040536
+monomial_benefit_over_permutation,centrality_residual,N4_W16,100,20,0.1623247835560926,-0.15831589415746206
+monomial_benefit_over_permutation,centrality_residual,N4_W32,100,20,0.1392717177681255,-0.13509764691587428
+monomial_benefit_over_permutation,centrality_residual,N4_W64,100,20,0.12308400500590332,-0.11739075565025103
+monomial_benefit_over_permutation,synchronization_disagreement,N3_W16,100,20,0.011181688511286383,-0.024061394777129933
+monomial_benefit_over_permutation,synchronization_disagreement,N3_W32,100,20,0.027672025367933974,-0.08521993548652856
+monomial_benefit_over_permutation,synchronization_disagreement,N3_W64,100,20,0.028018869642192454,-0.08483962264141695
+monomial_benefit_over_permutation,synchronization_disagreement,N4_W16,100,20,0.02258455942636587,-0.06573676286179479
+monomial_benefit_over_permutation,synchronization_disagreement,N4_W32,100,20,0.02380656111734596,-0.07496816650490835
+monomial_benefit_over_permutation,synchronization_disagreement,N4_W64,100,20,0.021064751592714086,-0.05802430046075341
+monomial_benefit_over_permutation,log_scale_variance,N3_W16,100,20,0.009740517602454311,-0.02303221102022419
+monomial_benefit_over_permutation,log_scale_variance,N3_W32,100,20,0.010672241386230581,-0.013912803546823897
+monomial_benefit_over_permutation,log_scale_variance,N3_W64,100,20,0.011285786724839068,-0.012734470548999477
+monomial_benefit_over_permutation,log_scale_variance,N4_W16,100,20,0.006781645905073812,0.010028471732079436
+monomial_benefit_over_permutation,log_scale_variance,N4_W32,100,20,0.010202006776241175,-0.01069442009911606
+monomial_benefit_over_permutation,log_scale_variance,N4_W64,100,20,0.011534048194528308,-0.012053625342836974
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N3_W16,100,20,0.006150644270095602,-10.752599763193185
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N3_W32,100,20,0.003958516399331085,40.698309836944766
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N3_W64,100,20,0.0046978784547606865,39.44444972373252
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N4_W16,100,20,0.0047338869142600935,66.55971797591066
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N4_W32,100,20,0.003969910219686574,41.1182819044916
+monomial_benefit_over_permutation,individual_model_accuracy_variance,N4_W64,100,20,0.005272047730887121,38.31458162850035
+monomial_benefit_over_permutation,validation_loss,N3_W16,100,20,0.00017630503140685902,0.0036234998147371294
+monomial_benefit_over_permutation,validation_loss,N3_W32,100,20,-0.008162071982332372,0.010397385913525193
+monomial_benefit_over_permutation,validation_loss,N3_W64,100,20,-0.005227201847355447,0.00873501187635355
+monomial_benefit_over_permutation,validation_loss,N4_W16,100,20,-0.024696226295533814,0.022653968072614012
+monomial_benefit_over_permutation,validation_loss,N4_W32,100,20,-0.0061951162638548204,0.009352148996629388
+monomial_benefit_over_permutation,validation_loss,N4_W64,100,20,-0.0019873534081191425,0.007153494763493419
+monomial_benefit_over_permutation,validation_delta,N3_W16,100,20,0.0037775288396179538,-0.01019167572825201
+monomial_benefit_over_permutation,validation_delta,N3_W32,100,20,0.002653122647481334,-0.02552911950345182
+monomial_benefit_over_permutation,validation_delta,N3_W64,100,20,0.003928946341547293,-0.02211887042827898
+monomial_benefit_over_permutation,validation_delta,N4_W16,100,20,-0.0002202080012276106,-0.05000789402082853
+monomial_benefit_over_permutation,validation_delta,N4_W32,100,20,0.003910188853271687,-0.02083223041049888
+monomial_benefit_over_permutation,validation_delta,N4_W64,100,20,0.004700442043623933,-0.021649316137007112
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N3_W16,100,20,0.16943600000000003,"{""centrality_residual"": 0.0001643494110656387, ""cycle_residual"": -0.000784986268669133, ""individual_model_accuracy_variance"": 0.0017546240440058838, ""log_scale_variance"": -2.7553451615467935e-05, ""pairwise_alignment_loss"": 0.00559821674304083, ""synchronization_disagreement"": 0.0030526345443859983, ""validation_delta"": -0.08928104471740202, ""validation_loss"": -0.0005673255900923231}"
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N3_W32,100,20,0.19634800000000002,"{""centrality_residual"": -0.0021824979806440653, ""cycle_residual"": 0.0018702232892572868, ""individual_model_accuracy_variance"": 0.0009120805268825973, ""log_scale_variance"": 9.981669773258107e-05, ""pairwise_alignment_loss"": 0.008374388237267624, ""synchronization_disagreement"": 0.0019114632581021807, ""validation_delta"": -0.09972499133722318, ""validation_loss"": 4.2485941459086495e-05}"
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N3_W64,100,20,0.20384533333333332,"{""centrality_residual"": -0.002501293461853836, ""cycle_residual"": 0.0014192396192081902, ""individual_model_accuracy_variance"": 0.0010367758673656775, ""log_scale_variance"": -0.0001556649360809761, ""pairwise_alignment_loss"": 0.007169886872805582, ""synchronization_disagreement"": 0.0024795647780769016, ""validation_delta"": -0.09506203916854508, ""validation_loss"": -4.867415946543283e-05}"
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N4_W16,100,20,0.16638991666666667,"{""centrality_residual"": -0.00482586750774368, ""cycle_residual"": 0.00417798940767024, ""individual_model_accuracy_variance"": -9.570536236775008e-05, ""log_scale_variance"": 0.0005824420274167491, ""pairwise_alignment_loss"": 0.003430474493125263, ""synchronization_disagreement"": 0.0020901726799729403, ""validation_delta"": -0.08404036078892162, ""validation_loss"": 0.004485184071343561}"
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N4_W32,100,20,0.1831999166666667,"{""centrality_residual"": -0.0016725754510803729, ""cycle_residual"": 0.0011206714056341727, ""individual_model_accuracy_variance"": 0.0009616469056529451, ""log_scale_variance"": 0.00023347261520412566, ""pairwise_alignment_loss"": 0.006686874559633426, ""synchronization_disagreement"": 0.001251152987189301, ""validation_delta"": -0.09597688942956653, ""validation_loss"": 0.0025827436850448726}"
+weight_average_degradation,pairwise_alignment_loss+cycle_residual+centrality_residual+synchronization_disagreement+log_scale_variance+individual_model_accuracy_variance+validation_loss+validation_delta,N4_W64,100,20,0.19292416666666667,"{""centrality_residual"": -0.002744340614546013, ""cycle_residual"": 0.0018956652024819795, ""individual_model_accuracy_variance"": 0.0009317325224598754, ""log_scale_variance"": 0.00020186071514632507, ""pairwise_alignment_loss"": 0.007578953783861113, ""synchronization_disagreement"": 0.0016264424125925086, ""validation_delta"": -0.09928360090276014, ""validation_loss"": 0.0006522809031005717}"
+weight_average_degradation,validation_loss+validation_delta,N3_W16,100,20,0.16943600000000003,"{""validation_delta"": -0.08832259574491079, ""validation_loss"": 0.007650133406479114}"
+weight_average_degradation,validation_loss+validation_delta,N3_W32,100,20,0.19634800000000002,"{""validation_delta"": -0.09950952176413537, ""validation_loss"": 0.007634409832238002}"
+weight_average_degradation,validation_loss+validation_delta,N3_W64,100,20,0.20384533333333332,"{""validation_delta"": -0.09468036238443857, ""validation_loss"": 0.005930543303925994}"
+weight_average_degradation,validation_loss+validation_delta,N4_W16,100,20,0.16638991666666667,"{""validation_delta"": -0.08413311210559035, ""validation_loss"": 0.007001077783110967}"
+weight_average_degradation,validation_loss+validation_delta,N4_W32,100,20,0.1831999166666667,"{""validation_delta"": -0.0956324490258267, ""validation_loss"": 0.009116249882080681}"
+weight_average_degradation,validation_loss+validation_delta,N4_W64,100,20,0.19292416666666667,"{""validation_delta"": -0.09907522972467347, ""validation_loss"": 0.007829510540083346}"
+weight_average_degradation,pairwise_alignment_loss,N3_W16,100,20,0.16943600000000003,"{""pairwise_alignment_loss"": 0.06092525328488409}"
+weight_average_degradation,pairwise_alignment_loss,N3_W32,100,20,0.19634800000000002,"{""pairwise_alignment_loss"": 0.06956410183700926}"
+weight_average_degradation,pairwise_alignment_loss,N3_W64,100,20,0.20384533333333332,"{""pairwise_alignment_loss"": 0.05640291407894224}"
+weight_average_degradation,pairwise_alignment_loss,N4_W16,100,20,0.16638991666666667,"{""pairwise_alignment_loss"": 0.053758137063520825}"
+weight_average_degradation,pairwise_alignment_loss,N4_W32,100,20,0.1831999166666667,"{""pairwise_alignment_loss"": 0.07154152596801071}"
+weight_average_degradation,pairwise_alignment_loss,N4_W64,100,20,0.19292416666666667,"{""pairwise_alignment_loss"": 0.06904763418619035}"

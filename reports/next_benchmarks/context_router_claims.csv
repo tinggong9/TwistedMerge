@@ -1,0 +1,3 @@
+claim_id,status,safe_wording
+learned_router_generalizes_to_unseen_contexts,unsupported,"Supplied-context prediction remains valid, but the learned feature router is not supported as a practical unseen-context router."
+supplied_context_oracle,supported,"An executed supplied-context branch predictor selects the planted group action; it is an oracle diagnostic, not a learned router."
