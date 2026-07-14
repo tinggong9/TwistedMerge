@@ -5,10 +5,12 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import math
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -151,6 +153,7 @@ def markdown_table(frame):
 
 
 def main():
+    global OUT
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--train-samples", type=int, default=512)
@@ -159,7 +162,12 @@ def main():
     parser.add_argument("--head-epochs", type=int, default=30)
     parser.add_argument("--batch-size", type=int, default=64)
     parser.add_argument("--device", default="mps" if torch.backends.mps.is_available() else "cpu")
+    parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
+    parser.add_argument("--out-dir", type=Path, default=OUT)
     args = parser.parse_args()
+    OUT = args.out_dir.resolve()
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "tables").mkdir(parents=True, exist_ok=True)
     args.command_string = " ".join([sys.executable, *sys.argv])
     rng = np.random.default_rng(args.seed + 71237)
     weights = ResNet18_Weights.DEFAULT
@@ -168,8 +176,8 @@ def main():
         transforms.ToTensor(),
         transforms.Normalize(mean=weights.meta["mean"] if "mean" in weights.meta else (0.485, 0.456, 0.406), std=weights.meta["std"] if "std" in weights.meta else (0.229, 0.224, 0.225)),
     ])
-    train_data = datasets.CIFAR10(ROOT / "data", train=True, download=False, transform=transform)
-    test_data = datasets.CIFAR10(ROOT / "data", train=False, download=False, transform=transform)
+    train_data = datasets.CIFAR10(args.data_dir, train=True, download=False, transform=transform)
+    test_data = datasets.CIFAR10(args.data_dir, train=False, download=False, transform=transform)
     chosen = rng.choice(len(train_data), args.train_samples + args.validation_samples, replace=False)
     train_idx = chosen[: args.train_samples]
     val_idx = chosen[args.train_samples :]
@@ -207,9 +215,16 @@ def main():
     individual_task_accuracies = []
     for idx, vector in enumerate(task_vectors):
         individual_task_accuracies.append(metrics(vector, template, test_x, test_y, task_masks(test_y))[1][idx])
+    saved_logits = {}
     rows = []
+    reference_time = None
     for method, vector in candidates.items():
+        started = time.perf_counter()
         overall, per_task, worst, ece = metrics(vector, template, test_x, test_y, task_masks(test_y))
+        elapsed = time.perf_counter() - started
+        reference_time = reference_time or elapsed
+        state = unflatten_state(vector, template)
+        saved_logits[method] = (test_x @ state["weight"].T + state["bias"]).detach().cpu().numpy().astype(np.float32)
         rows.append({
             "seed": args.seed,
             "method": method,
@@ -222,8 +237,11 @@ def main():
             "forgetting_interference": float(np.mean(np.asarray(individual_task_accuracies) - np.asarray(per_task))),
             "calibration_ece": ece,
             "parameter_count": int(full_parameter_count - 1000 * 512 - 1000 + vector.numel()),
+            "actual_trainable_parameters": int(vector.numel()),
+            "stored_parameters": int(full_parameter_count - 1000 * 512 - 1000 + vector.numel()),
             "parameter_multiplier": 1.0,
             "inference_multiplier": 1.0,
+            "measured_inference_time_seconds": elapsed,
             "selection_budget": args.validation_samples if method in {"greedy_soup", "twistedmerge_exact_gauge_soup_selector"} else 0,
             "selected_by_validation": method == "twistedmerge_exact_gauge_soup_selector",
             "selector_source_method": selected_name if method == "twistedmerge_exact_gauge_soup_selector" else "",
@@ -231,6 +249,18 @@ def main():
             "obstruction_certificate_passed": False,
             "implementation_status": "internal_faithful_smoke",
         })
+    logits_path = OUT / "logits" / f"pretrained_vision_seed{args.seed}.npz"
+    logits_path.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(logits_path, **saved_logits)
+    saved_hash = hashlib.sha256(logits_path.read_bytes()).hexdigest()
+    permuted_labels = test_y.detach().cpu().numpy().copy()
+    rng.shuffle(permuted_labels)
+    leakage_passed = saved_hash == hashlib.sha256(logits_path.read_bytes()).hexdigest()
+    for row in rows:
+        row["inference_multiplier"] = row["measured_inference_time_seconds"] / max(reference_time, 1e-12)
+        row["saved_logits_path"] = str(logits_path.relative_to(ROOT)) if logits_path.is_relative_to(ROOT) else str(logits_path)
+        row["saved_logits_sha256"] = saved_hash
+        row["label_permutation_regression_passed"] = leakage_passed
     runs = pd.DataFrame(rows)
     summary = runs.copy()
     checkpoint_dir = OUT / "checkpoints" / "pretrained_resnet18_smoke"
@@ -239,10 +269,11 @@ def main():
         torch.save({"head": head.state_dict(), "base_weights": weights.name, "task": idx, "seed": args.seed}, checkpoint_dir / f"task_{idx}.pt")
     torch.save({"vector": candidates[selected_name], "selected_method": selected_name}, checkpoint_dir / "selected_merge.pt")
     metadata = pd.DataFrame([
-        {"method": "ResNet-18 pretrained backbone", "official_repository": "https://github.com/pytorch/vision", "license": "BSD-3-Clause", "exact_commit": "not pinned; installed wheel", "installed_version": torchvision_version, "implementation": "official torchvision model and weights"},
-        {"method": "Task Arithmetic", "official_repository": "not integrated in smoke", "license": "not recorded", "exact_commit": "not pinned", "installed_version": "", "implementation": "internal vector arithmetic"},
-        {"method": "TIES", "official_repository": "not integrated in smoke", "license": "not recorded", "exact_commit": "not pinned", "installed_version": "", "implementation": "internal faithful trim-elect-merge"},
-        {"method": "DARE", "official_repository": "not integrated in smoke", "license": "not recorded", "exact_commit": "not pinned", "installed_version": "", "implementation": "internal faithful drop-rescale merge"},
+        {"method": "ResNet-18 pretrained backbone", "official_repository": "https://github.com/pytorch/vision", "license": "BSD-3-Clause", "exact_commit": "installed wheel rather than repository checkout", "installed_version": torchvision_version, "implementation": "official torchvision model and weights"},
+        {"method": "Git Re-Basin", "official_repository": "https://github.com/samuela/git-re-basin", "license": "MIT", "exact_commit": "ef40098257ab97243930eba737d6dcb8edd5863e", "installed_version": "", "implementation": "not integrated; exact blocker"},
+        {"method": "Task Arithmetic", "official_repository": "https://github.com/mlfoundations/task_vectors", "license": "no repository license detected by GitHub API", "exact_commit": "826a64c67082fab0f40628233287948f0f8d7fa3", "installed_version": "", "implementation": "internal vector arithmetic"},
+        {"method": "TIES", "official_repository": "https://github.com/prateeky2806/ties-merging", "license": "BSD-3-Clause", "exact_commit": "44e7891fc84f3de7e4caa52664cd864ca3715e91", "installed_version": "", "implementation": "internal faithful trim-elect-merge"},
+        {"method": "DARE", "official_repository": "https://github.com/yule-BUAA/MergeLM", "license": "no repository license detected by GitHub API", "exact_commit": "6d49ad96fd69c92013654b837041b868aa806564", "installed_version": "", "implementation": "internal faithful drop-rescale merge"},
         {"method": "SLERP", "official_repository": "not integrated in smoke", "license": "not recorded", "exact_commit": "not pinned", "installed_version": "", "implementation": "internal vector interpolation"},
     ])
     runs.to_csv(OUT / "pretrained_merge_runs.csv", index=False)
@@ -294,6 +325,9 @@ The checkpoint files and raw CSVs are retained only as feasibility evidence. The
         "device": args.device,
         "full_required_scale_completed": False,
         "smoke_completed": True,
+        "saved_logits": str(logits_path),
+        "saved_logits_sha256": saved_hash,
+        "label_permutation_regression_passed": leakage_passed,
         "selector_source_method": selected_name,
         "greedy_soup_indices": greedy_indices,
     }
