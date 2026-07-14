@@ -1,6 +1,6 @@
 {
   "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000",
-  "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
+  "git_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280",
   "mu2": {
     "families": [
       "mu2_coboundary",
@@ -62,6 +62,6 @@
       "torch": "2.12.1",
       "torchvision": "0.27.1"
     },
-    "git_commit": "8c369a6"
+    "git_commit": "0a41f76"
   }
 }

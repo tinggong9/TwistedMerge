@@ -11,7 +11,7 @@
 /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000
 ```
 
-- Git commit at execution: `8c369a6f1a7f08b7443626ae1dece7d25fc06ddf`
+- Git commit at execution: `0a41f76d3c8a77acc3a47514c2639b81fbc5b280`
 - Controlled families: `mu2_coboundary, mu2_nontrivial_h2, random_noncentral`
 - Widths: `32, 64`
 - Seeds: `0:29`

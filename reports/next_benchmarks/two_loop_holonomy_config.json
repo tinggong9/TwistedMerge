@@ -63,8 +63,8 @@
   ],
   "n_validation": 1000,
   "n_test": 2000,
-  "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
-  "dirty_worktree": true,
+  "git_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280",
+  "dirty_worktree": false,
   "saved_logits": "reports/next_benchmarks/logits/two_loop_S3_W32_seed0.npz",
   "saved_logits_sha256": "5d7ea580762167edd9e478504b175185d40af0228b0c00c122d550662cde05cb",
   "gates": {
@@ -90,6 +90,6 @@
       "torch": "2.12.1",
       "torchvision": "0.27.1"
     },
-    "git_commit": "8c369a6"
+    "git_commit": "0a41f76"
   }
 }

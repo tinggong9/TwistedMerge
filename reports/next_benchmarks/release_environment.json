@@ -1,0 +1,18 @@
+{
+  "evidence_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280",
+  "release_builder_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280",
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "numpy": "2.5.0",
+  "pandas": "3.0.4",
+  "git_status_at_release_build": "## agent/next-benchmarks\n M reports/next_benchmarks/central_reproduction_manifest.json\n M reports/next_benchmarks/central_reproduction_report.md\n M reports/next_benchmarks/plots/two_loop_holonomy_accuracy.pdf\n M reports/next_benchmarks/plots/two_loop_holonomy_paired_delta.pdf\n M reports/next_benchmarks/plots/two_loop_holonomy_residuals.pdf\n M reports/next_benchmarks/two_loop_holonomy_config.json\n M reports/next_benchmarks/two_loop_holonomy_report.md\n?? reports/next_benchmarks/release_manifest.json\n?? reports/next_benchmarks/release_manifest.md",
+  "commands": {
+    "controlled_mu2_reproduction": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000",
+    "period_index_reproduction": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000",
+    "executed_two_loop_holonomy": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/executed_two_loop_holonomy.py --mode full",
+    "context_router_generalization": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/context_router_generalization.py --groups S3,D4 --seeds 0:19 --n-validation-per-context 200 --n-test-per-context 300",
+    "matched_selector_budget": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/matched_selector_budget_benchmark.py",
+    "heldout_diagnostic_prediction": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000",
+    "pretrained_resnet18_smoke": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30"
+  }
+}
