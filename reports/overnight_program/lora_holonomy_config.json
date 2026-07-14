@@ -1,0 +1,12 @@
+{
+  "stage": 9,
+  "mode": "smoke",
+  "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+  "open_pretrained_completed": false,
+  "missing_dependencies": [
+    "transformers",
+    "datasets",
+    "peft"
+  ],
+  "label_permutation_regression_passed": true
+}

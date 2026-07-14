@@ -1,0 +1,7 @@
+method,official_repository,license,exact_commit,installed_version,implementation
+ResNet-18 pretrained backbone,https://github.com/pytorch/vision,BSD-3-Clause,installed wheel rather than repository checkout,0.27.1,official torchvision model and weights
+Git Re-Basin,https://github.com/samuela/git-re-basin,MIT,ef40098257ab97243930eba737d6dcb8edd5863e,,not integrated; exact blocker
+Task Arithmetic,https://github.com/mlfoundations/task_vectors,no repository license detected by GitHub API,826a64c67082fab0f40628233287948f0f8d7fa3,,internal vector arithmetic
+TIES,https://github.com/prateeky2806/ties-merging,BSD-3-Clause,44e7891fc84f3de7e4caa52664cd864ca3715e91,,internal faithful trim-elect-merge
+DARE,https://github.com/yule-BUAA/MergeLM,no repository license detected by GitHub API,6d49ad96fd69c92013654b837041b868aa806564,,internal faithful drop-rescale merge
+SLERP,not integrated in smoke,not recorded,not pinned,,internal vector interpolation

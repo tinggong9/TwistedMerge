@@ -1,0 +1,9 @@
+metric,value
+settings,120.0
+residual_failure_correlation,-0.19128120870404314
+residual_null_p_value,0.029970029970029972
+bootstrap_corr_2.5pct,-0.37230167079955667
+bootstrap_corr_97.5pct,-0.031843905905364615
+validation_only_loso_mse,0.006889236353836923
+residual_extended_loso_mse,0.012634042292055303
+mean_monomial_over_strict_gain,0.014995833333333335

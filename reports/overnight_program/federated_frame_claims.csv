@@ -1,0 +1,5 @@
+claim,supported,evidence
+cycle_residual_predicts_degradation,False,exact coordinate frames are a removable coboundary
+synchronization_removes_coboundary,True,
+persistent_low_rank_lift_improves,False,no persistent component certified
+router_generalizes_unseen_clients,False,unseen client protocol not completed

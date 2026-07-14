@@ -1,0 +1,7 @@
+audit,benchmark,reference,control,control_gap
+wrong_group_action,two_loop_context,1.0,0.6730974999999999,0.3269025000000001
+wrong_generator,two_loop_context,1.0,0.1498025,0.8501974999999999
+wrong_context_order,two_loop_context,1.0,0.7563325000000001,0.24366749999999993
+random_same_branch_count,two_loop_context,1.0,0.14535,0.85465
+wrong_quaternion_sign,quaternion_pose,0.998046875,0.0,0.998046875
+random_quaternion_branch,quaternion_pose,0.998046875,0.7473958333333334,0.25065104166666663

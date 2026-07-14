@@ -1,0 +1,4 @@
+claim,supported,scope,paired_ci_low,paired_ci_high
+projective_cycle_sign_detected,True,generated quaternion-lift choices,,
+two_sheet_lift_beats_best_strict,False,synthetic smoke only,0.0,0.0
+real_pose_dataset,False,blocked: no installed pose dataset or meshes,,

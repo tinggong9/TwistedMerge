@@ -1,0 +1,9 @@
+{
+  "stage": 6,
+  "mode": "smoke",
+  "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/quaternion_projective_pose_merge.py --mode smoke",
+  "data": "generated asymmetric pose/quaternion smoke",
+  "real_dataset_completed": false,
+  "claim_gate_passed": false
+}

@@ -1,0 +1,8 @@
+method,baseline,n_pairs,mean_accuracy_delta,ci_low,ci_high
+weight_average,weight_average,1,0.0,0.0,0.0
+greedy_soup,weight_average,1,-0.01953125,-0.01953125,-0.01953125
+task_arithmetic,weight_average,1,0.0,0.0,0.0
+ties,weight_average,1,-0.056640625,-0.056640625,-0.056640625
+dare,weight_average,1,-0.076171875,-0.076171875,-0.076171875
+slerp,weight_average,1,0.0,0.0,0.0
+twistedmerge_exact_gauge_soup_selector,weight_average,1,0.0,0.0,0.0

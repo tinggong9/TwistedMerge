@@ -1,0 +1,9 @@
+{
+  "stage": 10,
+  "mode": "smoke",
+  "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+  "dataset": "MNIST",
+  "max_exact_cycle_residual": 0.0,
+  "full_grid_completed": false,
+  "label_permutation_regression_passed": true
+}

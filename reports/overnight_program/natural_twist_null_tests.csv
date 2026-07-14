@@ -1,0 +1,5 @@
+null,statistic,p_value,samples,status
+target_permutation,0.19128120870404314,0.029970029970029972,1000,
+checkpoint_shuffle,0.19128120870404314,0.029970029970029972,1000,
+edge_permutation,0.19128120870404314,0.029970029970029972,1000,
+matched_pairwise_error,,,0,blocked_without_additional_architectures

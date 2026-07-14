@@ -1,0 +1,18 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30 --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --out-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program/pretrained_vision_source",
+  "git_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+  "weights": "IMAGENET1K_V1",
+  "weights_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",
+  "torchvision_version": "0.27.1",
+  "device": "mps",
+  "full_required_scale_completed": false,
+  "smoke_completed": true,
+  "saved_logits": "/Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program/pretrained_vision_source/logits/pretrained_vision_seed0.npz",
+  "saved_logits_sha256": "cfaa5aa1966e5246939029d589bde0f66188d5acb0976e2efe1b7d0b8a0e8668",
+  "label_permutation_regression_passed": true,
+  "selector_source_method": "weight_average",
+  "greedy_soup_indices": [
+    1,
+    0
+  ]
+}

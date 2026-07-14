@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-14T18:06:41.077171+00:00",
+  "stages": {
+    "0": {
+      "name": "provenance_audit",
+      "status": "completed",
+      "decision": "supported",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "1": {
+      "name": "fresh_practical_selector",
+      "status": "completed",
+      "decision": "executed_negative_result",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "2": {
+      "name": "hodge_lr_components",
+      "status": "completed",
+      "decision": "component_smoke",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "3": {
+      "name": "context_two_loop",
+      "status": "completed",
+      "decision": "executed_controlled_positive",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "4": {
+      "name": "central_period_index",
+      "status": "completed",
+      "decision": "supported_controlled_and_exact",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "5": {
+      "name": "arxiv_release",
+      "status": "completed",
+      "decision": "verified_clean_release",
+      "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "6": {
+      "name": "quaternion_pose",
+      "status": "completed",
+      "decision": "synthetic_smoke_negative",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "7": {
+      "name": "natural_twist",
+      "status": "completed",
+      "decision": "natural_promotion_unsupported",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "8": {
+      "name": "pretrained_vision",
+      "status": "completed",
+      "decision": "one_seed_frozen_backbone_smoke",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "9": {
+      "name": "lora_holonomy",
+      "status": "completed",
+      "decision": "synthetic_adapter_smoke",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "10": {
+      "name": "federated_frame",
+      "status": "completed",
+      "decision": "real_mnist_controlled_frame_smoke",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "11": {
+      "name": "transformer",
+      "status": "completed",
+      "decision": "local_transformer_smoke",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    },
+    "12": {
+      "name": "capacity_latency",
+      "status": "completed",
+      "decision": "cross_benchmark_smoke_audit",
+      "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+      "updated_at": "2026-07-14T18:06:41.077171+00:00"
+    }
+  }
+}

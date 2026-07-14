@@ -1,0 +1,4 @@
+seed,clients,negative_cycle_rate,cycle_sign_residual_present,sign_cochain_coboundary,underlying_so3_consistency_error,target_permutation_regression_passed
+0,4,0.5,True,False,0.0,True
+1,4,0.5,True,False,0.0,True
+2,4,0.5,True,False,0.0,True

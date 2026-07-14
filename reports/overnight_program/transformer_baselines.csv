@@ -1,0 +1,5 @@
+component,name,revision,license,status
+architecture,torch.nn.TransformerEncoder,2.12.1,PyTorch BSD-style,installed
+pretrained_model,none,none,not applicable,blocked
+tokenizer,fixed integer-token synthetic tokenizer,local-v1,repository code,smoke only
+transformers,Hugging Face transformers,not installed,not inspected because unavailable,blocked

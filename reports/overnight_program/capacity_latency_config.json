@@ -1,0 +1,29 @@
+{
+  "stage": 12,
+  "sources": [
+    "practical_selector",
+    "two_loop_context",
+    "quaternion_pose",
+    "pretrained_vision",
+    "lora_holonomy",
+    "federated_frame",
+    "transformer"
+  ],
+  "lambda_regret": [
+    0.0,
+    0.1,
+    0.25
+  ],
+  "lambda_inference": [
+    0.0,
+    0.01,
+    0.05
+  ],
+  "false_positive_rate": 0.0,
+  "missing_not_imputed": [
+    "FLOPs",
+    "most_peak_memory",
+    "batch_size_sensitivity",
+    "false_negative_rate"
+  ]
+}

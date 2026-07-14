@@ -1,0 +1,5 @@
+# Stage 7: mixed natural-data twist discovery smoke
+
+The audit reuses the 120 **freshly executed**, matched MNIST checkpoint collections from Stage 1, not the deprecated aggregation. Residual/failure correlation is -0.1913 (permutation p=0.02997); adding residual predictors changes leave-one-setting-out MSE from 0.00688924 to 0.012634. Natural twist promotion is **False**. No Hodge/LR lift was activated because not every gate passed.
+
+Exact coverage blocker: the available fresh grid contains one dataset (MNIST), one architecture (one-hidden-layer MLP), model counts 3/4, and widths 16/32/64. Fashion-MNIST, CIFAR-10/100, two-layer MLP, CNN, ResNet-18, model count 5, domain shifts, matched pairwise-error nulls, leave-one-dataset-out, and leave-one-architecture-out were not executed. This smoke therefore cannot promote a natural twist, even if a single residual statistic is significant. Full command after those checkpoint collections are available: `python experiments/natural_twist_discovery.py --mode full`.

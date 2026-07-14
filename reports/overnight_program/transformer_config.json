@@ -1,0 +1,11 @@
+{
+  "stage": 11,
+  "mode": "smoke",
+  "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
+  "model": "local TinyTransformer",
+  "parameter_count": 5882,
+  "pretrained_completed": false,
+  "fine_tuned_checkpoints": 4,
+  "selector_source": "ties",
+  "label_permutation_regression_passed": true
+}

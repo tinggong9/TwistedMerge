@@ -1,0 +1,4 @@
+claim,supported
+factor_gauge_invariance_executed,True
+persistent_lora_holonomy,False
+open_pretrained_adapter_benchmark,False
