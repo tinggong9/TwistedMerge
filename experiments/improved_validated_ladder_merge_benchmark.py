@@ -4,11 +4,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -49,6 +51,13 @@ from src.structure_group_ladder import StructureGroupLadderMerge, estimate_pairw
 
 
 EXTRA_METADATA: dict[str, MethodMetadata] = {
+    "git_rebasin_pairwise": MethodMetadata(
+        "git_rebasin_pairwise",
+        "pairwise_reference_permutation_single_model",
+        True,
+        True,
+        "Faithful pairwise-to-reference permutation alignment followed by weight averaging.",
+    ),
     "validated_ladder_selector": MethodMetadata(
         "validated_ladder_selector",
         "validation_selected_exact_relu_single_model",
@@ -125,6 +134,13 @@ EXTRA_METADATA: dict[str, MethodMetadata] = {
         True,
         True,
         "Greedy soup over original, C2M3, shrinkage, and global monomial candidates; output is one averaged MLP.",
+    ),
+    "randomly_augmented_candidate_union": MethodMetadata(
+        "randomly_augmented_candidate_union",
+        "validation_selected_augmented_union_single_model_soup",
+        True,
+        True,
+        "Union-candidate soup augmented with four seeded random-subset model averages; every candidate is executed.",
     ),
 }
 
@@ -271,6 +287,35 @@ def diag_by_level(ladder_result) -> dict[str, object]:
 
 def evaluate_on_val_and_test(model, val_loader, test_loader, device) -> tuple[dict[str, float], dict[str, float]]:
     return evaluate_model(model, val_loader, device), evaluate_model(model, test_loader, device)
+
+
+def collect_saved_logits(model, loader, device, max_examples: int = 512) -> tuple[np.ndarray, float]:
+    torch, _, _ = require_torch()
+    model = model.to(device)
+    model.eval()
+    chunks = []
+    count = 0
+    started = time.perf_counter()
+    with torch.no_grad():
+        for inputs, _labels in loader:
+            batch = model(inputs.to(device)).detach().cpu().numpy()
+            take = min(len(batch), max_examples - count)
+            chunks.append(batch[:take])
+            count += take
+            if count >= max_examples:
+                break
+    elapsed = time.perf_counter() - started
+    model.to("cpu")
+    return np.concatenate(chunks, axis=0), elapsed
+
+
+def collect_ensemble_saved_logits(models, loader, device, max_examples: int = 512) -> tuple[np.ndarray, float]:
+    logits = []
+    started = time.perf_counter()
+    for model in models:
+        values, _elapsed = collect_saved_logits(model, loader, device, max_examples)
+        logits.append(values)
+    return np.stack(logits, axis=0).mean(axis=0), time.perf_counter() - started
 
 
 def add_method_row(
@@ -461,6 +506,7 @@ def run_setting(args, spec, train_data, test_data, seed: int, n_models: int, wid
         "max_test_samples": args.max_test_samples,
         "val_fraction": args.val_fraction,
         "matching": "activation",
+        "selector_validation_budget": len(val_subset),
         "sync_reference": ref,
         "sync_disagreement": sync_disagreement,
         "global_scale_sync_rms_residual": global_sync.rms_residual,
@@ -479,12 +525,29 @@ def run_setting(args, spec, train_data, test_data, seed: int, n_models: int, wid
     weight_val, weight_test = evaluate_on_val_and_test(weight_avg, val_loader, test_loader, device)
     add_method_row(rows, base=base, method="weight_average", test_metrics=weight_test, val_metrics=weight_val, single_best_accuracy=single_best_accuracy)
 
+    pairwise_to_zero = [
+        permute_model_to_reference(model, "mlp", spec, width, pairwise[(0, idx)])
+        for idx, model in enumerate(models)
+    ]
+    git_rebasin_model = average_models(pairwise_to_zero, "mlp", spec, width)
+    git_rebasin_val, git_rebasin_test = evaluate_on_val_and_test(
+        git_rebasin_model, val_loader, test_loader, device
+    )
+    add_method_row(
+        rows,
+        base=base,
+        method="git_rebasin_pairwise",
+        test_metrics=git_rebasin_test,
+        val_metrics=git_rebasin_val,
+        single_best_accuracy=single_best_accuracy,
+    )
+
     aligned_c2m3 = [permute_model_to_reference(model, "mlp", spec, width, synced[idx]) for idx, model in enumerate(models)]
     c2m3_model = average_models(aligned_c2m3, "mlp", spec, width)
     c2m3_val, c2m3_test = evaluate_on_val_and_test(c2m3_model, val_loader, test_loader, device)
     add_method_row(rows, base=base, method="c2m3_permutation", test_metrics=c2m3_test, val_metrics=c2m3_val, single_best_accuracy=single_best_accuracy)
 
-    raw_monomial_models, _model, monomial_val, monomial_test = add_scaled_method(
+    raw_monomial_models, raw_monomial_model, monomial_val, monomial_test = add_scaled_method(
         rows,
         base=base,
         method="monomial_scale",
@@ -737,6 +800,34 @@ def run_setting(args, spec, train_data, test_data, seed: int, n_models: int, wid
         extra={"union_candidate_count": len(union_models)},
     )
 
+    rng = np.random.default_rng(seed + 104729 * n_models + width)
+    random_models = []
+    random_labels = []
+    for candidate_idx in range(4):
+        subset_size = int(rng.integers(2, min(6, len(union_models)) + 1))
+        subset = sorted(rng.choice(len(union_models), size=subset_size, replace=False).tolist())
+        random_models.append(average_models([union_models[idx] for idx in subset], "mlp", spec, width))
+        random_labels.append(f"random_average:{candidate_idx}:{'-'.join(map(str, subset))}")
+    augmented_union_models = [*union_models, *random_models]
+    augmented_union_labels = [*union_labels, *random_labels]
+    augmented_union_soup = add_soup_row(
+        rows,
+        base=base,
+        method="randomly_augmented_candidate_union",
+        candidate_models=augmented_union_models,
+        candidate_labels=augmented_union_labels,
+        val_loader=val_loader,
+        test_loader=test_loader,
+        device=device,
+        spec=spec,
+        width=width,
+        single_best_accuracy=single_best_accuracy,
+        extra={
+            "union_candidate_count": len(augmented_union_models),
+            "random_augmented_candidate_count": len(random_models),
+        },
+    )
+
     ensemble_test = evaluate_ensemble(models, test_loader, device)
     ensemble_val = evaluate_ensemble(models, val_loader, device)
     add_method_row(rows, base=base, method="ensemble_upper_bound", test_metrics=ensemble_test, val_metrics=ensemble_val, single_best_accuracy=single_best_accuracy)
@@ -755,6 +846,7 @@ def run_setting(args, spec, train_data, test_data, seed: int, n_models: int, wid
         "global_monomial_greedy_soup",
         "optimized_monomial_greedy_soup",
         "union_candidate_soup",
+        "randomly_augmented_candidate_union",
     ]
     selector_choice = choose_by_validation(
         {name: {"accuracy": by_method[name]["val_accuracy"], "loss": by_method[name]["val_loss"]} for name in selector_pool},
@@ -798,6 +890,58 @@ def run_setting(args, spec, train_data, test_data, seed: int, n_models: int, wid
         row["loss_delta_vs_greedy_soup"] = row["loss"] - greedy_loss
         row["validation_delta_vs_c2m3"] = row["val_accuracy"] - by_method["c2m3_permutation"]["val_accuracy"]
         row["validation_delta_vs_greedy_soup"] = row["val_accuracy"] - by_method["greedy_soup"]["val_accuracy"]
+
+    if args.saved_logits_dir is not None:
+        args.saved_logits_dir.mkdir(parents=True, exist_ok=True)
+        model_by_method = {
+            "weight_average": weight_avg,
+            "git_rebasin_pairwise": git_rebasin_model,
+            "c2m3_permutation": c2m3_model,
+            "monomial_scale": raw_monomial_model,
+            "shrinkage_monomial_scale": shrink_model,
+            "global_monomial_scale": global_model,
+            "optimized_monomial_scale": _optimized_model,
+            "validated_ladder_selector": c2m3_model if previous_selected.selected == "c2m3_permutation" else raw_monomial_model,
+            "greedy_soup": original_soup.model,
+            "c2m3_greedy_soup": c2m3_soup.model,
+            "monomial_scaled_greedy_soup": raw_soup.model,
+            "shrinkage_monomial_greedy_soup": shrink_soup.model,
+            "global_monomial_greedy_soup": global_soup.model,
+            "optimized_monomial_greedy_soup": optimized_soup.model,
+            "union_candidate_soup": union_soup.model,
+            "randomly_augmented_candidate_union": augmented_union_soup.model,
+        }
+        model_by_method["improved_validated_selector"] = model_by_method[selector_choice.selected]
+        saved = {}
+        timings = {}
+        parameters = {}
+        for method, model in model_by_method.items():
+            values, elapsed = collect_saved_logits(model, test_loader, device)
+            saved[method] = values.astype(np.float32)
+            timings[method] = elapsed
+            parameters[method] = int(sum(parameter.numel() for parameter in model.parameters()))
+        ensemble_logits, ensemble_time = collect_ensemble_saved_logits(models, test_loader, device)
+        saved["ensemble_upper_bound"] = ensemble_logits.astype(np.float32)
+        timings["ensemble_upper_bound"] = ensemble_time
+        parameters["ensemble_upper_bound"] = int(sum(parameter.numel() for parameter in models[0].parameters()))
+        logits_path = args.saved_logits_dir / f"{setting_id}.npz"
+        np.savez_compressed(logits_path, **saved)
+        digest_before = hashlib.sha256(logits_path.read_bytes()).hexdigest()
+        labels_after_logits = np.arange(len(next(iter(saved.values()))), dtype=int)
+        np.random.default_rng(seed + 991).shuffle(labels_after_logits)
+        digest_after = hashlib.sha256(logits_path.read_bytes()).hexdigest()
+        reference_time = max(timings["weight_average"], 1e-12)
+        for row in rows:
+            method = row["method"]
+            row["saved_logits_path"] = str(logits_path.relative_to(ROOT))
+            row["saved_logits_sha256"] = digest_before
+            row["label_permutation_regression_passed"] = digest_before == digest_after
+            row["measured_inference_time_seconds_512"] = timings[method]
+            row["inference_multiplier"] = timings[method] / reference_time
+            row["actual_trainable_parameters"] = parameters[method]
+            row["stored_parameters"] = parameters[method] * (n_models if method == "ensemble_upper_bound" else 1)
+            row["parameter_multiplier"] = n_models if method == "ensemble_upper_bound" else 1.0
+            row["branch_count"] = n_models if method == "ensemble_upper_bound" else 1
     return rows
 
 
@@ -1305,7 +1449,10 @@ def main() -> None:
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data")
     parser.add_argument("--reports-dir", type=Path, default=ROOT / "reports")
+    parser.add_argument("--saved-logits-dir", type=Path, default=None)
     args = parser.parse_args()
+    if args.saved_logits_dir is not None and not args.saved_logits_dir.is_absolute():
+        args.saved_logits_dir = ROOT / args.saved_logits_dir
     env_prefix = [
         f"{name}={os.environ[name]}"
         for name in ("PYTHONPYCACHEPREFIX", "MPLCONFIGDIR")

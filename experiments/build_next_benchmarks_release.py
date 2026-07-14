@@ -14,6 +14,11 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from src.evidence_provenance import execution_commit
+
+
 OUT = ROOT / "reports" / "next_benchmarks"
 
 
@@ -41,11 +46,15 @@ def command_from_config(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--evidence-commit", required=True)
+    parser.add_argument("--evidence-commit", default="", help="release commit; entries use their own execution configs")
     parser.add_argument("--test-result", required=True)
     parser.add_argument("--test-command", default="PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache .venv/bin/python -m pytest -q")
     args = parser.parse_args()
     current = git_output("rev-parse", "HEAD")
+    release_commit = args.evidence_commit or current
+
+    def artifact_commit(config_name):
+        return execution_commit(OUT / config_name)
     two_loop_claim = pd.read_csv(OUT / "two_loop_holonomy_claims.csv").iloc[0]
     period = pd.read_csv(OUT / "period_index_summary.csv")
     central = pd.read_csv(OUT / "central_mu2_summary.csv")
@@ -60,7 +69,7 @@ def main():
             "benchmark": "controlled_mu2_reproduction",
             "generating_script": "experiments/central_reproduction_next.py",
             "exact_command": command_from_config("central_reproduction_manifest.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("central_reproduction_manifest.json"),
             "configuration": "reports/next_benchmarks/central_reproduction_manifest.json",
             "raw_csv": "reports/next_benchmarks/central_mu2_runs.csv",
             "summary_csv": "reports/next_benchmarks/central_mu2_summary.csv",
@@ -75,7 +84,7 @@ def main():
             "benchmark": "period_index_reproduction",
             "generating_script": "experiments/central_reproduction_next.py",
             "exact_command": command_from_config("central_reproduction_manifest.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("central_reproduction_manifest.json"),
             "configuration": "reports/next_benchmarks/central_reproduction_manifest.json",
             "raw_csv": "reports/next_benchmarks/period_index_rank_outcomes.csv",
             "summary_csv": "reports/next_benchmarks/period_index_summary.csv",
@@ -90,7 +99,7 @@ def main():
             "benchmark": "executed_two_loop_holonomy",
             "generating_script": "experiments/executed_two_loop_holonomy.py",
             "exact_command": command_from_config("two_loop_holonomy_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("two_loop_holonomy_config.json"),
             "configuration": "reports/next_benchmarks/two_loop_holonomy_config.json",
             "raw_csv": "reports/next_benchmarks/two_loop_holonomy_residuals.csv",
             "summary_csv": "reports/next_benchmarks/two_loop_holonomy_summary.csv",
@@ -105,7 +114,7 @@ def main():
             "benchmark": "executed_two_loop_holonomy",
             "generating_script": "experiments/executed_two_loop_holonomy.py",
             "exact_command": command_from_config("two_loop_holonomy_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("two_loop_holonomy_config.json"),
             "configuration": "reports/next_benchmarks/two_loop_holonomy_config.json",
             "raw_csv": "reports/next_benchmarks/two_loop_holonomy_runs.csv",
             "summary_csv": "reports/next_benchmarks/two_loop_holonomy_paired_stats.csv",
@@ -120,7 +129,7 @@ def main():
             "benchmark": "context_router_generalization",
             "generating_script": "experiments/context_router_generalization.py",
             "exact_command": command_from_config("context_router_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("context_router_config.json"),
             "configuration": "reports/next_benchmarks/context_router_config.json",
             "raw_csv": "reports/next_benchmarks/context_router_runs.csv",
             "summary_csv": "reports/next_benchmarks/context_router_summary.csv",
@@ -135,7 +144,7 @@ def main():
             "benchmark": "matched_selector_budget",
             "generating_script": "experiments/matched_selector_budget_benchmark.py",
             "exact_command": command_from_config("matched_selector_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("matched_selector_config.json"),
             "configuration": "reports/next_benchmarks/matched_selector_config.json",
             "raw_csv": "reports/next_benchmarks/matched_selector_runs.csv",
             "summary_csv": "reports/next_benchmarks/matched_selector_paired_stats.csv",
@@ -150,7 +159,7 @@ def main():
             "benchmark": "heldout_diagnostic_prediction",
             "generating_script": "experiments/heldout_diagnostic_prediction.py",
             "exact_command": command_from_config("diagnostic_prediction_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("diagnostic_prediction_config.json"),
             "configuration": "reports/next_benchmarks/diagnostic_prediction_config.json",
             "raw_csv": "reports/next_benchmarks/diagnostic_prediction_runs.csv",
             "summary_csv": "reports/next_benchmarks/diagnostic_prediction_summary.csv",
@@ -165,7 +174,7 @@ def main():
             "benchmark": "pretrained_resnet18_smoke",
             "generating_script": "experiments/pretrained_merge_smoke.py",
             "exact_command": command_from_config("pretrained_merge_config.json"),
-            "git_commit": args.evidence_commit,
+            "git_commit": artifact_commit("pretrained_merge_config.json"),
             "configuration": "reports/next_benchmarks/pretrained_merge_config.json",
             "raw_csv": "reports/next_benchmarks/pretrained_merge_runs.csv",
             "summary_csv": "reports/next_benchmarks/pretrained_merge_summary.csv",
@@ -184,7 +193,7 @@ def main():
     manifest = {
         "schema_version": 1,
         "release_builder_commit": current,
-        "evidence_commit": args.evidence_commit,
+        "evidence_commit": release_commit,
         "test_command": args.test_command,
         "test_result": args.test_result,
         "deprecated_target_injected_numbers_present": False,
@@ -194,7 +203,7 @@ def main():
     manifest_df = pd.DataFrame(entries)
     manifest_report = f"""# Next-Benchmarks Release Manifest
 
-- Evidence commit: `{args.evidence_commit}`
+- Release commit: `{release_commit}`
 - Release builder commit: `{current}`
 - Test result: `{args.test_result}`
 - Deprecated target-injected numbers present: `False`
@@ -203,7 +212,7 @@ def main():
 """
     (OUT / "release_manifest.md").write_text(manifest_report, encoding="utf-8")
     environment = {
-        "evidence_commit": args.evidence_commit,
+        "evidence_commit": release_commit,
         "release_builder_commit": current,
         "python": sys.version,
         "platform": platform.platform(),
@@ -213,11 +222,11 @@ def main():
         "commands": {entry["benchmark"]: entry["exact_command"] for entry in entries},
     }
     (OUT / "release_environment.json").write_text(json.dumps(environment, indent=2), encoding="utf-8")
-    (OUT / "release_test_results.txt").write_text(f"Command: {args.test_command}\nResult: {args.test_result}\nEvidence commit: {args.evidence_commit}\n", encoding="utf-8")
+    (OUT / "release_test_results.txt").write_text(f"Command: {args.test_command}\nResult: {args.test_result}\nRelease commit: {release_commit}\n", encoding="utf-8")
 
     lines = [
         "% Generated paper-number manifest; only paper_number_eligible entries are included.",
-        f"\\newcommand{{\\TwistedMergeEvidenceCommit}}{{{args.evidence_commit[:12]}}}",
+        f"\\newcommand{{\\TwistedMergeEvidenceCommit}}{{{release_commit[:12]}}}",
         "\\newcommand{\\TwoLoopHolonomyDecision}{B: structural support, accuracy advantage unsupported}",
     ]
     for row in period.itertuples():
@@ -247,7 +256,7 @@ def main():
 | Held-out diagnostic prediction | Unsupported under the preregistered held-out gate. |
 | Pretrained merging | Not run at full required scale; one-seed ResNet-18 smoke completed. |
 
-Evidence commit: `{args.evidence_commit}`. Complete tests: `{args.test_result}`.
+Release commit: `{release_commit}`. Each table row records its own execution commit. Complete tests: `{args.test_result}`.
 
 ## Exact commands and output paths
 

@@ -34,9 +34,8 @@ def _predictor_logits(case: ControlledCase, predictor) -> np.ndarray:
     return np.concatenate([predictor(face, case.test_face_data[face][0]) for face in sorted(case.test_face_data)])
 
 
-def executed_central_candidate_logits(case: ControlledCase) -> dict[str, np.ndarray]:
-    """Execute central candidates without reading any test labels."""
-
+def central_candidate_predictors(case: ControlledCase):
+    """Return zero-argument candidate executors that never read test labels."""
     aligned_models = [align_hidden_to_base(model) for model in case.local_models]
     ordinary = average_models(case.local_models)
     aligned = average_models(aligned_models)
@@ -51,22 +50,28 @@ def executed_central_candidate_logits(case: ControlledCase) -> dict[str, np.ndar
     distilled_scale, _ = distilled_twisted_scale(case, aligned)
     wide = make_parameter_matched_wide_model(aligned, aligned.parameter_count * case.branch_count)
     return {
-        "ordinary_weight_average": _predictor_logits(case, lambda _face, x: ordinary.logits(x)),
-        "git_rebasin_pairwise": _predictor_logits(case, lambda _face, x: aligned.logits(x)),
-        "c2m3_synchronized": _predictor_logits(case, lambda _face, x: aligned.logits(x)),
-        "supplied_context_q2_branch_predictor": _assignment_logits(case, aligned, supplied),
-        "random_branch_control": _assignment_logits(case, aligned, random_assignment),
-        "validation_global_branch_selector": _assignment_logits(case, aligned, global_validation),
-        "validation_face_table_router": _assignment_logits(case, aligned, face_table),
-        "wrong_twist_control": _assignment_logits(case, aligned, wrong_twist),
-        "wrong_context_control": _assignment_logits(case, aligned, wrong_context),
-        "no_twist_branch_control": _assignment_logits(case, aligned, no_twist),
-        "distilled_single_model_control": _predictor_logits(case, lambda _face, x: distilled_scale * aligned.logits(x)),
-        "parameter_matched_wide_control": _predictor_logits(case, lambda _face, x: wide.logits(x)),
-        "ensemble_reference": _predictor_logits(
+        "ordinary_weight_average": lambda: _predictor_logits(case, lambda _face, x: ordinary.logits(x)),
+        "git_rebasin_pairwise": lambda: _predictor_logits(case, lambda _face, x: aligned.logits(x)),
+        "c2m3_synchronized": lambda: _predictor_logits(case, lambda _face, x: aligned.logits(x)),
+        "supplied_context_q2_branch_predictor": lambda: _assignment_logits(case, aligned, supplied),
+        "random_branch_control": lambda: _assignment_logits(case, aligned, random_assignment),
+        "validation_global_branch_selector": lambda: _assignment_logits(case, aligned, global_validation),
+        "validation_face_table_router": lambda: _assignment_logits(case, aligned, face_table),
+        "wrong_twist_control": lambda: _assignment_logits(case, aligned, wrong_twist),
+        "wrong_context_control": lambda: _assignment_logits(case, aligned, wrong_context),
+        "no_twist_branch_control": lambda: _assignment_logits(case, aligned, no_twist),
+        "distilled_single_model_control": lambda: _predictor_logits(case, lambda _face, x: distilled_scale * aligned.logits(x)),
+        "parameter_matched_wide_control": lambda: _predictor_logits(case, lambda _face, x: wide.logits(x)),
+        "ensemble_reference": lambda: _predictor_logits(
             case, lambda _face, x: np.stack([model.logits(x) for model in case.local_models]).mean(axis=0)
         ),
     }
+
+
+def executed_central_candidate_logits(case: ControlledCase) -> dict[str, np.ndarray]:
+    """Execute central candidates without reading any test labels."""
+
+    return {method: predictor() for method, predictor in central_candidate_predictors(case).items()}
 
 
 def concatenated_test_labels(case: ControlledCase) -> np.ndarray:

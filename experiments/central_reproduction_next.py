@@ -9,6 +9,7 @@ import hashlib
 import json
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import numpy as np
@@ -18,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.central_reproduction import (  # noqa: E402
+    central_candidate_predictors,
     concatenated_test_labels,
     executed_central_candidate_logits,
 )
@@ -92,12 +94,19 @@ def latex(df, columns, path):
 
 
 def main():
+    global OUT
     parser = argparse.ArgumentParser()
     parser.add_argument("--seeds", default="0:29")
     parser.add_argument("--widths", default="32,64")
     parser.add_argument("--samples-per-chart", type=int, default=500)
     parser.add_argument("--samples-per-overlap", type=int, default=2000)
+    parser.add_argument("--out-dir", type=Path, default=OUT)
     args = parser.parse_args()
+    execution_commit = git_commit()
+    dirty_worktree_at_execution = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip())
+    OUT = args.out_dir.resolve()
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "tables").mkdir(parents=True, exist_ok=True)
     args.command_string = " ".join([sys.executable, *sys.argv])
     seed_start, seed_end = (int(value) for value in args.seeds.split(":", 1))
     widths = [int(value) for value in args.widths.split(",")]
@@ -112,29 +121,36 @@ def main():
     rows = []
     structural_rows = []
     leakage_passed = True
-    saved_path = OUT / "logits" / "central_mu2_logits.npz"
-    saved_path.parent.mkdir(parents=True, exist_ok=True)
-    saved_once = False
+    saved_dir = OUT / "logits" / "central_mu2"
+    saved_dir.mkdir(parents=True, exist_ok=True)
+    saved_paths = []
     for family in FAMILIES:
         for width in widths:
             for seed in range(seed_start, seed_end + 1):
                 case = build_controlled_case(
                     family, width, 4, seed, args.samples_per_chart, args.samples_per_overlap, 2
                 )
-                logits = executed_central_candidate_logits(case)
+                predictors = central_candidate_predictors(case)
+                logits = {}
+                timings = {}
+                for method, predictor in predictors.items():
+                    started = time.perf_counter()
+                    logits[method] = predictor()
+                    timings[method] = time.perf_counter() - started
                 labels = concatenated_test_labels(case)
-                if not saved_once:
-                    np.savez_compressed(saved_path, **logits)
-                    saved_hash = hashlib.sha256(saved_path.read_bytes()).hexdigest()
-                    permuted_data = {
-                        face: (x, np.random.default_rng(811).permutation(y))
-                        for face, (x, y) in case.test_face_data.items()
-                    }
-                    permuted_case = dataclasses.replace(case, test_face_data=permuted_data)
-                    rerun = executed_central_candidate_logits(permuted_case)
-                    leakage_passed = all(np.array_equal(logits[key], rerun[key]) for key in logits)
-                    leakage_passed = leakage_passed and saved_hash == hashlib.sha256(saved_path.read_bytes()).hexdigest()
-                    saved_once = True
+                saved_path = saved_dir / f"{family}_W{width}_S{seed}.npz"
+                np.savez_compressed(saved_path, **logits)
+                saved_hash = hashlib.sha256(saved_path.read_bytes()).hexdigest()
+                permuted_data = {
+                    face: (x, np.random.default_rng(811 + seed).permutation(y))
+                    for face, (x, y) in case.test_face_data.items()
+                }
+                permuted_case = dataclasses.replace(case, test_face_data=permuted_data)
+                rerun = executed_central_candidate_logits(permuted_case)
+                setting_leakage_passed = all(np.array_equal(logits[key], rerun[key]) for key in logits)
+                setting_leakage_passed = setting_leakage_passed and saved_hash == hashlib.sha256(saved_path.read_bytes()).hexdigest()
+                leakage_passed = leakage_passed and setting_leakage_passed
+                saved_paths.append({"path": str(saved_path.relative_to(ROOT)), "sha256": saved_hash})
                 method_rows = evaluate_methods(case, extra_controls)
                 by_name = {METHOD_NAMES.get(str(row["method"]), str(row["method"])): row for row in method_rows}
                 for method, candidate_logits in logits.items():
@@ -147,12 +163,19 @@ def main():
                         "method": method,
                         "test_accuracy": accuracy,
                         "test_loss": loss,
-                        "label_permutation_regression_passed": leakage_passed,
+                        "label_permutation_regression_passed": setting_leakage_passed,
                         "candidate_logits_executed": True,
                         "parameter_count": source["parameter_count"],
+                        "actual_trainable_parameters": source["parameter_count"],
+                        "stored_parameters": source["parameter_count"],
                         "parameter_multiplier": source["parameter_multiplier"],
                         "branch_count": source["branch_count"],
                         "inference_multiplier": source["inference_time_multiplier"],
+                        "measured_inference_time_seconds": timings[method],
+                        "candidate_count": 1,
+                        "selector_validation_budget": sum(len(y) for _, y in case.val_face_data.values()),
+                        "saved_logits_path": str(saved_path.relative_to(ROOT)),
+                        "saved_logits_sha256": saved_hash,
                         "is_single_model": source["is_single_model"],
                         "is_branch_model": source["is_branch_model"],
                         "uses_supplied_context": method == "supplied_context_q2_branch_predictor",
@@ -181,7 +204,7 @@ def main():
         inference_multiplier=("inference_multiplier", "first"),
     )
     capacity = runs[[
-        "method", "parameter_count", "parameter_multiplier", "branch_count", "inference_multiplier",
+        "method", "parameter_count", "actual_trainable_parameters", "stored_parameters", "parameter_multiplier", "branch_count", "inference_multiplier", "measured_inference_time_seconds", "candidate_count", "selector_validation_budget",
         "is_single_model", "is_branch_model", "uses_supplied_context", "uses_validation_data", "uses_obstruction_data",
     ]].drop_duplicates().sort_values("method")
 
@@ -230,14 +253,15 @@ def main():
     latex(period_summary_df, ["case_id", "period", "certified_representation_threshold", "minimal_successful_rank", "matrix_relation_residual"], OUT / "tables" / "period_index.tex")
     manifest = {
         "command": args.command_string,
-        "git_commit": git_commit(),
+        "git_commit": execution_commit,
+        "execution_commit": execution_commit,
+        "dirty_worktree_at_execution": dirty_worktree_at_execution,
         "mu2": {
             "families": FAMILIES,
             "widths": widths,
             "seeds": [seed_start, seed_end],
             "samples_per_overlap": args.samples_per_overlap,
-            "saved_logits": str(saved_path.relative_to(ROOT)),
-            "saved_logits_sha256": hashlib.sha256(saved_path.read_bytes()).hexdigest(),
+            "saved_logits": saved_paths,
             "label_permutation_regression_passed": leakage_passed,
         },
         "period_index_cases": [[2, 1], [2, 2], [2, 3], [3, 1], [3, 2], [4, 1], [4, 2]],
@@ -266,7 +290,7 @@ def main():
 - Widths: `{', '.join(map(str, widths))}`
 - Seeds: `{seed_start}:{seed_end}`
 - Label-permutation regression: `{leakage_passed}`
-- Saved candidate logits: `{saved_path.relative_to(ROOT)}`
+- Saved candidate logits: one immutable NPZ per matched setting under `{saved_dir.relative_to(ROOT)}`
 
 ## Controlled mu2
 
