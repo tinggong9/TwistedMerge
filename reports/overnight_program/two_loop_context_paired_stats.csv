@@ -1,0 +1,17 @@
+method,baseline,n_pairs,mean_accuracy_delta,ci_low,ci_high,wins,ties,losses
+branch_orbit_lift_invariant_pooling,c2m3_strict_synchronization,200,0.8782525000000001,0.8750734738857435,0.8814315261142567,200,0,0
+branch_regular_lift_invariant_pooling,c2m3_strict_synchronization,200,0.8782525000000001,0.8750734738857435,0.8814315261142567,200,0,0
+ensemble_reference,c2m3_strict_synchronization,200,0.8757825,0.8726716271577332,0.8788933728422669,200,0,0
+git_rebasin_style_pairwise,c2m3_strict_synchronization,200,0.0,0.0,0.0,0,200,0
+greedy_soup,c2m3_strict_synchronization,200,0.08512,0.08236297853443103,0.08787702146556897,200,0,0
+learned_feature_router,c2m3_strict_synchronization,200,0.8700950000000001,0.8671576819418604,0.8730323180581397,200,0,0
+naive_regular_representation_without_pooling,c2m3_strict_synchronization,200,0.0,0.0,0.0,0,200,0
+ordinary_weight_average,c2m3_strict_synchronization,200,0.023750000000000004,0.022288841665529725,0.025211158334470282,198,1,1
+random_same_branch_count_control,c2m3_strict_synchronization,200,0.023602500000000005,0.021922749011649555,0.025282250988350456,192,1,7
+supplied_context_oracle,c2m3_strict_synchronization,200,0.8782525000000001,0.8750734738857435,0.8814315261142567,200,0,0
+twistedmerge_hodge_lr,c2m3_strict_synchronization,200,0.8782525000000001,0.8750734738857435,0.8814315261142567,200,0,0
+uniform_pooling_without_correct_action,c2m3_strict_synchronization,200,0.023750000000000004,0.022288841665529725,0.025211158334470282,198,1,1
+validation_only_safe_selector,c2m3_strict_synchronization,200,0.8782525000000001,0.8750734738857435,0.8814315261142567,200,0,0
+wrong_generator_control,c2m3_strict_synchronization,200,0.028055000000000004,0.01800799422109219,0.03810200577890782,100,0,100
+wrong_group_action_control,c2m3_strict_synchronization,200,0.55135,0.5440948662210299,0.5586051337789701,200,0,0
+wrong_order_control,c2m3_strict_synchronization,200,0.634585,0.6253570216414901,0.6438129783585098,200,0,0

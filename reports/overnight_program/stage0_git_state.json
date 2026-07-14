@@ -1,0 +1,47 @@
+{
+  "branch": "twistedmerge-practical-research-2026",
+  "head": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+  "worktree_status": "## twistedmerge-practical-research-2026",
+  "tags": [
+    "next-benchmarks-evidence-2026-07-14"
+  ],
+  "remote": "https://github.com/tinggong9/TwistedMerge.git",
+  "isolated_worktree": "/Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight",
+  "base_commit": "a1ed6646a0e9a2d1ced5d435f2862fde3fd6eca2",
+  "preserved_main_checkout": "/Users/tinggong/Documents/GitHub/TwistedMerge",
+  "preserved_main_staged_additions": 1408,
+  "baseline_test_command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python -m pytest -q",
+  "baseline_test_result": "372 passed, 5 subtests passed in 20.30s",
+  "per_artifact_provenance": [
+    {
+      "artifact_family": "two_loop_holonomy",
+      "config": "reports/next_benchmarks/two_loop_holonomy_config.json",
+      "execution_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280"
+    },
+    {
+      "artifact_family": "controlled_central_and_period_index",
+      "config": "reports/next_benchmarks/central_reproduction_manifest.json",
+      "execution_commit": "0a41f76d3c8a77acc3a47514c2639b81fbc5b280"
+    },
+    {
+      "artifact_family": "context_router",
+      "config": "reports/next_benchmarks/context_router_config.json",
+      "execution_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf"
+    },
+    {
+      "artifact_family": "matched_selector",
+      "config": "reports/next_benchmarks/matched_selector_config.json",
+      "execution_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf"
+    },
+    {
+      "artifact_family": "heldout_diagnostic",
+      "config": "reports/next_benchmarks/diagnostic_prediction_config.json",
+      "execution_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf"
+    },
+    {
+      "artifact_family": "pretrained_smoke",
+      "config": "reports/next_benchmarks/pretrained_merge_config.json",
+      "execution_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf"
+    }
+  ]
+}

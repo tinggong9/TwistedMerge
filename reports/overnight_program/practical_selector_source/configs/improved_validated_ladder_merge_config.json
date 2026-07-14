@@ -1,0 +1,81 @@
+{
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/experiments/improved_validated_ladder_merge_benchmark.py --reports-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/reports/overnight_program/practical_selector_source --saved-logits-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/reports/overnight_program/logits/practical_selector",
+  "git_commit": "d71d1a3",
+  "dirty_worktree": true,
+  "dataset": "mnist",
+  "model_counts": [
+    3,
+    4
+  ],
+  "widths": [
+    16,
+    32,
+    64
+  ],
+  "seeds": [
+    1800,
+    1801,
+    1802,
+    1803,
+    1804,
+    1805,
+    1806,
+    1807,
+    1808,
+    1809,
+    1810,
+    1811,
+    1812,
+    1813,
+    1814,
+    1815,
+    1816,
+    1817,
+    1818,
+    1819
+  ],
+  "epochs": 3,
+  "max_train_samples": 5000,
+  "max_test_samples": 0,
+  "val_fraction": 0.2,
+  "alpha_grid": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0,
+    1.25,
+    1.5
+  ],
+  "tau_grid": [
+    "0.25",
+    "0.5",
+    "1.0",
+    "2.0",
+    "inf"
+  ],
+  "optimization_steps": 30,
+  "optimization_lr": 0.05,
+  "optimization_bound": 1.0,
+  "optimization_l2": 0.001,
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "processor": "arm",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "matplotlib": "3.11.0",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "git_commit": "d71d1a3"
+  }
+}

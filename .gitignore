@@ -12,3 +12,6 @@ checkpoints/
 reports/checkpoints/fixed_setting_verification/
 reports/checkpoints/same_base_task_vector/
 reports/monomial_mlp2_prompt*/
+# Saved prediction tensors are retained locally and identified by SHA-256 in
+# the committed overnight evidence CSVs/manifests.
+reports/overnight_program/logits/

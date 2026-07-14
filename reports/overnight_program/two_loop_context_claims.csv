@@ -1,0 +1,5 @@
+claim,supported,evidence
+noncommuting_holonomy_structural,True,recovered noncommuting regular-action generators
+context_changes_prediction,True,fixed teacher prediction changes on held-out inputs
+executed_accuracy_advantage_over_strict,True,"paired CI [0.875073, 0.881432]"
+natural_holonomy,False,controlled context-dependent construction only

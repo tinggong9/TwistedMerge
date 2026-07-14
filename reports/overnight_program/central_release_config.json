@@ -1,0 +1,16 @@
+{
+  "stage": 4,
+  "mode": "full",
+  "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+  "dirty_worktree_at_execution": false,
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/experiments/central_reproduction_next.py --out-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program",
+  "validation": {
+    "required_methods_present": true,
+    "required_period_cases_present": true,
+    "all_predictions_executed": true,
+    "all_leakage_regressions_passed": true,
+    "all_scalar_orders_match_d": true,
+    "all_thresholds_match_d_power_k": true,
+    "all_direct_sums_realized": true
+  }
+}

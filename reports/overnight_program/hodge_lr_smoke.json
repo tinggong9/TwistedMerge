@@ -1,0 +1,29 @@
+{
+  "transition_calibration_error": 3.858332897357124e-16,
+  "transition_heldout_error": 4.007973368063879e-16,
+  "transition_rank": 4,
+  "transition_condition_number": 1.0000000000000002,
+  "cycle_distance_to_identity": 2.8284271247461903,
+  "cycle_distance_to_real_center": 2.0,
+  "cycle_effective_rank": 2,
+  "hodge_reconstruction_error": 2.7755575615628914e-17,
+  "hodge_max_abs_orthogonality_error": 1.665334536937735e-17,
+  "twist_rank": 1,
+  "twist_explained_energy": 1.0,
+  "twist_rank_bootstrap": {
+    "1": 1.0
+  },
+  "twist_cost": {
+    "shared_parameters": 10000,
+    "lifted_parameters": 10,
+    "stored_parameters": 10010,
+    "parameter_multiplier": 1.001,
+    "branch_count": 2
+  },
+  "router_heldout_branch_accuracy": 0.99,
+  "distillation_initial_kl": 0.29735973856057113,
+  "distillation_final_kl": 6.8413421308814685e-09,
+  "confidence_gate_activate": false,
+  "dispatcher_mode": "ordinary_validated_family",
+  "dispatcher_activate_lift": false
+}

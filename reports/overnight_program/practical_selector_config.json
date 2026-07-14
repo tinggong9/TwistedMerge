@@ -1,0 +1,55 @@
+{
+  "stage": 1,
+  "mode": "full",
+  "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
+  "dirty_worktree_at_execution": false,
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/experiments/improved_validated_ladder_merge_benchmark.py --reports-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/reports/overnight_program/practical_selector_source --saved-logits-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-overnight/reports/overnight_program/logits/practical_selector",
+  "source_script": "experiments/improved_validated_ladder_merge_benchmark.py",
+  "fresh_inference": true,
+  "matched_grid": {
+    "dataset": "MNIST",
+    "architecture": "one_hidden_layer_relu_mlp",
+    "model_counts": [
+      3,
+      4
+    ],
+    "widths": [
+      16,
+      32,
+      64
+    ],
+    "seeds": [
+      1800,
+      1801,
+      1802,
+      1803,
+      1804,
+      1805,
+      1806,
+      1807,
+      1808,
+      1809,
+      1810,
+      1811,
+      1812,
+      1813,
+      1814,
+      1815,
+      1816,
+      1817,
+      1818,
+      1819
+    ]
+  },
+  "runtime_seconds": 1620.47911295807,
+  "peak_child_memory_mb": 426.34375,
+  "central_lift_activated": false,
+  "nonabelian_lift_activated": false,
+  "leakage_regression_passed": true,
+  "environment": {
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "executable": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+    "platform": "darwin",
+    "PYTHONPYCACHEPREFIX": "/private/tmp/codex-pycache"
+  }
+}
