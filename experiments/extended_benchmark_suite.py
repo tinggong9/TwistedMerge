@@ -202,7 +202,7 @@ def run_stage(stage: str) -> None:
             if path.exists(): checkpoints.append({"artifact": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "bytes": path.stat().st_size})
         write_csv(DEST / "checkpoint_manifest.csv", checkpoints)
         artifact_rows = []
-        excluded = {DEST / "artifact_manifest.csv", OUT / "status.json", OUT / "status.md", OUT / "commands.csv"}
+        excluded = {DEST / "artifact_manifest.csv", OUT / "status.json", OUT / "status.md", OUT / "commands.csv", OUT / "attempt_history.csv"}
         for path in sorted(OUT.rglob("*")):
             if path.is_file() and path not in excluded and not path.name.startswith("final_"):
                 artifact_rows.append({"path": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "bytes": path.stat().st_size, "execution_commit": git_head()})
