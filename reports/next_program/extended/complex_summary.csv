@@ -1,0 +1,8 @@
+complex,trials,class_stability,false_positive_rate,nontrivial_detection_rate,mean_distance_to_coboundaries,mean_runtime_seconds
+triangle_complex,200,1.0,0.0,not_applicable_h1_trivial,0.8700809394813723,7.338711991906167e-05
+wedge_of_cycles,200,1.0,0.0,1.0,0.5053436808042465,4.499502130784094e-05
+theta_graph,200,1.0,0.0,1.0,0.5059298971783549,4.7810840187594293e-05
+sparse_random,200,1.0,0.0,1.0,0.5061116121328856,6.292649079114198e-05
+dense_complex,200,1.0,0.0,not_applicable_h1_trivial,0.881296217854888,0.00012528498889878393
+missing_faces,200,1.0,0.0,1.0,0.5158115659446597,8.570837322622537e-05
+redundant_edges_refinement,200,1.0,0.0,1.0,0.5093608485448162,7.016959483735263e-05

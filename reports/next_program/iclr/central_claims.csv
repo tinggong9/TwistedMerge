@@ -1,0 +1,5 @@
+claim,value
+all_reported_nontrivial_cocycles_exact,True
+all_constructed_extensions_associative,True
+no_trivial_filler_rows,True
+heisenberg_minimal_ranks_verified,True

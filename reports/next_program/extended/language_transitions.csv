@@ -1,0 +1,4 @@
+subspace,pairwise_fit,cycle_residual,residual_rank,calibration_examples,adapter_subspace
+attention_output,0.24730296432971954,0.1188024861882754,7,40,False
+mlp_intermediate,0.31307199597358704,0.09580991603891435,14,40,False
+final_hidden_state,0.30695584416389465,0.07026304118984354,11,40,False

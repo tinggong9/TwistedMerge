@@ -1,0 +1,6 @@
+claim,value
+discovery_passed,True
+confirmation_executed,True
+confirmation_passed,True
+cifar_triggered,False
+all_chart_rows_trained_neural_or_controls,True

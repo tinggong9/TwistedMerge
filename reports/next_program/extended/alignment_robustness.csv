@@ -1,0 +1,8 @@
+alignment_family,layers,collections,mean_pairwise_fit,mean_inverse_consistency,mean_cycle_residual,classification
+block_orthogonal,4,5,0.7641508752402868,2.2269670425707085e-15,0.7954169400937926,poor_pairwise_fit
+cca_whitened,4,5,0.5622953107743249,9.980868648654106e-15,1.1503858591760883,poor_pairwise_fit
+channel_permutation,4,5,0.9352352217808687,0.0,0.881050944582162,poor_pairwise_fit
+low_rank_subspace,4,5,0.6950750177851913,1.0318509612467284,1.0479440714173969,poor_pairwise_fit
+orthogonal_procrustes,4,5,0.6792742091013861,4.671474627154195e-15,0.5275222383528463,poor_pairwise_fit
+positive_monomial,4,5,0.7262288352372667,0.7441763788450347,0.8178337579571779,poor_pairwise_fit
+LoRA_basis_maps,0,0,unavailable,unavailable,unavailable,not_executed_no_nontrivial_adapter_mechanism

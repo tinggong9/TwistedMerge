@@ -1,0 +1,122 @@
+{
+  "execution_commit": "4ab8022b5c7826c1584ba781a707fc491aa6ede6",
+  "final_state": "completed",
+  "program": "next_twistedmerge_program",
+  "requested_tier": "extended",
+  "resume": true,
+  "stages": {
+    "A1": {
+      "exit_code": 0,
+      "runtime_seconds": 279.3070809589699,
+      "start_time": "2026-07-15T13:23:30.408229+00:00",
+      "state": "completed",
+      "summary": "trained Fashion-MNIST chart inference"
+    },
+    "A2": {
+      "exit_code": 0,
+      "runtime_seconds": 77.19020387483761,
+      "start_time": "2026-07-15T13:28:09.769744+00:00",
+      "state": "completed",
+      "summary": "end-to-end controlled systems audit"
+    },
+    "A3": {
+      "exit_code": 0,
+      "runtime_seconds": 0.7053552500437945,
+      "start_time": "2026-07-15T13:29:27.057851+00:00",
+      "state": "completed",
+      "summary": "nontrivial refinement invariance"
+    },
+    "B1": {
+      "exit_code": 0,
+      "runtime_seconds": 556.3412893330678,
+      "start_time": "2026-07-15T13:29:27.785488+00:00",
+      "state": "completed",
+      "summary": "full-model hidden-layer geometry"
+    },
+    "B2": {
+      "exit_code": 0,
+      "runtime_seconds": 954.2150744590908,
+      "start_time": "2026-07-15T13:38:44.224310+00:00",
+      "state": "completed",
+      "summary": "strong learned compositional baselines"
+    },
+    "B3": {
+      "exit_code": 0,
+      "runtime_seconds": 65.96659733401611,
+      "start_time": "2026-07-15T13:59:13.365930+00:00",
+      "state": "completed",
+      "summary": "genuine multiview coordinate retransport"
+    },
+    "B4": {
+      "exit_code": 0,
+      "runtime_seconds": 0.6763165409211069,
+      "start_time": "2026-07-15T14:00:19.347801+00:00",
+      "state": "completed",
+      "summary": "new realistic residual search"
+    },
+    "B5": {
+      "exit_code": 0,
+      "runtime_seconds": 631.3642158329021,
+      "start_time": "2026-07-15T14:29:20.218284+00:00",
+      "state": "completed",
+      "summary": "structure-preserving compression"
+    },
+    "B6": {
+      "exit_code": 0,
+      "runtime_seconds": 2.3194605000317097,
+      "start_time": "2026-07-15T14:18:25.757807+00:00",
+      "state": "completed",
+      "summary": "noncyclic central extensions"
+    },
+    "B7": {
+      "exit_code": 0,
+      "runtime_seconds": 0.11381466686725616,
+      "start_time": "2026-07-15T14:18:28.094779+00:00",
+      "state": "completed_gate_closed",
+      "summary": "conditional official baseline integration"
+    },
+    "C1_C2": {
+      "exit_code": 0,
+      "runtime_seconds": 0.08790099993348122,
+      "start_time": "2026-07-15T14:18:28.224394+00:00",
+      "state": "completed_gate_closed",
+      "summary": "conditional extended vision and adapter families"
+    },
+    "C3": {
+      "exit_code": 0,
+      "runtime_seconds": 88.5313935840968,
+      "start_time": "2026-07-15T14:18:28.328271+00:00",
+      "state": "completed",
+      "summary": "language checkpoint transition geometry"
+    },
+    "C4_C5": {
+      "exit_code": 0,
+      "runtime_seconds": 0.28467991715297103,
+      "start_time": "2026-07-15T14:19:56.884727+00:00",
+      "state": "completed",
+      "summary": "comparison-complex and alignment robustness"
+    },
+    "C6": {
+      "exit_code": 0,
+      "runtime_seconds": 1.8229343749117106,
+      "start_time": "2026-07-15T14:19:57.186253+00:00",
+      "state": "completed",
+      "summary": "selective activation diagnostics"
+    },
+    "C7": {
+      "exit_code": 0,
+      "runtime_seconds": 2.4821250420063734,
+      "start_time": "2026-07-15T14:19:59.025731+00:00",
+      "state": "completed",
+      "summary": "real runtime and memory scaling"
+    },
+    "C8": {
+      "exit_code": 0,
+      "runtime_seconds": 8.778634292073548,
+      "start_time": "2026-07-15T14:52:50.626391+00:00",
+      "state": "completed",
+      "summary": "reproducibility and release manifests"
+    }
+  },
+  "updated_at": "2026-07-15T14:52:59.425038+00:00"
+}

@@ -1,0 +1,7 @@
+reference,alternative,mean_accuracy_delta,ci_low,ci_high
+structured_group_retransport,context_blind_synchronization,0.067626953125,0.048094482421875,0.08867309570312498
+structured_group_retransport,ensemble_reference,0.064404296875,0.044873046875,0.084814453125
+structured_group_retransport,generic_low_rank_context_adapter,0.0234375,0.01591796875,0.03154296875
+structured_group_retransport,generic_mixture_of_experts,0.012109375,0.007763671875,0.016650390625
+structured_group_retransport,twistedmerge_diagnostic_retransport,0.000537109375,-0.000830078125,0.00185546875
+structured_group_retransport,unconstrained_learned_matrix_action,0.01279296875,0.008349609375,0.017626953125

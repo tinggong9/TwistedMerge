@@ -1,0 +1,4 @@
+construction,operations,all_nontrivial,class_order_preserved,max_closure_error,max_prediction_error,gate_passed
+controlled_mu2,5,True,True,0,0.0,True
+cyclic_carry_C2,5,True,True,0,0.0,True
+finite_Heisenberg_3,5,True,True,0,0.0,True

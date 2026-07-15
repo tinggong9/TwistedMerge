@@ -1,0 +1,8 @@
+group,claim,value
+D4,structured_compression_gate_passed,True
+FashionMNIST,structured_compression_gate_passed,False
+S3,structured_compression_gate_passed,True
+FashionMNIST,teacher_eligible,True
+FashionMNIST,teacher_executed,True
+ModelNet10,teacher_eligible,False
+ModelNet10,teacher_executed,False

@@ -1,0 +1,51 @@
+[
+  {
+    "available": true,
+    "dataset": "FashionMNIST",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/FashionMNIST/raw/train-images-idx3-ubyte",
+    "sha256": "c59f468a2f672dc815687fe0f83887768d799fd8a3f3276145d20f83aa44d888",
+    "source": "torchvision"
+  },
+  {
+    "available": true,
+    "dataset": "CIFAR10",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/cifar-10-python.tar.gz",
+    "sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+    "source": "torchvision"
+  },
+  {
+    "available": true,
+    "dataset": "ModelNet10",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/ModelNet10.zip",
+    "sha256": "9d8679435fc07d1d26f13009878db164a7aa8ea5e7ea3c8880e42794b7307d51",
+    "source": "http://3dvision.princeton.edu/projects/2014/3DShapeNets/ModelNet10.zip"
+  },
+  {
+    "available": true,
+    "dataset": "sst2",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/huggingface",
+    "sha256": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb",
+    "source": "stanfordnlp/sst2"
+  },
+  {
+    "available": true,
+    "dataset": "imdb",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/huggingface",
+    "sha256": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31",
+    "source": "stanfordnlp/imdb"
+  },
+  {
+    "available": true,
+    "dataset": "yelp",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/huggingface",
+    "sha256": "bbf1c97a1f0cf005e5aded43839fd814654a1557",
+    "source": "fancyzhx/yelp_polarity"
+  },
+  {
+    "available": true,
+    "dataset": "amazon",
+    "local_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/huggingface",
+    "sha256": "9d9c45c18f8c3cf1b23a3c27917b60cbf28f3289",
+    "source": "fancyzhx/amazon_polarity"
+  }
+]

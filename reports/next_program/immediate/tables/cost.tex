@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{End-to-end controlled accuracy and cost}
+\begin{tabular}{llll}
+\toprule
+method & mean\_accuracy & mean\_stored\_parameters & mean\_latency\_batch32\_ms \\
+\midrule
+context\_blind\_synchronization & 0.91083984375 & 292.0 & 0.013384319026954472 \\
+ensemble\_reference & 0.9140625 & 784.0 & 0.05763336084783077 \\
+generic\_low\_rank\_context\_adapter & 0.955029296875 & 385.0 & 0.021337909856811166 \\
+generic\_mixture\_of\_experts & 0.966357421875 & 1098.0 & 0.12213706795591861 \\
+structured\_group\_retransport & 0.978466796875 & 292.0 & 0.0259281019680202 \\
+twistedmerge\_diagnostic\_retransport & 0.9779296875 & 292.0 & 0.06345728470478207 \\
+unconstrained\_learned\_matrix\_action & 0.965673828125 & 656.0 & 0.025533809093758464 \\
+\bottomrule
+\end{tabular}
+\end{table}

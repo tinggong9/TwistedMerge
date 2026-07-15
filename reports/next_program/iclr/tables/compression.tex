@@ -1,0 +1,82 @@
+\begin{table}[t]
+\centering
+\caption{Structure-preserving compression}
+\begin{tabular}{lllll}
+\toprule
+group & method & target\_storage\_reduction & retained\_teacher\_gain\_fraction & measured\_storage\_reduction \\
+\midrule
+D4 & chart\_token\_student & 0.25 & -2.883809523809524 & -0.8410634023035449 \\
+D4 & chart\_token\_student & 0.5 & -7.859047619047619 & -0.6545763801491732 \\
+D4 & chart\_token\_student & 0.75 & -50.31142857142857 & -0.459276112456412 \\
+D4 & finite\_state\_chart\_module & 0.25 & 0.9742857142857143 & -0.7160239072880711 \\
+D4 & finite\_state\_chart\_module & 0.5 & 0.2542857142857143 & -0.5666376266817212 \\
+D4 & finite\_state\_chart\_module & 0.75 & 0.27142857142857146 & -0.41028952568150645 \\
+D4 & low\_rank\_group\_generators & 0.25 & -8.753333333333334 & -0.7158643132777229 \\
+D4 & low\_rank\_group\_generators & 0.5 & -19.86952380952381 & -0.566394065384572 \\
+D4 & low\_rank\_group\_generators & 0.75 & -61.07047619047619 & -0.40991423851798553 \\
+D4 & ordinary\_single\_model\_control & 0.25 & -9.814285714285715 & -0.7155610156948035 \\
+D4 & ordinary\_single\_model\_control & 0.5 & -20.57142857142857 & -0.56636432572672 \\
+D4 & ordinary\_single\_model\_control & 0.75 & -57.58 & -0.41015924738382137 \\
+D4 & pruned\_structured\_student & 0.25 & 1.0142857142857142 & -3.2184657014518234 \\
+D4 & pruned\_structured\_student & 0.5 & 0.8876190476190476 & -3.011225473636184 \\
+D4 & pruned\_structured\_student & 0.75 & -3.4933333333333327 & -2.6434529182390336 \\
+D4 & quantized\_structured\_student & 0.25 & 0.9 & -1.213566369287422 \\
+D4 & quantized\_structured\_student & 0.5 & 0.7828571428571428 & -1.1737076750694775 \\
+D4 & quantized\_structured\_student & 0.75 & -2.58 & -1.1333301391787929 \\
+D4 & shared\_canonical\_backbone\_group\_head & 0.25 & 0.96 & -0.7161677632679678 \\
+D4 & shared\_canonical\_backbone\_group\_head & 0.5 & 0.9028571428571429 & -0.566898344372201 \\
+D4 & shared\_canonical\_backbone\_group\_head & 0.75 & 0.7838095238095238 & -0.4098427814976359 \\
+D4 & tensor\_factorized\_equivariant\_head & 0.25 & 0.82 & -0.7161808641677001 \\
+D4 & tensor\_factorized\_equivariant\_head & 0.5 & 0.9266666666666665 & -0.5670135240652912 \\
+D4 & tensor\_factorized\_equivariant\_head & 0.75 & 0.5276190476190475 & -0.4098274290653706 \\
+FashionMNIST & chart\_token\_student & 0.25 & -0.03558414634270569 & 0.9338681222668884 \\
+FashionMNIST & chart\_token\_student & 0.5 & -0.05751909897791637 & 0.963667388877367 \\
+FashionMNIST & chart\_token\_student & 0.75 & -0.01738436117550931 & 0.9829938354683411 \\
+FashionMNIST & finite\_state\_chart\_module & 0.25 & -0.0017160033308949447 & 0.9338173763011928 \\
+FashionMNIST & finite\_state\_chart\_module & 0.5 & 0.025505960651403807 & 0.9636569749226677 \\
+FashionMNIST & finite\_state\_chart\_module & 0.75 & 0.02092983999594037 & 0.9829933059452207 \\
+FashionMNIST & low\_rank\_group\_generators & 0.25 & -0.006386183140455055 & 0.933809609962095 \\
+FashionMNIST & low\_rank\_group\_generators & 0.5 & 0.006737562994273849 & 0.9636558276225735 \\
+FashionMNIST & low\_rank\_group\_generators & 0.75 & 0.030182149730414484 & 0.9829937472144877 \\
+FashionMNIST & ordinary\_single\_model\_control & 0.25 & 0.0 & 0.9338078448850272 \\
+FashionMNIST & ordinary\_single\_model\_control & 0.5 & 0.0 & 0.9636605933306563 \\
+FashionMNIST & ordinary\_single\_model\_control & 0.75 & 0.0 & 0.9829941884837546 \\
+FashionMNIST & pruned\_structured\_student & 0.25 & -0.025361943173891024 & 0.9174506109373002 \\
+FashionMNIST & pruned\_structured\_student & 0.5 & -0.05405426059162786 & 0.9576723046170003 \\
+FashionMNIST & pruned\_structured\_student & 0.75 & -0.10842774322892713 & 0.9748404149696185 \\
+FashionMNIST & quantized\_structured\_student & 0.25 & 0.0076253366803967345 & 0.9715764344560693 \\
+FashionMNIST & quantized\_structured\_student & 0.5 & 0.0003284936480974843 & 0.9788591424373067 \\
+FashionMNIST & quantized\_structured\_student & 0.75 & -0.015116104785633664 & 0.9837810598405252 \\
+FashionMNIST & shared\_canonical\_backbone\_group\_head & 0.25 & -0.0030930123177457776 & 0.933827348986625 \\
+FashionMNIST & shared\_canonical\_backbone\_group\_head & 0.5 & -0.01027567762869392 & 0.9636627996769909 \\
+FashionMNIST & shared\_canonical\_backbone\_group\_head & 0.75 & -0.010573791684031495 & 0.9829916291220065 \\
+FashionMNIST & tensor\_factorized\_equivariant\_head & 0.25 & -0.010776054591232204 & 0.933827790255892 \\
+FashionMNIST & tensor\_factorized\_equivariant\_head & 0.5 & 0.010570152394571066 & 0.9636560041302805 \\
+FashionMNIST & tensor\_factorized\_equivariant\_head & 0.75 & -0.004691808960699594 & 0.982995865306969 \\
+S3 & chart\_token\_student & 0.25 & nan & -0.8870333877847517 \\
+S3 & chart\_token\_student & 0.5 & nan & -0.6997922877390252 \\
+S3 & chart\_token\_student & 0.75 & nan & -0.5074884086770302 \\
+S3 & finite\_state\_chart\_module & 0.25 & nan & -0.7431157931607616 \\
+S3 & finite\_state\_chart\_module & 0.5 & nan & -0.6019268692111842 \\
+S3 & finite\_state\_chart\_module & 0.75 & nan & -0.4532307394763642 \\
+S3 & low\_rank\_group\_generators & 0.25 & nan & -0.7423696934114646 \\
+S3 & low\_rank\_group\_generators & 0.5 & nan & -0.6017676853437994 \\
+S3 & low\_rank\_group\_generators & 0.75 & nan & -0.4535961123424037 \\
+S3 & ordinary\_single\_model\_control & 0.25 & nan & -0.7424813728089235 \\
+S3 & ordinary\_single\_model\_control & 0.5 & nan & -0.6020217422562246 \\
+S3 & ordinary\_single\_model\_control & 0.75 & nan & -0.4534853333277664 \\
+S3 & pruned\_structured\_student & 0.25 & nan & -3.430042702203721 \\
+S3 & pruned\_structured\_student & 0.5 & nan & -3.2164738696118076 \\
+S3 & pruned\_structured\_student & 0.75 & nan & -2.818978103915731 \\
+S3 & quantized\_structured\_student & 0.25 & nan & -1.3951698921986275 \\
+S3 & quantized\_structured\_student & 0.5 & nan & -1.3582258052632152 \\
+S3 & quantized\_structured\_student & 0.75 & nan & -1.320266944896991 \\
+S3 & shared\_canonical\_backbone\_group\_head & 0.25 & nan & -0.7425285946925934 \\
+S3 & shared\_canonical\_backbone\_group\_head & 0.5 & nan & -0.6018950982629205 \\
+S3 & shared\_canonical\_backbone\_group\_head & 0.75 & nan & -0.45324770393819497 \\
+S3 & tensor\_factorized\_equivariant\_head & 0.25 & nan & -0.7432583915471608 \\
+S3 & tensor\_factorized\_equivariant\_head & 0.5 & nan & -0.6018319894070211 \\
+S3 & tensor\_factorized\_equivariant\_head & 0.75 & nan & -0.45320024834560835 \\
+\bottomrule
+\end{tabular}
+\end{table}

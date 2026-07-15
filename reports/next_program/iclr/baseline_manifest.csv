@@ -1,0 +1,7 @@
+baseline,repository,commit,license,wrapper_modifications,hyperparameters,execution_command,applicable_families,status
+Model Soups,https://github.com/mlfoundations/model-soups.git,not_fetched_gate_closed,Apache-2.0,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family
+Git Re-Basin,https://github.com/samuela/git-re-basin.git,not_fetched_gate_closed,MIT,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family
+Task Arithmetic,https://github.com/mlfoundations/task_vectors.git,not_fetched_gate_closed,MIT,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family
+TIES,https://github.com/prateeky2806/ties-merging.git,not_fetched_gate_closed,MIT,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family
+DARE and RegMean,https://github.com/yule-BUAA/MergeLM.git,not_fetched_gate_closed,MIT,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family
+RegMean,https://github.com/bloomberg/dataless-model-merging.git,not_fetched_gate_closed,Apache-2.0,none,not_applicable_gate_closed,not_applicable_gate_closed,,gated_off_no_positive_realistic_family

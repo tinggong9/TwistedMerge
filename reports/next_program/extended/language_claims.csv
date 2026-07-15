@@ -1,0 +1,6 @@
+claim,value
+residual_exceeds_nulls,False
+rank_stable,False
+correction_reduces_interference,False
+adapter_subspace_available,False
+complete_language_gate_passed,False

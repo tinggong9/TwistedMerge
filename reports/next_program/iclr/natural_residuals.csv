@@ -1,0 +1,11 @@
+family,collection,heldout_pairwise_fit,cycle_residual,null_percentile,calibration_resamples,residual_rank_reproducible,residual_rank
+domain_specific_final_block_resnets,0,0.7401103915824904,0.5158446945446079,0.248,5,False,
+domain_specific_final_block_resnets,1,0.7765682441394727,0.6609846149949276,0.296,5,False,
+domain_specific_final_block_resnets,2,0.737453348474764,0.6664656711179748,0.329,5,False,
+domain_specific_final_block_resnets,3,0.7265579023044567,0.5992526998483321,0.281,5,False,
+domain_specific_final_block_resnets,4,0.8124738683646225,0.7018495520383634,0.418,5,False,
+multiview_specialists,0,0.4984819044669469,1.1955011997414073,0.41375,5,False,
+multiview_specialists,1,0.38376224786043167,1.1291408364633353,0.4125,5,False,
+multiview_specialists,2,0.45228754977385205,1.1668487499156284,0.32125,5,False,
+multiview_specialists,3,0.3325970023870468,1.2060036606054394,0.3325,5,False,
+multiview_specialists,4,0.4067398359378179,1.2421922240410224,0.3275,5,False,

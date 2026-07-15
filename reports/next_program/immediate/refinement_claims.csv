@@ -1,0 +1,4 @@
+claim,value
+nontrivial_refinement_invariance,True
+explicit_comparison_maps,True
+prediction_equivalence,True

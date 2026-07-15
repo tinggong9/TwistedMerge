@@ -1,0 +1,9 @@
+group,claim,value
+A4,twistedmerge_specific_compositional_advantage,False
+A4,exact_algebraic_structure_general_advantage,True
+D4,twistedmerge_specific_compositional_advantage,False
+D4,exact_algebraic_structure_general_advantage,True
+Q8,twistedmerge_specific_compositional_advantage,False
+Q8,exact_algebraic_structure_general_advantage,True
+S3,twistedmerge_specific_compositional_advantage,False
+S3,exact_algebraic_structure_general_advantage,True

@@ -1,0 +1,7 @@
+claim,value
+real_final_two_block_fine_tuning_executed,True
+bounded_full_backbone_subset_executed,True
+residual_exceeds_all_matched_nulls,False
+residual_rank_stable_five_resamples,False
+structured_correction_activated,False
+complete_realistic_gate_passed,False

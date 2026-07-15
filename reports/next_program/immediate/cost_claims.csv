@@ -1,0 +1,5 @@
+claim,value
+all_costs_end_to_end_measured,True
+structured_accuracy_advantage_positive,True
+structured_matched_cost,True
+structured_cost_efficient,True

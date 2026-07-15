@@ -1,0 +1,16 @@
+subspace,resample,cycle_residual,residual_rank
+attention_output,0,0.13266124696894321,11
+attention_output,1,0.4112674410945106,6
+attention_output,2,0.07683983470817894,11
+attention_output,3,0.1108191673563936,11
+attention_output,4,0.08912231054783722,11
+mlp_intermediate,0,0.41230991857035065,6
+mlp_intermediate,1,0.12065661753826512,14
+mlp_intermediate,2,0.05626433295011261,19
+mlp_intermediate,3,0.4134206709969789,6
+mlp_intermediate,4,0.08235186084341208,18
+final_hidden_state,0,0.4118817825316763,6
+final_hidden_state,1,0.4108862338339341,4
+final_hidden_state,2,0.4095628571466055,3
+final_hidden_state,3,0.05441693012238951,17
+final_hidden_state,4,0.05755263365955569,17

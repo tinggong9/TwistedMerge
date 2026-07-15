@@ -1,0 +1,3 @@
+# Structure-preserving distillation and compression
+
+Execution commit: `efb0342fed58bdb90ac97a9e546a84560959804d`. Independently trained S3 and D4 structured teachers and 5 confirmed Fashion-MNIST inferred teachers were compressed with seven structured students and one required ordinary control at three target reductions under five cumulative objectives. Storage is the byte size of executed dense, sparse, or int8 tensor artifacts; latency is measured end to end. 2 of 3 executed teacher families passed the 95%-gain and 25%-measured-reduction gate. Fashion-MNIST and ModelNet10 teachers are executed only when their upstream confirmation gates pass.

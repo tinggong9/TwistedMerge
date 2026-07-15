@@ -1,0 +1,6 @@
+claim,value
+genuine_coordinate_retransport_executed,True
+residual_survives_matched_nulls,False
+residual_rank_stable,False
+inferred_retransport_beats_generic_methods,False
+complete_multiview_gate_passed,False

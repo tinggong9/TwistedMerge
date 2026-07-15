@@ -1,0 +1,3 @@
+stage,family,prerequisite,prerequisite_passed,status,reason
+C1,broader_pretrained_vision,B1 useful transition geometry,False,gated_off,B1 did not produce useful transition geometry
+C2,real_adapter_basis_holonomy,nontrivially_closing_adapter_transition_mechanism,False,gated_off,no nontrivially closing adapter transition mechanism was certified

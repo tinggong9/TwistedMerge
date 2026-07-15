@@ -1,0 +1,3 @@
+# Full-model hidden-layer transition geometry
+
+Execution commit: `1237f70e2276c249ee5cbc1eedb977fc1043db26`. Five collections of four ImageNet-pretrained ResNet-18 specialists were fine-tuned through the final two residual blocks and classifier on 10,000 CIFAR-10 examples each; one bounded four-specialist collection also fine-tuned the full backbone. Six gauge families, four hidden layers, five calibration resamples, and 200 draws from each of five label-independent matched-null families were executed. No structured lift was activated without a certified chart action. The complete gate did not pass.

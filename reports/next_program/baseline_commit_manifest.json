@@ -1,0 +1,68 @@
+[
+  {
+    "applicable_families": "",
+    "baseline": "Model Soups",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/mlfoundations/model-soups.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  },
+  {
+    "applicable_families": "",
+    "baseline": "Git Re-Basin",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "MIT",
+    "repository": "https://github.com/samuela/git-re-basin.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  },
+  {
+    "applicable_families": "",
+    "baseline": "Task Arithmetic",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "MIT",
+    "repository": "https://github.com/mlfoundations/task_vectors.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  },
+  {
+    "applicable_families": "",
+    "baseline": "TIES",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "MIT",
+    "repository": "https://github.com/prateeky2806/ties-merging.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  },
+  {
+    "applicable_families": "",
+    "baseline": "DARE and RegMean",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "MIT",
+    "repository": "https://github.com/yule-BUAA/MergeLM.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  },
+  {
+    "applicable_families": "",
+    "baseline": "RegMean",
+    "commit": "not_fetched_gate_closed",
+    "execution_command": "not_applicable_gate_closed",
+    "hyperparameters": "not_applicable_gate_closed",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/bloomberg/dataless-model-merging.git",
+    "status": "gated_off_no_positive_realistic_family",
+    "wrapper_modifications": "none"
+  }
+]

@@ -1,0 +1,12 @@
+split,heldout,test_examples,accuracy,roc_auc,validation_only_baseline_accuracy,added_value,abstention_threshold,coverage,covered_accuracy
+leave_family_out,controlled_central_obstruction,20,1.0,nan,0.45,0.55,0.8746047868542677,0.0,nan
+leave_family_out,controlled_noncentral_holonomy,20,0.0,nan,0.55,-0.55,0.9505705702408147,1.0,0.0
+leave_family_out,noisy_transition_system,20,0.85,nan,0.35,0.5,0.9149246876069931,0.0,nan
+leave_family_out,ordinary_merge,20,1.0,nan,0.35,0.65,0.8678244448533302,0.75,1.0
+leave_family_out,realistic_checkpoint_family,20,1.0,nan,0.3,0.7,0.8709315702842242,1.0,1.0
+leave_family_out,removable_gauge_mismatch,20,1.0,nan,0.55,0.44999999999999996,0.8678254214613366,0.65,1.0
+leave_architecture_out,orthogonal_linear,60,0.3333333333333333,0.5,0.3333333333333333,0.0,1.0,1.0,0.3333333333333333
+leave_architecture_out,perturbed_linear,60,0.3333333333333333,nan,0.48333333333333334,-0.15000000000000002,0.9002084718897794,1.0,0.3333333333333333
+leave_group_out,central,20,1.0,nan,0.45,0.55,0.8746047868542677,0.0,nan
+leave_group_out,noncentral,20,0.0,nan,0.55,-0.55,0.9505705702408147,1.0,0.0
+leave_group_out,ordinary,80,0.0,nan,0.0,0.0,1.0,1.0,0.0
