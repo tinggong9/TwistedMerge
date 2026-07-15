@@ -40,11 +40,14 @@ jobs:
           set -euo pipefail
           cat .evidence-upload/next-program/natural_nulls.part-* > reports/next_program/iclr/natural_nulls.csv
           cat .evidence-upload/next-program/full_model_nulls.part-* > reports/next_program/iclr/full_model_nulls.csv
+          cat .evidence-upload/next-program/compression_runs.part-* > reports/next_program/iclr/compression_runs.csv
           printf '%s  %s\n' \
             '1931dad94c6b1289ec0c21cf403387ba1348ecbbf4fc100a772d87c6f94d0d97' \
             'reports/next_program/iclr/natural_nulls.csv' \
             'fbcb4440c6c8bd2610e1ecdca146cd6c4d9a4e588a82102560583f7faaa8fd67' \
-            'reports/next_program/iclr/full_model_nulls.csv' | sha256sum --check --strict
+            'reports/next_program/iclr/full_model_nulls.csv' \
+            '3843786e3ff35940dd1ddbb9d40438399e459bbc3634c162314155c3d1b0cb89' \
+            'reports/next_program/iclr/compression_runs.csv' | sha256sum --check --strict
           python - <<'PY'
           import csv
           import hashlib
