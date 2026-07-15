@@ -650,7 +650,7 @@ def main() -> None:
         "adapter, disjoint chart/selector/calibration/test roles, and eight evaluation conditions. "
         f"The discovery gate {'passed' if paired[0]['gate_passed'] else 'did not pass'}. Confirmation "
         f"{'passed' if confirmation else ('did not pass' if len(paired) > 1 else 'was not triggered')}; CIFAR-10 "
-        f"{'was triggered' if confirmation else 'was not triggered'}.\n",
+        "was not triggered in this bounded program.\n",
         encoding="utf-8",
     )
 
