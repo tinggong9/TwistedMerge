@@ -29,3 +29,4 @@ def test_attempt_history_is_append_only(tmp_path, monkeypatch):
     runner.append_attempt("run", item)
     runner.append_attempt("run", item)
     assert len((tmp_path / "attempt_history.csv").read_text().splitlines()) == 3
+    assert b"\r\n" not in (tmp_path / "attempt_history.csv").read_bytes()

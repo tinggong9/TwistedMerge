@@ -71,7 +71,7 @@ def write_csv(path: Path, rows: Sequence[Mapping[str, object]], fields: Sequence
     if fields is None:
         fields = list(rows[0]) if rows else []
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(fields), extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=list(fields), extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
