@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import json
 import sys
 import time
 from pathlib import Path
@@ -21,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from experiments.compact_benchmark_common import classification_metrics, ridge_fit, ridge_predict
-from experiments.future_benchmark_common import OUT, bootstrap, label_independence_record, peak_memory_mb, stage_result, write_csv
+from experiments.future_benchmark_common import LOCAL, OUT, bootstrap, label_independence_record, peak_memory_mb, stage_result, write_csv
 from experiments.future_text_common import DATASETS, MODEL_ID, MODEL_REVISION, DomainData, domain_features, loader, tensor_dataset, text_and_label
 from experiments.real_lora_adapter_near_term import average_states, delta_factor_state
 
@@ -35,8 +36,6 @@ TOKENIZER_REVISION = MODEL_REVISION
 def base_model(model_id: str = SECOND_MODEL_ID, revision: str = SECOND_MODEL_REVISION):
     torch.manual_seed(20_260)
     config_path = hf_hub_download(model_id, "config.json", revision=revision)
-    import json
-
     payload = json.loads(Path(config_path).read_text(encoding="utf-8"))
     payload.update({"model_type": "bert", "num_labels": 2})
     config = BertConfig.from_dict(payload)
@@ -47,11 +46,33 @@ def load_second_base_domains(per_domain: int = 128) -> tuple[object, list[Domain
     # The second model repository does not contain a fast-tokenizer artifact;
     # both checkpoints use the standard uncased BERT vocabulary.
     tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_ID, revision=TOKENIZER_REVISION)
+    cache_path = LOCAL / "data" / f"x2_text_domains_{per_domain}.json"
+    if cache_path.exists():
+        cached = json.loads(cache_path.read_text(encoding="utf-8"))
+    else:
+        from huggingface_hub import close_session
+
+        cached = {}
+        for name, dataset_id, revision in DATASETS:
+            last_error = None
+            for attempt in range(3):
+                try:
+                    close_session()
+                    stream = load_dataset(dataset_id, split="train", streaming=True, revision=revision)
+                    rows = list(stream.take(per_domain))
+                    cached[name] = [{"text": text, "label": label} for text, label in [text_and_label(row, name) for row in rows]]
+                    break
+                except Exception as error:
+                    last_error = error
+                    close_session()
+                    time.sleep(2**attempt)
+            if name not in cached:
+                raise RuntimeError(f"{name} bounded stream failed after three attempts: {last_error}") from last_error
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(json.dumps(cached), encoding="utf-8")
     domains = []
-    for name, dataset_id, revision in DATASETS:
-        stream = load_dataset(dataset_id, split="train", streaming=True, revision=revision)
-        rows = list(stream.take(per_domain))
-        pairs = [text_and_label(row, name) for row in rows]
+    for name, _, _ in DATASETS:
+        pairs = [(str(row["text"]), int(row["label"])) for row in cached[name]]
         texts = [item[0] for item in pairs]
         labels = [item[1] for item in pairs]
         train_end, validation_end = per_domain // 2, 3 * per_domain // 4
