@@ -40,6 +40,7 @@ jobs:
           set -euo pipefail
           cat .evidence-upload/next-program/natural_nulls.part-* > reports/next_program/iclr/natural_nulls.csv
           cat .evidence-upload/next-program/full_model_nulls.part-* > reports/next_program/iclr/full_model_nulls.csv
+          cat .evidence-upload/next-program/compression_runs.part-* > reports/next_program/iclr/compression_runs.csv
           printf '%s  %s\n' \
             '1931dad94c6b1289ec0c21cf403387ba1348ecbbf4fc100a772d87c6f94d0d97' \
             'reports/next_program/iclr/natural_nulls.csv' \
