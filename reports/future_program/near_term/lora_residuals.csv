@@ -1,0 +1,5 @@
+layer,observed_residual,null_95,exceeds_null,persistent_rank,null_draws
+base_model.model.bert.encoder.layer.0.attention.self.query.lora_B.weight,1.9623215075121632,1.9637035960921378,False,4,200
+base_model.model.bert.encoder.layer.0.attention.self.value.lora_B.weight,1.8661306026831297,1.89511954247733,False,4,200
+base_model.model.bert.encoder.layer.1.attention.self.query.lora_B.weight,1.9396244075051732,2.0897361188587866,False,4,200
+base_model.model.bert.encoder.layer.1.attention.self.value.lora_B.weight,1.9964921867157552,2.478591113480119,False,4,200

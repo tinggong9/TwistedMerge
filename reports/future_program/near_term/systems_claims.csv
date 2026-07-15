@@ -1,0 +1,4 @@
+claim,value
+branch_scaling_measured,True
+distillation_mean_gap,-0.5568229166666667
+distillation_retains_gain,False

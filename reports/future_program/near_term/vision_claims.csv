@@ -1,0 +1,13 @@
+claim,value
+resource_blocked,false
+dataset_source,"""canonical torchvision cache"""
+discovery_gate_passed,false
+confirmation_executed,false
+best_nonensemble_baseline,"""generic_router"""
+paired_delta,-0.20533333333333337
+paired_ci_low,-0.21600000000000005
+paired_ci_high,-0.1885
+hodge_selection_frequency,0.0
+fresh_checkpoints_trained_this_invocation,12
+training_time_seconds,150.16354999807663
+all_leakage_hashes_passed,true

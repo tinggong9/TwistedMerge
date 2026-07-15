@@ -1,0 +1,22 @@
+{
+  "artifact_count": 149,
+  "execution_commit": "0a6b2d06b02231bf74790dc4abb2a899ba07cd7e",
+  "python_requirements": [
+    "# Versions used by the compact reproducibility program.",
+    "numpy==2.4.3",
+    "pandas==3.0.1",
+    "matplotlib==3.10.8",
+    "torch==2.12.1",
+    "torchvision==0.27.1",
+    "scipy==1.18.0",
+    "scikit-learn==1.9.0",
+    "timm==1.0.28",
+    "transformers==5.13.1",
+    "datasets==5.0.0",
+    "peft==0.19.1",
+    "accelerate==1.14.0",
+    "einops==0.8.2",
+    "sentencepiece==0.2.2"
+  ],
+  "reproduction_command": "python experiments/run_all_future_benchmarks.py --tier all --resume"
+}

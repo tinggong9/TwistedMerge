@@ -1,0 +1,8 @@
+claim,value
+five_collections_per_architecture_dataset,True
+cifar10_and_cifar100_completed,True
+resnet18_and_deit_tiny_completed,True
+structured_gate_passed,False
+lift_frequency,0.0
+clip_executed,False
+clip_reason,optional CLIP branch omitted under the bounded 8 GB discovery budget

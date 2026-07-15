@@ -1,0 +1,7 @@
+claim,value
+real_pose_dataset_available,True
+real_pose_predictor_executed,True
+pose_lift_gate_passed,False
+stable_non_null_cycle_sign_residual,False
+archive_sha256,9d8679435fc07d1d26f13009878db164a7aa8ea5e7ea3c8880e42794b7307d51
+source_url,https://3dvision.princeton.edu/projects/2014/3DShapeNets/ModelNet10.zip

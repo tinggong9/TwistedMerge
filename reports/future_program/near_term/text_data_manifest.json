@@ -1,0 +1,28 @@
+{
+  "datasets": [
+    {
+      "id": "stanfordnlp/sst2",
+      "name": "sst2",
+      "revision": "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb"
+    },
+    {
+      "id": "stanfordnlp/imdb",
+      "name": "imdb",
+      "revision": "e6281661ce1c48d982bc483cf8a173c1bbeb5d31"
+    },
+    {
+      "id": "fancyzhx/yelp_polarity",
+      "name": "yelp",
+      "revision": "bbf1c97a1f0cf005e5aded43839fd814654a1557"
+    },
+    {
+      "id": "fancyzhx/amazon_polarity",
+      "name": "amazon",
+      "revision": "9d9c45c18f8c3cf1b23a3c27917b60cbf28f3289"
+    }
+  ],
+  "examples_per_domain": 320,
+  "execution_commit": "8af8c49799884d6c7b8dad109e8aa2b9e41eafbe",
+  "model": "google/bert_uncased_L-2_H-128_A-2",
+  "model_revision": "30b0a37ccaaa32f332884b96992754e246e48c5f"
+}

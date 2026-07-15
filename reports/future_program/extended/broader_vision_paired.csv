@@ -1,0 +1,9 @@
+architecture,dataset,domain,baseline,mean_accuracy_delta,ci_low,ci_high
+deit_tiny,CIFAR10,clean,c2m3_shared_feature_identity,-0.0006000000000000005,-0.0018000000000000017,0.0
+deit_tiny,CIFAR10,gaussian_shift,c2m3_shared_feature_identity,-0.0026000000000000025,-0.007800000000000007,0.0
+deit_tiny,CIFAR100,clean,c2m3_shared_feature_identity,0.0,0.0,0.0
+deit_tiny,CIFAR100,gaussian_shift,c2m3_shared_feature_identity,0.0,0.0,0.0
+resnet18,CIFAR10,clean,c2m3_shared_feature_identity,0.0,0.0,0.0
+resnet18,CIFAR10,gaussian_shift,c2m3_shared_feature_identity,0.0,0.0,0.0
+resnet18,CIFAR100,clean,c2m3_shared_feature_identity,0.0,0.0,0.0
+resnet18,CIFAR100,gaussian_shift,c2m3_shared_feature_identity,0.0,0.0,0.0

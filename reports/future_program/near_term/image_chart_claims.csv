@@ -1,0 +1,3 @@
+claim,value
+bridge_gate_passed,False
+datasets,FashionMNIST;CIFAR10

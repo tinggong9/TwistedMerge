@@ -1,0 +1,6 @@
+source_artifact,baseline,implementation,confirmation_required
+reports/future_program/near_term/vision_baselines.csv,Git Re-Basin,faithful internal permutation-compatible approximation,False
+reports/future_program/near_term/vision_baselines.csv,cycle-consistent model merging,faithful internal alignment-compatible approximation,False
+reports/future_program/near_term/vision_baselines.csv,Task Arithmetic,internal delta merge,False
+reports/future_program/near_term/vision_baselines.csv,TIES,internal sign-election merge,False
+reports/future_program/near_term/vision_baselines.csv,DARE,internal random delta rescaling,False

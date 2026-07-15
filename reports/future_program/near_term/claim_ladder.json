@@ -1,0 +1,16 @@
+{
+  "family_gates": {
+    "federated_frames": false,
+    "natural_checkpoints": false,
+    "pretrained_vision": false,
+    "projective_pose": false,
+    "real_adapters": false,
+    "real_image_charts": false,
+    "transformers": false
+  },
+  "level_1_controlled": true,
+  "level_2_structured_context": true,
+  "level_3_single_realistic_family": false,
+  "level_4_broad_practical": false,
+  "strongest_supported_level": 2
+}

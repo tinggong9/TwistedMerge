@@ -1,0 +1,5 @@
+group,baseline,mean_delta,ci_low,ci_high,positive
+S3,group_retransport_without_hodge,0.0,0.0,0.0,False
+S3,generic_low_rank_residual_correction,0.5231666666666667,0.4855380208333333,0.5620859375,True
+D4,group_retransport_without_hodge,0.0,0.0,0.0,False
+D4,generic_low_rank_residual_correction,0.5461458333333333,0.5067692708333333,0.5866713541666667,True

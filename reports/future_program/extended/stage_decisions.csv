@@ -1,0 +1,13 @@
+stage,topic,state,reason
+X1,broader pretrained vision,negative,broader pretrained vision executed; rows=520; gate did not pass
+X2,broader language and adapters,negative,broader language executed; collections=5; gate did not pass
+X3,group and coefficient generality,completed,group/coefficient checks executed; rows=27
+X4,representation-rank expansion,completed,representation-rank checks executed; rows=44
+X5,comparison topology robustness,completed,comparison-topology checks executed; rows=4
+X6,alignment-family robustness,completed,alignment-family fits executed; rows=6
+X7,residual prediction,negative,leave-dataset-out residual prediction executed; rows=3
+X8,router and chart-inference generality,completed,router/context modes executed=5/5
+X9,distillation and compression,completed,distillation rows retained=80
+X10,systems scaling,completed,systems scaling rows retained=20
+X11,reproducibility,completed,reproducibility manifests generated; artifacts=149
+X12,global evidence package,completed,global numerical evidence map generated

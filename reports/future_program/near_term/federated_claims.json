@@ -1,0 +1,7 @@
+{
+  "all_leakage_hashes_passed": true,
+  "confirmation_executed": false,
+  "interpretation": "Exact and noisy coherent frames are synchronization cases; a lift is promoted only for stable persistent residuals with positive intervals over both controls.",
+  "persistent_lift_gain_found": false,
+  "positive_regimes": []
+}

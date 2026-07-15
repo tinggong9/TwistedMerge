@@ -1,0 +1,3 @@
+comparison,mean_error_reduction_degrees,ci_low,ci_high
+structured_vs_best_strict,119.91742763358214,119.7522829434351,120.0
+structured_vs_best_generic,0.0,0.0,0.0

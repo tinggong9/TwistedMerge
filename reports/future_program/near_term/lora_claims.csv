@@ -1,0 +1,5 @@
+claim,value
+residual_beyond_matched_nulls,False
+persistent_rank,4
+heldout_residual_reduced,False
+full_gate_passed,False

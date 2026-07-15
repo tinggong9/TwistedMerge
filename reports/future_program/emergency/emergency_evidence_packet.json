@@ -1,0 +1,36 @@
+{
+  "broad_natural_checkpoint_superiority": false,
+  "calibration_rows": 42,
+  "controlled_central_rows": 54,
+  "controlled_context_confirmation": {
+    "all_leakage_hashes_passed": true,
+    "conditions": {
+      "D4": {
+        "best_generic_worst_case_regret": 0.5592809433215711,
+        "condition_A": true,
+        "condition_B": false,
+        "condition_C": true,
+        "positive_conditions": 4,
+        "structured_worst_case_regret": 0.4191889841273837
+      },
+      "S3": {
+        "best_generic_worst_case_regret": 0.5196629019953278,
+        "condition_A": true,
+        "condition_B": false,
+        "condition_C": true,
+        "positive_conditions": 4,
+        "structured_worst_case_regret": 0.3974530507413896
+      }
+    },
+    "fresh_seed_block": "20:29",
+    "independent_gate_passed": true
+  },
+  "mechanistic_attribution": {
+    "all_leakage_hashes_passed": true,
+    "criterion": "positive paired intervals over both group-only and generic low-rank controls for both groups",
+    "full_gain_attributed_to_combination": false
+  },
+  "practical_selector_mean_delta": -0.001398333333333319,
+  "representation_rank_cases": 7,
+  "strongest_supported_evidence_level": 2
+}

@@ -1,0 +1,9 @@
+claim,value
+five_collections_completed,True
+two_open_bases_completed,True
+full_and_lora_collections_completed,True
+multiple_adapter_ranks_completed,True
+classification_completed,True
+generative_domain_executed,False
+generative_reason,optional generative branch omitted under the bounded 8 GB discovery budget
+structured_gate_passed,False

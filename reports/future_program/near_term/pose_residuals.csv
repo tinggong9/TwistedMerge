@@ -1,0 +1,4 @@
+seed,mesh_count,negative_cycle_rate,cycle_sign_residual_present,max_underlying_so3_sign_residual,target_permutation_hash_passed
+0,40,0.0,False,0.0,True
+1,40,0.0,False,0.0,True
+2,40,0.0,False,0.0,True

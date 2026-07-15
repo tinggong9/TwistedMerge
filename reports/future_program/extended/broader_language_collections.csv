@@ -1,0 +1,6 @@
+collection,collection_type,base_model,base_revision,rank,source,executed
+0,lora,google/bert_uncased_L-2_H-128_A-2,30b0a37ccaaa32f332884b96992754e246e48c5f,4,N6,True
+1,partial_full_checkpoint,google/bert_uncased_L-2_H-128_A-2,30b0a37ccaaa32f332884b96992754e246e48c5f,0,N7 collection 0,True
+2,partial_full_checkpoint,google/bert_uncased_L-2_H-128_A-2,30b0a37ccaaa32f332884b96992754e246e48c5f,0,N7 collection 1,True
+3,lora,prajjwal1/bert-tiny,6f75de8b60a9f8a2fdf7b69cbd86d9e64bcb3837,4,X2,True
+4,lora,prajjwal1/bert-tiny,6f75de8b60a9f8a2fdf7b69cbd86d9e64bcb3837,8,X2,True

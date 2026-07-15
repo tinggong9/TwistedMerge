@@ -1,0 +1,5 @@
+architecture,source,model_sha256,feature_cache_reused,dataset,train_examples,validation_examples,test_examples
+resnet18,https://download.pytorch.org/models/resnet18-f37072fd.pth,de620ffcedf6c2818d8b6575ad3b3fc89a41351a1588ef8c0d904defc28ebf8e,True,CIFAR10,2400,600,1000
+resnet18,https://download.pytorch.org/models/resnet18-f37072fd.pth,de620ffcedf6c2818d8b6575ad3b3fc89a41351a1588ef8c0d904defc28ebf8e,True,CIFAR100,2400,600,1000
+deit_tiny,timm/deit_tiny_patch16_224.fb_in1k,9a4e7cc392920096d1bf1be91854437b389ed01fb3f45ad9cb63ea60d616a530,True,CIFAR10,2400,600,1000
+deit_tiny,timm/deit_tiny_patch16_224.fb_in1k,9a4e7cc392920096d1bf1be91854437b389ed01fb3f45ad9cb63ea60d616a530,True,CIFAR100,2400,600,1000

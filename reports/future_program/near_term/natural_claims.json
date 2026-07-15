@@ -1,0 +1,13 @@
+{
+  "all_leakage_hashes_passed": true,
+  "cifar_extension_collections": 6,
+  "cifar_extension_executed": true,
+  "cifar_extension_reason": "licensed mirror cache available before stage completion",
+  "confirmation_collections": 0,
+  "discovery_collections": 48,
+  "expected_checkpoint_pool_size": 120,
+  "fresh_checkpoints_trained_this_invocation": 120,
+  "natural_residual_promoted": false,
+  "positive_families": [],
+  "training_time_seconds": 60.851486703846604
+}

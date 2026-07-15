@@ -1,0 +1,4 @@
+setting_id,seed,selector_choice,greedy_soup_members,hodge_selected,cycle_residual
+cifar10_resnet18_s0,0,greedy_soup,"[1, 0]",False,0.0
+cifar10_resnet18_s1,1,greedy_soup,"[1, 0]",False,0.0
+cifar10_resnet18_s2,2,greedy_soup,"[1, 0]",False,0.0

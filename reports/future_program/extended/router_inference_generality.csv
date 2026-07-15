@@ -1,0 +1,6 @@
+context_mode,source_stage,executed,rows,artifact
+input_inferred_image_chart,N2,True,60,reports/future_program/near_term/image_chart_runs.csv
+compositional_group_context,N3,True,700,reports/future_program/near_term/composition_runs.csv
+adapter_domain_router,N6,True,13,reports/future_program/near_term/lora_runs.csv
+transformer_domain_router,N7,True,24,reports/future_program/near_term/transformer_runs.csv
+residual_inferred_context,N1,True,270,reports/future_program/near_term/natural_runs.csv

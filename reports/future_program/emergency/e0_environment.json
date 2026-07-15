@@ -1,0 +1,27 @@
+{
+  "branch": "twistedmerge-all-future-benchmarks-2026",
+  "free_disk_bytes": 199782277120,
+  "head": "0a6b2d06b02231bf74790dc4abb2a899ba07cd7e",
+  "machine": "arm64",
+  "mps_available": true,
+  "packages": {
+    "accelerate": "1.14.0",
+    "datasets": "5.0.0",
+    "matplotlib": "3.11.0",
+    "numpy": "2.5.0",
+    "pandas": "3.0.4",
+    "peft": "0.19.1",
+    "scipy": "1.18.0",
+    "sklearn": "1.9.0",
+    "timm": "1.0.28",
+    "torch": "2.12.1",
+    "torchvision": "0.27.1",
+    "transformers": "5.13.1"
+  },
+  "physical_memory_bytes": 8589934592,
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "python": "3.12.13",
+  "python_executable": "<home>/Documents/GitHub/TwistedMerge/.venv/bin/python",
+  "tags": [],
+  "worktree_clean": false
+}

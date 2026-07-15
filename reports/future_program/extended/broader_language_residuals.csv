@@ -1,0 +1,9 @@
+collection,layer,observed_residual,null_95,exceeds_null,null_draws
+3,base_model.model.bert.encoder.layer.0.attention.self.query.lora_B.weight,1.9934933151042884,1.9943526687961435,False,200
+3,base_model.model.bert.encoder.layer.0.attention.self.value.lora_B.weight,1.9394291805791188,1.954141652239524,False,200
+3,base_model.model.bert.encoder.layer.1.attention.self.query.lora_B.weight,1.9680857051689993,1.9791811625991222,False,200
+3,base_model.model.bert.encoder.layer.1.attention.self.value.lora_B.weight,1.9325591135903617,1.9349761044677558,False,200
+4,base_model.model.bert.encoder.layer.0.attention.self.query.lora_B.weight,2.774344907618021,2.7762262883275675,False,200
+4,base_model.model.bert.encoder.layer.0.attention.self.value.lora_B.weight,2.714379943404616,2.827561397019516,False,200
+4,base_model.model.bert.encoder.layer.1.attention.self.query.lora_B.weight,2.7606784217727727,2.825825766228715,False,200
+4,base_model.model.bert.encoder.layer.1.attention.self.value.lora_B.weight,2.7487809540073433,3.0344878628232106,False,200

@@ -1,0 +1,5 @@
+{
+  "all_leakage_hashes_passed": true,
+  "criterion": "positive paired intervals over both group-only and generic low-rank controls for both groups",
+  "full_gain_attributed_to_combination": false
+}
