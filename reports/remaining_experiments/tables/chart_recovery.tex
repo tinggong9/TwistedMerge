@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{Input-inferred chart recovery}
+\begin{tabular}{llllll}
+\toprule
+dataset & phase & method & runs & accuracy & chart\_accuracy \\
+\midrule
+FashionMNIST & discovery & canonicalize\_pool\_retransport\_inferred & 5 & 0.5447000000000001 & 0.4521 \\
+FashionMNIST & discovery & context\_blind\_synchronization & 5 & 0.2802 & 0.4521 \\
+FashionMNIST & discovery & ensemble & 5 & 0.2802 & 0.4521 \\
+FashionMNIST & discovery & generic\_image\_context\_classifier & 5 & 0.4737 & 0.4521 \\
+FashionMNIST & discovery & generic\_low\_rank\_context\_adapter & 5 & 0.5435000000000001 & 0.4521 \\
+FashionMNIST & discovery & generic\_mixture\_of\_experts & 5 & 0.3862 & 0.4521 \\
+FashionMNIST & discovery & group\_equivariant\_cnn\_chart\_classifier & 5 & 0.5447000000000001 & 0.4521 \\
+FashionMNIST & discovery & random\_action\_control & 5 & 0.28280000000000005 & 0.4521 \\
+FashionMNIST & discovery & structured\_group\_router & 5 & 0.5447000000000001 & 0.4521 \\
+FashionMNIST & discovery & supplied\_chart\_oracle & 5 & 0.7420000000000001 & 0.4521 \\
+FashionMNIST & discovery & twistedmerge\_diagnostic\_structured\_retransport & 5 & 0.5445 & 0.4521 \\
+FashionMNIST & discovery & wrong\_action\_control & 5 & 0.1647 & 0.4521 \\
+\bottomrule
+\end{tabular}
+\end{table}

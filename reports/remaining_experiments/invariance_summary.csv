@@ -1,0 +1,6 @@
+family,trials,max_gauge_law_error,max_prediction_error,max_face_residual,vertex_gauge_invariant
+controlled_D4,100,0.0,0.0,0.0,True
+controlled_S3,100,0.0,0.0,0.0,True
+controlled_mu2,100,0.0,0.0,0.0,True
+relu_mlp_3,100,3.672661563295813e-15,8.881784197001252e-16,2.794000007381818e-16,True
+relu_mlp_4,100,3.712613018615133e-15,8.881784197001252e-16,2.9764538874609303e-16,True

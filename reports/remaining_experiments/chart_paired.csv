@@ -1,0 +1,2 @@
+dataset,phase,best_generic,mean_delta,ci_low,ci_high,efficiency_match,gate_passed
+FashionMNIST,discovery,generic_low_rank_context_adapter,0.0010000000000000009,-0.01080000000000001,0.015000000000000013,False,False

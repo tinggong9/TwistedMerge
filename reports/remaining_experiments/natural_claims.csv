@@ -1,0 +1,3 @@
+dataset,architecture,model_count,relation,fixed_transition_family,seeds,calibration_resamples,null_draws_per_family,delta_vs_strict,ci_low,ci_high,gate_passed
+FashionMNIST,mlp,4,independent_seeds,orthogonal,7,5,200,0.0,0.0,0.0,False
+MNIST,mlp,4,shared_base_specialization,positive_monomial,7,5,200,0.0,0.0,0.0,False

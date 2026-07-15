@@ -1,0 +1,5 @@
+architecture,method,baseline,mean_delta,ci_low,ci_high
+resnet18,hodge_diagnostic_ordinary_fallback,strict_synchronization,0.0,0.0,0.0
+resnet18,hodge_diagnostic_ordinary_fallback,generic_low_rank_merge,-0.04140000000000001,-0.05520000000000003,-0.027000000000000007
+deit_tiny,hodge_diagnostic_ordinary_fallback,strict_synchronization,0.0,0.0,0.0
+deit_tiny,hodge_diagnostic_ordinary_fallback,generic_low_rank_merge,-0.021399999999999995,-0.033000000000000015,-0.010799999999999987

@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Bounded baseline and systems-cost proxy audit}
+\begin{tabular}{llllll}
+\toprule
+family & role & accuracy & trainable\_parameters & stored\_parameters & latency\_batch32\_ms \\
+\midrule
+independent\_controlled\_context\_confirmation & ensemble & 0.29990833333333333 & 93 & 93 & 0.01258309930562973 \\
+independent\_controlled\_context\_confirmation & generic\_low\_rank\_context\_adapter & 0.16617499999999996 & 555 & 555 & 0.04791701212525368 \\
+independent\_controlled\_context\_confirmation & group\_equivariant\_baseline & 0.2549916666666666 & 371 & 371 & 0.032250070944428444 \\
+independent\_controlled\_context\_confirmation & inference\_matched\_model & 0.4343583333333333 & 57 & 57 & 0.0100000761449337 \\
+independent\_controlled\_context\_confirmation & learned\_cayley\_table\_upper\_bound & 0.5928666666666667 & 1 & 0 & 0.009917188435792923 \\
+independent\_controlled\_context\_confirmation & parameter\_matched\_widened\_model & 0.2549916666666666 & 371 & 371 & 0.03237510100007057 \\
+independent\_controlled\_context\_confirmation & strongest\_generic\_moe & 0.4343583333333333 & 57 & 57 & 0.024582957848906517 \\
+independent\_controlled\_context\_confirmation & structured\_method & 0.5928666666666667 & 43 & 43 & 0.010541873052716255 \\
+\bottomrule
+\end{tabular}
+\end{table}

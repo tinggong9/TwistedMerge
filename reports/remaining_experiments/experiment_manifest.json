@@ -1,0 +1,494 @@
+{
+  "artifacts": [
+    {
+      "bytes": 2842,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/central_extensions.csv",
+      "sha256": "5cd9d0cd6984c51ee04d03b6dd58910827b56786c51e7c5964e1feeccce4994c"
+    },
+    {
+      "bytes": 10059,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_abstention.csv",
+      "sha256": "c43a6b2011a17a889bf65afb02cff0f78208b0fed37601206dfc5bf081d1a5e2"
+    },
+    {
+      "bytes": 144,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_claims.csv",
+      "sha256": "577d59ea4e7b75e14fcb3ba2cbe3be5bb328c58449b11c3f2ac3d7d46599db27"
+    },
+    {
+      "bytes": 214,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_paired.csv",
+      "sha256": "97bbcdcbd491f77e0db5b1956ccae8a802092dcac900c9e56d44223445a9f85c"
+    },
+    {
+      "bytes": 555,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_report.md",
+      "sha256": "d1bb8cf5494e44c4a6efe20f5c98b24ed981e495f7c7e292d137e411e73774d7"
+    },
+    {
+      "bytes": 29023,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_runs.csv",
+      "sha256": "ff9ff5b021658d231a5f794adffc987c175c5f2c68d595a0bb6a20867c5b1aa4"
+    },
+    {
+      "bytes": 1190,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/chart_summary.csv",
+      "sha256": "e72dd352edb836c2f38b866c7134b21faec6b322825b1d54b06076adaed01a70"
+    },
+    {
+      "bytes": 610,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/composition_claims.csv",
+      "sha256": "8924ec3f4baf6d75e122a581a62191969abb2f0e367946df32ed60840aaaaf96"
+    },
+    {
+      "bytes": 2648,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/composition_efficiency.csv",
+      "sha256": "2c4adb0bc1f972b2ecc5eae28b3d59469c2b07ee61fcf78b0b96c2f71b4decce"
+    },
+    {
+      "bytes": 515,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/composition_report.md",
+      "sha256": "c8407b90f32e8642d5104c29126e2b356ddb60f456d83936ace60a79e5ff2017"
+    },
+    {
+      "bytes": 407601,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/composition_runs.csv",
+      "sha256": "9ed123e760503b03f618970ec0e7cc6a9651285047bca4ce36412bb50a71bdff"
+    },
+    {
+      "bytes": 2690,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/composition_summary.csv",
+      "sha256": "0631edd28596156f8ca2727719ae10f5034439a01942105a50b277ebe1af65f5"
+    },
+    {
+      "bytes": 296,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/cost_claims.csv",
+      "sha256": "1e7272344ae0ca366c8a30501478d42a2774aa2aca783c03dea456e5c319321f"
+    },
+    {
+      "bytes": 498,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/cost_report.md",
+      "sha256": "c831ee71ab4fa4b27bea53f2026242b99ec6b51caded067471679fd6806ba301"
+    },
+    {
+      "bytes": 11255,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/cost_runs.csv",
+      "sha256": "c517425a4dc34de4b761e89e9b7b3a2a8cfc2a6fecb28b01b9cb192a818c06f1"
+    },
+    {
+      "bytes": 1142,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/cost_summary.csv",
+      "sha256": "0723f420712979b2726a2c5ba74ac323ebf3148cff21dc2eb6e07efee18117f7"
+    },
+    {
+      "bytes": 108,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/distillation_claims.csv",
+      "sha256": "6295f5bd607ca7a1a9317df85c7d5e5a66a1861a05ff701a4effe1606af58c9e"
+    },
+    {
+      "bytes": 316,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/distillation_report.md",
+      "sha256": "c58cb5b9e5aa1c9210871e6f24ea2c2af77e874afb05e9fa1d80a36ccc588778"
+    },
+    {
+      "bytes": 120005,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/distillation_runs.csv",
+      "sha256": "3bafade2531f1b2e927f55cfe384ea43ed650199c2921442f59ff8a16d45b7d2"
+    },
+    {
+      "bytes": 1790,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/distillation_summary.csv",
+      "sha256": "788fd736ff34991668dfe25df7d1830a7baaf58df315372c1e72c5595702fb47"
+    },
+    {
+      "bytes": 6573,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/final_experimental_report.md",
+      "sha256": "4a1cb571a623fd9ecc5224de18bdf8d5a63c36f19cb3b2ca23b526d91990c94e"
+    },
+    {
+      "bytes": 321,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_claims.csv",
+      "sha256": "8869976dd108ca7c42e444177ca56859ac1908334b21a7b18adfdf9d34d61cff"
+    },
+    {
+      "bytes": 1050,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_nulls.csv",
+      "sha256": "76e6ab98749d6b50e0a1181d214684f11338ba2e5469207bf3180512549d2fbe"
+    },
+    {
+      "bytes": 479,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_paired.csv",
+      "sha256": "e01e0feec2174c2b4029926f3a6671ae90f97d2c5ccb479e780b4c2931af0905"
+    },
+    {
+      "bytes": 600,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_report.md",
+      "sha256": "ede68e8fe03f50f9aab7a59f516a98b2ed5448d521ce3f79cf7a7fde74595bb0"
+    },
+    {
+      "bytes": 56557,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_runs.csv",
+      "sha256": "bb0eb3e09bfc6b6c428e6adde0c47f4b3d62a5bb9bb3f4132e3ca78cc105cfd7"
+    },
+    {
+      "bytes": 1188,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_stability.csv",
+      "sha256": "7558ca4f600c75021d561ab2d8f9ebed4e5518fd3f0c813c2a808588a2f6b7f2"
+    },
+    {
+      "bytes": 27299,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/full_model_transitions.csv",
+      "sha256": "980dfc1ee20347dd5d3c4af134964d9b9bf816b82981604a8d16fa5dcf52e02d"
+    },
+    {
+      "bytes": 641,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/invariance_report.md",
+      "sha256": "9757c2492aadebd0a6787fff257105d178d23a8ef6e08d74eb340339fbef587f"
+    },
+    {
+      "bytes": 266041,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/invariance_runs.csv",
+      "sha256": "21f0d0cca87fa449a6891b26d2a01390186203a0b786b35f08c06f5c3cd4f8bf"
+    },
+    {
+      "bytes": 375,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/invariance_summary.csv",
+      "sha256": "b9d9299141df4ca31776bf47cd0779026f7f78bfe13e89cfb80a8cb991380b40"
+    },
+    {
+      "bytes": 409,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_claims.csv",
+      "sha256": "367182c59bbb0b9e0446cacbfcc1ee67c6e7a89a207c3a4a0a8b90327cf2027e"
+    },
+    {
+      "bytes": 80252,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_nulls.csv",
+      "sha256": "d0f65f180cdd33f996372e4c9bda196917b3473d08002681b8b665e498975f9d"
+    },
+    {
+      "bytes": 399,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_paired.csv",
+      "sha256": "1350ef623f01890bfc9abf581a925b0690dc9dfd28b34d4c31d28a2c19d3fc6f"
+    },
+    {
+      "bytes": 486,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_report.md",
+      "sha256": "68416e6a919a447e0c9bdd4ea31ba3365bae94e0c2eed3625237fefc49eb3db5"
+    },
+    {
+      "bytes": 883,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_residuals.csv",
+      "sha256": "476379777baa36a05feb23d4f5ff8c125150e4ed1209258cad51ad5f45cd9d86"
+    },
+    {
+      "bytes": 17119,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/multiview_runs.csv",
+      "sha256": "3d04da8d634a928d1640153b4147cc91300808725f61e9cd136b339b09a83b9b"
+    },
+    {
+      "bytes": 316,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/natural_claims.csv",
+      "sha256": "3a9f7a8c05f2dd79de628dd54b767f815e9b840c94ef4c0b6c56c1dbc6e6f905"
+    },
+    {
+      "bytes": 3765,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/natural_corrections.csv",
+      "sha256": "0e36fbeaf7417de96f44626920098b57b53e243a902b08875290b3aaf4eb4b5f"
+    },
+    {
+      "bytes": 1367670,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/natural_nulls.csv",
+      "sha256": "317eda02a09fa6b027d0fc595c56df43c35dab4f0ce824999e8995106f4dcc99"
+    },
+    {
+      "bytes": 345,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/natural_report.md",
+      "sha256": "3d1271d26f7213922cf2c27979855bba790d81e1fd2ccaf6f5a4dfec731d3fae"
+    },
+    {
+      "bytes": 7195,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/natural_stability.csv",
+      "sha256": "3e008c4bcbe2f9e3cf9994bb48191edde75c8687bb1689b4b8d2873f231cc2a9"
+    },
+    {
+      "bytes": 532,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/outside_gauge.csv",
+      "sha256": "41173aad12d13f4303c722f3a7569052bc2f6a57c63804a8d706612a3d6e3882"
+    },
+    {
+      "bytes": 11061,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/plots/chart_coverage.pdf",
+      "sha256": "6a664c1a8d2120a7ff1b1467b9dd6fe0965e4b4fb650443a59416428eb4fee0c"
+    },
+    {
+      "bytes": 3186,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/projective_ranks.csv",
+      "sha256": "e3e23722618e67dc694ada1aff0c2850c993833624d4bff6e57d70eccf2424bb"
+    },
+    {
+      "bytes": 517,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/projective_report.md",
+      "sha256": "8731b44abd73d97d47e3a15c492f9c61b826efdc3f35378ed0a5dea2ce350d45"
+    },
+    {
+      "bytes": 1660,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/projective_residuals.csv",
+      "sha256": "22ff8fe92dbbc02ca9de75c5dffc75d3227c15392d4248f0ec92d47a37694c42"
+    },
+    {
+      "bytes": 1197,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/protocol_coverage.csv",
+      "sha256": "62c3876bbcf78f499e2ca24c37fd0642822203f71c8256b80eb9ecb7e4c9c5b5"
+    },
+    {
+      "bytes": 330,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/refinement.csv",
+      "sha256": "b40b0c66ed3da16431509eee90e093390e2e9a2217f38f0d02f30f8dac5962eb"
+    },
+    {
+      "bytes": 1285,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/chart_recovery.tex",
+      "sha256": "8f6d815c906ea406bb5f662072de2f1005181599f5f15759aabd7086da839e95"
+    },
+    {
+      "bytes": 3162,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/composition.tex",
+      "sha256": "98a605ccbfd73c268e8022865d5f7327753e2880fad3b24242dd34b9cf2e9b0c"
+    },
+    {
+      "bytes": 1325,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/cost.tex",
+      "sha256": "0f97cd3d6564ce4b8c4e888003dc2aa8f033e2f33fb9c2af7f0bf80d0332e288"
+    },
+    {
+      "bytes": 1610,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/distillation.tex",
+      "sha256": "d81cfdef18fa550ad121ed7055058ff29db7f1de8b09f38e1666b39174e27bff"
+    },
+    {
+      "bytes": 1648,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/full_model.tex",
+      "sha256": "312a6efffc2f94da8d3a136f4dcc1ddb2ca980becb2060d7c4b58cbf421c8135"
+    },
+    {
+      "bytes": 530,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/invariance.tex",
+      "sha256": "834e4500e0705591adfba3d5a8150aa0c5538b4dca1a65327d2bd6eb1126e420"
+    },
+    {
+      "bytes": 965,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/multiview.tex",
+      "sha256": "0a6a494d3ad9f3ebba1682bb2c415c2b5e06481a6f26c456b643ae97306bfd5f"
+    },
+    {
+      "bytes": 1823,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/tables/projective_ranks.tex",
+      "sha256": "dc2b94927029f127095b80ccc79092208394ddb663cf83eaf0c4819e66498d19"
+    },
+    {
+      "bytes": 515,
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "path": "reports/remaining_experiments/test_results.txt",
+      "sha256": "f75a199d76078d3a002292574c6b69d8dc4ff0b0b998a40777e4d90f7c56a818"
+    }
+  ],
+  "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "protocol_coverage": [
+    {
+      "limitation": "Exact gauge/lift checks ran, but the refinement audit is a finite-dimensional certificate surrogate.",
+      "stage": "1",
+      "status": "partial"
+    },
+    {
+      "limitation": "Fashion-MNIST discovery ran; the bounded router uses ridge and orbit-moment features, not a trained equivariant CNN.",
+      "stage": "2",
+      "status": "partial"
+    },
+    {
+      "limitation": "Cached pretrained features and synthetic feature adapters ran; residual-block and full-backbone fine-tuning did not run.",
+      "stage": "3",
+      "status": "partial"
+    },
+    {
+      "limitation": "Exact algebra and ridge/random-feature sequence controls ran; neural Transformer and differentiable-automaton baselines did not run.",
+      "stage": "4",
+      "status": "partial"
+    },
+    {
+      "limitation": "Both fixed natural families ran with five calibration resamples and four 200-draw null families.",
+      "stage": "5",
+      "status": "complete"
+    },
+    {
+      "limitation": "Both controlled teachers, seven bounded student families, and five objectives ran; the Fashion branch was correctly gated off.",
+      "stage": "6",
+      "status": "complete"
+    },
+    {
+      "limitation": "ModelNet10 mesh features and four fitted view experts ran; the graph and retransport methods are bounded linear proxies.",
+      "stage": "7",
+      "status": "partial"
+    },
+    {
+      "limitation": "Exact cyclic and finite-Heisenberg constructions ran; S3, D4, and Q8 were covered only by normalized trivial cocycles.",
+      "stage": "8",
+      "status": "partial"
+    },
+    {
+      "limitation": "Accuracy was read from executed controls, but batch-size systems costs are shape-matched NumPy proxies, not end-to-end method timings.",
+      "stage": "9",
+      "status": "partial"
+    }
+  ],
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "stages": [
+    {
+      "command": "python experiments/gauge_invariance_and_refinement.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 14.401984457857907,
+      "script": "gauge_invariance_and_refinement.py",
+      "stage": "1",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/input_inferred_chart_recovery.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 7.996123417047784,
+      "script": "input_inferred_chart_recovery.py",
+      "stage": "2",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/full_model_transition_geometry.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 6.062989583006129,
+      "script": "full_model_transition_geometry.py",
+      "stage": "3",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/strong_compositional_baselines.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 31.662549334112555,
+      "script": "strong_compositional_baselines.py",
+      "stage": "4",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/complete_natural_stability_gate.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 9.154887875076383,
+      "script": "complete_natural_stability_gate.py",
+      "stage": "5",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/equivariant_distillation.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 7.047027583932504,
+      "script": "equivariant_distillation.py",
+      "stage": "6",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/realistic_multiview_twist.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 11.89724654215388,
+      "script": "realistic_multiview_twist.py",
+      "stage": "7",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/projective_representation_expansion.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 0.6800358749460429,
+      "script": "projective_representation_expansion.py",
+      "stage": "8",
+      "stderr": "",
+      "stdout": ""
+    },
+    {
+      "command": "python experiments/official_baseline_cost_audit.py",
+      "execution_commit": "00a00e704f8daf4f7ae158af6d03c755fbb1d1c6",
+      "returncode": 0,
+      "runtime_seconds": 0.9266722910106182,
+      "script": "official_baseline_cost_audit.py",
+      "stage": "9",
+      "stderr": "",
+      "stdout": ""
+    }
+  ]
+}

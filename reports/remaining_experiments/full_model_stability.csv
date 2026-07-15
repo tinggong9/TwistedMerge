@@ -1,0 +1,11 @@
+setting_id,architecture,collection,selected_family,observed_residual,null_threshold,calibration_resample_stable,beyond_null
+resnet18_collection0,resnet18,0,orthogonal_procrustes,0.022762197811208838,0.1785517811521558,True,False
+resnet18_collection1,resnet18,1,orthogonal_procrustes,0.02216222472946138,0.17916207079519159,True,False
+resnet18_collection2,resnet18,2,orthogonal_procrustes,0.02228888442136436,0.17876709083090886,True,False
+resnet18_collection3,resnet18,3,orthogonal_procrustes,0.024481354083313464,0.17908076147892354,True,False
+resnet18_collection4,resnet18,4,orthogonal_procrustes,0.022920438887902485,0.1801554860339959,True,False
+deit_tiny_collection0,deit_tiny,0,orthogonal_procrustes,0.026750962877486274,0.17837737031654013,True,False
+deit_tiny_collection1,deit_tiny,1,orthogonal_procrustes,0.027608439180217315,0.17871507082566074,True,False
+deit_tiny_collection2,deit_tiny,2,orthogonal_procrustes,0.025483560481345934,0.17884029711886784,True,False
+deit_tiny_collection3,deit_tiny,3,orthogonal_procrustes,0.026783617188228994,0.1783060095252542,True,False
+deit_tiny_collection4,deit_tiny,4,orthogonal_procrustes,0.02643116297857666,0.17855196141309268,True,False

@@ -1,0 +1,10 @@
+stage,status,limitation
+1,partial,"Exact gauge/lift checks ran, but the refinement audit is a finite-dimensional certificate surrogate."
+2,partial,"Fashion-MNIST discovery ran; the bounded router uses ridge and orbit-moment features, not a trained equivariant CNN."
+3,partial,Cached pretrained features and synthetic feature adapters ran; residual-block and full-backbone fine-tuning did not run.
+4,partial,Exact algebra and ridge/random-feature sequence controls ran; neural Transformer and differentiable-automaton baselines did not run.
+5,complete,Both fixed natural families ran with five calibration resamples and four 200-draw null families.
+6,complete,"Both controlled teachers, seven bounded student families, and five objectives ran; the Fashion branch was correctly gated off."
+7,partial,ModelNet10 mesh features and four fitted view experts ran; the graph and retransport methods are bounded linear proxies.
+8,partial,"Exact cyclic and finite-Heisenberg constructions ran; S3, D4, and Q8 were covered only by normalized trivial cocycles."
+9,partial,"Accuracy was read from executed controls, but batch-size systems costs are shape-matched NumPy proxies, not end-to-end method timings."

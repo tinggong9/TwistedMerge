@@ -1,0 +1,3 @@
+architecture,collections,residual_blocks_finetuned,bounded_full_backbone_subset_executed,hodge_components_computed,full_model_protocol_complete,stable_residual_beyond_all_nulls,positive_paired_interval,gate_passed
+resnet18,5,False,False,False,False,False,False,False
+deit_tiny,5,False,False,False,False,False,False,False

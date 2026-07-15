@@ -1,0 +1,13 @@
+dataset,phase,method,runs,accuracy,chart_accuracy,latency_ms
+FashionMNIST,discovery,canonicalize_pool_retransport_inferred,5,0.5447000000000001,0.4521,0.03595813177525997
+FashionMNIST,discovery,context_blind_synchronization,5,0.2802,0.4521,0.02345792017877102
+FashionMNIST,discovery,ensemble,5,0.2802,0.4521,0.0392089132219553
+FashionMNIST,discovery,generic_image_context_classifier,5,0.4737,0.4521,0.040833139792084694
+FashionMNIST,discovery,generic_low_rank_context_adapter,5,0.5435000000000001,0.4521,0.03587501123547554
+FashionMNIST,discovery,generic_mixture_of_experts,5,0.3862,0.4521,0.037291087210178375
+FashionMNIST,discovery,group_equivariant_cnn_chart_classifier,5,0.5447000000000001,0.4521,0.03812485374510288
+FashionMNIST,discovery,random_action_control,5,0.28280000000000005,0.4521,0.03533298149704933
+FashionMNIST,discovery,structured_group_router,5,0.5447000000000001,0.4521,0.03774999640882015
+FashionMNIST,discovery,supplied_chart_oracle,5,0.7420000000000001,0.4521,0.035291071981191635
+FashionMNIST,discovery,twistedmerge_diagnostic_structured_retransport,5,0.5445,0.4521,0.035207951441407204
+FashionMNIST,discovery,wrong_action_control,5,0.1647,0.4521,0.0363748986274004

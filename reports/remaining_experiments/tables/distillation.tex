@@ -1,0 +1,24 @@
+\begin{table}[t]
+\centering
+\caption{Equivariant distillation}
+\begin{tabular}{llllll}
+\toprule
+group & method & accuracy & teacher\_student\_kl & retained\_teacher\_gain\_fraction & stored\_parameters \\
+\midrule
+S3 & canonical\_predictor\_learned\_retransport & 0.15091666666666667 & 0.755276400027416 & -0.02089795344965563 & 726.0 \\
+S3 & explicit\_chart\_token & 0.19346666666666665 & 0.3355081464380514 & 0.030235547489158278 & 186.0 \\
+S3 & finite\_state\_chart\_module & 1.0 & 0.0 & 1.0 & 180.0 \\
+S3 & group\_equivariant\_output\_head & 1.0 & 0.0 & 1.0 & 180.0 \\
+S3 & low\_rank\_chart\_adapter & 0.15848333333333334 & 0.3369961642936654 & -0.011771726815843408 & 246.0 \\
+S3 & ordinary\_single\_model & 0.15945 & 0.33706656950406205 & -0.010593954145435638 & 726.0 \\
+S3 & parameter\_matched\_widened\_model & 0.1673 & 0.36021965542146395 & -0.0011155053565240062 & 30246.0 \\
+D4 & canonical\_predictor\_learned\_retransport & 0.10716666666666667 & 0.8084775664180448 & -0.015242822654404728 & 968.0 \\
+D4 & explicit\_chart\_token & 0.13761666666666666 & 0.367353148611163 & 0.019381781316064592 & 264.0 \\
+D4 & finite\_state\_chart\_module & 1.0 & 0.0 & 1.0 & 256.0 \\
+D4 & group\_equivariant\_output\_head & 1.0 & 0.0 & 1.0 & 256.0 \\
+D4 & low\_rank\_chart\_adapter & 0.11603333333333334 & 0.36881111011973816 & -0.005148610066800802 & 328.0 \\
+D4 & ordinary\_single\_model & 0.11576666666666668 & 0.3688620262758873 & -0.005456989087449109 & 968.0 \\
+D4 & parameter\_matched\_widened\_model & 0.11945 & 0.3870078738551317 & -0.001248083059668344 & 30728.0 \\
+\bottomrule
+\end{tabular}
+\end{table}

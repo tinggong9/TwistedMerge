@@ -1,0 +1,6 @@
+operation,functional_error,class_invariant,reason
+dead_neuron_insertion,0.0,False,width changes the transition space
+dead_neuron_modification,0.0,False,unobserved dead coordinates change transition certificates
+neuron_duplication_split_outgoing,3.552713678800501e-15,False,noninvertible duplication is outside the gauge group
+redundant_linear_factorization,2.4868995751603507e-14,False,factorization changes hidden dimension and cycle rank
+width_expansion,0.0,False,functional equivalence does not define an invertible vertex gauge

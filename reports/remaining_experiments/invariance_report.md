@@ -1,0 +1,3 @@
+# Gauge-invariance and refinement audit
+
+Execution commit: `00a00e704f8daf4f7ae158af6d03c755fbb1d1c6`. The audit executed 500 exact vertex-gauge trials and 500 central lift-change trials. Vertex gauges and the six finite-dimensional certificate-surrogate refinement operations passed the numerical tolerance. The controlled transition systems in this script are coboundaries; it does not test preservation of a nontrivial finite cohomology class under refinement. All five outside-gauge functional equivalences preserved the sampled function where applicable but did not preserve the certificate class; those negative findings are retained.

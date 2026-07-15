@@ -1,0 +1,7 @@
+operation,trials,maximum_invariance_error,invariant
+vertex_relabeling,100,0.0,True
+edge_reversal,100,0.0,True
+cycle_basis_replacement,100,6.661338147750939e-16,True
+redundant_edge_insertion,100,8.881784197001252e-16,True
+barycentric_face_subdivision,100,4.440892098500626e-16,True
+common_refinement,100,4.440892098500626e-16,True

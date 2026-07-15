@@ -1,0 +1,11 @@
+setting_id,architecture,collection,null_family,observed_residual,null_q95,beyond_null
+resnet18_collection0,resnet18,0,edge_map_shuffle,0.022762197811208838,0.1785517811521558,False
+resnet18_collection1,resnet18,1,edge_map_shuffle,0.02216222472946138,0.17916207079519159,False
+resnet18_collection2,resnet18,2,edge_map_shuffle,0.02228888442136436,0.17876709083090886,False
+resnet18_collection3,resnet18,3,edge_map_shuffle,0.024481354083313464,0.17908076147892354,False
+resnet18_collection4,resnet18,4,edge_map_shuffle,0.022920438887902485,0.1801554860339959,False
+deit_tiny_collection0,deit_tiny,0,edge_map_shuffle,0.026750962877486274,0.17837737031654013,False
+deit_tiny_collection1,deit_tiny,1,edge_map_shuffle,0.027608439180217315,0.17871507082566074,False
+deit_tiny_collection2,deit_tiny,2,edge_map_shuffle,0.025483560481345934,0.17884029711886784,False
+deit_tiny_collection3,deit_tiny,3,edge_map_shuffle,0.026783617188228994,0.1783060095252542,False
+deit_tiny_collection4,deit_tiny,4,edge_map_shuffle,0.02643116297857666,0.17855196141309268,False
