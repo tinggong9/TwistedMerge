@@ -14,7 +14,9 @@ import uuid
 from dataclasses import dataclass
 from pathlib import Path
 
-from future_benchmark_common import LOCAL, OUT, ROOT, ensure_dirs, git_head, safe_path, write_csv, write_json
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from experiments.future_benchmark_common import LOCAL, OUT, ROOT, ensure_dirs, git_head, safe_path, write_csv, write_json
 
 
 @dataclass(frozen=True)
@@ -24,6 +26,7 @@ class Stage:
     name: str
     script: str
     kind: str = "discovery"
+    args: tuple[str, ...] = ()
 
 
 STAGES = [
@@ -44,7 +47,9 @@ STAGES = [
     Stage("N8", "near-term", "projective pose", "quaternion_pose_near_term.py"),
     Stage("N9", "near-term", "systems and distillation", "future_systems_distillation.py"),
     Stage("N10", "near-term", "claim decision", "future_claim_decision.py"),
-    Stage("X1-X12", "extended", "breadth and stress-test suite", "extended_benchmark_suite.py"),
+    Stage("X1", "extended", "broader pretrained vision", "broader_vision_extended.py"),
+    Stage("X2", "extended", "broader language and adapters", "broader_language_extended.py"),
+    *[Stage(f"X{index}", "extended", f"extended discovery topic {index}", "extended_benchmark_suite.py", args=("--stage", f"X{index}")) for index in range(3, 13)],
     Stage("F", "extended", "global evidence report", "future_final_report.py"),
 ]
 
@@ -99,7 +104,7 @@ def main() -> None:
         previous = status["stages"].get(stage.stage_id, {})
         if args.resume and previous.get("state") in {"completed", "confirmation", "clean-freeze", "negative", "blocked"} and previous.get("source_sha256") == source_sha:
             continue
-        command = [sys.executable, str(script)]
+        command = [sys.executable, str(script), *stage.args]
         started_at = time.strftime("%Y-%m-%dT%H:%M:%S%z")
         started = time.time()
         completed = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
@@ -120,7 +125,7 @@ def main() -> None:
             "name": stage.name,
             "state": state,
             "summary": summary,
-            "command": f"{Path(sys.executable).name} experiments/{stage.script}",
+            "command": " ".join([Path(sys.executable).name, f"experiments/{stage.script}", *stage.args]),
             "execution_commit": git_head(),
             "source_sha256": source_sha,
             "started_at": started_at,

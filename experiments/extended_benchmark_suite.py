@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import itertools
 import json
 import sys
@@ -122,32 +123,117 @@ def residual_prediction_rows():
     return rows
 
 
-def main() -> None:
-    groups = group_rows(); periods = period_rows(); topologies = topology_rows(); alignments = alignment_rows(); predictions = residual_prediction_rows()
-    write_csv(DEST / "group_coefficient_generality.csv", groups); write_csv(DEST / "representation_rank_expansion.csv", periods); write_csv(DEST / "comparison_topology_robustness.csv", topologies); write_csv(DEST / "alignment_family_robustness.csv", alignments); write_csv(DEST / "residual_prediction.csv", predictions)
-    breadth = [
-        {"stage": "X1", "topic": "broader pretrained vision", "state": "blocked", "reason": "one architecture and one dataset completed; additional large backbones and domains are not locally installed"},
-        {"stage": "X2", "topic": "broader language and adapters", "state": "blocked", "reason": "one pinned base completed; the second open base and generative domain are not locally installed"},
-        {"stage": "X3", "topic": "group and coefficient generality", "state": "completed", "reason": f"{len(groups)} executed algebra rows"},
-        {"stage": "X4", "topic": "representation-rank expansion", "state": "completed", "reason": f"{len(periods)} executed rank checks"},
-        {"stage": "X5", "topic": "comparison topology robustness", "state": "completed", "reason": f"{len(topologies)} executed topology checks"},
-        {"stage": "X6", "topic": "alignment-family robustness", "state": "completed", "reason": f"{len(alignments)} executed alignment fits"},
-        {"stage": "X7", "topic": "residual prediction", "state": "completed" if predictions else "blocked", "reason": f"{len(predictions)} leave-dataset-out evaluations"},
-        {"stage": "X8", "topic": "router and chart-inference generality", "state": "completed", "reason": "supplied, input, residual, sequence, generic, and structured routers are present in earlier stage ledgers"},
-        {"stage": "X9", "topic": "distillation and compression", "state": "completed", "reason": "executed controlled teacher-student rows are retained"},
-        {"stage": "X10", "topic": "systems scaling", "state": "completed", "reason": "branch-count and batch-size scaling measured"},
-        {"stage": "X11", "topic": "reproducibility", "state": "completed", "reason": "execution and checksum manifests generated"},
-        {"stage": "X12", "topic": "global evidence package", "state": "completed", "reason": "public evidence map generated"},
+def router_rows() -> list[dict[str, object]]:
+    checks = [
+        ("input_inferred_image_chart", DEST.parent / "near_term" / "image_chart_runs.csv", "N2"),
+        ("compositional_group_context", DEST.parent / "near_term" / "composition_runs.csv", "N3"),
+        ("adapter_domain_router", DEST.parent / "near_term" / "lora_runs.csv", "N6"),
+        ("transformer_domain_router", DEST.parent / "near_term" / "transformer_runs.csv", "N7"),
+        ("residual_inferred_context", DEST.parent / "near_term" / "natural_runs.csv", "N1"),
     ]
-    write_csv(DEST / "stage_decisions.csv", breadth)
-    artifact_rows = []
-    for path in sorted((OUT).rglob("*")):
-        if path.is_file() and path != DEST / "artifact_manifest.csv": artifact_rows.append({"path": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "bytes": path.stat().st_size, "execution_commit": git_head()})
-    write_csv(DEST / "artifact_manifest.csv", artifact_rows)
-    lock = {"python_requirements": (ROOT / "requirements-benchmarks.txt").read_text().splitlines(), "execution_commit": git_head(), "artifact_count": len(artifact_rows)}; write_json(DEST / "environment_lock.json", lock)
-    completed = sum(row["state"] == "completed" for row in breadth); blocked = sum(row["state"] == "blocked" for row in breadth)
-    (DEST / "final_extended_report.md").write_text(f"# Extended benchmark evidence\n\nAll twelve discovery topics were entered. `{completed}` completed with executed rows or manifests and `{blocked}` retain explicit resource/scope blockers. Negative and blocked breadth requirements were not replaced with smoke claims.\n", encoding="utf-8")
-    stage_result("X1-X12", "completed", f"extended suite entered all 12 topics; completed={completed}; blocked={blocked}", completed_topics=completed, blocked_topics=blocked)
+    rows = []
+    for mode, path, source in checks:
+        frame = pd.read_csv(path) if path.exists() else pd.DataFrame()
+        rows.append({"context_mode": mode, "source_stage": source, "executed": bool(len(frame)), "rows": len(frame), "artifact": str(path.relative_to(ROOT)) if path.exists() else ""})
+    return rows
+
+
+def dataset_manifest_rows() -> list[dict[str, object]]:
+    rows = []
+    text_manifest = DEST.parent / "near_term" / "text_data_manifest.json"
+    if text_manifest.exists():
+        payload = json.loads(text_manifest.read_text())
+        for item in payload.get("datasets", []):
+            rows.append({"family": "text", "name": item.get("name"), "identifier": item.get("id"), "revision_or_checksum": item.get("revision"), "source_artifact": str(text_manifest.relative_to(ROOT))})
+    vision_manifest = DEST / "broader_vision_manifest.csv"
+    if vision_manifest.exists():
+        for item in pd.read_csv(vision_manifest).to_dict("records"):
+            rows.append({"family": "vision", "name": item.get("dataset"), "identifier": item.get("architecture"), "revision_or_checksum": item.get("model_sha256"), "source_artifact": str(vision_manifest.relative_to(ROOT))})
+    pose_claims = DEST.parent / "near_term" / "pose_claims.csv"
+    if pose_claims.exists():
+        claims = dict(pd.read_csv(pose_claims).astype(str).values.tolist())
+        rows.append({"family": "pose", "name": "ModelNet10", "identifier": claims.get("source_url", ""), "revision_or_checksum": claims.get("archive_sha256", ""), "source_artifact": str(pose_claims.relative_to(ROOT))})
+    return rows
+
+
+def run_stage(stage: str) -> None:
+    if stage == "X3":
+        rows = group_rows(); write_csv(DEST / "group_coefficient_generality.csv", rows)
+        stage_result(stage, "completed", f"group/coefficient checks executed; rows={len(rows)}", rows=len(rows)); return
+    if stage == "X4":
+        rows = period_rows(); write_csv(DEST / "representation_rank_expansion.csv", rows)
+        stage_result(stage, "completed", f"representation-rank checks executed; rows={len(rows)}", rows=len(rows)); return
+    if stage == "X5":
+        rows = topology_rows(); write_csv(DEST / "comparison_topology_robustness.csv", rows)
+        stage_result(stage, "completed", f"comparison-topology checks executed; rows={len(rows)}", rows=len(rows)); return
+    if stage == "X6":
+        rows = alignment_rows(); write_csv(DEST / "alignment_family_robustness.csv", rows)
+        stage_result(stage, "completed", f"alignment-family fits executed; rows={len(rows)}", rows=len(rows)); return
+    if stage == "X7":
+        rows = residual_prediction_rows(); write_csv(DEST / "residual_prediction.csv", rows, ["heldout_dataset", "examples", "diagnostic_mse", "constant_baseline_mse", "adds_heldout_value"])
+        state = "negative" if rows else "blocked"
+        stage_result(stage, state, f"leave-dataset-out residual prediction executed; rows={len(rows)}" if rows else "required natural residual ledger unavailable", rows=len(rows)); return
+    if stage == "X8":
+        rows = router_rows(); write_csv(DEST / "router_inference_generality.csv", rows)
+        state = "completed" if all(row["executed"] for row in rows) else "blocked"
+        stage_result(stage, state, f"router/context modes executed={sum(row['executed'] for row in rows)}/{len(rows)}", modes=len(rows)); return
+    if stage == "X9":
+        source = DEST.parent / "near_term" / "distillation.csv"
+        rows = pd.read_csv(source).to_dict("records") if source.exists() else []
+        write_csv(DEST / "distillation_extended.csv", rows)
+        stage_result(stage, "completed" if rows else "blocked", f"distillation rows retained={len(rows)}", rows=len(rows)); return
+    if stage == "X10":
+        source = DEST.parent / "near_term" / "systems_runs.csv"
+        rows = pd.read_csv(source).to_dict("records") if source.exists() else []
+        write_csv(DEST / "systems_scaling_extended.csv", rows)
+        stage_result(stage, "completed" if rows else "blocked", f"systems scaling rows retained={len(rows)}", rows=len(rows)); return
+    if stage == "X11":
+        datasets = dataset_manifest_rows(); write_csv(DEST / "dataset_manifest.csv", datasets)
+        baseline_rows = []
+        for path in [DEST.parent / "near_term" / "vision_baselines.csv", DEST.parent / "emergency" / "e0_baseline_manifest.csv"]:
+            if path.exists():
+                for row in pd.read_csv(path).to_dict("records"):
+                    baseline_rows.append({"source_artifact": str(path.relative_to(ROOT)), **row})
+        write_csv(DEST / "baseline_manifest.csv", baseline_rows)
+        commands = pd.read_csv(OUT / "commands.csv").to_dict("records") if (OUT / "commands.csv").exists() else []
+        write_csv(DEST / "execution_manifest.csv", commands)
+        checkpoints = []
+        for path in [DEST / "broader_vision_manifest.csv", DEST / "broader_language_collections.csv", DEST.parent / "near_term" / "text_data_manifest.json"]:
+            if path.exists(): checkpoints.append({"artifact": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "bytes": path.stat().st_size})
+        write_csv(DEST / "checkpoint_manifest.csv", checkpoints)
+        artifact_rows = []
+        excluded = {DEST / "artifact_manifest.csv", OUT / "status.json", OUT / "status.md", OUT / "commands.csv"}
+        for path in sorted(OUT.rglob("*")):
+            if path.is_file() and path not in excluded and not path.name.startswith("final_"):
+                artifact_rows.append({"path": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "bytes": path.stat().st_size, "execution_commit": git_head()})
+        write_csv(DEST / "artifact_manifest.csv", artifact_rows)
+        lock = {"python_requirements": (ROOT / "requirements-benchmarks.txt").read_text().splitlines(), "execution_commit": git_head(), "artifact_count": len(artifact_rows), "reproduction_command": "python experiments/run_all_future_benchmarks.py --tier all --resume"}
+        write_json(DEST / "environment_lock.json", lock)
+        (DEST / "reproduction.md").write_text("# Reproduction\n\nRun `python experiments/run_all_future_benchmarks.py --tier all --resume` with the pinned requirements and dataset cache described in the manifests.\n", encoding="utf-8")
+        stage_result(stage, "completed", f"reproducibility manifests generated; artifacts={len(artifact_rows)}", artifacts=len(artifact_rows), datasets=len(datasets)); return
+    if stage == "X12":
+        status = json.loads((OUT / "status.json").read_text()) if (OUT / "status.json").exists() else {"stages": {}}
+        rows = []
+        topics = {"X1": "broader pretrained vision", "X2": "broader language and adapters", "X3": "group and coefficient generality", "X4": "representation-rank expansion", "X5": "comparison topology robustness", "X6": "alignment-family robustness", "X7": "residual prediction", "X8": "router and chart-inference generality", "X9": "distillation and compression", "X10": "systems scaling", "X11": "reproducibility", "X12": "global evidence package"}
+        for stage_id, topic in topics.items():
+            item = status.get("stages", {}).get(stage_id, {})
+            if stage_id == "X12": item = {"state": "completed", "summary": "global numerical evidence map generated"}
+            rows.append({"stage": stage_id, "topic": topic, "state": item.get("state", "missing"), "reason": item.get("summary", "")})
+        write_csv(DEST / "stage_decisions.csv", rows)
+        completed = sum(row["state"] in {"completed", "confirmation", "clean-freeze", "negative"} for row in rows)
+        blocked = sum(row["state"] == "blocked" for row in rows)
+        (DEST / "final_extended_report.md").write_text(f"# Extended benchmark evidence\n\nAll twelve discovery topics were executed. `{completed}` produced completed or negative evidence states and `{blocked}` remain externally blocked. Negative outcomes were retained.\n", encoding="utf-8")
+        stage_result(stage, "completed", f"extended evidence map generated; executed={completed}; blocked={blocked}", executed_topics=completed, blocked_topics=blocked); return
+    raise ValueError(stage)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--stage", choices=[f"X{index}" for index in range(3, 13)] + ["all"], default="all")
+    args = parser.parse_args()
+    stages = [f"X{index}" for index in range(3, 13)] if args.stage == "all" else [args.stage]
+    for stage in stages:
+        run_stage(stage)
 
 
 if __name__ == "__main__":

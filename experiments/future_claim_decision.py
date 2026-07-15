@@ -35,7 +35,7 @@ def main() -> None:
         "federated_frames": bool(read_claim(DEST / "federated_claims.json", "persistent_lift_gain_found")),
         "real_adapters": bool(read_claim(DEST / "lora_claims.csv", "full_gate_passed")),
         "transformers": bool(read_claim(DEST / "transformer_claims.csv", "gate_passed")),
-        "projective_pose": bool(read_claim(DEST / "pose_claims.csv", "pose_gate_passed")),
+        "projective_pose": bool(read_claim(DEST / "pose_claims.csv", "pose_lift_gate_passed")),
     }
     level3 = any(families.values()); level4 = sum(families.values()) >= 3 and families["pretrained_vision"] and (families["real_adapters"] or families["transformers"])
     strongest = 4 if level4 else 3 if level3 else 2 if level2 else 1 if level1 else 0

@@ -12,3 +12,10 @@ def test_future_runner_has_all_scientific_tiers():
     assert '"emergency"' in text
     assert '"near-term"' in text
     assert '"extended"' in text
+
+
+def test_future_runner_exposes_each_extended_stage():
+    from experiments.run_all_future_benchmarks import STAGES
+
+    identifiers = {stage.stage_id for stage in STAGES}
+    assert {f"X{index}" for index in range(1, 13)} <= identifiers
