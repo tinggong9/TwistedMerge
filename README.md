@@ -124,7 +124,7 @@ Representative outputs:
 
 ### Real fixed-setting verification
 
-The current paper-grade real verification entry point is:
+The current confirmatory real verification entry point is:
 
 ```bash
 PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig \
@@ -248,7 +248,7 @@ Each substantial experiment records:
 - paired deltas,
 - capacity and inference multipliers when relevant.
 
-Smoke tests are plumbing checks. Paper-grade runs use the report-specific gates and repeated-seed settings described in the corresponding markdown report.
+Smoke tests are plumbing checks. confirmatory runs use the report-specific gates and repeated-seed settings described in the corresponding markdown report.
 
 ## Artifact Hygiene
 

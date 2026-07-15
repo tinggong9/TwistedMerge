@@ -447,7 +447,7 @@ def update_claims_audit(summary: pd.DataFrame, path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     marker = "The full stepwise greedy-soup empirical descent theorem is directly auditable"
     if marker not in text:
-        insert_marker = "<!-- prompt10-claim-audit:start -->"
+        insert_marker = "<!-- claim_audit-claim-audit:start -->"
         if insert_marker in text:
             text = text.replace(insert_marker, row + "\n\n" + insert_marker)
         else:

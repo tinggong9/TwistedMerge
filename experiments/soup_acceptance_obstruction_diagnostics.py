@@ -585,7 +585,7 @@ def target_availability_rows(df: pd.DataFrame) -> list[dict]:
         {
             "summary_type": "target_availability",
             "target": "final_ingredient_count",
-            "feature_set": "constant_in_prompt22_audit",
+            "feature_set": "constant_in_fixed_diagnostic_audit",
             "predictor": "",
             "n_rows": int(df["run_id"].nunique()),
             "metric": "std",

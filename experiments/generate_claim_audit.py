@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate conservative verification-pipeline and claim-audit artifacts.
 
-This script is intentionally small and deterministic. It writes the benchmark series 10
+This script is intentionally small and deterministic. It writes the fixed-setting
 audit layer used to keep paper claims separated from smoke tests, descriptive
 implementation checks, and full repeated-seed empirical support.
 """
@@ -24,7 +24,7 @@ CLAIM_FIELDS = [
     "status",
     "evidence",
     "safe_wording",
-    "forbidden_wording",
+    "unsupported_wording",
     "fake_mnist_support_allowed",
     "next_gate",
 ]
@@ -43,7 +43,7 @@ CLAIMS = [
             "In the controlled central-twist benchmark, rank-lifted branches "
             "are supported as controlled obstruction-structured evidence."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "This does not show that real neural residuals are Brauer classes "
             "or that rank lift is a capacity-matched single merged model."
         ),
@@ -61,9 +61,9 @@ CLAIMS = [
         ),
         "safe_wording": (
             "The training-quality sweep supports choosing model-quality "
-            "settings before the paper-grade verification run."
+            "settings before the confirmatory verification run."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not use the sweep as evidence for obstruction prediction or "
             "merge-method superiority."
         ),
@@ -80,12 +80,12 @@ CLAIMS = [
             "reports/csv/obstruction_predictor_target_stats.csv"
         ),
         "safe_wording": (
-            "The fixed-setting script is the paper-grade real verification "
+            "The fixed-setting script is the confirmatory real verification "
             "entry point, but real obstruction-prediction claims remain gated "
             "until full observed repeated-seed runs pass the predefined "
             "statistical criteria."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not claim raw weight-average degradation prediction, broad "
             "real-model prediction, or positive empirical support from "
             "fake-MNIST smoke rows."
@@ -109,7 +109,7 @@ CLAIMS = [
             "Positive monomial ReLU MLP gauges are implemented and tested as "
             "function-preserving transformations."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not turn exact functional preservation into a performance or "
             "generalization claim."
         ),
@@ -128,7 +128,7 @@ CLAIMS = [
             "Monomial gauge performance remains an open empirical question in "
             "this audit layer."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not claim monomial gauges improve merge accuracy from "
             "implementation checks alone."
         ),
@@ -147,7 +147,7 @@ CLAIMS = [
             "Greedy soup remains a strong boundary baseline that exact-gauge "
             "methods do not robustly beat under the current evidence."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not claim TwistedMerge beats greedy soup unless paired CIs "
             "directly support that exact comparison."
         ),
@@ -166,7 +166,7 @@ CLAIMS = [
             "Official external-code integration was attempted and documented, "
             "but no official baseline win is claimed."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not say TwistedMerge beats official Git-ReBasin, C2M3, Model "
             "Soups, or NSD baselines unless official-code runs produce those "
             "metrics."
@@ -186,7 +186,7 @@ CLAIMS = [
             "Real residuals remain non-Brauer under tested diagnostics; "
             "controlled period-index examples support the mathematics."
         ),
-        "forbidden_wording": (
+        "unsupported_wording": (
             "Do not call real MNIST, Fashion-MNIST, CIFAR, CNN, or block "
             "residuals Brauer/period-index classes under the current evidence."
         ),
@@ -201,21 +201,21 @@ PIPELINE_ROWS = [
         "status": "historical/descriptive",
         "role": (
             "Retained for continuity with earlier benchmark plumbing. It is "
-            "not the next paper-grade real verification run."
+            "not the next confirmatory real verification run."
         ),
     },
     {
         "artifact": "experiments/model_merging_fixed_setting_verification.py",
-        "status": "paper-grade real verification script",
+        "status": "confirmatory real verification script",
         "role": (
-            "Use this script for the next paper-grade real run measuring "
+            "Use this script for the next confirmatory real run measuring "
             "obstruction predictors, merge degradation targets, rank-lift "
             "comparisons, and confidence intervals."
         ),
     },
     {
         "artifact": "experiments/controlled_twisted_overlap_benchmark.py",
-        "status": "paper-grade controlled central-twist benchmark",
+        "status": "confirmatory controlled central-twist benchmark",
         "role": (
             "Use this for controlled central-twist obstruction and rank-lift "
             "claims, not for natural real-model Brauer claims."
@@ -273,7 +273,7 @@ FORBIDDEN_WORDING = [
     "Raw weight-average degradation is predicted unless the full fixed-setting gates pass.",
     "Monomial gauges improve performance based only on implementation checks.",
     "Real MNIST/Fashion-MNIST/CIFAR residuals are Brauer or period-index classes.",
-    "The historical model_merging_benchmark.py verification mode is the paper-grade real run.",
+    "The historical model_merging_benchmark.py verification mode is the confirmatory real run.",
 ]
 
 
@@ -321,7 +321,7 @@ def latex_table(rows: list[dict[str, str]]) -> str:
                     latex_escape(row["claim"]),
                     latex_escape(row["status"]),
                     latex_escape(row["safe_wording"]),
-                    latex_escape(row["forbidden_wording"]),
+                    latex_escape(row["unsupported_wording"]),
                 ]
             )
             + r" \\"
@@ -344,10 +344,10 @@ def write_claim_tex() -> None:
     (TABLE_DIR / "claims_audit.tex").write_text(latex_table(CLAIMS), encoding="utf-8")
 
 
-def prompt10_section() -> str:
+def claim_audit_section() -> str:
     section_lines = [
-        "<!-- prompt10-claim-audit:start -->",
-        "## benchmark series 10 Verification Pipeline And Claim Boundary Audit",
+        "<!-- claim_audit-claim-audit:start -->",
+        "## fixed-setting Verification Pipeline And Claim Boundary Audit",
         "",
         (
             "This section is generated by "
@@ -358,27 +358,27 @@ def prompt10_section() -> str:
         "",
         "### Required Claim Statuses",
         "",
-        markdown_table(CLAIMS, ["claim_id", "status", "evidence", "safe_wording", "forbidden_wording"]),
+        markdown_table(CLAIMS, ["claim_id", "status", "evidence", "safe_wording", "unsupported_wording"]),
         "",
-        "### Safe Abstract Wording",
+        "### Evidence-Constrained Summary Wording",
         "",
     ]
     section_lines.extend(f"- {item}" for item in SAFE_ABSTRACT_WORDING)
-    section_lines.extend(["", "### Forbidden Wording", ""])
+    section_lines.extend(["", "### Unsupported Extrapolations", ""])
     section_lines.extend(f"- {item}" for item in FORBIDDEN_WORDING)
     section_lines.extend(
         [
             "",
-            "### Next Paper-Grade Real Run",
+            "### Next Confirmatory Real Run",
             "",
             (
                 "Use `experiments/model_merging_fixed_setting_verification.py` "
-                "for the next paper-grade real verification run. Keep "
+                "for the next confirmatory real verification run. Keep "
                 "`experiments/model_merging_benchmark.py --mode verification` "
                 "as historical/descriptive context only."
             ),
             "",
-            "<!-- prompt10-claim-audit:end -->",
+            "<!-- claim_audit-claim-audit:end -->",
             "",
         ]
     )
@@ -388,9 +388,9 @@ def prompt10_section() -> str:
 def update_claims_audit_md() -> None:
     path = REPORTS / "claims_audit.md"
     original = path.read_text(encoding="utf-8") if path.exists() else "# Claims Audit\n"
-    section = prompt10_section()
+    section = claim_audit_section()
     pattern = re.compile(
-        r"<!-- prompt10-claim-audit:start -->.*?<!-- prompt10-claim-audit:end -->\n?",
+        r"<!-- claim_audit-claim-audit:start -->.*?<!-- claim_audit-claim-audit:end -->\n?",
         re.DOTALL,
     )
     if pattern.search(original):
@@ -407,17 +407,17 @@ def write_pipeline_status() -> None:
         (
             "This report fixes the current pipeline roles before additional "
             "experiments are run. It names exactly which script should be used "
-            "for the next paper-grade real run."
+            "for the next confirmatory real run."
         ),
         "",
         "## Script Roles",
         "",
         markdown_table(PIPELINE_ROWS, ["artifact", "status", "role"]),
         "",
-        "## Next Paper-Grade Real Run",
+        "## Next Confirmatory Real Run",
         "",
         (
-            "The next paper-grade real run should use "
+            "The next confirmatory real run should use "
             "`experiments/model_merging_fixed_setting_verification.py`. That "
             "script is the current real-model verification entry point for "
             "obstruction predictors, alignment-conditioned targets, ordinary "
@@ -430,15 +430,15 @@ def write_pipeline_status() -> None:
         (
             "- `experiments/model_merging_benchmark.py --mode verification` is "
             "historical/descriptive and should not be cited as the final "
-            "paper-grade real verification run."
+            "confirmatory real verification run."
         ),
         (
             "- `experiments/model_merging_fixed_setting_verification.py` is the "
-            "paper-grade real verification script."
+            "confirmatory real verification script."
         ),
         (
             "- `experiments/controlled_twisted_overlap_benchmark.py` is the "
-            "paper-grade controlled central-twist benchmark."
+            "confirmatory controlled central-twist benchmark."
         ),
         (
             "- `experiments/train_quality_sweep.py` is only for choosing "
@@ -469,11 +469,11 @@ def write_evidence_summary() -> None:
         "",
         "## Implemented",
         "",
-        "- `experiments/model_merging_fixed_setting_verification.py` is implemented as the paper-grade real verification script.",
-        "- `experiments/controlled_twisted_overlap_benchmark.py` is implemented as the paper-grade controlled central-twist benchmark.",
+        "- `experiments/model_merging_fixed_setting_verification.py` is implemented as the confirmatory real verification script.",
+        "- `experiments/controlled_twisted_overlap_benchmark.py` is implemented as the confirmatory controlled central-twist benchmark.",
         "- `experiments/train_quality_sweep.py` is implemented for model-quality setting selection.",
         "- `src/monomial_gauge_alignment.py` and `tests/test_monomial_gauge_alignment.py` implement and test exact ReLU-compatible monomial gauges.",
-        "- `experiments/generate_claim_audit.py` generates the benchmark series 10 audit section plus CSV/TeX/status artifacts.",
+        "- `experiments/generate_claim_audit.py` generates the fixed-setting audit section plus CSV/TeX/status artifacts.",
         "",
         "## Run Or Descriptive",
         "",
@@ -507,7 +507,7 @@ def main() -> None:
     update_claims_audit_md()
     write_pipeline_status()
     write_evidence_summary()
-    print("Generated benchmark series 10 claim-audit artifacts.")
+    print("Generated fixed-setting claim-audit artifacts.")
 
 
 if __name__ == "__main__":

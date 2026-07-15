@@ -33,7 +33,7 @@ This is an explanation of greedy-soup selection behavior, not evidence for a sou
 | --- | --- | --- | --- | --- | --- |
 | validation_margin_after_adding_candidate | not_modelled_direct_target_unavailable | 1680 | logged_rows | 0.0000 | true_candidate_soup_margins_not_logged_for_current_artifacts |
 | absolute_validation_degradation_if_rejected | not_modelled_direct_target_unavailable | 1200 | logged_rows | 0.0000 | rejected_candidate_after_metrics_not_logged_proxy_only |
-| final_ingredient_count | constant_in_prompt22_audit | 480 | std | 0.0000 | not_regressed_because_final_ingredient_count_is_constant_in_this_audit |
+| final_ingredient_count | constant_in_fixed_diagnostic_audit | 480 | std | 0.0000 | not_regressed_because_final_ingredient_count_is_constant_in_this_audit |
 
 ## Cross-Validated Acceptance
 

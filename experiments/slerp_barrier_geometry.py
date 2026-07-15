@@ -1043,7 +1043,7 @@ def update_claims_audit(summary: pd.DataFrame, path: Path) -> None:
     if replaced:
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         return
-    insert_marker = "<!-- prompt10-claim-audit:start -->"
+    insert_marker = "<!-- claim_audit-claim-audit:start -->"
     if insert_marker in text:
         text = text.replace(insert_marker, row + "\n\n" + insert_marker)
     else:

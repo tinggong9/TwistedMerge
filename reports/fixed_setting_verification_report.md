@@ -21,7 +21,7 @@ PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconf
 - Fixed settings are kept separate by dataset, architecture, `N`, width, domain shift, and matching protocol.
 - The main obstruction-correlation claim uses only `N>=3` observed-alignment rows; `N=2` is rejected because it has no triangle obstruction.
 - Multi-layer architectures use layerwise permutation alignment and synchronization. For `mlp2`, both `hidden1` and `hidden2` are aligned for model transforms; the scalar cycle table uses the primary layer `hidden2`, and the full layerwise maps are serialized in `layerwise_alignment_permutations_json`.
-- This benchmark series 11 `mlp2` run evaluates permutation matchings (`activation`, `weight`). Monomial gauge rows require `--architecture mlp --matching monomial_activation,monomial_weight` in the current prototype, so no monomial row is promoted here.
+- This fixed-setting `mlp2` run evaluates permutation matchings (`activation`, `weight`). Monomial gauge rows require `--architecture mlp --matching monomial_activation,monomial_weight` in the current prototype, so no monomial row is promoted here.
 - The validation and test partitions are shared across all methods within each seed and setting. The test set is evaluation-only.
 - Injected alignment-noise rows, when present, are labeled `injected_noise` and are negative/control diagnostics, not primary evidence.
 - CIFAR is not part of the default run. No CIFAR success claim is made by this artifact.
