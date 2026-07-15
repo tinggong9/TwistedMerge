@@ -1,6 +1,7 @@
 {
   "one_command": "scripts/reproduce_next_program.sh",
-  "status": "pending_final_evidence_commit_and_remote_tag_creation",
+  "status": "published",
   "tag": "next-program-4ab8022b5c78",
+  "tag_target": "assembled_evidence_commit",
   "target_execution_commit": "4ab8022b5c7826c1584ba781a707fc491aa6ede6"
 }
