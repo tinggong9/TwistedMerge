@@ -1,0 +1,13 @@
+phase,method,seeds,task_accuracy,ece,stored_bytes
+discovery,context_blind_expert_average,5,0.286,0.05339380318852838,235552
+discovery,generic_moe,5,0.2819,0.04538743205466244,266240
+discovery,generic_low_rank_context_adapter,5,0.2383,0.041338054546877105,94296
+discovery,d4_equivariant_chart_soft_routing,5,0.3311,0.053866293128040435,247876
+discovery,inferred_canonicalize_pool_retransport,5,0.2061,0.028431149123413397,247876
+discovery,d4_equivariant_task_classifier,5,0.293,0.04969184434893802,47640
+discovery,d4_test_time_augmentation,5,0.25570000000000004,0.04181862824627651,58888
+discovery,one_canonical_after_inferred_inverse,5,0.3021,0.04834019986914236,71212
+discovery,supplied_chart_oracle,5,0.38089999999999996,0.06223874632302665,235552
+discovery,random_action_control,5,0.27120000000000005,0.03495591182855398,235552
+discovery,wrong_action_control,5,0.25179999999999997,0.04363245857575381,247876
+discovery,ensemble_reference,5,0.26189999999999997,0.04308341598146721,235552

@@ -1,0 +1,6 @@
+phase,seed,path,bytes
+discovery,0,reports/tmp/chart_followup/checkpoints/cifar/discovery_seed_0.pt,478447
+discovery,1,reports/tmp/chart_followup/checkpoints/cifar/discovery_seed_1.pt,478447
+discovery,2,reports/tmp/chart_followup/checkpoints/cifar/discovery_seed_2.pt,478447
+discovery,3,reports/tmp/chart_followup/checkpoints/cifar/discovery_seed_3.pt,478447
+discovery,4,reports/tmp/chart_followup/checkpoints/cifar/discovery_seed_4.pt,478447

@@ -1,0 +1,13 @@
+method,task_accuracy,stored_bytes,pareto_optimal
+single_ordinary_cnn,0.2245,58024,False
+direct_d4_equivariant_task_cnn,0.6061,46920,True
+d4_test_time_augmentation,0.22945000000000002,58024,False
+generic_low_rank_context_adapter,0.31325000000000003,121608,False
+generic_moe,0.26965000000000006,290816,False
+d4_chart_soft_routing,0.5553,243700,False
+hard_branch_selection,0.5478,243700,False
+canonicalize_pool_retransport,0.34064999999999995,243700,False
+uncertainty_weighted_retransport,0.35300000000000004,243700,False
+abstaining_retransport,0.34525,243700,False
+ensemble,0.22535,232096,False
+supplied_chart_oracle_diagnostic,0.73295,232096,True

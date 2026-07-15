@@ -1,0 +1,7 @@
+claim,value
+unseen_task_beats_all_ordinary_learned_baselines,False
+heldout_chart_labels_never_exposed_during_fitting,True
+equivariance_error_below_tolerance,True
+multiplication_error_below_tolerance,True
+random_and_wrong_action_controls_fail,True
+strict_zeroshot_gate_passed,False

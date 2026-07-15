@@ -1,0 +1,22 @@
+{
+  "datasets": [
+    {
+      "bytes": 85828693,
+      "dataset": "FashionMNIST",
+      "exists": true,
+      "files": 8,
+      "path": "data/FashionMNIST",
+      "role": "local_read_only_dataset",
+      "root_configuration": "TWISTEDMERGE_DATA_ROOT or repository data directory"
+    },
+    {
+      "bytes": 186214114,
+      "dataset": "CIFAR10",
+      "exists": true,
+      "files": 8,
+      "path": "data/cifar-10-batches-py",
+      "role": "local_read_only_dataset",
+      "root_configuration": "TWISTEDMERGE_DATA_ROOT or repository data directory"
+    }
+  ]
+}

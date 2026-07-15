@@ -1,0 +1,9 @@
+{
+  "stage": "SAMPLE_EFFICIENCY",
+  "completed_at": "2026-07-15T18:57:46.886594+00:00",
+  "command": [
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+    "experiments/chart_sample_efficiency.py"
+  ],
+  "smoke": false
+}

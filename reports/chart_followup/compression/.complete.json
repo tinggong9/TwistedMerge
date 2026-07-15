@@ -1,0 +1,9 @@
+{
+  "stage": "COMPRESSION",
+  "completed_at": "2026-07-15T18:54:24.185968+00:00",
+  "command": [
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+    "experiments/compression_claim_reaudit.py"
+  ],
+  "smoke": false
+}

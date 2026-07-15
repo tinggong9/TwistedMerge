@@ -1,0 +1,13 @@
+method,task_accuracy,complete_path_latency_ms_batch128,pareto_optimal
+single_ordinary_cnn,0.2245,2.014499972574413,True
+direct_d4_equivariant_task_cnn,0.6061,8.351145486813039,True
+d4_test_time_augmentation,0.22945000000000002,34.10962491761893,False
+generic_low_rank_context_adapter,0.31325000000000003,6.325395777821541,True
+generic_moe,0.26965000000000006,16.38337504118681,False
+d4_chart_soft_routing,0.5553,17.71586446557194,False
+hard_branch_selection,0.5478,17.8658957593143,False
+canonicalize_pool_retransport,0.34064999999999995,143.64716678392142,False
+uncertainty_weighted_retransport,0.35300000000000004,177.5324479676783,False
+abstaining_retransport,0.34525,177.1927605732344,False
+ensemble,0.22535,12.527187529485673,False
+supplied_chart_oracle_diagnostic,0.73295,135.69156249286607,True

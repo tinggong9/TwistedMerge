@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{CIFAR-10 D4 chart transfer}
+\begin{tabular}{lllll}
+\toprule
+phase & method & task\_accuracy & ece & stored\_bytes \\
+\midrule
+discovery & context\_blind\_expert\_average & 0.286 & 0.05339380318852838 & 235552 \\
+discovery & generic\_moe & 0.2819 & 0.04538743205466244 & 266240 \\
+discovery & generic\_low\_rank\_context\_adapter & 0.2383 & 0.041338054546877105 & 94296 \\
+discovery & d4\_equivariant\_chart\_soft\_routing & 0.3311 & 0.053866293128040435 & 247876 \\
+discovery & inferred\_canonicalize\_pool\_retransport & 0.2061 & 0.028431149123413397 & 247876 \\
+discovery & d4\_equivariant\_task\_classifier & 0.293 & 0.04969184434893802 & 47640 \\
+discovery & d4\_test\_time\_augmentation & 0.25570000000000004 & 0.04181862824627651 & 58888 \\
+discovery & one\_canonical\_after\_inferred\_inverse & 0.3021 & 0.04834019986914236 & 71212 \\
+discovery & supplied\_chart\_oracle & 0.38089999999999996 & 0.06223874632302665 & 235552 \\
+discovery & random\_action\_control & 0.27120000000000005 & 0.03495591182855398 & 235552 \\
+discovery & wrong\_action\_control & 0.25179999999999997 & 0.04363245857575381 & 247876 \\
+discovery & ensemble\_reference & 0.26189999999999997 & 0.04308341598146721 & 235552 \\
+\bottomrule
+\end{tabular}
+\end{table}

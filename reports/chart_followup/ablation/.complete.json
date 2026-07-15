@@ -1,0 +1,9 @@
+{
+  "stage": "ABLATION",
+  "completed_at": "2026-07-15T18:07:47.032847+00:00",
+  "command": [
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+    "experiments/chart_component_ablation.py"
+  ],
+  "smoke": false
+}

@@ -1,0 +1,9 @@
+{
+  "stage": "CIFAR",
+  "completed_at": "2026-07-15T18:18:28.281102+00:00",
+  "command": [
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+    "experiments/cifar10_chart_retransport.py"
+  ],
+  "smoke": false
+}

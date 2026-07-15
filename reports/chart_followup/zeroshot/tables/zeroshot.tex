@@ -1,0 +1,32 @@
+\begin{table}[t]
+\centering
+\caption{Strict D4 element holdout}
+\begin{tabular}{lllll}
+\toprule
+method & element\_role & task\_accuracy & chart\_accuracy & ece \\
+\midrule
+d4\_equivariant\_chart\_classifier & seen & 0.7120999999999998 & 0.7248000025749206 & 0.03175478807329844 \\
+d4\_equivariant\_chart\_classifier & unseen & 0.7152000000000001 & 0.7245000004768372 & 0.03520392329613136 \\
+capacity\_matched\_ordinary\_chart\_classifier & seen & 0.7173999999999999 & 0.7867000043392182 & 0.032955721165716836 \\
+capacity\_matched\_ordinary\_chart\_classifier & unseen & 0.24089999999999998 & 0.0 & 0.31079304635611865 \\
+augmentation\_trained\_ordinary\_chart\_classifier & seen & 0.7165999999999999 & 0.7543000042438507 & 0.034034715715589164 \\
+augmentation\_trained\_ordinary\_chart\_classifier & unseen & 0.24950000000000006 & 0.0 & 0.2964982360852744 \\
+learned\_multiplication\_table\_model & seen & 0.7117 & 0.7282999992370606 & 0.03115707106287462 \\
+learned\_multiplication\_table\_model & unseen & 0.7175 & 0.7232999920845031 & 0.03126756685579837 \\
+d4\_equivariant\_task\_classifier & seen & 0.6313 &  & 0.08019659370002982 \\
+d4\_equivariant\_task\_classifier & unseen & 0.6396000000000001 &  & 0.08620514788431625 \\
+structured\_hard\_retransport & seen & 0.7101000000000001 & 0.7248000025749206 & 0.03706167937122376 \\
+structured\_hard\_retransport & unseen & 0.7123999999999999 & 0.7245000004768372 & 0.03774865208632427 \\
+structured\_soft\_retransport & seen & 0.7120999999999998 & 0.7248000025749206 & 0.03175478807329844 \\
+structured\_soft\_retransport & unseen & 0.7152000000000001 & 0.7245000004768372 & 0.03520392329613136 \\
+d4\_test\_time\_augmentation & seen & 0.23339999999999997 &  & 0.19841954436544268 \\
+d4\_test\_time\_augmentation & unseen & 0.23560000000000003 &  & 0.19435506074696707 \\
+supplied\_chart\_oracle & seen & 0.7708999999999999 & 1.0 & 0.028997455538889848 \\
+supplied\_chart\_oracle & unseen & 0.7687000000000002 & 1.0 & 0.028539807011209894 \\
+random\_action\_control & seen & 0.25599999999999995 & 0.12249999940395355 & 0.44766976773474954 \\
+random\_action\_control & unseen & 0.2577 & 0.1268999993801117 & 0.4422269295183218 \\
+wrong\_action\_control & seen & 0.07799999999999999 & 0.019299999997019767 & 0.6969740708116173 \\
+wrong\_action\_control & unseen & 0.0823 & 0.013799999933689832 & 0.6666545000815158 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,6 @@
+claim,value
+structured_complete_path_faster_than_single,False
+structured_storage_lower_than_single,False
+structured_on_accuracy_latency_pareto_frontier,False
+structured_on_accuracy_storage_pareto_frontier,False
+all_complete_paths_used_preregistered_timing_repetitions,True

@@ -1,0 +1,7 @@
+{
+  "execution_commit": "d57d4fcf04141e3c44001bf9c7e576d9c80007ee",
+  "machine": "arm64",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "smoke": false
+}

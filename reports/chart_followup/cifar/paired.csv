@@ -1,0 +1,4 @@
+comparison,left_method,right_method,metric,collections,mean_delta,ci_low,ci_high
+structured_minus_generic_moe,inferred_canonicalize_pool_retransport,generic_moe,task_accuracy,5,-0.0758,-0.08559999999999998,-0.06600000000000002
+structured_minus_low_rank_adapter,inferred_canonicalize_pool_retransport,generic_low_rank_context_adapter,task_accuracy,5,-0.03219999999999999,-0.0409,-0.023499999999999993
+structured_minus_direct_equivariant_task,inferred_canonicalize_pool_retransport,d4_equivariant_task_classifier,task_accuracy,5,-0.08689999999999996,-0.1001,-0.07409999999999997

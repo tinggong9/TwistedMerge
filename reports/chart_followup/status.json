@@ -1,0 +1,49 @@
+{
+  "completed_at": "2026-07-15T18:58:17.790337+00:00",
+  "force": true,
+  "overall": "completed",
+  "resume": false,
+  "selected": [
+    "ABLATION",
+    "ZEROSHOT",
+    "CIFAR",
+    "COST",
+    "COMPRESSION",
+    "SAMPLE_EFFICIENCY"
+  ],
+  "smoke": false,
+  "stages": {
+    "ABLATION": {
+      "duration_seconds": 301.2850077501498,
+      "marker": "reports/chart_followup/ablation/.complete.json",
+      "status": "completed"
+    },
+    "CIFAR": {
+      "duration_seconds": 242.9249251249712,
+      "marker": "reports/chart_followup/cifar/.complete.json",
+      "status": "completed"
+    },
+    "COMPRESSION": {
+      "duration_seconds": 49.086294000037014,
+      "marker": "reports/chart_followup/compression/.complete.json",
+      "status": "completed"
+    },
+    "COST": {
+      "duration_seconds": 2106.736336583039,
+      "marker": "reports/chart_followup/cost/.complete.json",
+      "status": "completed"
+    },
+    "SAMPLE_EFFICIENCY": {
+      "duration_seconds": 202.66765429102816,
+      "marker": "reports/chart_followup/sample_efficiency/.complete.json",
+      "status": "completed"
+    },
+    "ZEROSHOT": {
+      "duration_seconds": 398.25850004097447,
+      "marker": "reports/chart_followup/zeroshot/.complete.json",
+      "status": "completed"
+    }
+  },
+  "started_at": "2026-07-15T18:02:45.719983+00:00",
+  "updated_at": "2026-07-15T18:58:17.790371+00:00"
+}

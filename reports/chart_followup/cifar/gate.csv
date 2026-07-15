@@ -1,0 +1,2 @@
+phase,criterion_a_all_generic_inferred,criterion_b_direct_equivariant,criterion_c_half_parameters_or_chart_data,criterion_d_worst_condition,worst_condition_mean_delta,worst_condition_ci_low,worst_condition_ci_high,gate_passed
+discovery,False,False,False,False,-0.04324324727058411,-0.05495496094226837,-0.02972973436117172,False

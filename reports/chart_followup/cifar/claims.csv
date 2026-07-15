@@ -1,0 +1,5 @@
+claim,value
+discovery_gate_passed,False
+confirmation_executed,False
+confirmation_required_when_discovery_passes,True
+all_saved_logits_label_permutation_invariant,True

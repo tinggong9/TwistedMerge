@@ -1,0 +1,22 @@
+\begin{table}[t]
+\centering
+\caption{Complete Fashion-MNIST inference cost}
+\begin{tabular}{lllll}
+\toprule
+method & task\_accuracy & complete\_path\_latency\_ms\_batch128 & stored\_bytes & parameters \\
+\midrule
+single\_ordinary\_cnn & 0.2245 & 2.014499972574413 & 58024 & 14506 \\
+direct\_d4\_equivariant\_task\_cnn & 0.6061 & 8.351145486813039 & 46920 & 11730 \\
+d4\_test\_time\_augmentation & 0.22945000000000002 & 34.10962491761893 & 58024 & 14506 \\
+generic\_low\_rank\_context\_adapter & 0.31325000000000003 & 6.325395777821541 & 121608 & 30402 \\
+generic\_moe & 0.26965000000000006 & 16.38337504118681 & 290816 & 72704 \\
+d4\_chart\_soft\_routing & 0.5553 & 17.71586446557194 & 243700 & 60925 \\
+hard\_branch\_selection & 0.5478 & 17.8658957593143 & 243700 & 60925 \\
+canonicalize\_pool\_retransport & 0.34064999999999995 & 143.64716678392142 & 243700 & 60925 \\
+uncertainty\_weighted\_retransport & 0.35300000000000004 & 177.5324479676783 & 243700 & 60925 \\
+abstaining\_retransport & 0.34525 & 177.1927605732344 & 243700 & 60925 \\
+ensemble & 0.22535 & 12.527187529485673 & 232096 & 58024 \\
+supplied\_chart\_oracle\_diagnostic & 0.73295 & 135.69156249286607 & 232096 & 58024 \\
+\bottomrule
+\end{tabular}
+\end{table}

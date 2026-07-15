@@ -1,0 +1,3 @@
+dataset,path,exists,files,bytes,root_configuration,role
+FashionMNIST,data/FashionMNIST,True,8,85828693,TWISTEDMERGE_DATA_ROOT or repository data directory,local_read_only_dataset
+CIFAR10,data/cifar-10-batches-py,True,8,186214114,TWISTEDMERGE_DATA_ROOT or repository data directory,local_read_only_dataset
