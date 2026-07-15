@@ -148,7 +148,8 @@ Use the exact replacement text in the adjacent supported-text files. Do not stre
 - Execution commit at report generation: `{git_head()}`.
 - Existing test suite: `{stage0.strip().splitlines()[-1] if stage0.strip() else 'missing'}`.
 - Runtime by runner stage: `{json.dumps(runtimes, sort_keys=True)}`.
-- Natural checkpoint collections: 48 discovery collections; {natural.get('confirmation_collections', 0)} confirmation collections.
+- Natural checkpoint collections: 48 mandatory discovery collections, {natural.get('cifar_extension_collections', 0)} optional CIFAR collections, and {natural.get('confirmation_collections', 0)} confirmation collections.
+- Pretrained checkpoint collections: 3; federated frame collections: 18.
 - Fresh reusable natural checkpoint pool: {natural.get('expected_checkpoint_pool_size', 96)} local models.
 - Pretrained checkpoint status: {'resource-blocked' if vision.get('resource_blocked') else 'executed'}.
 
@@ -157,7 +158,7 @@ Use the exact replacement text in the adjacent supported-text files. Do not stre
 - Context fairness: **{'pass' if level2 else 'fail'}**; best generic method `{best_generic}`; structured mean {context_structured:.4f}, generic mean {best_generic_accuracy:.4f} over the discovery aggregate.
 - Hodge and low-rank contribution: **{'promoted in controlled families' if hodge.get('promoted') else 'not promoted'}**; real-image frame negatives are retained.
 - Natural residual: **{'promoted' if natural_promoted else 'not promoted'}**.
-- Pretrained vision: **{'discovery gate passed' if vision_gate else 'gate not passed or resource-blocked'}**.
+- Pretrained vision: **{'discovery gate passed' if vision_gate else ('resource-blocked' if vision.get('resource_blocked') else 'gate not passed')}**.
 - Federated frame: **{'persistent lift gain found' if federated_gate else 'no persistent lift gain found'}**.
 - Strongest supported scientific claim: **Level {strongest}**.
 
