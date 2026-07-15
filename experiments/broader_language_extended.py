@@ -94,7 +94,7 @@ def evaluate_model(model, data, target_device: torch.device) -> tuple[np.ndarray
 
 def evaluate_state(base_state, state, rank: int, domains: list[DomainData], target_device: torch.device):
     model = lora_model(base_state, rank)
-    set_peft_model_state_dict(model, state)
+    set_peft_model_state_dict(model, copy.deepcopy(state))
     logits, labels, domain_ids, elapsed = [], [], [], 0.0
     for domain_id, domain in enumerate(domains):
         values, target, timing = evaluate_model(model, domain.test, target_device)
@@ -142,7 +142,7 @@ def run_collection(base_state, domains: list[DomainData], rank: int, collection:
     validation_scores = {}
     for method, state in candidates.items():
         model = lora_model(base_state, rank)
-        set_peft_model_state_dict(model, state)
+        set_peft_model_state_dict(model, copy.deepcopy(state))
         scores = []
         for domain in domains:
             logits, labels, _ = evaluate_model(model, domain.validation, target_device)
