@@ -340,7 +340,6 @@ This file tracks which claims are supported by current repository artifacts and 
 | `reports/plots/unified_obstruction_chain.pdf` | Four-panel diagnostic plot for planted degradation, selector deltas, operator-error certification, and projection-residual gates. |
 | `reports/latex/quantitative_obstruction_theorem_candidate.tex` | Cautious LaTeX theorem-candidate snippet stating the artifact-scoped multi-residual decision chain. |
 | `reports/latex/results_section_after_35791f7.tex` | Paste-ready LaTeX Results and Contributions section preserving the current claim boundaries. |
-| `reports/latex/main_claims_table_after_35791f7.tex` | Paste-ready LaTeX table of supported claims and forbidden overclaims after the final CIFAR run. |
 | `experiments/cifar_or_colored_mnist_feasibility.py` | Rotated-MNIST bridge and gated CIFAR probe feasibility benchmark for small CNN channel-gauge merging. |
 | `reports/cifar_or_colored_mnist_feasibility.md` | Report for bridge/CIFAR accuracy gates, merge method summaries, and plumbing-only boundaries. |
 | `reports/csv/cifar_or_colored_mnist_feasibility.csv` | Per-setting bridge/CIFAR feasibility rows with method metrics, threshold status, and validation-only selector metadata. |

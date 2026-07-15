@@ -168,7 +168,7 @@ reported separately to avoid hiding that extra capacity.
 - The models are intentionally undertrained (`1` epoch, at most
   `384` train samples per setting). CIFAR-10 accuracies are
   near chance in this smoke run, so CIFAR rows mainly test the plumbing rather
-  than a publishable image-model claim.
+  than a validated large-scale image-model result.
 - A positive result here means the score co-varies with merge degradation in
   controlled small settings. It is not yet a claim that the method beats all
   external baselines at scale.

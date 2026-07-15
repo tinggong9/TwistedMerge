@@ -62,7 +62,7 @@ CIFAR was skipped for the verification grid because the prior smoke run has max 
 ## Interpretation
 
 - The fixed-N observed rows are the relevant repeated-seed check for whether cycle score predicts ordinary weight-average degradation beyond the trivial `N=2` versus `N=3` confound.
-- The injected-alignment rows test score sensitivity under controlled pairwise inconsistency, but weight averaging itself does not use alignments. Correlation there is a negative-control diagnostic, not a publishable success claim.
+- The injected-alignment rows test score sensitivity under controlled pairwise inconsistency, but weight averaging itself does not use alignments. Correlation there is a negative-control diagnostic, not a validated large-scale result.
 - C2M3-style and Git-Re-Basin-style rows are single-model, capacity-matched merged models in this implementation.
 - The TwistedMerge/rank-lift row is a branch ensemble with extra capacity. It must not be described as beating single merged models unless a future capacity-matched comparison is added.
 - Claims are marked descriptive unless the corresponding fixed-setting repeated-seed statistics provide enough rows and a bootstrap interval that does not cross zero.

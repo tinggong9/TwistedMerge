@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Stage 7: mechanical scientific claim decision and revision evidence packet."""
+"""Stage 7: mechanical scientific evidence decision."""
 
 from __future__ import annotations
 
 import json
-import subprocess
 import sys
 from pathlib import Path
 
@@ -85,60 +84,6 @@ def main() -> None:
     natural_promoted = bool(natural.get("natural_residual_promoted"))
     vision_gate = bool(vision.get("discovery_gate_passed"))
     federated_gate = bool(federated.get("persistent_lift_gain_found"))
-    abstract = rf"""We study model merging when local parameterizations are related by chart transformations whose pairwise maps need not be globally coherent. We introduce synchronization diagnostics, a weighted Hodge residual decomposition, conservative low-rank corrections, chart-aware routing, and invariant pooling. In controlled noncommutative context tasks, the structured method reaches mean accuracy {context_structured:.4f} compared with {best_generic_accuracy:.4f} for the strongest generic context baseline ({best_generic}) over the fixed discovery grid, and the narrow preregistered confirmation is executed. Compact natural-checkpoint and real-image frame experiments {'provide a positive realistic correction result' if level3 else 'do not yet establish a realistic correction advantage'}. We therefore restrict the empirical claim to Level {strongest} and retain all negative findings."""
-    (OUT / "abstract_supported.tex").write_text(abstract + "\n", encoding="utf-8")
-    contributions = r"""\begin{itemize}
-\item A leakage-safe context-fairness benchmark that gives structured and generic methods the same inference-available context.
-\item A matched ablation of synchronization, weighted Hodge diagnostics, low-rank correction, routing, pooling, and distillation.
-\item A fixed 48-collection natural-checkpoint discovery grid with calibration resampling and three matched null families.
-\item A conservative mechanical claim ladder that prevents controlled successes from being presented as broad practical superiority.
-\end{itemize}
-"""
-    (OUT / "contributions_supported.tex").write_text(contributions, encoding="utf-8")
-    experiments = rf"""The compact program uses 20 controlled context settings, 52 component-ablation settings, 48 natural checkpoint collections, 18 federated-frame collections, and a conditional pretrained ResNet-18 experiment. Candidate logits are saved before test-label evaluation and pass byte-identity label-permutation regressions. The context discovery gate {'passes' if level2 else 'does not pass'} and its narrow confirmation is {'executed' if context.get('confirmation_executed') else 'not triggered'}. A natural residual is {'promoted' if natural_promoted else 'not promoted'}, the pretrained discovery gate {'passes' if vision_gate else 'does not pass or is resource-blocked'}, and a persistent federated lift gain is {'found' if federated_gate else 'not found'}.
-"""
-    (OUT / "experiments_supported.tex").write_text(experiments, encoding="utf-8")
-    (OUT / "conclusion_supported.tex").write_text(
-        f"The experiments support controlled chart-aware context handling through Level {strongest}. They do not support a broader claim unless Level 3 passes mechanically. The conservative dispatcher remains essential: ordinary synchronization or a simple baseline is retained whenever the residual gate fails.\n",
-        encoding="utf-8",
-    )
-    (OUT / "limitations_supported.tex").write_text(
-        "The compact run uses MNIST-scale natural checkpoints and an 8 GB single-device compute budget. Null calibration is limited to 100 draws per family. The natural and federated studies do not cover large foundation-model checkpoints, and any missing CIFAR result is reported as a resource blocker rather than replaced. Controlled context access is an explicit input assumption and should not be conflated with latent-context discovery.\n",
-        encoding="utf-8",
-    )
-    paper_numbers = rf"""\newcommand{{\ContextStructuredAccuracy}}{{{context_structured:.4f}}}
-\newcommand{{\BestGenericContextAccuracy}}{{{best_generic_accuracy:.4f}}}
-\newcommand{{\CompactNaturalCollections}}{{48}}
-\newcommand{{\CompactFederatedCollections}}{{18}}
-\newcommand{{\StrongestSupportedClaimLevel}}{{{strongest}}}
-"""
-    (OUT / "paper_numbers.tex").write_text(paper_numbers, encoding="utf-8")
-    revision_packet = f"""# Evidence-based manuscript revision packet
-
-The manuscript source is not stored in this repository, so this packet identifies replacement targets by claim and artifact rather than inventing line numbers.
-
-## Remove or replace
-
-1. Remove any table or paragraph that treats one-dataset natural, adapter, transformer, pose, or frozen-backbone smoke results as full evidence.
-2. Remove any statement of practical cross-domain superiority unless Level 3 is mechanically true.
-3. Replace selector-only comparisons that omit generic context-conditioned methods.
-4. Retain the negative practical-selector result (ordinary greedy soup approximately 0.8572 versus selector approximately 0.8558) and label it as a negative ordinary-regime result.
-
-## Insert
-
-1. Insert `tables/context_main.tex` and `tables/context_efficiency.tex` in the controlled context section.
-2. Insert `tables/hodge_ablation.tex` after the algorithm description.
-3. Insert `tables/natural_main.tex` in the natural-checkpoint section.
-4. Insert `tables/vision_main.tex` only if `vision_claims.json` records an executed benchmark.
-5. Insert `tables/federated_main.tex` and `tables/systems.tex` in the practical evidence section.
-
-## Supported wording
-
-The strongest supported claim is Level {strongest}. The controlled context gate {'passes with narrow confirmation' if level2 else 'does not pass'}. The Hodge component is positive in controlled families but not in the real-image frame ablation. A natural residual is {'promoted' if natural_promoted else 'not promoted'}. The compact pretrained gate {'passes' if vision_gate else 'does not pass or is resource-blocked'}. A persistent federated lift gain is {'found' if federated_gate else 'not found'}.
-
-Use the exact replacement text in the adjacent supported-text files. Do not strengthen it beyond `claim_ladder.json`.
-"""
-    (OUT / "paper_revision_packet.md").write_text(revision_packet, encoding="utf-8")
     status = read_json("status.json", {"stages": {}})
     runtimes = {number: item.get("runtime_seconds") for number, item in status.get("stages", {}).items()}
     final_report = f"""# Final compact experimental report
