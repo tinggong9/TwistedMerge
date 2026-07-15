@@ -1,0 +1,31 @@
+name: next-program-smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Run data-independent next-program tests
+        run: >-
+          pytest -q
+          tests/test_nontrivial_refinement_invariance.py
+          tests/test_noncyclic_central_extensions.py
+          tests/test_end_to_end_controlled_cost.py
+          tests/test_learned_compositional_baselines.py
+          tests/test_full_model_hidden_geometry.py
+          tests/test_genuine_multiview_retransport.py
+          tests/test_new_realistic_residual_search.py
+          tests/test_structured_compression.py
+          tests/test_comparison_alignment_robustness.py
+          tests/test_selective_activation_diagnostics.py
+          tests/test_real_scaling_audit.py
