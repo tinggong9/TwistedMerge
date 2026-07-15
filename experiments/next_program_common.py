@@ -26,7 +26,8 @@ DATA = Path(os.environ.get("TWISTEDMERGE_DATA_ROOT", ROOT / "data")).expanduser(
 
 
 def ensure_dirs() -> None:
-    for path in (OUT, OUT / "immediate", OUT / "iclr", OUT / "extended", TMP, TMP / "logits", TMP / "checkpoints"):
+    tier_dirs = [OUT / tier / child for tier in ("immediate", "iclr", "extended") for child in ("tables", "plots")]
+    for path in (OUT, OUT / "immediate", OUT / "iclr", OUT / "extended", *tier_dirs, TMP, TMP / "logits", TMP / "checkpoints"):
         path.mkdir(parents=True, exist_ok=True)
 
 
