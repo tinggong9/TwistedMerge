@@ -14,7 +14,8 @@ import pandas as pd
 import torch
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model, get_peft_model_state_dict, set_peft_model_state_dict
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from huggingface_hub import hf_hub_download
+from transformers import AutoTokenizer, BertConfig, BertForSequenceClassification
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -33,7 +34,13 @@ TOKENIZER_REVISION = MODEL_REVISION
 
 def base_model(model_id: str = SECOND_MODEL_ID, revision: str = SECOND_MODEL_REVISION):
     torch.manual_seed(20_260)
-    return AutoModelForSequenceClassification.from_pretrained(model_id, revision=revision, num_labels=2)
+    config_path = hf_hub_download(model_id, "config.json", revision=revision)
+    import json
+
+    payload = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    payload.update({"model_type": "bert", "num_labels": 2})
+    config = BertConfig.from_dict(payload)
+    return BertForSequenceClassification.from_pretrained(model_id, revision=revision, config=config)
 
 
 def load_second_base_domains(per_domain: int = 128) -> tuple[object, list[DomainData]]:
