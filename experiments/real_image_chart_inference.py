@@ -43,7 +43,9 @@ def run(dataset_name: str, seed: int) -> list[dict[str, object]]:
     train_idx = rng.permutation(len(train_set))[:11_000]
     test_idx = rng.permutation(len(test_set))[:2_000]
     train_x, train_y = subset_arrays(train_set, train_idx); test_x, test_y = subset_arrays(test_set, test_idx)
-    train_x = train_x.squeeze(1); test_x = test_x.squeeze(1)
+    if train_x.ndim == 4 and train_x.shape[1] == 1:
+        train_x = train_x[:, 0]
+        test_x = test_x[:, 0]
     train_charts = rng.integers(0, 8, len(train_x)); test_charts = rng.integers(0, 8, len(test_x))
     chart_train = np.stack([transform(image, int(chart)) for image, chart in zip(train_x, train_charts, strict=True)])
     chart_test = np.stack([transform(image, int(chart)) for image, chart in zip(test_x, test_charts, strict=True)])
