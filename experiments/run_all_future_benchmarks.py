@@ -61,7 +61,9 @@ def digest(path: Path) -> str:
 def load_status(new: bool) -> dict:
     path = OUT / "status.json"
     if not new and path.exists():
-        return json.loads(path.read_text(encoding="utf-8"))
+        status = json.loads(path.read_text(encoding="utf-8"))
+        status.get("stages", {}).pop("X1-X12", None)
+        return status
     return {"schema_version": 1, "run_id": str(uuid.uuid4()), "stages": {}}
 
 
