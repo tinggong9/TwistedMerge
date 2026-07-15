@@ -113,7 +113,8 @@ def main() -> None:
         raw_candidates = sorted(directory.glob(prefix + "*runs*.csv")) + sorted(directory.glob(prefix + "*transitions*.csv"))
         summary_candidates = sorted(directory.glob(prefix + "*summary*.csv")) + sorted(directory.glob(prefix + "*claims*.csv"))
         artifact = str(path.relative_to(ROOT))
-        manifest.append({"stage": stage, "artifact": artifact, "artifact_type": path.suffix.lstrip("."), "script": script, "configuration": commands.get(stage, {}).get("exact_command", f"python {script}"), "raw_data": ";".join(str(value.relative_to(ROOT)) for value in raw_candidates), "summary_data": ";".join(str(value.relative_to(ROOT)) for value in summary_candidates), "execution_commit": git_head(), "sha256": checksums.get(artifact, sha256_file(path))})
+        stage_command = commands.get(stage, {})
+        manifest.append({"stage": stage, "artifact": artifact, "artifact_type": path.suffix.lstrip("."), "script": script, "configuration": stage_command.get("exact_command", f"python {script}"), "raw_data": ";".join(str(value.relative_to(ROOT)) for value in raw_candidates), "summary_data": ";".join(str(value.relative_to(ROOT)) for value in summary_candidates), "execution_commit": stage_command.get("execution_commit", git_head()), "sha256": checksums.get(artifact, sha256_file(path))})
     write_csv(OUT / "experiment_manifest.csv", manifest, ["stage", "artifact", "artifact_type", "script", "configuration", "raw_data", "summary_data", "execution_commit", "sha256"]); write_json(OUT / "experiment_manifest.json", manifest)
     status = json.loads((OUT / "status.json").read_text()) if (OUT / "status.json").exists() else {"stages": {}}
     failures = read(OUT / "failures.csv"); claim_rows = claims(); negative = [row for row in claim_rows if str(row.get("value", "")).lower() == "false"]

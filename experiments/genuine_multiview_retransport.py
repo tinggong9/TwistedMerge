@@ -201,11 +201,12 @@ def maps_to_reference(maps: dict[tuple[int, int], np.ndarray], condition: str, s
 
 
 def aligned_logits(experts: list[ViewCNN], images: torch.Tensor, maps: list[np.ndarray]) -> torch.Tensor:
-    aligned = []
-    for expert, matrix in zip(experts, maps, strict=True):
-        _, features = model_output(expert, images, return_features=True)
-        aligned.append(features @ torch.tensor(matrix, dtype=torch.float32))
-    return experts[0].head(torch.stack(aligned).mean(0).to(DEVICE)).cpu()
+    with torch.no_grad():
+        aligned = []
+        for expert, matrix in zip(experts, maps, strict=True):
+            _, features = model_output(expert, images, return_features=True)
+            aligned.append(features @ torch.tensor(matrix, dtype=torch.float32))
+        return experts[0].head(torch.stack(aligned).mean(0).to(DEVICE)).cpu()
 
 
 def retransport_logits(experts: list[ViewCNN], observed_points: list[np.ndarray], inferred_angles: np.ndarray) -> torch.Tensor:
@@ -325,11 +326,11 @@ def run_collection(collection: int, epochs: int = 8):
             "random_action_control": random_action,
             "ensemble": ensemble,
         }
-        numpy_candidates = {name: value.numpy() for name, value in candidates.items()}
+        numpy_candidates = {name: value.detach().numpy() for name, value in candidates.items()}
         ledger = save_logits_before_labels(f"multiview_{collection}_{condition}", numpy_candidates, test_labels.numpy(), 133_700_000 + condition_index)
         logits_ledger.append({"collection": collection, "condition": condition, **ledger})
         for name, logits in candidates.items():
-            metrics = classification_metrics(logits.numpy(), test_labels.numpy())
+            metrics = classification_metrics(logits.detach().numpy(), test_labels.numpy())
             model = generic if name == "generic_calibration_network" else (router if name in {"generic_moe", "inferred_view_structured_retransport"} else experts[0])
             trainable, stored = parameter_counts(model)
             rows.append({"setting_id": f"ModelNet10_collection_{collection}", "collection": collection, "condition": condition, "method": name, "implementation": "explicit_3d_inverse_forward_coordinate_map" if "retransport" in name else "trained_neural_or_feature_alignment", **metrics, "view_inference_accuracy": float(np.mean(inferred_indices == np.asarray([int(np.argmin(np.abs(np.angle(np.exp(1j * (VIEW_ANGLES - angle)))))) for angle in true_angles]))), "transition_fit": float(np.mean([row["heldout_transition_fit"] for row in transition_output])), "inverse_consistency": statistics["inverse_consistency"], "cycle_residual_before": statistics["cycle_residual"], "cycle_residual_after": 0.0 if "retransport" in name else statistics["cycle_residual"], "training_time_seconds": training_time + (router_time if "inferred" in name or name == "generic_moe" else generic_time if name == "generic_calibration_network" else 0), "trainable_parameters": trainable, "stored_parameters": stored, "branch_count": 4 if name in {"generic_moe", "ensemble", "inferred_view_structured_retransport", "supplied_view_retransport_oracle"} else 1, "context_mode": "supplied" if name == "supplied_view_retransport_oracle" else ("inferred" if "inferred" in name or name == "generic_moe" else "none"), "certificate_activated": "retransport" in name, "logits_sha256": ledger["logits_sha256"], "label_permutation_hash_passed": bool(ledger["candidate_hashes_unchanged"] and ledger["file_hash_unchanged"]), **provenance(SCRIPT, "python experiments/genuine_multiview_retransport.py", collection)})

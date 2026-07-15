@@ -2,7 +2,9 @@ import numpy as np
 import torch
 
 from experiments.genuine_multiview_retransport import (
+    DEVICE,
     ViewCNN,
+    aligned_logits,
     null_rows,
     render_points,
     rotate_points,
@@ -26,3 +28,7 @@ def test_multiview_path_uses_explicit_3d_maps_and_trained_cnns():
     maps = transition_maps(features)
     assert transition_statistics(maps)["cycle_residual"] >= 0
     assert len(null_rows(maps, seed=3, draws=2)) == 8
+    experts = [ViewCNN(10).to(DEVICE).eval() for _ in range(4)]
+    logits = aligned_logits(experts, torch.tensor(image).unsqueeze(0), [np.eye(24) for _ in range(4)])
+    assert logits.shape == (1, 10)
+    assert not logits.requires_grad
