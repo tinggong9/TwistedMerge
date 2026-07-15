@@ -13,9 +13,9 @@ import numpy as np
 import pandas as pd
 import torch
 from torch import nn
-from torch.utils.data import DataLoader, Subset
+from torch.utils.data import DataLoader, Dataset, Subset
 from torchvision import transforms
-from torchvision.datasets import CIFAR10, CIFAR100
+from torchvision.datasets import CIFAR10
 from torchvision.models import ResNet18_Weights, resnet18
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -59,9 +59,31 @@ def model_sha256(model: nn.Module) -> str:
     return digest.hexdigest()
 
 
+class ImageRowsDataset(Dataset):
+    def __init__(self, rows: list[tuple[object, int]]):
+        self.rows = rows
+        self.transform = image_transform()
+
+    def __len__(self) -> int:
+        return len(self.rows)
+
+    def __getitem__(self, index: int):
+        image, label = self.rows[index]
+        return self.transform(image), label
+
+
 def dataset(name: str, train: bool):
-    cls = CIFAR10 if name == "CIFAR10" else CIFAR100
-    return cls(root=DATA, train=train, download=True, transform=image_transform())
+    if name == "CIFAR10":
+        return CIFAR10(root=DATA, train=train, download=True, transform=image_transform())
+    # The canonical CIFAR-100 host can be prohibitively slow. Use the licensed
+    # uoft-cs mirror and materialize only the preregistered bounded subset.
+    from datasets import load_dataset
+
+    split = "train" if train else "test"
+    limit = 3000 if train else 1000
+    stream = load_dataset("uoft-cs/cifar100", split=split, streaming=True).shuffle(seed=10_200 + int(not train), buffer_size=4000)
+    rows = [(row["img"].copy(), int(row["fine_label"])) for row in stream.take(limit)]
+    return ImageRowsDataset(rows)
 
 
 def split_indices(name: str, train_size: int, test_size: int) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
