@@ -1,5 +1,5 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/executed_two_loop_holonomy.py --mode full",
+  "command": "<repository-root>/.venv/bin/python experiments/executed_two_loop_holonomy.py --mode full",
   "mode": "full",
   "groups": [
     "S3",

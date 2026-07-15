@@ -1,5 +1,5 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/cifar_final_channel_gauge_confirmatory.py",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig <repository-root>/.venv/bin/python experiments/cifar_final_channel_gauge_confirmatory.py",
   "git_commit": "700e4cd",
   "dirty_worktree": true,
   "configs": "32,64,256,12",

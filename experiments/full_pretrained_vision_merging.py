@@ -15,7 +15,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "reports" / "overnight_program"
 SOURCE = OUT / "pretrained_vision_source"
-DEFAULT_DATA = Path("/Users/tinggong/Documents/GitHub/TwistedMerge/data")
+DEFAULT_DATA = ROOT / "data"
 
 
 def main() -> None:

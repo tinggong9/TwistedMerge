@@ -7,7 +7,7 @@ Every prediction in this report was produced by an executed NumPy one-hidden-lay
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/executed_two_loop_holonomy.py --mode full
+<repository-root>/.venv/bin/python experiments/executed_two_loop_holonomy.py --mode full
 ```
 
 - Git commit at execution: `0a41f76d3c8a77acc3a47514c2639b81fbc5b280`

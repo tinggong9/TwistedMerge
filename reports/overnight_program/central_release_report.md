@@ -8,7 +8,7 @@
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/experiments/central_reproduction_next.py --out-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program
+<repository-root>/.venv/bin/python <repository-root>/experiments/central_reproduction_next.py --out-dir <repository-root>/reports/overnight_program
 ```
 
 - Git commit at execution: `d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e`

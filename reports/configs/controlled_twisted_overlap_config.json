@@ -2,7 +2,7 @@
   "args": {
     "bootstrap_samples": 5000,
     "branch_count": 2,
-    "command_string": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/controlled_twisted_overlap_benchmark.py --twist-family mu2_coboundary,mu2_nontrivial_h2,random_noncentral --n-models 4 --widths 32,64 --seeds 6000:6029 --epochs 5 --samples-per-chart 2000 --samples-per-overlap 1000 --branch-count 2 --extra-controls wrong_twist,wrong_context,learned_router,distilled_single,parameter_matched_wide,no_twist_branch --bootstrap-samples 5000 --device auto",
+    "command_string": "<repository-root>/.venv/bin/python experiments/controlled_twisted_overlap_benchmark.py --twist-family mu2_coboundary,mu2_nontrivial_h2,random_noncentral --n-models 4 --widths 32,64 --seeds 6000:6029 --epochs 5 --samples-per-chart 2000 --samples-per-overlap 1000 --branch-count 2 --extra-controls wrong_twist,wrong_context,learned_router,distilled_single,parameter_matched_wide,no_twist_branch --bootstrap-samples 5000 --device auto",
     "device": "auto",
     "epochs": 5,
     "extra_controls": "wrong_twist,wrong_context,learned_router,distilled_single,parameter_matched_wide,no_twist_branch",
@@ -15,7 +15,7 @@
       "no_twist_branch_control"
     ],
     "n_models": 4,
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "samples_per_chart": 2000,
     "samples_per_overlap": 1000,
     "seeds": "6000:6029",

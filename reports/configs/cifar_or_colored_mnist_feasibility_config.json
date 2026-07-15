@@ -1,5 +1,5 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/cifar_or_colored_mnist_feasibility.py",
+  "command": "<repository-root>/.venv/bin/python experiments/cifar_or_colored_mnist_feasibility.py",
   "git_commit": "ba8fc00",
   "dirty_worktree": true,
   "thresholds": {

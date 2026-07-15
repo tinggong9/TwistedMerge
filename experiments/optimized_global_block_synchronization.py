@@ -2,7 +2,7 @@
 """Optimized global block synchronization sanity checks.
 
 This experiment is intentionally fast and controlled.  It verifies algorithmic
-behavior requested in Prompt 5(j)(ii) without turning diagnostic block rotations
+behavior requested in benchmark series 5(j)(ii) without turning diagnostic block rotations
 for ReLU MLPs into a claimed exact merge path.
 """
 

@@ -1,7 +1,7 @@
 {
   "stage": 7,
   "mode": "smoke",
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/natural_twist_discovery.py --mode smoke",
+  "command": "<repository-root>/.venv/bin/python experiments/natural_twist_discovery.py --mode smoke",
   "source": "reports/overnight_program/practical_selector_source/csv/improved_validated_ladder_merge_benchmark.csv",
   "source_settings": 120,
   "natural_twist_promoted": false,

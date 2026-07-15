@@ -1,6 +1,6 @@
 # Same-Base Task-Vector Extended Replication
 
-Generated from the committed Prompt 31 same-base CSVs plus an optional Prompt 37 extension run.
+Generated from the committed benchmark series 31 same-base CSVs plus an optional benchmark series 37 extension run.
 
 ## Scope
 
@@ -15,7 +15,7 @@ Width 256 was not run. Runtime was acceptable for the two added width-64 task fa
 
 ## Exact Commands
 
-Original Prompt 31 source rows are read from `reports/csv/same_base_task_vector_benchmark.csv`.
+Original benchmark series 31 source rows are read from `reports/csv/same_base_task_vector_benchmark.csv`.
 
 Additional raw extension run:
 
@@ -151,5 +151,5 @@ Claim-decision counts across exact settings: `{'supported_exact_setting_delta_vs
 
 - Exact-setting claims only unless support repeats across task families and widths.
 - Same-base task-vector methods are not independent-seed rebasin methods.
-- This extension does not support broad superiority by itself; it adds two width-64 task-family checks to the original Prompt 31 table.
+- This extension does not support broad superiority by itself; it adds two width-64 task-family checks to the original benchmark series 31 table.
 - The per-task oracle summary is not a single merged model.

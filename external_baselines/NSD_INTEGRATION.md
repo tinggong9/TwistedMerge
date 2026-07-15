@@ -39,7 +39,7 @@ Important environment notes:
   because it expected `torch.sparse_csc_tensor`, so the working pair is
   `torch-scatter==2.0.9` and `torch-sparse==0.6.13`.
 - `torch-householder` attempted to JIT-build in
-  `/Users/tinggong/Library/Caches/torch_extensions`, which was not writable
+  `<user-cache>/torch_extensions`, which was not writable
   from this session. The working invocation sets:
 
 ```bash

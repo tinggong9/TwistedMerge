@@ -106,12 +106,12 @@ def main() -> None:
 
 The audit normalizes {len(grouped)} benchmark-method summaries and reports the preregistered practical score for all 3×3 combinations of regret penalty {{0, 0.1, 0.25}} and inference penalty {{0, 0.01, 0.05}}. It does not select a lambda after seeing results. Wrong-action, wrong-generator, wrong-order/context, random-branch, and quaternion controls are retained in `robustness_controls.csv`.
 
-Observed false-positive activation rate across four negative/certificate gates is {false_positive_rate:.4f}. False-negative rate is not identifiable without verified positive natural examples. Missing FLOPs, peak memory outside Stage 1, batch-size sensitivity, alignment-noise sweeps, and branch-count scaling are left missing rather than estimated; these are exact blockers to a publication-grade systems claim. Cross-benchmark native scores are not pooled into one headline accuracy.
+Observed false-positive activation rate across four negative/certificate gates is {false_positive_rate:.4f}. False-negative rate is not identifiable without verified positive natural examples. Missing FLOPs, peak memory outside Stage 1, batch-size sensitivity, alignment-noise sweeps, and branch-count scaling are left missing rather than estimated; the available measurements do not support a full systems conclusion. Cross-benchmark native scores are not pooled into one headline accuracy.
 """
     (OUT / "capacity_latency_report.md").write_text(report, encoding="utf-8")
     distill_report = f"""# Distillation audit
 
-The component smoke reduced teacher/student KL from {hodge['distillation_initial_kl']:.6g} to {hodge['distillation_final_kl']:.6g}. In controlled mu2, the supplied-context teacher and distilled single-model accuracies are recorded in `distillation_summary.csv`; the distilled model is not relabeled as a successful lift. No pretrained vision or language branch teacher was sufficiently supported for publication-grade distillation.
+The component smoke reduced teacher/student KL from {hodge['distillation_initial_kl']:.6g} to {hodge['distillation_final_kl']:.6g}. In controlled mu2, the supplied-context teacher and distilled single-model accuracies are recorded in `distillation_summary.csv`; the distilled model is not relabeled as a successful lift. No pretrained vision or language branch teacher had sufficient evidence for a full-scale distillation conclusion.
 """
     (OUT / "distillation_report.md").write_text(distill_report, encoding="utf-8")
     (OUT / "capacity_latency_config.json").write_text(json.dumps({"stage": 12, "sources": [source[0] for source in SOURCES], "lambda_regret": [0.0, 0.1, 0.25], "lambda_inference": [0.0, 0.01, 0.05], "false_positive_rate": false_positive_rate, "missing_not_imputed": ["FLOPs", "most_peak_memory", "batch_size_sensitivity", "false_negative_rate"]}, indent=2), encoding="utf-8")

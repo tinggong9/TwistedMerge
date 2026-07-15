@@ -1,8 +1,8 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/greedy_aware_monomial_benchmark.py",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig <repository-root>/.venv/bin/python experiments/greedy_aware_monomial_benchmark.py",
   "git_commit": "65eed8d",
   "dirty_worktree": true,
-  "base_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/improved_validated_ladder_merge_benchmark.csv",
+  "base_csv": "<repository-root>/reports/csv/improved_validated_ladder_merge_benchmark.csv",
   "epsilon_grid": "0.0,0.0005,0.001,0.002,0.005",
   "loss_slack_grid": "0.0,0.005,0.01,inf",
   "selected_epsilon": 0.0,

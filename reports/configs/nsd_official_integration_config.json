@@ -23,9 +23,9 @@
   },
   "command": "experiments/nsd_official_cycle_diagnostics.py --nsd-root /private/tmp/neural-sheaf-diffusion --dataset texas --fold 0 --seed 43 --epochs 3 --edge-weight-modes false true --cycle-lambda-attempt 1.0",
   "outputs": {
-    "config_json": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/configs/nsd_official_integration_config.json",
-    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/nsd_cycle_diagnostics.csv"
+    "config_json": "<repository-root>/reports/configs/nsd_official_integration_config.json",
+    "csv": "<repository-root>/reports/csv/nsd_cycle_diagnostics.csv"
   },
   "rows": 3,
-  "twistedmerge_cwd": "/Users/tinggong/Documents/GitHub/TwistedMerge"
+  "twistedmerge_cwd": "<repository-root>"
 }

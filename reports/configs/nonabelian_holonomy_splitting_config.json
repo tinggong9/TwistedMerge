@@ -23,7 +23,7 @@
     "--reports-dir",
     "reports"
   ],
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/nonabelian_holonomy_splitting.py --reports-dir reports",
+  "command": "<repository-root>/.venv/bin/python experiments/nonabelian_holonomy_splitting.py --reports-dir reports",
   "environment": {
     "git_commit": "f923323",
     "machine": "arm64",

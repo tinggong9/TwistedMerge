@@ -2,7 +2,7 @@
   "stage": 8,
   "mode": "smoke",
   "execution_commit": "66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03",
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30 --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --out-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program/pretrained_vision_source",
+  "command": "<repository-root>/.venv/bin/python <repository-root>/experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30 --data-dir <repository-root>/data --out-dir <repository-root>/reports/overnight_program/pretrained_vision_source",
   "backbone": "torchvision ResNet-18 ImageNet weights",
   "dataset": "CIFAR-10",
   "seeds_completed": 1,

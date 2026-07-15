@@ -5,7 +5,7 @@
     "label_noise": 0.02,
     "model_noise": 0.03,
     "nodes": 12,
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "seed_offset": 1701,
     "seeds": 12,
     "test_samples": 512,
@@ -33,9 +33,9 @@
     "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
   },
   "outputs": {
-    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/synthetic_mu2_results.csv",
-    "plot": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/plots/synthetic_mu2_obstruction.png",
-    "summary_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/synthetic_mu2_summary.csv",
-    "table": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/tables/synthetic_mu2_summary.tex"
+    "csv": "<repository-root>/reports/csv/synthetic_mu2_results.csv",
+    "plot": "<repository-root>/reports/plots/synthetic_mu2_obstruction.png",
+    "summary_csv": "<repository-root>/reports/csv/synthetic_mu2_summary.csv",
+    "table": "<repository-root>/reports/tables/synthetic_mu2_summary.tex"
   }
 }

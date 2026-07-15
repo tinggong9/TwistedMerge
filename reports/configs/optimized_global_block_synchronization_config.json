@@ -1,5 +1,5 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/optimized_global_block_synchronization.py --reports-dir /Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig <repository-root>/.venv/bin/python experiments/optimized_global_block_synchronization.py --reports-dir <repository-root>/reports",
   "git_commit": "efb80d8",
   "git_worktree_dirty": false,
   "settings": {

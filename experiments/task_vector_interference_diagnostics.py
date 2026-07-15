@@ -2,7 +2,7 @@
 """Task-vector interference diagnostics for the same-base benchmark.
 
 This script separates same-base task-vector geometry from independent-seed
-rebasin/cycle obstruction diagnostics.  The inputs are the Prompt 29
+rebasin/cycle obstruction diagnostics.  The inputs are the benchmark series 29
 same-base benchmark CSVs; no training is performed here.
 """
 

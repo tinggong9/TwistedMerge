@@ -2,7 +2,7 @@
   "args": {
     "architecture": "auto",
     "batch_size": 128,
-    "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+    "data_dir": "<repository-root>/data",
     "datasets": "mnist,cifar10",
     "device": "cpu",
     "domain_shifts": "none,input_noise",
@@ -13,7 +13,7 @@
     "max_train_samples": 384,
     "model_counts": "2,3",
     "rank_lift_branches": 2,
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "seed": 8128,
     "val_fraction": 0.2,
     "widths": "8,16"

@@ -1,5 +1,5 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/context_router_generalization.py --groups S3,D4 --seeds 0:19 --n-validation-per-context 200 --n-test-per-context 300",
+  "command": "<repository-root>/.venv/bin/python experiments/context_router_generalization.py --groups S3,D4 --seeds 0:19 --n-validation-per-context 200 --n-test-per-context 300",
   "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
   "train_words": [
     "e",

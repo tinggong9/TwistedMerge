@@ -1,11 +1,11 @@
 # Modern Shared-Base Pretrained Model-Merging Smoke Report
 
-Decision: **not run at full required scale due to exact blockers; smoke completed**.
+Decision: **bounded feasibility run completed; the full-scale protocol was not executed**.
 
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30 --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --out-dir /Users/tinggong/Documents/Codex/2026-07-14/ru-3/work/TwistedMerge-stage4/reports/overnight_program/pretrained_vision_source
+<repository-root>/.venv/bin/python <repository-root>/experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30 --data-dir <repository-root>/data --out-dir <repository-root>/reports/overnight_program/pretrained_vision_source
 ```
 
 - Git commit at execution: `66f7eaf811a57d4e94e1dd699c1025dc2fa4ea03`
@@ -28,11 +28,11 @@ Decision: **not run at full required scale due to exact blockers; smoke complete
 | 0 | slerp | 0.597656 | 0.634328 | 0.557377 | 0.675676 | 0.517787 | 0.517787 | 0.157934 | 0.112756 | 11181642 | 5130 | 11181642 | 1 | 0.948663 | 0.000475083 | 0 | False |  | False | False | internal_faithful_smoke | reports/overnight_program/pretrained_vision_source/logits/pretrained_vision_seed0.npz | cfaa5aa1966e5246939029d589bde0f66188d5acb0976e2efe1b7d0b8a0e8668 | True |
 | 0 | twistedmerge_exact_gauge_soup_selector | 0.597656 | 0.634328 | 0.557377 | 0.675676 | 0.517787 | 0.517787 | 0.157934 | 0.0546974 | 11181642 | 5130 | 11181642 | 1 | 0.965636 | 0.000483583 | 256 | True | weight_average | False | False | internal_faithful_smoke | reports/overnight_program/pretrained_vision_source/logits/pretrained_vision_seed0.npz | cfaa5aa1966e5246939029d589bde0f66188d5acb0976e2efe1b7d0b8a0e8668 | True |
 
-## Exact blockers to a full ICLR/JMLR benchmark
+## Scope and limitations
 
-1. The required five-seed, full fine-tuning protocol was not computationally justified for this package run; this smoke freezes the backbone and fine-tunes only task heads.
-2. Official Task Arithmetic, TIES, DARE, and SLERP repositories/licenses/commits were not pinned and integrated. The smoke uses labeled internal faithful implementations, which are not publication-grade external-baseline reproductions.
-3. The full protocol needs separate validation/test sets at useful scale and paired statistics across at least five seeds; one smoke seed cannot support an accuracy claim.
+1. This historical run uses one seed, a frozen backbone, and fine-tuned task heads; it is a feasibility result rather than a full comparison.
+2. Task Arithmetic, TIES, DARE, and SLERP are labeled internal implementations; official repositories were not integrated for this run.
+3. A full comparison requires disjoint validation and test sets at larger scale, at least five seeds, and paired intervals.
 4. No exact centrality/closure certificate passed, so no central/Brauer obstruction or branch candidate is claimed.
 
-The checkpoint files and raw CSVs are retained only as feasibility evidence. They are excluded from paper-number release eligibility.
+The checkpoints and raw CSVs are retained as reproducibility evidence for this bounded run.

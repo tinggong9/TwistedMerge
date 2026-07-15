@@ -5,7 +5,7 @@ Primary practical-selector decision: **unsupported** versus ordinary greedy soup
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/matched_selector_budget_benchmark.py
+<repository-root>/.venv/bin/python experiments/matched_selector_budget_benchmark.py
 ```
 
 - Git commit at aggregation: `8c369a6f1a7f08b7443626ae1dece7d25fc06ddf`

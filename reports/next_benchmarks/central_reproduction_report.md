@@ -8,7 +8,7 @@
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000
+<repository-root>/.venv/bin/python experiments/central_reproduction_next.py --seeds 0:29 --widths 32,64 --samples-per-chart 500 --samples-per-overlap 2000
 ```
 
 - Git commit at execution: `0a41f76d3c8a77acc3a47514c2639b81fbc5b280`

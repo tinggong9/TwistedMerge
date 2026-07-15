@@ -1,5 +1,5 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/fashion_mnist_cnn_channel_gauge_confirmatory.py --device auto",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl <repository-root>/.venv/bin/python experiments/fashion_mnist_cnn_channel_gauge_confirmatory.py --device auto",
   "git_commit": "ba8fc00",
   "dirty_worktree": true,
   "model_counts": [

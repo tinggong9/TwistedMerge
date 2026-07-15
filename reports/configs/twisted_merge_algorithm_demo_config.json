@@ -3,7 +3,7 @@
     "central_tolerance": 1e-05,
     "q_values": "1,2",
     "ranks": "1,2,4,8",
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "samples_per_face": 512,
     "seed": 6211,
     "tolerance": 1e-06
@@ -26,7 +26,7 @@
     "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
   },
   "outputs": {
-    "csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/twisted_merge_algorithm_demo.csv",
-    "report": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/twisted_merge_algorithm_report.md"
+    "csv": "<repository-root>/reports/csv/twisted_merge_algorithm_demo.csv",
+    "report": "<repository-root>/reports/twisted_merge_algorithm_report.md"
   }
 }

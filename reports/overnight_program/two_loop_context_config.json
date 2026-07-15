@@ -3,7 +3,7 @@
   "mode": "full",
   "execution_commit": "d71d1a3651a4c4c23a3e6e80c834b729d6a8aa2e",
   "dirty_worktree_at_execution": false,
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/context_dependent_two_loop_holonomy.py --mode full",
+  "command": "<repository-root>/.venv/bin/python experiments/context_dependent_two_loop_holonomy.py --mode full",
   "groups": [
     "S3",
     "D4"

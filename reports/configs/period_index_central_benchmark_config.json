@@ -1,7 +1,7 @@
 {
   "args": {
     "max_multiplier": 3,
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports"
+    "reports_dir": "<repository-root>/reports"
   },
   "argv": [
     "experiments/period_index_central_benchmark.py"

@@ -10,7 +10,7 @@ Natural-data diagnostic hypothesis: **unsupported** under the preregistered gate
 - Evaluation: leave one complete `(n_models,width)` setting out; seeds never cross from a held-out setting into its training folds.
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000
+<repository-root>/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000
 ```
 
 - Git commit at execution: `8c369a6f1a7f08b7443626ae1dece7d25fc06ddf`

@@ -1,5 +1,5 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/improved_validated_ladder_merge_benchmark.py",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig <repository-root>/.venv/bin/python experiments/improved_validated_ladder_merge_benchmark.py",
   "git_commit": "e48ea65",
   "dirty_worktree": true,
   "dataset": "mnist",

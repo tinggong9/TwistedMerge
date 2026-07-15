@@ -1,7 +1,7 @@
 {
   "args": {
     "batch_size": 128,
-    "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+    "data_dir": "<repository-root>/data",
     "dataset_seed": 8128,
     "device": "cpu",
     "epochs": 3,
@@ -10,7 +10,7 @@
     "max_test_samples": 1000,
     "max_train_samples": 2000,
     "model_counts": "3,4",
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "seeds": "1400,1401,1402,1403,1404",
     "widths": "16,32"
   },

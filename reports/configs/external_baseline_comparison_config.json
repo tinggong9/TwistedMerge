@@ -1,5 +1,5 @@
 {
-  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/external_baseline_comparison.py --seeds 1800,1801,1802,1803,1804 --model-counts 3,4 --widths 32,64 --epochs 3 --max-train-samples 5000 --max-test-samples 0 --bootstrap-samples 2000 --device cpu",
+  "command": "PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/mplconfig <repository-root>/.venv/bin/python experiments/external_baseline_comparison.py --seeds 1800,1801,1802,1803,1804 --model-counts 3,4 --widths 32,64 --epochs 3 --max-train-samples 5000 --max-test-samples 0 --bootstrap-samples 2000 --device cpu",
   "dataset": "mnist",
   "dirty_worktree": true,
   "environment": {
@@ -18,7 +18,7 @@
   },
   "epochs": 3,
   "git_commit": "65eed8d",
-  "improved_benchmark_csv": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/improved_validated_ladder_merge_benchmark.csv",
+  "improved_benchmark_csv": "<repository-root>/reports/csv/improved_validated_ladder_merge_benchmark.csv",
   "max_test_samples": 0,
   "max_train_samples": 5000,
   "model_counts": [

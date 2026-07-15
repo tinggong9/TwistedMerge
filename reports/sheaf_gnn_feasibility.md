@@ -1,6 +1,6 @@
 # Sheaf/GNN Feasibility Report
 
-This is a pre-implementation feasibility check for Prompt 6.  The external reference is the official Neural Sheaf Diffusion repository:
+This is a pre-implementation feasibility check for benchmark series 6.  The external reference is the official Neural Sheaf Diffusion repository:
 
 - Repository: <https://github.com/twitter-research/neural-sheaf-diffusion>
 - Paper: "Neural Sheaf Diffusion: A Topological Perspective on Heterophily and Oversmoothing in GNNs" (NeurIPS 2022)

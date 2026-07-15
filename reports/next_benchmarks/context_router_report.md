@@ -5,7 +5,7 @@ Claim decision: **unsupported** for a learned practical router.
 ## Exact command
 
 ```bash
-/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/context_router_generalization.py --groups S3,D4 --seeds 0:19 --n-validation-per-context 200 --n-test-per-context 300
+<repository-root>/.venv/bin/python experiments/context_router_generalization.py --groups S3,D4 --seeds 0:19 --n-validation-per-context 200 --n-test-per-context 300
 ```
 
 - Git commit at execution: `8c369a6f1a7f08b7443626ae1dece7d25fc06ddf`

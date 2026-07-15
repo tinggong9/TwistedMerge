@@ -28,7 +28,7 @@
       "k": 2
     }
   ],
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/time_frequency_heisenberg_projection_benchmark.py",
+  "command": "<repository-root>/.venv/bin/python experiments/time_frequency_heisenberg_projection_benchmark.py",
   "commit": "0cf028f",
   "environment": {
     "git_commit": "0cf028f",

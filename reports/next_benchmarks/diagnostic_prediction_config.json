@@ -1,5 +1,5 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000",
+  "command": "<repository-root>/.venv/bin/python experiments/heldout_diagnostic_prediction.py --bootstrap-samples 2000",
   "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
   "primary_target": "weight_average_degradation",
   "primary_predictor": "cycle_residual",

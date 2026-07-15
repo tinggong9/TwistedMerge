@@ -1,6 +1,6 @@
 # Baseline Regime Audit
 
-Generated for Prompt 28. This is a reproducibility and claim-boundary artifact, not paper prose.
+Generated for benchmark series 28. This is a reproducibility and claim-boundary artifact, not paper prose.
 
 ## Scope
 
@@ -9,11 +9,11 @@ This audit separates two experimental regimes that should not be collapsed:
 - Independent-seed/rebasin regime: local models are trained from different random initializations. Permutation, synchronization, and ReLU-gauge methods are meaningful because they address coordinate mismatch.
 - Same-base task-vector regime: models are fine-tuned from one common base checkpoint. SLERP, Task Arithmetic, TIES, and DARE are meaningful because parameter deltas live in a shared coordinate system.
 
-The current Prompt 11 fixed-setting data are independent-seed small-network runs. They are not a same-base task-vector benchmark. Therefore Task Arithmetic, TIES, and DARE should not be judged from those rows unless a new common-base setup is created.
+The current benchmark series 11 fixed-setting data are independent-seed small-network runs. They are not a same-base task-vector benchmark. Therefore Task Arithmetic, TIES, and DARE should not be judged from those rows unless a new common-base setup is created.
 
 ## Audit Table
 
-| method | intended regime | common init? | validation? | capacity | output | fair on current Prompt 11 fixed-setting data? | fair on new same-base task-vector benchmark? |
+| method | intended regime | common init? | validation? | capacity | output | fair on current benchmark series 11 fixed-setting data? | fair on new same-base task-vector benchmark? |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | weight averaging | same-base task-vector; same-dataset fine-tune; independent seed as weak/unprotected baseline | no | no | yes | single averaged model | yes as weak unaligned baseline | yes |
 | greedy soup / Model Soups | same-base task-vector; same-dataset fine-tune; checkpoint soup over a common candidate pool | preferred | yes | yes | single averaged soup | yes as validation-descent baseline over candidate checkpoints | yes |
@@ -48,7 +48,7 @@ Twisted/rank-lifted branch candidates are not same-capacity single-model baselin
 
 ## Forbidden Claims
 
-- Do not claim Task Arithmetic, TIES, or DARE fail based on current independent random-initialization Prompt 11 fixed-setting rows.
+- Do not claim Task Arithmetic, TIES, or DARE fail based on current independent random-initialization benchmark series 11 fixed-setting rows.
 - Do not claim a broad win over SLERP unless SLERP is run in a same-base or otherwise alignment-safe regime.
 - Do not compare rank-lifted branch candidates directly against same-capacity task-vector baselines without labeling extra capacity and including branch-capacity matched controls.
 - Do not claim official external-baseline wins from faithful internal implementations or regime-audit rows.

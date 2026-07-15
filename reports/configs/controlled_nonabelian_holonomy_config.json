@@ -22,7 +22,7 @@
     "--reports-dir",
     "reports"
   ],
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/controlled_nonabelian_holonomy.py --reports-dir reports",
+  "command": "<repository-root>/.venv/bin/python experiments/controlled_nonabelian_holonomy.py --reports-dir reports",
   "environment": {
     "git_commit": "6768999",
     "machine": "arm64",

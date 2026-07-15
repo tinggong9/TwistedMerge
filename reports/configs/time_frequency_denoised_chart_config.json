@@ -28,7 +28,7 @@
       "k": 2
     }
   ],
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/time_frequency_denoised_chart_benchmark.py",
+  "command": "<repository-root>/.venv/bin/python experiments/time_frequency_denoised_chart_benchmark.py",
   "commit": "8d69f8c",
   "denoising_methods": [
     "raw_least_squares",

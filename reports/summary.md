@@ -5,7 +5,7 @@ Generated from local artifacts in `reports/` on 2026-06-29.
 ## Exact commands run
 
 ```bash
-/Users/tinggong/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 -m venv .venv
+python3 -m venv .venv
 .venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -r requirements-synthetic.txt
 .venv/bin/python experiments/synthetic_mu2_obstruction.py

@@ -21,11 +21,11 @@ experiments/diagnostic_method_selector.py --bootstrap-samples 5000
 
 ## Inputs
 
-- `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/fixed_setting_verification_runs.csv`
-- `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/fixed_setting_individual_models.csv`
-- `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/obstruction_predictor_target_stats.csv`
-- `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/alignment_barrier_targets.csv`
-- `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/monomial_fixed_setting_runs.csv`
+- `<repository-root>/reports/csv/fixed_setting_verification_runs.csv`
+- `<repository-root>/reports/csv/fixed_setting_individual_models.csv`
+- `<repository-root>/reports/csv/obstruction_predictor_target_stats.csv`
+- `<repository-root>/reports/csv/alignment_barrier_targets.csv`
+- `<repository-root>/reports/csv/monomial_fixed_setting_runs.csv`
 
 ## Candidate Availability
 

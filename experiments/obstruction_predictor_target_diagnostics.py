@@ -811,7 +811,7 @@ def apply_full_loader_barrier_stability(
         stats.loc[mask, "full_loader_beta_in_stability_report"] = claim.get("current_beta", float("nan"))
         stats.loc[mask, "full_loader_ci_low_in_stability_report"] = claim.get("current_ci_low", float("nan"))
         stats.loc[mask, "full_loader_ci_high_in_stability_report"] = claim.get("current_ci_high", float("nan"))
-        # For previously supported two-batch claims, prefer the Prompt 20
+        # For previously supported two-batch claims, prefer the benchmark series 20
         # full-loader stability recheck coefficients.  The direct barrier-CSV
         # fallback can lack controls that were available during the full-loader
         # barrier run, so it must not silently resurrect a rejected stability

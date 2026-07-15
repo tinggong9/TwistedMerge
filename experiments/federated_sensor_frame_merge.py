@@ -20,7 +20,7 @@ from torchvision import datasets, transforms
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "reports" / "overnight_program"
-DATA = Path("/Users/tinggong/Documents/GitHub/TwistedMerge/data")
+DATA = ROOT / "data"
 
 
 def rotation_permutation(quarter_turns: int, side: int = 28) -> np.ndarray:

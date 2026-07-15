@@ -28,7 +28,6 @@ For claim status, start with:
 
 - `reports/claims_audit.md`
 - `reports/full_capacity_claim_audit.md`
-- `reports/final_evidence_freeze_manifest.md`
 - `reports/final_claim_ledger.md`
 
 ## Repository Map
@@ -231,13 +230,10 @@ The official-code documents record repository URLs, licenses, commit hashes, env
 
 ## Recommended Reading Order
 
-1. `reports/final_evidence_freeze_manifest.md`
-2. `reports/final_claim_ledger.md`
-3. `reports/claims_audit.md`
-4. `reports/full_capacity_claim_audit.md`
-5. `reports/paper_level_decision_after_35791f7.md`
-6. `reports/results_narrative_after_35791f7.md`
-7. Dataset-specific reports listed in the relevant section above
+1. `reports/final_claim_ledger.md`
+2. `reports/claims_audit.md`
+3. `reports/full_capacity_claim_audit.md`
+4. Dataset-specific reports listed in the relevant section above
 
 ## Reproducibility Conventions
 

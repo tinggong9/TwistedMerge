@@ -1,5 +1,5 @@
 {
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30",
+  "command": "<repository-root>/.venv/bin/python experiments/pretrained_merge_smoke.py --seed 0 --train-samples 512 --validation-samples 256 --test-samples 512 --head-epochs 30",
   "git_commit": "8c369a6f1a7f08b7443626ae1dece7d25fc06ddf",
   "weights": "IMAGENET1K_V1",
   "weights_url": "https://download.pytorch.org/models/resnet18-f37072fd.pth",

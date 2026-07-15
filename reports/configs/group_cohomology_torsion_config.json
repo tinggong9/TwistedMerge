@@ -26,7 +26,7 @@
     "--reports-dir",
     "reports"
   ],
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/group_cohomology_torsion_hunting.py --reports-dir reports",
+  "command": "<repository-root>/.venv/bin/python experiments/group_cohomology_torsion_hunting.py --reports-dir reports",
   "environment": {
     "git_commit": "634972d",
     "machine": "arm64",

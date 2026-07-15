@@ -16,7 +16,7 @@
     "pooling_thresholds": "1e-8,1e-6,1e-4,1e-2",
     "random_restarts": 64,
     "relation_thresholds": "0,0.01,0.05",
-    "reports_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports",
+    "reports_dir": "<repository-root>/reports",
     "seed": 27119,
     "selector_epsilon_controls": "0.0,0.0005,0.001",
     "selector_epsilons": "0.0,0.0005,0.001,0.002",
@@ -51,7 +51,7 @@
     "regret": 30720,
     "selector": 30720
   },
-  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/small_quotient_holonomy_splitting.py --datasets mnist,fashion_mnist --model-counts 3,4 --max-settings 160 --random-restarts 64 --bootstrap-samples 100 --bootstrap-ci-samples 500 --nulls-per-family 20",
+  "command": "<repository-root>/.venv/bin/python experiments/small_quotient_holonomy_splitting.py --datasets mnist,fashion_mnist --model-counts 3,4 --max-settings 160 --random-restarts 64 --bootstrap-samples 100 --bootstrap-ci-samples 500 --nulls-per-family 20",
   "environment": {
     "git_commit": "8693d66",
     "machine": "arm64",

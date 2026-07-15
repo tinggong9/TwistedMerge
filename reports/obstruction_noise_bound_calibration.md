@@ -2,7 +2,7 @@
 
 ## Exact command
 
-`PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/obstruction_noise_bound_calibration.py --bootstrap-samples 1000`
+`PYTHONPYCACHEPREFIX=/private/tmp/codex-pycache MPLCONFIGDIR=/private/tmp/codex-mpl <repository-root>/.venv/bin/python experiments/obstruction_noise_bound_calibration.py --bootstrap-samples 1000`
 
 ## Environment
 
@@ -13,10 +13,10 @@
 
 ## Outputs
 
-- Calibration rows: `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/obstruction_noise_bound_calibration.csv`
-- Summary rows: `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/csv/obstruction_noise_bound_summary.csv`
-- Plot: `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/plots/def_observed_vs_noise_floor.pdf`
-- Config: `/Users/tinggong/Documents/GitHub/TwistedMerge/reports/configs/obstruction_noise_bound_calibration_config.json`
+- Calibration rows: `<repository-root>/reports/csv/obstruction_noise_bound_calibration.csv`
+- Summary rows: `<repository-root>/reports/csv/obstruction_noise_bound_summary.csv`
+- Plot: `<repository-root>/reports/plots/def_observed_vs_noise_floor.pdf`
+- Config: `<repository-root>/reports/configs/obstruction_noise_bound_calibration_config.json`
 
 ## Calibration definitions
 
