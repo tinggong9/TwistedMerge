@@ -1,11 +1,13 @@
 import torch
 
-from experiments.broader_language_extended import SECOND_MODEL_ID, SECOND_MODEL_REVISION, adapter_residual
+from experiments.broader_language_extended import SECOND_MODEL_ID, SECOND_MODEL_REVISION, TOKENIZER_ID, TOKENIZER_REVISION, adapter_residual
 
 
 def test_second_language_base_is_pinned():
     assert SECOND_MODEL_ID == "prajjwal1/bert-tiny"
     assert len(SECOND_MODEL_REVISION) == 40
+    assert TOKENIZER_ID.startswith("google/")
+    assert len(TOKENIZER_REVISION) == 40
 
 
 def test_adapter_residual_is_deterministic():

@@ -27,6 +27,8 @@ from experiments.real_lora_adapter_near_term import average_states, delta_factor
 DEST = OUT / "extended"
 SECOND_MODEL_ID = "prajjwal1/bert-tiny"
 SECOND_MODEL_REVISION = "6f75de8b60a9f8a2fdf7b69cbd86d9e64bcb3837"
+TOKENIZER_ID = MODEL_ID
+TOKENIZER_REVISION = MODEL_REVISION
 
 
 def base_model(model_id: str = SECOND_MODEL_ID, revision: str = SECOND_MODEL_REVISION):
@@ -35,7 +37,9 @@ def base_model(model_id: str = SECOND_MODEL_ID, revision: str = SECOND_MODEL_REV
 
 
 def load_second_base_domains(per_domain: int = 128) -> tuple[object, list[DomainData]]:
-    tokenizer = AutoTokenizer.from_pretrained(SECOND_MODEL_ID, revision=SECOND_MODEL_REVISION)
+    # The second model repository does not contain a fast-tokenizer artifact;
+    # both checkpoints use the standard uncased BERT vocabulary.
+    tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_ID, revision=TOKENIZER_REVISION)
     domains = []
     for name, dataset_id, revision in DATASETS:
         stream = load_dataset(dataset_id, split="train", streaming=True, revision=revision)
@@ -194,7 +198,7 @@ def main() -> None:
         rows.extend(collection_rows)
         residuals.extend(collection_residuals)
         residual_flags.append(flag)
-        prior.append({"collection": collection, "collection_type": "lora", "base_model": SECOND_MODEL_ID, "base_revision": SECOND_MODEL_REVISION, "rank": rank, "source": "X2", "executed": True})
+        prior.append({"collection": collection, "collection_type": "lora", "base_model": SECOND_MODEL_ID, "base_revision": SECOND_MODEL_REVISION, "rank": rank, "source": "X2", "executed": True, "tokenizer": TOKENIZER_ID, "tokenizer_revision": TOKENIZER_REVISION})
     frame = pd.DataFrame(rows)
     summary = frame.groupby(["base_model", "rank", "method"], as_index=False).agg(accuracy=("accuracy", "mean"), worst_domain_accuracy=("worst_domain_accuracy", "mean"), ece=("ece", "mean"), latency_seconds=("latency_seconds", "median"), peak_memory_mb=("peak_memory_mb", "max"), lift_frequency=("lift_activated", "mean"))
     paired = []
