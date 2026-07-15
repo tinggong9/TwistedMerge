@@ -409,9 +409,12 @@ def main() -> None:
     write_csv(DEST / "compression_runs.csv", rows); write_csv(DEST / "compression_summary.csv", summary); write_csv(DEST / "compression_claims.csv", claims)
     latex_table(DEST / "tables" / "compression.tex", ["group", "method", "target_storage_reduction", "retained_teacher_gain_fraction", "measured_storage_reduction"], summary, "Structure-preserving compression")
     passed = sum(bool(row["value"]) for row in claims if row["claim"] == "structured_compression_gate_passed")
+    fashion_collections = len({int(row["seed"]) for row in rows if row["group"] == "FashionMNIST"})
+    teacher_description = "Independently trained S3 and D4 structured teachers"
+    if fashion_collections: teacher_description += f" and {fashion_collections} confirmed Fashion-MNIST inferred teachers"
     (DEST / "compression_report.md").write_text(
         "# Structure-preserving distillation and compression\n\n"
-        f"Execution commit: `{git_head()}`. Independently trained S3 and D4 structured teachers were compressed with seven "
+        f"Execution commit: `{git_head()}`. {teacher_description} were compressed with seven "
         "structured students and one required ordinary control at three target reductions under five cumulative objectives. "
         f"Storage is the byte size of executed dense, sparse, or int8 tensor artifacts; latency is measured end to end. "
         f"{passed} executed teachers passed the 95%-gain and 25%-measured-reduction gate. Fashion-MNIST and "
