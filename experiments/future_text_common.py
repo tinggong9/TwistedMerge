@@ -20,7 +20,7 @@ MODEL_ID = "google/bert_uncased_L-2_H-128_A-2"
 MODEL_REVISION = "30b0a37ccaaa32f332884b96992754e246e48c5f"
 DATASETS = [
     ("sst2", "stanfordnlp/sst2", "8d51e7e4887a4caaa95b3fbebbf53c0490b58bbb"),
-    ("imdb", "imdb", "e6281661ce1c48d982bc483cf8a173c1bbeb5d31"),
+    ("imdb", "stanfordnlp/imdb", "e6281661ce1c48d982bc483cf8a173c1bbeb5d31"),
     ("yelp", "fancyzhx/yelp_polarity", "bbf1c97a1f0cf005e5aded43839fd814654a1557"),
     ("amazon", "fancyzhx/amazon_polarity", "9d9c45c18f8c3cf1b23a3c27917b60cbf28f3289"),
 ]

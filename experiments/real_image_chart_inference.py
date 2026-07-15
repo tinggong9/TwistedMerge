@@ -13,8 +13,13 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+import experiments.compact_benchmark_common as compact_common
 from experiments.compact_benchmark_common import classification_metrics, load_vision_dataset, ridge_fit, ridge_predict, subset_arrays
-from experiments.future_benchmark_common import OUT, bootstrap, label_independence_record, peak_memory_mb, stage_result, write_csv
+from experiments.future_benchmark_common import DATA, OUT, bootstrap, label_independence_record, peak_memory_mb, stage_result, write_csv
+
+# The compact helpers predate the configurable future-program data root. Keep
+# their loader pointed at the same external cache selected by the master runner.
+compact_common.DATA = DATA
 
 DEST = OUT / "near_term"
 

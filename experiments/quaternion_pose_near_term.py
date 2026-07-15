@@ -32,7 +32,7 @@ def main() -> None:
         archive = LOCAL / "downloads" / "ModelNet10.zip"
         for attempt in [1, 2]:
             try:
-                download_with_resume("https://modelnet.cs.princeton.edu/ModelNet10.zip", archive)
+                download_with_resume("https://3dvision.princeton.edu/projects/2014/3DShapeNets/ModelNet10.zip", archive)
                 break
             except Exception as error:
                 errors.append({"attempt": attempt, "error_type": type(error).__name__, "error": safe_path(str(error))})
