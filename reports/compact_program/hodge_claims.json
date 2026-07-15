@@ -1,0 +1,10 @@
+{
+  "all_leakage_hashes_passed": true,
+  "criterion": "positive setting-stratified interval beyond strict synchronization and generic low-rank correction, or matched accuracy at materially lower rank or context data",
+  "positive_families": [
+    "controlled_D4",
+    "controlled_S3",
+    "controlled_mu2"
+  ],
+  "promoted": true
+}

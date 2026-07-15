@@ -1,0 +1,16 @@
+\begin{table}[t]
+\centering
+\caption{Targeted systems comparison.}
+\begin{tabular}{llllll}
+\toprule
+role & method & accuracy & parameters & latency ms & branch count \\
+\midrule
+best\_generic\_context & generic\_mixture\_of\_experts & 0.7842 & 42.0000 & 0.0063 & 1 \\
+best\_natural\_or\_pretrained\_baseline & strict\_synchronization & 0.7841 & 27954.0000 & 0.0063 & 1 \\
+best\_structured & twistedmerge\_hodge\_lr & 0.8150 & 30.0000 & 0.0065 & 1 \\
+ensemble\_reference & ensemble\_reference & 0.7866 & 393952.0000 & 0.0155 & 4 \\
+greedy\_soup & strict\_synchronization & 0.7841 & 27954.0000 & 0.0063 & 1 \\
+strict\_synchronization & c2m3\_strict\_synchronization & 0.2192 & 0.0000 & 0.0064 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Compact pretrained ResNet-18 results.}
+\begin{tabular}{lllll}
+\toprule
+method & accuracy & worst task accuracy & interference & latency ms \\
+\midrule
+c2m3\_identity\_synchronization & 0.3648 & 0.2574 & 0.1354 & 279.9096 \\
+dare & 0.1922 & 0.1226 & 0.3080 & 278.3837 \\
+ensemble\_reference & 0.4832 & 0.3889 & 0.0161 & 1153.9958 \\
+generic\_low\_rank\_merge & 0.3657 & 0.2571 & 0.1346 & 286.5552 \\
+generic\_router & 0.4893 & 0.3975 & 0.0099 & 1153.9958 \\
+greedy\_soup & 0.4337 & 0.3304 & 0.0655 & 279.2530 \\
+task\_arithmetic & 0.3648 & 0.2574 & 0.1354 & 281.5120 \\
+ties & 0.3527 & 0.2231 & 0.1475 & 283.8731 \\
+twistedmerge\_exact\_gauge\_selector & 0.4337 & 0.3304 & 0.0655 & 279.2530 \\
+twistedmerge\_hodge\_lr & 0.3648 & 0.2574 & 0.1354 & 296.3216 \\
+weight\_average & 0.3648 & 0.2574 & 0.1354 & 296.3216 \\
+\bottomrule
+\end{tabular}
+\end{table}

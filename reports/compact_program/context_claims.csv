@@ -1,0 +1,8 @@
+claim,value
+discovery_gate_passed,true
+conditions_by_group,"{""D4"": {""A"": true, ""B"": true, ""C"": true}, ""S3"": {""A"": true, ""B"": true, ""C"": true}}"
+interpretation,"""The gate is mechanical; efficiency counts only when accuracy is within the preregistered tolerance."""
+confirmation_executed,true
+confirmation_methods,"[""generic_mixture_of_experts"", ""learned_matrix_context_action"", ""twistedmerge_hodge_lr""]"
+confirmation_noises,"[0.5, 0.2]"
+confirmation_budgets,"[16, 64]"

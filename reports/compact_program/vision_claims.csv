@@ -1,0 +1,13 @@
+claim,value
+resource_blocked,false
+dataset_source,"""licensed dataset mirror cache"""
+discovery_gate_passed,false
+confirmation_executed,false
+best_nonensemble_baseline,"""generic_router"""
+paired_delta,-0.1245
+paired_ci_low,-0.1335
+paired_ci_high,-0.11149999999999999
+hodge_selection_frequency,0.0
+fresh_checkpoints_trained_this_invocation,0
+training_time_seconds,0.0
+all_leakage_hashes_passed,true

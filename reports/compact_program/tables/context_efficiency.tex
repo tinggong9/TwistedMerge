@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\caption{Context-method efficiency comparison.}
+\begin{tabular}{llllll}
+\toprule
+group & generic method & structured accuracy & generic accuracy & structured parameters & generic parameters \\
+\midrule
+S3 & generic\_linear & 0.6471 & 0.1671 & 30.0000 & 234.0000 \\
+S3 & generic\_two\_layer\_mlp & 0.6471 & 0.1685 & 30.0000 & 546.0000 \\
+S3 & generic\_mixture\_of\_experts & 0.6471 & 0.5823 & 30.0000 & 42.0000 \\
+S3 & learned\_matrix\_context\_action & 0.6471 & 0.4725 & 30.0000 & 222.0000 \\
+S3 & generic\_low\_rank\_context\_adapter & 0.6471 & 0.1801 & 30.0000 & 270.0000 \\
+D4 & generic\_linear & 0.6286 & 0.1247 & 56.0000 & 328.0000 \\
+D4 & generic\_two\_layer\_mlp & 0.6286 & 0.1196 & 56.0000 & 792.0000 \\
+D4 & generic\_mixture\_of\_experts & 0.6286 & 0.5449 & 56.0000 & 72.0000 \\
+D4 & learned\_matrix\_context\_action & 0.6286 & 0.3926 & 56.0000 & 520.0000 \\
+D4 & generic\_low\_rank\_context\_adapter & 0.6286 & 0.1430 & 56.0000 & 392.0000 \\
+\bottomrule
+\end{tabular}
+\end{table}

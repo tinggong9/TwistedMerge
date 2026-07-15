@@ -1,0 +1,87 @@
+{
+  "run_id": "526b8879-ab8b-478f-b7c3-6eaa524738ef",
+  "runner_commit": "c4fa3a6653becbffddcbee6e03c7c99b1bdd30e4",
+  "schema_version": 1,
+  "stages": {
+    "0": {
+      "command": "python experiments/compact_environment.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "full",
+      "name": "environment and provenance",
+      "runtime_seconds": 23.536,
+      "source_sha256": "265dbb2bbf265eb1955a16a46ddac19934a584d607cb09d1eae88ba70b39196c",
+      "status": "completed"
+    },
+    "1": {
+      "command": "python experiments/compact_context_fairness.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "discovery",
+      "name": "context fairness",
+      "runtime_seconds": 17.377,
+      "source_sha256": "18bea63b0b68a8d6ebfa12afd7966f217ad3ba077be7746a86341568cc53c94b",
+      "status": "completed"
+    },
+    "2": {
+      "command": "python experiments/compact_hodge_lr_ablation.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "discovery",
+      "name": "Hodge and low-rank ablation",
+      "runtime_seconds": 7.326,
+      "source_sha256": "75de79cfc52dd0d6b653c38314a993e3fc87cd10b2f601dbc70ee000470e3959",
+      "status": "completed"
+    },
+    "3": {
+      "command": "python experiments/compact_natural_twist.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "discovery",
+      "name": "natural checkpoint discovery",
+      "runtime_seconds": 47.594,
+      "source_sha256": "9aad774797e711c32a9458ec280ddb69023b4350e1a646796bf2eb00cabbe393",
+      "status": "completed"
+    },
+    "4": {
+      "command": "python experiments/compact_pretrained_vision.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "discovery",
+      "name": "pretrained vision",
+      "runtime_seconds": 58.572,
+      "source_sha256": "8ea216a88ce5fb9ea7b9ae388e46423551206be04267b464e3c0a301c626f00a",
+      "status": "completed"
+    },
+    "5": {
+      "command": "python experiments/compact_federated_frame.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "discovery",
+      "name": "federated frames",
+      "runtime_seconds": 7.78,
+      "source_sha256": "1b5047a946f1c628097748363c1aed5fe1a3bd50293d25900de84dce3957b36a",
+      "status": "completed"
+    },
+    "6": {
+      "command": "python experiments/compact_systems_audit.py",
+      "execution_commit": "d30b02821526c13428d96143d4af1456918b2452",
+      "exit_code": 0,
+      "kind": "full",
+      "name": "systems and distillation",
+      "runtime_seconds": 0.912,
+      "source_sha256": "8a5c5793a3e2505339239055fa3edf17e33418d06d0ca21f7e3c4a60d11358ed",
+      "status": "completed"
+    },
+    "7": {
+      "command": "python experiments/compact_evidence_packet.py",
+      "execution_commit": "c4fa3a6653becbffddcbee6e03c7c99b1bdd30e4",
+      "exit_code": 0,
+      "kind": "full",
+      "name": "claim decision and evidence packet",
+      "runtime_seconds": 0.524,
+      "source_sha256": "a471fe6b6b979e3792b5cf7c5d0626aafd6c13193c6d017376a0972d5237fe76",
+      "status": "completed"
+    }
+  }
+}

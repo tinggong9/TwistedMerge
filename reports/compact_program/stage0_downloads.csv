@@ -1,0 +1,4 @@
+resource,status,source,license,file_count,bytes,aggregate_sha256,attempts,last_error
+MNIST,available,https://yann.lecun.com/exdb/mnist/,dataset terms at source,8,66544770,87d1baa4a19da6b8008ad42008d7029bef52cdd5359f2a01977a094d9918748a,0,
+Fashion-MNIST,available,https://github.com/zalandoresearch/fashion-mnist,MIT,8,85828693,ee10363d8c49db2f24d1f440dfd6ed2d6a33a917fad642bfbf1c01e0107d336d,0,
+CIFAR-10,available,https://huggingface.co/datasets/uoft-cs/cifar10 revision 0b2714987fa478483af9968de7c934580d0bb9a2,dataset terms at canonical source,3,136825334,e57281c548f4dbaf828c3a86767593be76b6fbb4b644ba33623b032e1183bf83,0,

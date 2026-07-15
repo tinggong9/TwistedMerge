@@ -1,0 +1,5 @@
+baseline,official_repository,revision,license,execution
+cycle-consistent multi-model synchronization,https://github.com/crisostomi/cycle-consistent-model-merging,ea1eca76b19c5d57ed97b1ef396368189e864eee,MIT,faithful internal shared-base specialization; official metadata pinned
+Task Arithmetic,https://github.com/mlfoundations/task_vectors,826a64c67082fab0f40628233287948f0f8d7fa3,not declared in repository metadata,faithful internal implementation; official metadata pinned
+TIES,https://github.com/prateeky2806/ties-merging,44e7891fc84f3de7e4caa52664cd864ca3715e91,BSD-3-Clause,faithful internal implementation; official metadata pinned
+DARE,https://github.com/yule-BUAA/MergeLM,6d49ad96fd69c92013654b837041b868aa806564,not declared in repository metadata,faithful internal implementation; official metadata pinned

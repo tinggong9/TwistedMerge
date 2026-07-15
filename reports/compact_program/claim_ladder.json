@@ -1,0 +1,10 @@
+{
+  "broad_cross_domain_superiority_not_evaluated": true,
+  "decision_rule": "mechanical conjunctions from the preregistered compact benchmark gates",
+  "level_1_controlled_results_valid": true,
+  "level_2_context_efficiency_or_gain": true,
+  "level_3_realistic_stable_residual_and_gain": false,
+  "ordinary_regime_mean_regret_at_most_0_002": true,
+  "realistic_positive_family_present": false,
+  "strongest_supported_level": 2
+}
