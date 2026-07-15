@@ -1,7 +1,7 @@
 {
   "branch": "twistedmerge-all-future-benchmarks-2026",
-  "free_disk_bytes": 199782277120,
-  "head": "0a6b2d06b02231bf74790dc4abb2a899ba07cd7e",
+  "free_disk_bytes": 199765037056,
+  "head": "13485f857bde7c6d3a83763344e97138d6d791be",
   "machine": "arm64",
   "mps_available": true,
   "packages": {

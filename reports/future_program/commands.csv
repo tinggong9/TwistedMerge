@@ -1,5 +1,5 @@
 stage_id,tier,command,execution_commit,source_sha256,started_at,runtime_seconds,exit_code,state
-E0,emergency,python experiments/future_e0_provenance.py,0a6b2d06b02231bf74790dc4abb2a899ba07cd7e,9207964a7da58ff1cc851a9b7aeb57efd70a0b55ee6ee0b9385d7cfb77ef5337,2026-07-15T14:04:28+0800,35.05,0,clean-freeze
+E0,emergency,python experiments/future_e0_provenance.py,13485f857bde7c6d3a83763344e97138d6d791be,9207964a7da58ff1cc851a9b7aeb57efd70a0b55ee6ee0b9385d7cfb77ef5337,2026-07-15T14:07:23+0800,39.744,0,clean-freeze
 E1,emergency,python experiments/emergency_level2_confirmation.py,980bd79ea7fed6ffbd7f65c224e675fe55b75d7d,cc25f7d422374a131ef1ec09120e13df3e509e4e050fa3bbaffb74e1c601bb4c,2026-07-15T12:46:19+0800,6.271,0,confirmation
 E2,emergency,python experiments/context_calibration_audit.py,980bd79ea7fed6ffbd7f65c224e675fe55b75d7d,ba34919f4f4efd9458d7cd7a7226e414ee466fe4b38b355f1eec92f8ad7cd789,2026-07-15T12:46:25+0800,6.245,0,completed
 E3,emergency,python experiments/emergency_mechanism_ablation.py,980bd79ea7fed6ffbd7f65c224e675fe55b75d7d,4d7f99375ad5ce13e345e0f303bcbe20ef7975da4e24ee38a681958f77abc209,2026-07-15T12:46:32+0800,4.347,0,negative
@@ -26,6 +26,6 @@ X7,extended,python experiments/extended_benchmark_suite.py --stage X7,e4449f6236
 X8,extended,python experiments/extended_benchmark_suite.py --stage X8,e4449f62360fb474cfb3dba9418e32d1a375ec93,d9d602e683ca94927269029e309d598117f291bdc7bf292c9a5464d6435c79b0,2026-07-15T13:57:44+0800,0.402,0,completed
 X9,extended,python experiments/extended_benchmark_suite.py --stage X9,e4449f62360fb474cfb3dba9418e32d1a375ec93,d9d602e683ca94927269029e309d598117f291bdc7bf292c9a5464d6435c79b0,2026-07-15T13:57:45+0800,0.379,0,completed
 X10,extended,python experiments/extended_benchmark_suite.py --stage X10,e4449f62360fb474cfb3dba9418e32d1a375ec93,d9d602e683ca94927269029e309d598117f291bdc7bf292c9a5464d6435c79b0,2026-07-15T13:57:45+0800,1.08,0,completed
-X11,extended,python experiments/extended_benchmark_suite.py --stage X11,0a6b2d06b02231bf74790dc4abb2a899ba07cd7e,70bbb7145a2ef02ff2938499a91ced845ff759441b0bcd6d5cfa534a46efdaa7,2026-07-15T14:05:27+0800,4.24,0,completed
-X12,extended,python experiments/extended_benchmark_suite.py --stage X12,0a6b2d06b02231bf74790dc4abb2a899ba07cd7e,70bbb7145a2ef02ff2938499a91ced845ff759441b0bcd6d5cfa534a46efdaa7,2026-07-15T14:05:32+0800,0.401,0,completed
-F,extended,python experiments/future_final_report.py,0a6b2d06b02231bf74790dc4abb2a899ba07cd7e,5a8d9ac0ce8f4ec0981bb96e4e56bb7b0d1f22e68cc40dfdb9ca826026cfcfb1,2026-07-15T14:05:32+0800,0.365,0,completed
+X11,extended,python experiments/extended_benchmark_suite.py --stage X11,13485f857bde7c6d3a83763344e97138d6d791be,70bbb7145a2ef02ff2938499a91ced845ff759441b0bcd6d5cfa534a46efdaa7,2026-07-15T14:08:12+0800,2.763,0,completed
+X12,extended,python experiments/extended_benchmark_suite.py --stage X12,13485f857bde7c6d3a83763344e97138d6d791be,70bbb7145a2ef02ff2938499a91ced845ff759441b0bcd6d5cfa534a46efdaa7,2026-07-15T14:08:15+0800,0.357,0,completed
+F,extended,python experiments/future_final_report.py,13485f857bde7c6d3a83763344e97138d6d791be,5a8d9ac0ce8f4ec0981bb96e4e56bb7b0d1f22e68cc40dfdb9ca826026cfcfb1,2026-07-15T14:08:15+0800,0.348,0,completed

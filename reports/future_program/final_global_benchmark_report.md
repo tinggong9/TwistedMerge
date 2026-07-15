@@ -6,7 +6,7 @@ Strongest mechanically supported evidence level: `2`.
 
 ## Stage decisions
 
-- E0: `clean-freeze` — full tests exit=0; classified 5 invalid historical artifacts
+- E0: `clean-freeze` — full tests exit=0; classified 6 invalid historical artifacts
 - E1: `confirmation` — independent controlled gate passed on fresh seeds
 - E2: `completed` — calibration gate passed
 - E3: `negative` — component attribution gate did not pass

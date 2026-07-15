@@ -4,7 +4,7 @@ Run ID: `526fdb85-8b91-480a-9f89-52f156218071`
 
 | Stage | Tier | Kind | State | Runtime (s) |
 |---|---|---|---|---:|
-| E0 | emergency | clean-freeze | clean-freeze | 35.05 |
+| E0 | emergency | clean-freeze | clean-freeze | 39.744 |
 | E1 | emergency | confirmation | confirmation | 6.271 |
 | E2 | emergency | discovery | completed | 6.245 |
 | E3 | emergency | discovery | negative | 4.347 |
@@ -31,8 +31,8 @@ Run ID: `526fdb85-8b91-480a-9f89-52f156218071`
 | X8 | extended | discovery | completed | 0.402 |
 | X9 | extended | discovery | completed | 0.379 |
 | X10 | extended | discovery | completed | 1.08 |
-| X11 | extended | discovery | completed | 4.24 |
-| X12 | extended | discovery | completed | 0.401 |
-| F | extended | discovery | completed | 0.365 |
+| X11 | extended | discovery | completed | 2.763 |
+| X12 | extended | discovery | completed | 0.357 |
+| F | extended | discovery | completed | 0.348 |
 
 Raw stdout and stderr are retained in the ignored local run cache.
