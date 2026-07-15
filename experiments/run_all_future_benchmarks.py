@@ -88,6 +88,17 @@ def render(status: dict) -> None:
     write_csv(OUT / "failures.csv", failures, ["stage_id", "state", "exit_code", "error"])
 
 
+def append_attempt(run_id: str, item: dict) -> None:
+    path = OUT / "attempt_history.csv"
+    fields = ["run_id", "stage_id", "tier", "command", "execution_commit", "source_sha256", "started_at", "runtime_seconds", "exit_code", "state", "summary"]
+    existing = []
+    if path.exists():
+        with path.open(newline="", encoding="utf-8") as handle:
+            existing = list(csv.DictReader(handle))
+    existing.append({"run_id": run_id, **{key: item.get(key, "") for key in fields if key != "run_id"}})
+    write_csv(path, existing, fields)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--tier", choices=["emergency", "near-term", "extended", "all"], default="all")
@@ -120,7 +131,7 @@ def main() -> None:
         if completed.returncode and state not in {"blocked", "failed"}:
             state = "failed"
         summary = result.get("summary") or safe_path(completed.stderr[-2000:] or completed.stdout[-1000:])
-        status["stages"][stage.stage_id] = {
+        item = {
             "stage_id": stage.stage_id,
             "tier": stage.tier,
             "kind": stage.kind,
@@ -134,6 +145,8 @@ def main() -> None:
             "runtime_seconds": round(runtime, 3),
             "exit_code": completed.returncode,
         }
+        status["stages"][stage.stage_id] = item
+        append_attempt(status["run_id"], item)
         render(status)
         print(f"{stage.stage_id}: {state} ({runtime:.1f}s)", flush=True)
     render(status)

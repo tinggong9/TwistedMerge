@@ -19,3 +19,13 @@ def test_future_runner_exposes_each_extended_stage():
 
     identifiers = {stage.stage_id for stage in STAGES}
     assert {f"X{index}" for index in range(1, 13)} <= identifiers
+
+
+def test_attempt_history_is_append_only(tmp_path, monkeypatch):
+    import experiments.run_all_future_benchmarks as runner
+
+    monkeypatch.setattr(runner, "OUT", tmp_path)
+    item = {"stage_id": "E0", "state": "completed", "summary": "ok"}
+    runner.append_attempt("run", item)
+    runner.append_attempt("run", item)
+    assert len((tmp_path / "attempt_history.csv").read_text().splitlines()) == 3
