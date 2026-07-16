@@ -1,0 +1,16 @@
+{
+  "completed_at": "2026-07-16T01:18:17.566421+00:00",
+  "domain_type": "synthetic",
+  "execution_commit": "69dc6182d9fc1675a198380225f71c97b1deabdf",
+  "gate": false,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source_sha256": "31aca5b0f6414ac006d7c6b6bf65ca7a58b9cf21ee0ebbe40c7b44958d23a8fd",
+  "stage": "C1",
+  "state": "completed"
+}

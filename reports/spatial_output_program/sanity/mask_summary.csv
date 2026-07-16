@@ -1,0 +1,7 @@
+method,cases,exact_rate,mean_iou,mean_dice,mean_boundary_dice
+correct_retransport,48,1.0,1.0,1.0,1.0
+inverse_output_action,48,0.75,0.8347962088373085,0.8632405834684341,0.75
+omit_output_retransport,48,0.125,0.437608585010336,0.5245372979083986,0.125
+random_chart,48,0.0,0.3773160793621531,0.49057154117509577,0.0
+wrong_multiplication_table,48,0.0,0.30438358153380846,0.39348358453006327,0.0
+wrong_reflection_rotation_order,48,0.5,0.6695924176746169,0.7264811669368682,0.5

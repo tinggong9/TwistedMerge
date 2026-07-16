@@ -1,0 +1,90 @@
+{
+  "stages": {
+    "B0_dataset_audit": {
+      "state": "completed",
+      "summary": "Primary selection: Kvasir-SEG; local paired subset counts {'train': 160, 'validation': 40, 'test': 40}.",
+      "updated_at": "2026-07-16T01:10:43.492367+00:00"
+    },
+    "B1_segmentation_discovery": {
+      "state": "completed",
+      "summary": "5 seeds and 20 methods executed",
+      "updated_at": "2026-07-16T01:12:14.258600+00:00"
+    },
+    "B2_zeroshot_segmentation": {
+      "state": "completed",
+      "summary": "5 diagnostic seeds; gate=False",
+      "updated_at": "2026-07-16T01:26:33.650652+00:00"
+    },
+    "B3_chart_uncertainty": {
+      "state": "completed",
+      "summary": "5 seeds and 7 perturbations executed",
+      "updated_at": "2026-07-16T01:14:16.505571+00:00"
+    },
+    "B4_complete_cost": {
+      "state": "completed",
+      "summary": "36 complete-path timing rows",
+      "updated_at": "2026-07-16T01:31:18.322773+00:00"
+    },
+    "C1_multidomain_experts": {
+      "state": "completed",
+      "summary": "5 seeds; synthetic-domain gate=False",
+      "updated_at": "2026-07-16T01:18:17.485741+00:00"
+    },
+    "C2_missing_expert_robustness": {
+      "state": "completed",
+      "summary": "245 scenario-method rows",
+      "updated_at": "2026-07-16T01:18:49.367291+00:00"
+    },
+    "D1_transition_geometry": {
+      "state": "completed",
+      "summary": "stable residual certificate=False",
+      "updated_at": "2026-07-16T01:18:55.507454+00:00"
+    },
+    "D2_residual_correction": {
+      "state": "gate_closed",
+      "summary": "D1 stable-residual certificate was false",
+      "updated_at": "2026-07-16T01:34:42.952959+00:00"
+    },
+    "E1_second_biomedical_dataset": {
+      "state": "gate_closed",
+      "summary": "B1 retransport and TwistedMerge-specific gates were false",
+      "updated_at": "2026-07-16T01:34:47.628299+00:00"
+    },
+    "E2_biomedical_landmarks": {
+      "state": "blocked",
+      "summary": "selected biomedical dataset has no independent landmark, keypoint, or center annotations",
+      "updated_at": "2026-07-16T01:34:22.558080+00:00"
+    },
+    "F1_medical_3d": {
+      "state": "gate_closed",
+      "summary": "positive 2D retransport gate was not established",
+      "updated_at": "2026-07-16T01:34:32.855263+00:00"
+    },
+    "F2_microscopy_multiview": {
+      "state": "blocked",
+      "summary": "no public multiview microscopy archive with view metadata and segmentation annotations was resolved and audited",
+      "updated_at": "2026-07-16T01:34:32.891374+00:00"
+    },
+    "S1_exact_mask_retransport": {
+      "state": "completed",
+      "summary": "exact output action and asymmetric negative controls executed",
+      "updated_at": "2026-07-16T01:10:37.200882+00:00"
+    },
+    "S2_exact_spatial_output_actions": {
+      "state": "completed",
+      "summary": "123/123 checks passed",
+      "updated_at": "2026-07-16T01:10:39.719005+00:00"
+    },
+    "S3_trivial_vs_nontrivial_output": {
+      "state": "completed",
+      "summary": "trivial labels and four spatial representations compared",
+      "updated_at": "2026-07-16T01:10:41.716936+00:00"
+    },
+    "Z0_finalization": {
+      "state": "completed",
+      "summary": "claim ladder and manifests written; test exit=0",
+      "updated_at": "2026-07-16T01:35:03.394333+00:00"
+    }
+  },
+  "updated_at": "2026-07-16T01:35:03.394333+00:00"
+}

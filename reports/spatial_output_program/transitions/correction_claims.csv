@@ -1,0 +1,3 @@
+claim,passed,reason
+d1_stable_residual_required,False,D1 did not certify a stable residual
+residual_correction_activated,False,gate closed before correction fitting or test evaluation

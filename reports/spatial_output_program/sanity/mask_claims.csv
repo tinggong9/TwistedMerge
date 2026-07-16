@@ -1,0 +1,4 @@
+claim,passed
+nearest_neighbor_mask_action_exact,True
+iou_dice_boundary_all_one,True
+every_negative_control_detected,True

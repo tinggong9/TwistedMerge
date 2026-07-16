@@ -1,0 +1,9 @@
+{
+  "completed_at": "2026-07-16T01:31:18.551040+00:00",
+  "execution_commit": "949518d90d23eb3a471a88117eb75c552fa849d1",
+  "full_frontier": false,
+  "rows": 36,
+  "source_sha256": "2ff11f732dcdef08078534aa4d2d9006ec1990c10c38b2d299c1727fcac4871b",
+  "stage": "B4",
+  "state": "completed"
+}

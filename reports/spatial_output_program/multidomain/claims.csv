@@ -1,0 +1,3 @@
+claim,passed,reason
+multidomain_primary_gate,False,paired Dice on unseen synthetic-domain/chart combinations
+real_multicenter_claim,False,Kvasir-SEG has no center/site metadata; domains are synthetic

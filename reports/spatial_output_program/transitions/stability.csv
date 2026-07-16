@@ -1,0 +1,6 @@
+resample,layer,cycle_residual,residual_rank
+0,bottleneck,1.1119399070739746,13
+1,bottleneck,1.1861201524734497,13
+2,bottleneck,1.262886881828308,12
+3,bottleneck,1.152313470840454,12
+4,bottleneck,1.3480125665664673,15

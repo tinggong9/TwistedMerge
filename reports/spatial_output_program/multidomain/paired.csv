@@ -1,0 +1,6 @@
+comparison,left,right,metric,mean_delta,ci_lower,ci_upper,seeds
+structured_vs_generic_moe,canonicalize_pool_retransport,generic_moe,dice,0.0,0.0,0.0,5
+structured_vs_domain_router,canonicalize_pool_retransport,domain_router,dice,-0.0007006047106968893,-0.09165570598853073,0.08042967351592614,5
+structured_vs_direct_equivariant,canonicalize_pool_retransport,direct_d4_equivariant_unet,dice,0.18853524825962553,0.06219948040688476,0.31487101611236634,5
+structured_vs_tta,canonicalize_pool_retransport,d4_test_time_augmentation,dice,0.12690429889115679,0.0,0.25380859778231357,5
+structured_vs_one_canonical,canonicalize_pool_retransport,one_canonical_after_chart_inference,dice,0.12690429889115679,0.0,0.25380859778231357,5

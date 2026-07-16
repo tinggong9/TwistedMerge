@@ -1,0 +1,6 @@
+claim,passed
+unseen_chart_dice_beats_ordinary_learned_baselines,False
+heldout_chart_labels_unexposed,True
+equivariance_and_multiplication_tolerance,False
+wrong_action_control_fails,False
+strict_zeroshot_gate,False

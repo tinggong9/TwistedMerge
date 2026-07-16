@@ -1,0 +1,13 @@
+{
+  "dataset_checksum": "b96dfb8b16afc51a1ceb5285b1170535064b6007a3e8c555bbd5d93eabe3e11d",
+  "dataset_counts": {
+    "test": 40,
+    "train": 160,
+    "validation": 40
+  },
+  "device_mps_available": true,
+  "git_commit": "02b8818e4da9ba700336b24b22fda8ea101d11ef",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "torch": "2.12.1"
+}

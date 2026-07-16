@@ -1,0 +1,6 @@
+claim,passed,reason
+retransport_gate,False,paired Dice CI against same-probability no-output action
+multi_expert_gate,False,paired Dice CI for four versus one after identical chart inference
+control_gate,False,"random chart, wrong output action, and wrong order paired CIs"
+twistedmerge_specific_gate,False,requires B4 complete-path matched-cost evidence in addition to B1 accuracy
+prediction_label_permutation_audit,True,saved prediction hashes unchanged

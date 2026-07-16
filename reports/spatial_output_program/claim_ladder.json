@@ -1,0 +1,38 @@
+[
+  {
+    "evidence": "sanity/mask_claims.csv and sanity/output_action_runs.csv",
+    "level": "S1",
+    "name": "output_action_correctness",
+    "passed": true
+  },
+  {
+    "evidence": "exact asymmetric-mask retransport and negative controls",
+    "level": "S2",
+    "name": "controlled_spatial_retransport",
+    "passed": true
+  },
+  {
+    "evidence": "biomedical/discovery/claims.csv retransport_gate",
+    "level": "S3",
+    "name": "inferred_spatial_retransport",
+    "passed": false
+  },
+  {
+    "evidence": "B1 paired accuracy gates and B4 matched-cost gate",
+    "level": "S4",
+    "name": "twistedmerge_specific_spatial_benefit",
+    "passed": false
+  },
+  {
+    "evidence": "multidomain/claims.csv; domains labeled synthetic",
+    "level": "S5",
+    "name": "multi_domain_benefit",
+    "passed": false
+  },
+  {
+    "evidence": "transitions/residuals.csv and correction_claims.csv",
+    "level": "S6",
+    "name": "realistic_residual_correction",
+    "passed": false
+  }
+]

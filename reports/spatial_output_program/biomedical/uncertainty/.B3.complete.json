@@ -1,0 +1,15 @@
+{
+  "completed_at": "2026-07-16T01:14:16.624202+00:00",
+  "execution_commit": "69dc6182d9fc1675a198380225f71c97b1deabdf",
+  "rows": 210,
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "source_sha256": "c5f9f79211ef00d2a5aa5c58a33c321973a738ff22c40cbef1ab742bb8b8f69a",
+  "stage": "B3",
+  "state": "completed"
+}

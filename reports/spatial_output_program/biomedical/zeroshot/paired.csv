@@ -1,0 +1,6 @@
+comparison,left,right,metric,mean_delta,ci_lower,ci_upper,seeds
+soft_vs_ordinary_chart,soft_retransport,ordinary_chart_cnn_canonicalization,dice,-0.00016647832831073278,-0.0004994349849321984,0.0,5
+soft_vs_learned_table,soft_retransport,learned_multiplication_table_chart_model,dice,0.0001085902591001514,0.0,0.00032577077730045417,5
+soft_vs_direct_equivariant,soft_retransport,direct_d4_equivariant_unet,dice,0.06726002921057125,-0.13264239932450458,0.2671624577456471,5
+soft_vs_tta,soft_retransport,d4_test_time_augmentation,dice,2.9291743576396156e-05,0.0,8.787523072918846e-05,5
+soft_vs_wrong_action,soft_retransport,wrong_output_action_control,dice,-0.00018420145073893868,-0.0005526043522168161,0.0,5

@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-07-16T01:10:41.735483+00:00",
+  "execution_commit": "69dc6182d9fc1675a198380225f71c97b1deabdf",
+  "rows": 40,
+  "source_sha256": "e43836d85929335faec2fd1969feda638ac53569ecc12f47755fedbd956cbe08",
+  "stage": "S3",
+  "state": "completed"
+}
