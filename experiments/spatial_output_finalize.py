@@ -65,7 +65,7 @@ def build_claim_ladder() -> list[dict[str, Any]]:
     d2_claims = OUT / "transitions" / "correction_claims.csv"
     exact_masks = bool(sanity_masks and all(row.get("passed", "").lower() == "true" for row in sanity_masks))
     exact_outputs = bool(output_actions and all(row.get("passed", "").lower() == "true" for row in output_actions))
-    controlled = exact_masks and any(row.get("claim") == "negative_controls_fail" and row.get("passed", "").lower() == "true" for row in sanity_masks)
+    controlled = exact_masks and any(row.get("claim") == "every_negative_control_detected" and row.get("passed", "").lower() == "true" for row in sanity_masks)
     inferred = claim_value(b1_claims, "retransport_gate")
     accuracy = paired_positive(b1_paired, ("retransport_vs_generic_soft", "full_vs_direct_equivariant", "full_vs_tta", "four_vs_one_after_inferred_chart"))
     matched_cost = claim_value(b4_claims, "twistedmerge_specific_matched_cost_gate")
@@ -124,10 +124,12 @@ def _reports(claims: list[dict[str, Any]], test_exit: int) -> None:
     paired = read_csv(OUT / "biomedical" / "discovery" / "paired.csv")
     cost = read_csv(OUT / "biomedical" / "cost" / "summary.csv")
     dataset = read_csv(OUT / "data" / "dataset_manifest.csv")
+    commands = read_csv(OUT / "commands.csv")
+    execution_commits = sorted({row.get("execution_commit", "") for row in commands if row.get("execution_commit")})
     statuses = _status_rows()
     lines = ["# Spatial-output program factual report", "", "## Stage status", ""]
     lines.extend(f"- `{row['stage']}`: {row['state']}; {row['summary']}" for row in statuses)
-    lines.extend(["", "## Protocol coverage and data", "", f"- Dataset-ready check: {dataset_ready()}; bounded split counts: {dataset_counts() if dataset_ready() else {}}.", f"- Dataset manifest rows: {len(dataset)}; dataset SHA-256 aggregate: {dataset_checksum() if dataset_ready() else 'unavailable'}.", "- Kvasir-SEG has no patient, center, site, scanner, institution, tissue, or organ-domain metadata in the resolved archive; synthetic color/stain shifts are labeled synthetic domains.", f"- Execution commit recorded by finalizer: `{git_head()}`.", "- Candidate segmentation predictions were persisted before mask metrics and label-permutation hash audits were recorded by B1, B2, B3, and C1."])
+    lines.extend(["", "## Protocol coverage and data", "", f"- Dataset-ready check: {dataset_ready()}; bounded split counts: {dataset_counts() if dataset_ready() else {}}.", f"- Dataset manifest rows: {len(dataset)}; dataset SHA-256 aggregate: {dataset_checksum() if dataset_ready() else 'unavailable'}.", "- Kvasir-SEG has no patient, center, site, scanner, institution, tissue, or organ-domain metadata in the resolved archive; synthetic color/stain shifts are labeled synthetic domains.", f"- Execution commits recorded in `commands.csv`: {', '.join(f'`{value}`' for value in execution_commits)}.", f"- Finalizer execution commit: `{git_head()}`.", "- Candidate segmentation predictions were persisted before mask metrics and label-permutation hash audits were recorded by B1, B2, B3, and C1."])
     lines.extend(["", "## Numerical results", ""])
     for method in ("inferred_chart_canonicalize_pool_retransport", "inferred_canonical_no_output_retransport", "direct_d4_equivariant_unet", "d4_test_time_augmentation", "generic_soft_moe", "one_canonical_inferred_inverse_and_retransport", "supplied_chart_canonicalize_pool_retransport"):
         value = _mean(b1, method)
