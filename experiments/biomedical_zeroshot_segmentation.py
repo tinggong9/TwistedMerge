@@ -29,7 +29,6 @@ from experiments.spatial_output_common import (  # noqa: E402
     TinyUNet,
     apply_d4,
     calibrate_temperature,
-    chart_augmentation,
     chart_probabilities,
     dataset_checksum,
     dataset_ready,
@@ -71,6 +70,15 @@ METHODS = (
 )
 
 
+def seen_chart_augmentation(images: torch.Tensor, masks: torch.Tensor, seed: int) -> tuple[torch.Tensor, torch.Tensor]:
+    """Augment only with charts exposed in fitting roles."""
+
+    generator = torch.Generator().manual_seed(seed)
+    allowed = torch.tensor(SEEN, dtype=torch.long)
+    charts = allowed[torch.randint(0, len(allowed), (len(images),), generator=generator)]
+    return apply_d4(images, charts), apply_d4(masks, charts)
+
+
 def _expanded(images: torch.Tensor, charts: tuple[int, ...]) -> tuple[torch.Tensor, torch.Tensor]:
     return torch.cat([apply_d4(images, chart) for chart in charts]), torch.cat([torch.full((len(images),), chart, dtype=torch.long) for chart in charts])
 
@@ -86,7 +94,7 @@ def _train_seed(seed: int, smoke: bool) -> dict[str, Any]:
     epochs = 1 if smoke else 2
     chart_epochs = 1 if smoke else 5
     canonical, _, history = train_segmenter(TinyUNet(width=4), payload["expert_images"], payload["expert_masks"], payload["early_images"], payload["early_masks"], 330_000_000 + seed, epochs)
-    direct_base, _, direct_history = train_segmenter(TinyUNet(width=4), payload["expert_images"], payload["expert_masks"], payload["early_images"], payload["early_masks"], 330_010_000 + seed, epochs, augmentation=chart_augmentation)
+    direct_base, _, direct_history = train_segmenter(TinyUNet(width=4), payload["expert_images"], payload["expert_masks"], payload["early_images"], payload["early_masks"], 330_010_000 + seed, epochs, augmentation=seen_chart_augmentation)
     train_images, train_charts = _expanded(payload["chart_images"], SEEN)
     validation_images, validation_charts = _expanded(payload["early_images"], SEEN)
     equivariant, _, _ = train_chart_model(D4EquivariantChartCNN(3, width=4), train_images, train_charts, validation_images, validation_charts, 330_020_000 + seed, chart_epochs)
