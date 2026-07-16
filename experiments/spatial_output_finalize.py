@@ -123,13 +123,17 @@ def _reports(claims: list[dict[str, Any]], test_exit: int) -> None:
     b1 = read_csv(OUT / "biomedical" / "discovery" / "summary.csv")
     paired = read_csv(OUT / "biomedical" / "discovery" / "paired.csv")
     cost = read_csv(OUT / "biomedical" / "cost" / "summary.csv")
+    cost_claims = read_csv(OUT / "biomedical" / "cost" / "claims.csv")
+    domain_paired = read_csv(OUT / "multidomain" / "paired.csv")
+    residuals = read_csv(OUT / "transitions" / "residuals.csv")
+    nulls = read_csv(OUT / "transitions" / "nulls.csv")
     dataset = read_csv(OUT / "data" / "dataset_manifest.csv")
     commands = read_csv(OUT / "commands.csv")
     execution_commits = sorted({row.get("execution_commit", "") for row in commands if row.get("execution_commit")})
     statuses = _status_rows()
     lines = ["# Spatial-output program factual report", "", "## Stage status", ""]
     lines.extend(f"- `{row['stage']}`: {row['state']}; {row['summary']}" for row in statuses)
-    lines.extend(["", "## Protocol coverage and data", "", f"- Dataset-ready check: {dataset_ready()}; bounded split counts: {dataset_counts() if dataset_ready() else {}}.", f"- Dataset manifest rows: {len(dataset)}; dataset SHA-256 aggregate: {dataset_checksum() if dataset_ready() else 'unavailable'}.", "- Kvasir-SEG has no patient, center, site, scanner, institution, tissue, or organ-domain metadata in the resolved archive; synthetic color/stain shifts are labeled synthetic domains.", f"- Execution commits recorded in `commands.csv`: {', '.join(f'`{value}`' for value in execution_commits)}.", f"- Finalizer execution commit: `{git_head()}`.", "- Candidate segmentation predictions were persisted before mask metrics and label-permutation hash audits were recorded by B1, B2, B3, and C1."])
+    lines.extend(["", "## Protocol coverage and data", "", f"- Dataset-ready check: {dataset_ready()}; bounded split counts: {dataset_counts() if dataset_ready() else {}}.", f"- Dataset manifest rows: {len(dataset)}; dataset SHA-256 aggregate: {dataset_checksum() if dataset_ready() else 'unavailable'}.", "- Canonical Kvasir-SEG terms recorded by B0: research and educational use, citation required, and permission required for commercial use.", "- Kvasir-SEG has no patient, center, site, scanner, institution, tissue, or organ-domain metadata in the resolved archive; synthetic color/stain shifts are labeled synthetic domains.", f"- Execution commits recorded in `commands.csv`: {', '.join(f'`{value}`' for value in execution_commits)}.", f"- Finalizer execution commit: `{git_head()}`.", "- Candidate segmentation predictions were persisted before mask metrics and label-permutation hash audits were recorded by B1, B2, B3, and C1."])
     lines.extend(["", "## Numerical results", ""])
     for method in ("inferred_chart_canonicalize_pool_retransport", "inferred_canonical_no_output_retransport", "direct_d4_equivariant_unet", "d4_test_time_augmentation", "generic_soft_moe", "one_canonical_inferred_inverse_and_retransport", "supplied_chart_canonicalize_pool_retransport"):
         value = _mean(b1, method)
@@ -137,9 +141,28 @@ def _reports(claims: list[dict[str, Any]], test_exit: int) -> None:
             lines.append(f"- Mean B1 Dice, `{method}`: {value:.6f}.")
     lines.extend(["", "## Paired confidence intervals", ""])
     lines.extend(f"- `{row['comparison']}` Dice delta {float(row['mean_delta']):.6f}, 95% CI [{float(row['ci_lower']):.6f}, {float(row['ci_upper']):.6f}], seeds={row['seeds']}." for row in paired)
+    lines.extend(["", "## Domain and center results", "", "- Real center/site results were not computed because the resolved archive contains no center/site metadata; C1 domains are synthetic color/stain domains."])
+    lines.extend(f"- C1 `{row['comparison']}` Dice delta {float(row['mean_delta']):.6f}, 95% CI [{float(row['ci_lower']):.6f}, {float(row['ci_upper']):.6f}], seeds={row['seeds']}." for row in domain_paired)
     claim_summary = ", ".join(f"{row['level']}={row['passed']}" for row in claims)
     lines.extend(["", "## Exact actions and component attribution", "", f"- Claim levels: {claim_summary}.", "- Exact mask, landmark, heatmap, point-set, and vector-field actions are recorded under `sanity/`.", "- B1 comparisons separately attribute output retransport, chart inference, multi-expert pooling, direct D4 equivariance, D4 test-time augmentation, generic routing, and supplied-chart inference.", "- C1 uses exact D4 chart actions and separately labeled synthetic non-group domains."])
-    lines.extend(["", "## Complete cost and residual results", "", f"- Complete-path cost rows: {len(cost)}.", "- B4 includes chart inference, canonicalization, expert evaluation, pooling, final mask logits, output retransport, warm-ups, timed repetitions, process memory, accelerator memory where available, and stored bytes.", f"- D1 stable residual certificate: {next((row['passed'] for row in claims if row['level'] == 'S6'), False)}; D2 correction remained inactive when the D1 gate was closed."])
+    lines.extend(["", "## Complete cost and residual results", "", f"- Complete-path cost rows: {len(cost)}.", "- B4 includes chart inference, canonicalization, expert evaluation, pooling, sigmoid thresholding, output retransport, warm-ups, timed repetitions, process memory, accelerator memory where available, stored bytes, and checkpoint-derived training time."])
+    batch_one = [row for row in cost if int(row["batch_size"]) == 1]
+    for method in ("inferred_full_retransport", "direct_d4_equivariant_unet", "d4_test_time_augmentation", "generic_moe"):
+        selected = next((row for row in batch_one if row["method"] == method), None)
+        if selected:
+            lines.append(f"- B4 batch-1 `{method}` median complete latency {float(selected['latency_median_ms']):.6f} ms, stored bytes {int(selected['stored_bytes'])}, training time {float(selected['training_time_seconds']):.6f} s.")
+    full = next((row for row in batch_one if row["method"] == "inferred_full_retransport"), None)
+    if full:
+        lines.append(f"- B4 batch-1 component medians for the measured setup: chart {float(full['chart_model_latency_median_ms']):.6f} ms, four-expert evaluation {float(full['expert_latency_median_ms']):.6f} ms, input transform {float(full['input_transform_latency_median_ms']):.6f} ms, output retransport {float(full['output_retransport_latency_median_ms']):.6f} ms, threshold {float(full['threshold_latency_median_ms']):.6f} ms.")
+    lines.append(f"- Inferred full retransport on any measured frontier: {next((row['passed'] for row in cost_claims if row['claim'] == 'inferred_retransport_on_any_pareto_frontier'), 'False')}.")
+    certificate = next((row for row in residuals if row.get("layer") == "certificate"), None)
+    if certificate:
+        lines.append(f"- D1 bottleneck cycle residual {float(certificate['cycle_residual']):.6f}, closure {float(certificate['closure']):.6f}, centrality {float(certificate['centrality']):.6f}, distance to coboundaries {float(certificate['distance_to_coboundaries']):.6f}, stable rank={certificate.get('stable_rank')}, exceeds every matched null={certificate.get('exceeds_every_matched_null')}.")
+    for family in sorted({row.get("family", "") for row in nulls}):
+        values = [float(row["cycle_residual"]) for row in nulls if row.get("family") == family]
+        if values:
+            lines.append(f"- D1 `{family}` matched-null maximum cycle residual: {max(values):.6f} across {len(values)} draws.")
+    lines.append(f"- D1 stable residual certificate: {bool(certificate and certificate.get('certified_stable_residual', '').lower() == 'true')}; D2 correction remained inactive when the D1 gate was closed.")
     lines.extend(["", "## Negative and gated findings", ""])
     for row in claims:
         if not row["passed"]:
