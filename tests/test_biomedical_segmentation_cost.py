@@ -1,4 +1,7 @@
-from experiments.biomedical_segmentation_cost import METHODS, _pareto
+import torch
+
+from experiments.biomedical_segmentation_cost import METHODS, _batched_inverse, _pareto
+from experiments.spatial_output_common import apply_d4
 
 
 def test_cost_audit_has_all_required_method_families():
@@ -25,3 +28,10 @@ def test_boundary_quality_frontier_uses_boundary_metric():
     result = _pareto(rows, "latency", "boundary_dice")
     assert all(row["frontier"] for row in result)
     assert all(row["quality"] == "boundary_dice" for row in result)
+
+
+def test_batched_inverse_recovers_per_example_chart_actions():
+    images = torch.arange(8 * 3 * 7 * 7, dtype=torch.float32).reshape(8, 3, 7, 7)
+    charts = torch.arange(8)
+    transformed = apply_d4(images, charts)
+    assert torch.equal(_batched_inverse(transformed, charts), images)

@@ -30,7 +30,7 @@ from experiments.spatial_output_common import (  # noqa: E402
     expert_original_frame_logits,
     factual_report,
     hard_canonical_retransport,
-    inverse_d4,
+    inverse_chart,
     load_checkpoint,
     measure_complete_path,
     model_bytes,
@@ -151,6 +151,11 @@ def _training_time(method: str, models: dict[str, Any]) -> float:
     return sum(times["canonical"])
 
 
+def _batched_inverse(images: torch.Tensor, charts: torch.Tensor) -> torch.Tensor:
+    inverses = torch.tensor([inverse_chart(int(chart)) for chart in charts], dtype=torch.long)
+    return apply_d4(images, inverses)
+
+
 def run(smoke: bool = False) -> dict[str, Any]:
     if not dataset_ready() or not (OUT / "checkpoints" / "seed_0_canonical_0.pt").exists():
         update_status("B4_complete_cost", "blocked", "B1 checkpoints unavailable")
@@ -170,7 +175,7 @@ def run(smoke: bool = False) -> dict[str, Any]:
         components = {
             "chart_model": lambda: predict_logits(models["chart"], images),
             "expert": lambda: expert_original_frame_logits(images, models["canonical"]),
-            "input_transform": lambda: inverse_d4(images, charts),
+            "input_transform": lambda: _batched_inverse(images, charts),
             "output_retransport": lambda: apply_d4(probe_logits, charts),
             "threshold": lambda: torch.sigmoid(probe_logits) >= 0.5,
         }
