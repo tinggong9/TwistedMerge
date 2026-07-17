@@ -1,0 +1,10 @@
+diff --git a/src/ccmm/matching/frank_wolfe_sync_matching.py b/src/ccmm/matching/frank_wolfe_sync_matching.py
+index 1d7d100..e342a3f 100755
+--- a/src/ccmm/matching/frank_wolfe_sync_matching.py
++++ b/src/ccmm/matching/frank_wolfe_sync_matching.py
+@@ -344 +344,4 @@ def update_perm_matrices_sync(
+-            new_perm_matrices[symb][perm_name] = (1 - step_size) * perm + step_size * proj_grads[symb][perm_name].cuda()
++            new_perm_matrices[symb][perm_name] = (
++                (1 - step_size) * perm
++                + step_size * proj_grads[symb][perm_name].to(perm.device)
++            )
