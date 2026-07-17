@@ -1,0 +1,11 @@
+phase,experiment_family,status,parameter_multiplier,inference_multiplier,branches,output_type,training_compute,merge_compute,measured_environment,notes
+0,audit,complete,not_applicable,not_applicable,0,report_only,none,local_read_only_audit,macOS_arm64_existing_repo_environment,No experiment rerun
+1,official_independent_baselines,in_progress,1,1,1,same_capacity_single_model,none_checkpoint_reuse,pending_measurement,pending_current_probe,Exact saved MNIST MLP checkpoints
+1,official_common_base_baselines,in_progress,1,1,1,same_capacity_single_model_or_soup,none_checkpoint_reuse,pending_measurement,pending_current_probe,Kept separate from independent initialization
+2,resnet18_cifar10,planned,1,1,1,same_capacity_single_model,pending,pending,pending,Three and four model groups
+2,resnet18_cifar100,planned,1,1,1,same_capacity_single_model,pending,pending,pending,At least five confirmatory groups after smoke
+2,batchnorm_gauge_controls,planned,1,1,1,same_capacity_single_model,pending,pending,pending,Frozen transformed recalibrated recomputed and no-BN controls
+3,planted_rank_lift,planned,2,2,2,rank_lift,pending,pending,pending,Capacity matched wider and random controls required
+3,planted_branch_lift,planned,pending_group_order,pending_group_order,pending_group_order,branch_lift_invariant_pooling,pending,pending,pending,Always label capacity and inference multipliers
+4,diagnostic_selector,planned,1,1,1,validation_selected_same_capacity,pending,pending,pending,Ensemble is upper bound only
+5,biomedical_multisite_pilot,planned,1,1,1,same_capacity_single_model,pending,pending,pending,Synthetic sites labeled explicitly

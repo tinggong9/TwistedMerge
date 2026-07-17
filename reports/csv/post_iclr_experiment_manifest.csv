@@ -1,0 +1,23 @@
+experiment_id,priority,regime,experiment,status,existing_evidence,distinct_gap,next_action,large_rerun
+A1,A,independent_initialization,official_git_rebasin,partial,reports/official_external_baseline_attempt.md,No official-code metric on exact checkpoints,Retry pinned source with explicit adapter or record blocked,no
+A2,A,independent_initialization,official_c2m3,partial,reports/official_external_baseline_attempt.md,No official-code metric on exact checkpoints,Retry pinned source with explicit adapter or record blocked,no
+A3,A,independent_initialization,official_model_soups,partial,reports/official_external_baseline_attempt.md,No official-code metric on exact checkpoints,Retry author code with explicit evaluator adapter or record blocked,no
+A4,A,common_base_task_vector,official_task_arithmetic,partial,reports/descent_envelope_selector_report.md,Only internal algorithm on exact checkpoints,Pin official source and test exact common-base interface,no
+A5,A,common_base_task_vector,official_ties,partial,reports/descent_envelope_selector_report.md,Only internal algorithm on exact checkpoints,Pin official source and test exact common-base interface,no
+A6,A,common_base_task_vector,official_dare,partial,reports/descent_envelope_selector_report.md,Only internal algorithm on exact checkpoints,Pin official source and test exact common-base interface,no
+B1,B,independent_initialization,cifar10_resnet18,absent,reports/cifar_final_channel_gauge_confirmatory_report.md,Existing full-model evidence does not match requested architecture and protocol,Implement smoke then preregister pilot,yes
+B2,B,independent_initialization,cifar100_resnet18,absent,reports/future_program/extended/broader_vision_report.md,Existing work is frozen-feature or proxy evidence,Run only after B1 pipeline passes,yes
+B3,B,independent_initialization,batchnorm_channel_permutation,absent,tests/test_cnn_channel_gauge.py,No BatchNorm-aware exact transformation,Derive and test parameter and running-stat transformation,no
+B4,B,independent_initialization,batchnorm_positive_scaling,absent,reports/cifar_final_channel_gauge_confirmatory_report.md,No exactness or approximation study with epsilon and running statistics,Implement frozen transformed recalibrated recomputed and no-BN controls,no
+B5,B,independent_initialization,secondary_architecture,gated,reports/future_program/extended/broader_vision_report.md,Need one full-model missing-mechanism test,Select one only after B1 and B2,yes
+C1,C,controlled_real_task,coboundary_case,partial,reports/controlled_twisted_overlap_report.md,Not unified with new detector and controls,Add to planted benchmark,no
+C2,C,controlled_real_task,permutation_gauge_case,partial,tests/test_cnn_channel_gauge.py,Not unified with selector and planted ground truth,Add to planted benchmark,no
+C3,C,controlled_real_task,positive_channel_gauge_case,partial,reports/monomial_gauge_alignment_report.md,Not unified with selector and planted ground truth,Add to planted benchmark,no
+C4,C,controlled_real_task,central_projective_case,partial,reports/controlled_twisted_overlap_report.md,Needs unified real-task protocol and capacity controls,Add only mathematically valid construction,no
+C5,C,controlled_real_task,nonabelian_finite_holonomy,absent_valid,reports/controlled_nonabelian_holonomy_report.md,Old accuracy family quarantined for target-derived logits,Generate real model logits before labels and rerun,no
+D1,D,mixed_regime,diagnostic_prediction,partial,reports/obstruction_predictor_target_report.md,Narrow targets and incomplete calibration coverage,Freeze target-complete predictor and untouched evaluation,no
+D2,D,mixed_regime,diagnostic_selector,partial,reports/next_benchmarks/matched_selector_report.md,No unified false-lift missed-lift and regret analysis,Freeze conservative selector and compare greedy and oracle,no
+E1,E,biomedical_multisite,lightweight_classification_pilot,partial_distinct,reports/spatial_output_program/biomedical/discovery/report.md,Existing biomedical work is segmentation with synthetic domains not requested classification sites,Resolve public dataset and implement pilot,yes
+E2,E,biomedical_multisite,confirmatory_public_benchmark,gated,reports/spatial_output_program/final_report.md,No second requested classification benchmark,Run only after E1 technical gates,yes
+F1,F,deferred,lora_design,deferred,reports/overnight_program/lora_holonomy_report.md,Only future design is authorized now,Write concise design after A through D,no
+F2,F,deferred,legacy_small_dataset_sweeps,complete_for_scope,reports/final_claim_ledger.md,No distinct contribution without identified regression,Use only for regression,no
