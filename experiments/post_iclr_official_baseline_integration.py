@@ -625,7 +625,12 @@ def write_plot(summary: list[dict], path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     figure, axis = plt.subplots(figsize=(7.2, 4.2))
     if evaluated:
-        labels = [row["baseline"].replace("official_", "") for row in evaluated]
+        display_names = {
+            "official_c2m3": "C2M3",
+            "official_git_rebasin": "Git Re-Basin",
+            "official_ties": "TIES",
+        }
+        labels = [display_names.get(row["baseline"], row["baseline"]) for row in evaluated]
         values = [row["mean_delta_vs_internal_same_method"] for row in evaluated]
         errors = [
             [value - row["delta_ci_low"] for value, row in zip(values, evaluated)],
@@ -634,9 +639,9 @@ def write_plot(summary: list[dict], path: Path) -> None:
         axis.bar(labels, values, color="#4C78A8")
         axis.errorbar(range(len(values)), values, yerr=errors, fmt="none", ecolor="black", capsize=4)
     axis.axhline(0.0, color="black", linewidth=1)
-    axis.set_ylabel("Accuracy delta vs internal same-method implementation")
+    axis.set_ylabel("Accuracy delta vs internal counterpart")
     axis.set_title("Adapter-assisted official-core comparisons")
-    axis.tick_params(axis="x", rotation=20)
+    axis.tick_params(axis="x", rotation=12)
     figure.tight_layout()
     figure.savefig(path)
     plt.close(figure)
