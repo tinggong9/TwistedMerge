@@ -1,8 +1,8 @@
 phase,experiment_family,status,parameter_multiplier,inference_multiplier,branches,output_type,training_compute,merge_compute,measured_environment,notes
 0,audit,complete,not_applicable,not_applicable,0,report_only,none,local_read_only_audit,macOS_arm64_existing_repo_environment,No experiment rerun
-1,official_git_rebasin,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,69.44_seconds_total_20_rows,macOS_arm64_CPU_PyTorch_2.12.1_JAX_0.4.38,Exact saved MNIST MLP checkpoints; functional preservation max error <=5.73e-6; zero prediction disagreement
-1,official_c2m3,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,58.37_seconds_total_20_rows,macOS_arm64_CPU_PyTorch_2.12.1,Exact saved MNIST MLP checkpoints; tracked CPU portability patch; functional preservation max error <=5.73e-6; zero prediction disagreement
-1,official_ties,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,5.92_seconds_total_3_rows,macOS_arm64_CPU_PyTorch_2.12.1,Exact common-base seeds 7200-7202; validation-only density and scale selection
+1,official_git_rebasin,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,72.07_seconds_total_20_rows,macOS_arm64_CPU_PyTorch_2.12.1_JAX_0.4.38,Exact saved MNIST MLP checkpoints; functional preservation max error <=5.73e-6; zero prediction disagreement
+1,official_c2m3,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,63.54_seconds_total_20_rows,macOS_arm64_CPU_PyTorch_2.12.1,Exact saved MNIST MLP checkpoints; tracked CPU portability patch; functional preservation max error <=5.73e-6; zero prediction disagreement
+1,official_ties,complete,1,1,1,same_capacity_single_model,none_checkpoint_reuse,6.21_seconds_total_3_rows,macOS_arm64_CPU_PyTorch_2.12.1,Exact common-base seeds 7200-7202; validation-only density and scale selection
 1,official_model_soups,complete_blocked,not_applicable,not_applicable,0,no_metric,none_checkpoint_reuse,not_run,source_interface_probe,Official CLIP/ImageNet application incompatible without algorithm replacement
 1,official_task_arithmetic_and_dare,complete_blocked,not_applicable,not_applicable,0,no_metric,none_checkpoint_reuse,not_run,source_license_probe,Pinned author repositories contain no license file
 2,resnet18_cifar10,planned,1,1,1,same_capacity_single_model,pending,pending,pending,Three and four model groups

@@ -1,0 +1,130 @@
+{
+  "bootstrap_samples": 2000,
+  "c2m3_max_iter": 30,
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_official_baseline_integration.py --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --independent-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/external_baselines --common-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/same_base_task_vector",
+  "common_checkpoint_root": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/same_base_task_vector",
+  "common_seeds": [
+    7200,
+    7201,
+    7202
+  ],
+  "confirmatory_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_official_baseline_integration.py --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --independent-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/external_baselines --common-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/same_base_task_vector",
+  "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+  "environment": {
+    "git_rebasin_worker": {
+      "devices": [
+        "TFRT_CPU_0"
+      ],
+      "jax": "0.4.38",
+      "jaxlib": "0.4.38",
+      "scipy": "1.18.0"
+    },
+    "machine": "arm64",
+    "numpy": "2.5.0",
+    "pandas": "3.0.4",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "torch": "2.12.1",
+    "torch_device": "cpu",
+    "torchvision": "0.27.1"
+  },
+  "execution_commit": "b19ead8fec5886533052af404fc9f460adc2b8a2",
+  "git_rebasin_max_iter": 100,
+  "independent_checkpoint_root": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/external_baselines",
+  "jax_python": "/Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python",
+  "model_counts": [
+    3,
+    4
+  ],
+  "official_root": "/Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources",
+  "protocol": {
+    "bootstrap_unit": "exact checkpoint setting",
+    "common_dataset": "torchvision MNIST; ToTensor only; 6000 sampled train examples; 2000 sampled test examples; dataset seed=314159",
+    "common_training_provenance": "reused same_base_task_vector checkpoints; AdamW lr=0.001 base and 0.0005 fine-tune; cosine schedule; 3 base epochs; 2 fine-tune epochs; validation fraction=0.2",
+    "independent_dataset": "torchvision MNIST; ToTensor only; local downloaded copy",
+    "independent_training_provenance": "reused external_baseline_comparison checkpoints; Adam lr=0.001; 3 epochs; 5000 sampled train examples; validation fraction=0.2; full 10000-example test set; dataset seed=8128",
+    "selection": "validation accuracy then validation loss; test evaluated after selection",
+    "training_compute": "checkpoint reuse; no training performed"
+  },
+  "seeds": [
+    1800,
+    1801,
+    1802,
+    1803,
+    1804
+  ],
+  "smoke": false,
+  "smoke_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_official_baseline_integration.py --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --independent-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/external_baselines --common-checkpoint-root /Users/tinggong/Documents/GitHub/TwistedMerge/reports/checkpoints/same_base_task_vector --smoke",
+  "sources": {
+    "official_c2m3": {
+      "commit": "ea1eca76b19c5d57ed97b1ef396368189e864eee",
+      "directory": "c2m3",
+      "dirty": "True",
+      "license": "MIT",
+      "regime": "independent_initialization",
+      "source_status": "source_pinned",
+      "url": "https://github.com/crisostomi/cycle-consistent-model-merging.git"
+    },
+    "official_dare": {
+      "commit": "6d49ad96fd69c92013654b837041b868aa806564",
+      "directory": "mergelm",
+      "dirty": "False",
+      "license": "NO_REPOSITORY_LICENSE_FILE",
+      "regime": "common_base_task_vector",
+      "source_status": "source_pinned",
+      "url": "https://github.com/yule-BUAA/MergeLM.git"
+    },
+    "official_git_rebasin": {
+      "commit": "ef40098257ab97243930eba737d6dcb8edd5863e",
+      "directory": "git-re-basin",
+      "dirty": "False",
+      "license": "MIT",
+      "regime": "independent_initialization",
+      "source_status": "source_pinned",
+      "url": "https://github.com/samuela/git-re-basin.git"
+    },
+    "official_model_soups": {
+      "commit": "d5398f181ea51c5cd9d95ebacc6ea7132bb108ec",
+      "directory": "model-soups",
+      "dirty": "False",
+      "license": "MIT",
+      "regime": "both_separate",
+      "source_status": "source_pinned",
+      "url": "https://github.com/mlfoundations/model-soups.git"
+    },
+    "official_task_arithmetic": {
+      "commit": "826a64c67082fab0f40628233287948f0f8d7fa3",
+      "directory": "task-vectors",
+      "dirty": "False",
+      "license": "NO_REPOSITORY_LICENSE_FILE",
+      "regime": "common_base_task_vector",
+      "source_status": "source_pinned",
+      "url": "https://github.com/mlfoundations/task_vectors.git"
+    },
+    "official_ties": {
+      "commit": "44e7891fc84f3de7e4caa52664cd864ca3715e91",
+      "directory": "ties-merging",
+      "dirty": "False",
+      "license": "BSD-3-Clause",
+      "regime": "common_base_task_vector",
+      "source_status": "source_pinned",
+      "url": "https://github.com/prateeky2806/ties-merging.git"
+    }
+  },
+  "ties_densities": [
+    0.2,
+    0.5,
+    1.0
+  ],
+  "ties_scales": [
+    0.5,
+    1.0,
+    1.25
+  ],
+  "widths": [
+    32,
+    64
+  ],
+  "worktree_dirty_at_start": false,
+  "worktree_dirty_during_artifact_generation": true
+}

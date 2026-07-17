@@ -1,0 +1,12 @@
+method,regime,official_status,fair_comparison,capacity,boundary
+raw_weight_average,independent_initialization,native_control,True,1x single model,unaligned control only
+official_git_rebasin,independent_initialization,adapter_assisted_official_core,True,1x single model,not unmodified official end-to-end pipeline
+official_c2m3,independent_initialization,adapter_assisted_official_core,True,1x single model,CPU portability patch and checkpoint PermutationSpec adapter
+internal_c2m3_style,independent_initialization,internal_faithful_style,True,1x single model,never label official
+TwistedMerge_gauge_merge,independent_initialization,project_method,True,1x single model,exact gauge does not imply performance gain
+greedy_model_soup,independent_initialization,internal_faithful_only_official_blocked,True,1x single model,official CLIP/ImageNet code did not run
+prediction_ensemble,independent_initialization,upper_bound,False,N branches Nx inference,upper bound not same-cost candidate
+official_task_arithmetic,common_base_task_vector,blocked_license,False,1x single model,author repository has no license file
+official_ties,common_base_task_vector,adapter_assisted_official_core,True,1x single model,common-base checkpoints only
+official_dare,common_base_task_vector,blocked_license,False,1x single model,author repository has no license file
+descent_envelope_selector,common_base_task_vector,project_method,True,1x selected single model,validation-selected exact settings only
