@@ -11,7 +11,7 @@ Paired confirmatory output must include mean, median, standard deviation, bootst
 ## Ordered phases and gates
 
 1. **Audit and manifest -- complete.** The gap map, plan, and machine-readable manifest are the preregistration boundary for later work.
-2. **Official baseline integration -- in progress.** Retry pinned official Git Re-Basin, C2M3, Model Soups, Task Arithmetic, TIES, and DARE sources. Independent-initialization and common-base runs remain separate. A blocked adapter is retained as a negative integration result.
+2. **Official baseline integration -- complete.** Pinned Git Re-Basin, C2M3, and TIES cores ran through declared adapters on exact checkpoint families. Model Soups was interface-blocked; Task Arithmetic and DARE were license-blocked. Independent-initialization and common-base runs remain separate, and blocked methods have status rows without metrics.
 3. **ResNet-18 CIFAR-10/CIFAR-100 plus BatchNorm study -- pending.** Begin only after phase 2 has a complete status ledger. Smoke one group, pilot the declared recipe, then run at least five groups for both three- and four-model merges. Reject claims if the base-accuracy gate fails.
 4. **Unified planted real-network obstruction -- pending.** Implement synchronizable, permutation, positive channel, controlled central/projective, and valid nonabelian cases. The old target-injected nonabelian accuracy artifacts are excluded.
 5. **Diagnostic prediction and conservative selector -- pending.** Freeze prediction targets and selector rules from validation data, then evaluate on untouched test settings. Default to the best validation-selected ordinary candidate whenever no structured residual is certified.

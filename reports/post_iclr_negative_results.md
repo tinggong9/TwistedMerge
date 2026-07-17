@@ -2,7 +2,10 @@
 
 This ledger retains negative and boundary evidence rather than filtering it out.
 
-- No official Git Re-Basin, C2M3, or Model Soups metric currently exists on the exact TwistedMerge checkpoint set. Older official import/interface probes were blocked.
+- Official Git Re-Basin and C2M3 cores now run on the exact independent-initialization checkpoint family, but both trail the existing validation-selected greedy soup and TwistedMerge selector on mean paired accuracy. Official minus greedy soup is -0.0168 [-0.0239, -0.0102] for Git Re-Basin and -0.0106 [-0.0153, -0.0060] for C2M3. Official minus the TwistedMerge selector is -0.0143 [-0.0221, -0.0074] and -0.0081 [-0.0136, -0.0030], respectively.
+- Official C2M3 exceeds the pure TwistedMerge positive monomial gauge by 0.0087 [0.0050, 0.0123] on the 20 exact independent-initialization settings. The official integration therefore supports the selector result, not a universal gauge advantage.
+- Official TIES ties the internal TIES-style implementation on all three exact available common-base settings. This is implementation validation, not a performance gain.
+- Official Model Soups remains interface-blocked for the MLP checkpoint family, and the pinned Task Arithmetic and DARE author repositories have no license file. These methods retain status rows and no official metric.
 - No real MNIST, Fashion-MNIST, or CIFAR residual is certified as a Brauer, period-index, or central projective class under the existing detectors.
 - Raw weight-average degradation prediction is not supported by the current obstruction scores. Supported predictor language is alignment-conditioned and setting-specific.
 - The final bounded CIFAR-10 no-BatchNorm gauge run is descriptive/negative for performance and cannot stand in for a ResNet-18 result.

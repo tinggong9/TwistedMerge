@@ -21,10 +21,10 @@ The existing regime separation is scientifically sound and must remain intact:
 
 | Proposed experiment | Existing evidence | Audit status | Distinct contribution still needed |
 | --- | --- | --- | --- |
-| Official Git Re-Basin on independent checkpoints | Faithful internal pairwise alignment and an older blocked official-source inspection | Partially complete | Execute official author code through a declared checkpoint adapter if compatible; otherwise preserve a fresh reproducible failure row. |
-| Official C2M3 on independent checkpoints | Faithful internal cycle synchronization and an older blocked import/interface inspection | Partially complete | Test the pinned official matcher on the exact saved checkpoints; distinguish unmodified, adapter-assisted, and blocked outcomes. |
-| Official Model Soups on independent checkpoints | Faithful in-repo greedy soup on the exact checkpoint pool | Partially complete | Run author-provided selection code if it can accept an explicit evaluator/checkpoint adapter; do not relabel the internal implementation. |
-| Official common-base Task Arithmetic/TIES/DARE | Internal same-base benchmark and descent-envelope selector | Partially complete | Pin official repositories and execute compatible algorithms on the exact common-base checkpoints, separately from rebasin results. |
+| Official Git Re-Basin on independent checkpoints | Faithful internal pairwise alignment and an older blocked official-source inspection | Complete, adapter-assisted official core | Pinned official `weight_matching.py` ran on all 20 exact settings; conversion preservation and paired results are recorded. |
+| Official C2M3 on independent checkpoints | Faithful internal cycle synchronization and an older blocked import/interface inspection | Complete, adapter-assisted official core | Pinned official Frank-Wolfe synchronized matcher ran on all 20 exact settings after the tracked CPU-device portability patch. |
+| Official Model Soups on independent checkpoints | Faithful in-repo greedy soup on the exact checkpoint pool | Complete negative integration | Official CLIP/ImageNet application code could not accept the MLP checkpoint family without replacing its loader/evaluator; no official metric was emitted. |
+| Official common-base Task Arithmetic/TIES/DARE | Internal same-base benchmark and descent-envelope selector | Complete with mixed status | BSD-licensed official TIES ran on all three exact common-base settings and matched the internal TIES result; Task Arithmetic and DARE author repositories lacked license files and were retained as blocked status rows without metrics. |
 | CIFAR-10 ResNet-18 independent merge | No-BatchNorm small-CNN CIFAR boundary runs; frozen-backbone or proxy ResNet programs do not satisfy this protocol | Absent | Credible independently trained ResNet-18 groups with three/four-model merges, at least five confirmatory groups, full capacity and base-accuracy gates. |
 | CIFAR-100 ResNet-18 independent merge | Frozen-feature/pretrained exploratory artifacts only | Absent | Same full-model protocol on CIFAR-100 with honest compute and base-quality accounting. |
 | BatchNorm-aware channel permutation | Exact no-BatchNorm channel permutations are tested | Absent | Explicit adjacent-layer and BatchNorm parameter/running-stat transformation with many-batch functional-preservation tests. |
@@ -52,15 +52,8 @@ The existing regime separation is scientifically sound and must remain intact:
 - Greedy-safe selectors can exactly fall back to greedy soup in the tested replay. They do not yet provide the requested unified false-lift/missed-lift analysis.
 - The recent biomedical segmentation program is valuable spatial-output evidence but has synthetic domains and no real center/site metadata; it does not answer the requested biomedical classification-site questions.
 
-## Highest-priority unfinished phase
+## Completed highest-priority phase and next gate
 
-Priority A remains unfinished. The older official-integration attempt was a well-documented negative result, but it did not create the requested post-ICLR run manifest or retry against today's environment. The next phase will therefore:
+Priority A is complete. The clean-start confirmatory run used implementation commit `36009bf`, evaluated 43 official-core rows with no runtime failures, and retained three blocked integration rows without fabricated metrics. Official and internal results remain separately labeled, and independent-initialization and common-base regimes remain separate.
 
-1. pin and clone the official sources outside the tracked tree;
-2. probe current imports and exact checkpoint compatibility;
-3. permit only explicit adapter-assisted use of official algorithm code;
-4. run the exact available checkpoint set where technically valid;
-5. record every success, failure, patch, license, commit, conversion, and output type;
-6. keep official and internal results visibly separate.
-
-A blocked official method is a completed integration attempt, not a performance result. It will produce a failure/status row and no fabricated metric row.
+The next unopened phase is Priority B: full independently trained ResNet-18 groups on CIFAR-10/CIFAR-100 plus a derived and tested BatchNorm-aware gauge treatment. Its preregistration and base-accuracy gate must be frozen before any confirmatory training. No Priority B run was started as part of the official-integration phase.
