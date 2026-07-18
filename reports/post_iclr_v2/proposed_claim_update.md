@@ -1,6 +1,6 @@
 # Post-ICLR v2 Proposed Claim Update
 
-The completed selector-attribution phase promotes no positive algorithmic claim. It adds a confirmatory negative result that closes the previous attribution ambiguity on this MNIST MLP protocol.
+The completed selector-attribution phase promotes no positive algorithmic claim. It adds a confirmatory negative result that closes the previous attribution ambiguity on this MNIST MLP protocol. The independent BatchNorm phase supports a narrow functional-identity claim while also establishing explicit scaling boundaries; it is not a CIFAR-10 performance result.
 
 | Exact wording | Status | Evidence | Limitation |
 | --- | --- | --- | --- |
@@ -10,4 +10,8 @@ The completed selector-attribution phase promotes no positive algorithmic claim.
 | TwistedMerge-specific candidates were selected in `65%` of A5 settings, but their conditional mean gain over A0 was `-0.001758`. | negative | `selector_attribution/selection_counts.csv`; `claim_status_update.json` | Selection frequency is not benefit; the conditional result has the wrong sign. |
 | Residual diagnostics improve choice quality with the same candidate pool. | negative | A4 and A1 tied on all 40 settings; paired delta and CI are exactly zero. | The frozen pilot-median rule did not change test outcomes. |
 | TwistedMerge beats greedy soup. | forbidden | Existing selector delta is negative, and the fresh A5 attribution is also below A0/B0. | Do not describe enriched-pool selection as a TwistedMerge-specific advantage. |
-| TwistedMerge works on ResNet-18 with exact BatchNorm-aware gauges. | pending | No current artifact. | Requires derivation, exactness tests, base-quality gate, and confirmatory groups. |
+| Compatible channel permutations of torchvision-style ResNet-18 BasicBlocks preserve outputs in eval and train modes within preregistered float32 tolerances. | supported-narrow | Five random parameter states, three epsilon values; maximum logit errors `2.563e-6` eval and `9.548e-5` train; zero prediction disagreement. | Functional identity on random parameter states, not merging accuracy; Bottlenecks and grouped/depthwise convolutions excluded. |
+| Positive channel scaling before BatchNorm is eval-exact with either the derived original-statistic affine compensation or the epsilon-aware transformed-statistic compensation. | supported-narrow | Maximum confirmatory eval logit errors `2.652e-6` and `2.384e-6`, respectively. | Frozen evaluation mode only; not a general train-mode gauge. |
+| Scaling Conv outputs and BatchNorm running statistics alone is exact. | negative | Maximum eval logit error reaches `0.2030` at epsilon `0.1`, with prediction disagreement up to `0.375`. | The scalar epsilon breaks the naive scaling identity. |
+| Arbitrary channelwise positive scaling is an exact BatchNorm train-mode gauge under static affine corrections. | forbidden | Train-mode errors and disagreements are recorded in `batchnorm_gauge/exactness.csv`. | Batch statistics are input-dependent and standard BatchNorm supplies only one scalar epsilon. |
+| TwistedMerge improves merging accuracy on trained ResNet-18 CIFAR-10 models. | pending | The BatchNorm functional-identity gate is now open, but no performance run has been completed. | Requires base-quality preregistration, trained checkpoints, strong baselines, and confirmatory groups. |

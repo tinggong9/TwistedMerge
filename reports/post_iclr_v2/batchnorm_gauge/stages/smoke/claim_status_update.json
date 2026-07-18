@@ -1,0 +1,7 @@
+{
+  "arbitrary_channelwise_positive_scaling_train_mode": "forbidden",
+  "channel_permutation": "supported-narrow",
+  "positive_scaling_frozen_eval_affine_compensation": "supported-narrow",
+  "positive_scaling_running_stats_only": "negative",
+  "scope": "torchvision-style two-conv ResNet BasicBlocks; float32 numerical tolerance"
+}

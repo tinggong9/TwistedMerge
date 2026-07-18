@@ -7,6 +7,8 @@ Do not paste a broad performance claim from this audit.
 - Exact-family selector advantage over adapter-assisted official Git Re-Basin: `0.0143` (`[0.0074, 0.0221]`).
 - Exact-family selector advantage over adapter-assisted official C2M3: `0.0081` (`[0.0030, 0.0136]`).
 - Controlled q=2 branch-lift evidence remains controlled-only and extra-capacity.
+- Compatible channel permutations of torchvision-style ResNet-18 BasicBlocks preserve logits within the preregistered float32 tolerances in eval and train modes across five random states and three BatchNorm epsilon values.
+- The derived positive-scaling affine compensations are exact within tolerance in frozen eval mode only.
 
 ## Confirmed negative findings
 
@@ -17,6 +19,7 @@ Do not paste a broad performance claim from this audit.
 - A5 selects a TwistedMerge-specific candidate in `65%` of settings, but the conditional mean gain over A0 is `-0.001758`.
 - The diagnostic-only A4 rule ties A1 on all 40 settings and does not reduce regret.
 - All four requested biomedical gates remain closed, and inferred methods are not on a measured quality-cost Pareto frontier.
+- Scaling Conv outputs and BatchNorm running statistics alone is not exact for nonzero epsilon; arbitrary channelwise positive scaling is not a static train-mode BatchNorm gauge.
 
 ## Allowed official-baseline wording
 
@@ -29,6 +32,7 @@ Use "adapter-assisted official core" for Git Re-Basin, C2M3, and TIES. Do not ca
 - Do not attribute the selector result to residual geometry; the completed attribution phase is negative.
 - Do not describe A5 as improving a budget-matched ordinary selector on the new checkpoint groups.
 - Do not call natural residuals Brauer or period-index classes.
+- Do not turn the BatchNorm functional-identity result into a ResNet-18 CIFAR-10 performance claim.
 
 ## Paper placement
 
@@ -36,7 +40,8 @@ Use "adapter-assisted official core" for Git Re-Basin, C2M3, and TIES. Do not ca
 - Controlled obstruction mechanisms: main theory/controlled evidence, with capacity labels.
 - Current CIFAR and biomedical outcomes: appendix or negative-results note.
 - Fresh selector attribution: negative-results note or appendix; it should qualify the historical official-core comparison.
-- BatchNorm-aware ResNet-18 and harmful-merge prediction: unresolved experiments.
+- BatchNorm exactness derivation and tests: methods/theory appendix, using the explicit BasicBlock and frozen-eval scope.
+- Trained ResNet-18 CIFAR-10 performance and harmful-merge prediction: unresolved experiments.
 
 ## Claim-to-artifact map
 
@@ -45,3 +50,4 @@ Use "adapter-assisted official core" for Git Re-Basin, C2M3, and TIES. Do not ca
 - Fresh selector attribution: `reports/post_iclr_v2/selector_attribution/report.md`, `paired.csv`, `selection_counts.csv`, and `budget_audit.csv`.
 - Controlled lift: `reports/csv/controlled_twisted_overlap_summary.csv`.
 - Biomedical boundaries: `reports/spatial_output_program/` claim and Pareto CSVs.
+- BatchNorm functional identities and boundaries: `reports/post_iclr_v2/batchnorm_gauge/report.md`, `derivation.md`, `exactness.csv`, and `activations.csv`.

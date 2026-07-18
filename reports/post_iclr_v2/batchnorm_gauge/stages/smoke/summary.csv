@@ -1,0 +1,17 @@
+strategy,mode,epsilon,n_seeds,n_rows,max_overall_logit_error,mean_max_logit_error,mean_absolute_logit_error,mean_relative_output_error,max_prediction_disagreement,purported_exact,all_exactness_checks_passed,capacity
+permutation,eval,0.001,1,1,1.084059476852417e-06,1.084059476852417e-06,3.466382736405649e-07,9.345596079248665e-07,0.0,True,True,same_architecture_same_parameter_count
+permutation,train,0.001,1,1,3.7610530853271484e-05,3.7610530853271484e-05,1.090620662580477e-05,2.181681374914901e-05,0.0,True,True,same_architecture_same_parameter_count
+frozen,eval,0.001,1,1,0.6062150001525879,0.6062150001525879,0.24114450812339783,0.6501414705253268,0.75,False,False,same_architecture_same_parameter_count
+frozen,train,0.001,1,1,0.02636316418647766,0.02636316418647766,0.010218815878033638,0.020441754901324872,0.0,False,False,same_architecture_same_parameter_count
+running,eval,0.001,1,1,0.015081822872161865,0.015081822872161865,0.005475257057696581,0.014761653510987167,0.0,False,False,same_architecture_same_parameter_count
+running,train,0.001,1,1,0.02636316418647766,0.02636316418647766,0.010218815878033638,0.020441754901324872,0.0,False,False,same_architecture_same_parameter_count
+affine,eval,0.001,1,1,1.2516975402832031e-06,1.2516975402832031e-06,3.4188852282568405e-07,9.217539670108494e-07,0.0,True,True,same_architecture_same_parameter_count
+affine,train,0.001,1,1,1.6317453384399414,1.6317453384399414,0.47961291670799255,0.9594193503309202,0.75,False,False,same_architecture_same_parameter_count
+running_affine,eval,0.001,1,1,1.0132789611816406e-06,1.0132789611816406e-06,3.802589958468161e-07,1.025203288535293e-06,0.0,True,True,same_architecture_same_parameter_count
+running_affine,train,0.001,1,1,0.21525484323501587,0.21525484323501587,0.08155737817287445,0.16314766357502566,0.25,False,False,same_architecture_same_parameter_count
+post_merge_recalibration,eval,0.001,1,1,0.38891494274139404,0.38891494274139404,0.15746574103832245,0.4245380051683706,0.5,False,False,same_architecture_same_parameter_count
+post_merge_recalibration,train,0.001,1,1,0.02636316418647766,0.02636316418647766,0.010218815878033638,0.020441754901324872,0.0,False,False,same_architecture_same_parameter_count
+complete_recomputation,eval,0.001,1,1,0.015081584453582764,0.015081584453582764,0.005475274752825499,0.014761701218219752,0.0,False,False,same_architecture_same_parameter_count
+complete_recomputation,train,0.001,1,1,0.02636316418647766,0.02636316418647766,0.010218815878033638,0.020441754901324872,0.0,False,False,same_architecture_same_parameter_count
+no_batchnorm_control,eval,0.001,1,1,5.960464477539063e-08,5.960464477539063e-08,5.750917075886264e-09,3.484654221375377e-08,0.0,True,True,same_architecture_same_parameter_count
+no_batchnorm_control,train,0.001,1,1,5.960464477539063e-08,5.960464477539063e-08,5.750917075886264e-09,3.484654221375377e-08,0.0,True,True,same_architecture_same_parameter_count

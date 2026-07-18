@@ -1,0 +1,57 @@
+{
+  "batch_size": 4,
+  "batches": 1,
+  "calibration_batches": 2,
+  "confirmatory_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/batchnorm_gauge_exactness.py --stage confirmatory",
+  "environment": {
+    "matplotlib": "3.11.0",
+    "numpy": "2.5.0",
+    "pandas": "3.0.4",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "torch": "2.12.1",
+    "torchvision": "0.27.1"
+  },
+  "epsilons": [
+    0.001
+  ],
+  "exact_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/batchnorm_gauge_exactness.py --stage smoke",
+  "git_commit_at_execution": "04fcdbe146fba2715aaf90da91535dd3cb443668",
+  "git_worktree_dirty_at_execution": true,
+  "phase": "batchnorm_gauge",
+  "pilot_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/batchnorm_gauge_exactness.py --stage pilot",
+  "protocol": {
+    "architecture": "torchvision ResNet-18 BasicBlock",
+    "batch_size": 4,
+    "batches": 4,
+    "calibration_batches": 8,
+    "epsilons": [
+      1e-05,
+      0.001,
+      0.1
+    ],
+    "exact_tolerances": {
+      "affine:eval": 5e-05,
+      "no_batchnorm_control:eval": 5e-06,
+      "no_batchnorm_control:train": 5e-06,
+      "permutation:eval": 5e-05,
+      "permutation:train": 0.0002,
+      "running_affine:eval": 5e-05
+    },
+    "input": "seeded Gaussian 32x32 tensors; functional identity audit",
+    "recomputation_batches": 32,
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "recomputation_batches": 4,
+  "seeds": [
+    0
+  ],
+  "smoke_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/batchnorm_gauge_exactness.py --stage smoke",
+  "stage": "smoke"
+}

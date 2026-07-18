@@ -1,0 +1,5 @@
+comparison,method,baseline,n_pairs,n_seeds,paired_mean_max_error_delta,paired_delta_ci_low,paired_delta_ci_high,wins_lower_error,ties,losses_higher_error,bootstrap_unit
+running_minus_frozen,running,frozen,4,2,-0.44603835977613926,-0.45794038474559784,-0.4341363348066807,4,0,0,seed; epsilon settings averaged within seed
+affine_minus_frozen,affine,frozen,4,2,-0.5061795003712177,-0.5302087962627411,-0.48215020447969437,4,0,0,seed; epsilon settings averaged within seed
+running_affine_minus_running,running_affine,running,4,2,-0.060141051188111305,-0.07226838171482086,-0.04801372066140175,4,0,0,seed; epsilon settings averaged within seed
+complete_recomputation_minus_post_merge_recalibration,complete_recomputation,post_merge_recalibration,4,2,-0.27921964041888714,-0.32111967727541924,-0.23731960356235504,4,0,0,seed; epsilon settings averaged within seed

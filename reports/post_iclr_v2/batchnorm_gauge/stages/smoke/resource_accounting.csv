@@ -1,0 +1,9 @@
+seed,epsilon,strategy,parameter_multiplier,active_parameters,branches,inference_multiplier,output_type,stored_checkpoint_bytes,training_compute,calibration_batches,merge_compute_seconds,identity_evaluation_seconds,identity_evaluation_batches,validation_evaluation_count,process_peak_rss_mb
+0,0.001,permutation,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,0,0.02685858402401209,0.03332195873372257,2,0,612.453125
+0,0.001,frozen,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,0,0.007267541950568557,0.024977582972496748,2,0,612.484375
+0,0.001,running,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,0,0.009774790843948722,0.024728041142225266,2,0,612.484375
+0,0.001,affine,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,0,0.009597708005458117,0.02577933412976563,2,0,612.5
+0,0.001,running_affine,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,0,0.009468167088925838,0.024956374894827604,2,0,612.515625
+0,0.001,post_merge_recalibration,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,2,0.02514924993738532,0.025078208185732365,2,0,612.515625
+0,0.001,complete_recomputation,1.0,11181642,1,1.0,same_capacity_single_model,44765128,none,4,0.03670541709288955,0.025186792016029358,2,0,612.53125
+0,0.001,no_batchnorm_control,1.0,1898,1,1.0,same_capacity_single_model,7592,none,0,0.0002312499564141035,0.0010498759802430868,2,0,612.59375
