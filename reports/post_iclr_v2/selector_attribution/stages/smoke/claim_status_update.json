@@ -1,0 +1,31 @@
+{
+  "criteria": [
+    {
+      "ci_high": 0.08984375,
+      "ci_low": 0.08984375,
+      "criterion": "A5 beats B0 with positive group-bootstrap CI",
+      "passed": true,
+      "value": 0.08984375
+    },
+    {
+      "conditional_gain": NaN,
+      "criterion": "TM-specific choice has nontrivial frequency and positive conditional gain",
+      "passed": false,
+      "value": 0.0
+    },
+    {
+      "ci_high": -0.181640625,
+      "ci_low": -0.181640625,
+      "criterion": "A4 residual rule reduces regret with same pool",
+      "passed": false,
+      "value": -0.181640625
+    },
+    {
+      "a5_worst": 0.326171875,
+      "b0_worst": 0.236328125,
+      "criterion": "A5 improves worst setting without material mean loss",
+      "passed": true
+    }
+  ],
+  "status": "TwistedMerge-specific selector gain supported"
+}

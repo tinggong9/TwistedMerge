@@ -1,0 +1,8 @@
+comparison,method,baseline,n_exact_settings,n_training_groups,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,wins,ties,losses,paired_effect_size_dz,bootstrap_unit
+A5_minus_A0,A5,A0,4,2,0.014750000000000013,0.0010000000000000009,0.028500000000000025,0.01057904119417069,2,1,1,0.5100631573777902,independent training-group seed; N and width settings averaged within seed
+A5_minus_A1,A5,A1,4,2,-0.0017500000000000016,-0.003500000000000003,0.0,0.009471148606389757,0,3,1,-0.5,independent training-group seed; N and width settings averaged within seed
+A5_minus_A2,A5,A2,4,2,0.014750000000000013,0.0010000000000000009,0.028500000000000025,0.01057904119417069,2,1,1,0.5100631573777902,independent training-group seed; N and width settings averaged within seed
+A5_minus_A3,A5,A3,4,2,0.017250000000000015,0.004500000000000004,0.030000000000000027,-0.03172644299268723,2,2,0,0.5986660872396565,independent training-group seed; N and width settings averaged within seed
+A5_minus_A4,A5,A4,4,2,0.014750000000000013,0.0010000000000000009,0.028500000000000025,0.01057904119417069,2,1,1,0.5100631573777902,independent training-group seed; N and width settings averaged within seed
+A5_minus_B0,A5,B0,4,2,0.014750000000000013,0.0010000000000000009,0.028500000000000025,0.01057904119417069,2,1,1,0.5100631573777902,independent training-group seed; N and width settings averaged within seed
+A4_minus_A1_same_pool_diagnostic_rule,A4,A1,4,2,-0.016500000000000015,-0.028500000000000025,-0.004500000000000004,nan,0,2,2,nan,independent training-group seed; N and width settings averaged within seed

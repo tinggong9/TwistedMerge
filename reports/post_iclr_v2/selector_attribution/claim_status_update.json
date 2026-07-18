@@ -1,0 +1,31 @@
+{
+  "criteria": [
+    {
+      "ci_high": -0.0012149999999999828,
+      "ci_low": -0.0025775625000000017,
+      "criterion": "A5 beats B0 with positive group-bootstrap CI",
+      "passed": false,
+      "value": -0.0018649999999999945
+    },
+    {
+      "conditional_gain": -0.0017576923076922978,
+      "criterion": "TM-specific choice has nontrivial frequency and positive conditional gain",
+      "passed": false,
+      "value": 0.65
+    },
+    {
+      "ci_high": 0.0,
+      "ci_low": 0.0,
+      "criterion": "A4 residual rule reduces regret with same pool",
+      "passed": false,
+      "value": 0.0
+    },
+    {
+      "a5_worst": 0.8472,
+      "b0_worst": 0.848,
+      "criterion": "A5 improves worst setting without material mean loss",
+      "passed": false
+    }
+  ],
+  "status": "enriched-pool selection; no TwistedMerge-specific algorithmic gain established"
+}

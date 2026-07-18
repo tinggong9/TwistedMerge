@@ -1,0 +1,60 @@
+{
+  "batch_size": 128,
+  "c2m3_source_commit": "ea1eca76b19c5d57ed97b1ef396368189e864eee",
+  "confirmatory_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_selector_attribution.py --stage confirmatory --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python",
+  "dataset": "torchvision MNIST; ToTensor only",
+  "dataset_files": [
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/t10k-images-idx3-ubyte",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/t10k-images-idx3-ubyte.gz",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/t10k-labels-idx1-ubyte",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/t10k-labels-idx1-ubyte.gz",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/train-images-idx3-ubyte",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/train-images-idx3-ubyte.gz",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/train-labels-idx1-ubyte",
+    "/Users/tinggong/Documents/GitHub/TwistedMerge/data/MNIST/raw/train-labels-idx1-ubyte.gz"
+  ],
+  "dataset_seed": 8128,
+  "dataset_sha256": "ffb9d1ddd4ebe8347f3be76363165e416c4d3e71aeac9d1fc26d9ae7dd582fd5",
+  "device": "cpu",
+  "diagnostic_threshold": 0.0,
+  "environment": {
+    "machine": "arm64",
+    "matplotlib": "3.11.0",
+    "numpy": "2.5.0",
+    "pandas": "3.0.4",
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+    "torch": "2.12.1",
+    "torchvision": "0.27.1"
+  },
+  "epochs": 1,
+  "exact_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_selector_attribution.py --stage smoke --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python --device cpu",
+  "git_commit_at_execution": "7384a5290fd59dca439e059010cacc8ae1712100",
+  "git_rebasin_source_commit": "ef40098257ab97243930eba737d6dcb8edd5863e",
+  "git_worktree_dirty_at_execution": true,
+  "jax_python": "/Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python",
+  "lift_certification_gate": false,
+  "lift_exclusion_reason": "current claim ledger has no certified natural-MNIST lift candidate",
+  "lr": 0.001,
+  "max_test_samples": 512,
+  "max_train_samples": 512,
+  "model_counts": [
+    3
+  ],
+  "model_initialization_seed_formula": "group_seed + 1000*model_index + 17*width + n_models",
+  "official_root": "/Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources",
+  "optimizer": "adam",
+  "phase": "selector_attribution",
+  "pilot_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_selector_attribution.py --stage pilot --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python",
+  "seeds": [
+    9100
+  ],
+  "smoke_command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_selector_attribution.py --stage smoke --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --official-root /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-baseline-sources --jax-python /Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/official-git-rebasin-py312-venv/bin/python",
+  "stability_resamples": 2,
+  "stage": "smoke",
+  "test_selection_policy": "A0-A5/B0 frozen before test evaluation; A6 only is test-selected",
+  "val_fraction": 0.2,
+  "widths": [
+    32
+  ]
+}

@@ -1,0 +1,9 @@
+selector,selected_family,selected_candidate,count,frequency,tm_specific,conditional_mean_gain_vs_a0
+A0,ordinary_soup,greedy_soup,1,1.0,False,nan
+A1,official_synchronization,official_c2m3,1,1.0,False,nan
+A2,permutation_gauge,permutation_gauge_merge,1,1.0,True,nan
+A3,monomial_gauge_soup,monomial_gauge_soup,1,1.0,True,nan
+A4,ordinary_soup,greedy_soup,1,1.0,False,nan
+A5,official_synchronization,official_c2m3,1,1.0,False,0.181640625
+A6,official_synchronization,official_c2m3,1,1.0,False,nan
+B0,ordinary_soup,ordinary_weighted_soup_0,1,1.0,False,nan

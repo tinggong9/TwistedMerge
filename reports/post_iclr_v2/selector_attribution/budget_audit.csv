@@ -1,0 +1,321 @@
+setting_id,selector,candidate_pool_size,selection_validation_evals,generation_validation_evals,hyperparameter_configurations,candidate_generation_merge_seconds,same_pool_size_as_a5,same_selection_validation_evals_as_a5,generation_compute_exactly_matched_to_a5,budget_note
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A0,5,5,6,0,0.14322791690938175,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A1,7,7,6,0,5.083101625554264,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A2,7,7,6,0,0.23228404205292463,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A3,10,10,36,0,0.947804625146091,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A4,7,7,6,0,5.083101625554264,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A5,12,12,36,0,5.887678333790973,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9300,B0,12,12,6,0,0.14590104087255895,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9300,A6,12,0,36,0,5.887678333790973,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A0,5,5,6,0,0.1436136260163039,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A1,7,7,6,0,4.739679543301463,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A2,7,7,6,0,0.23288533394224942,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A3,10,10,36,0,0.9825739588122815,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A4,7,7,6,0,4.739679543301463,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A5,12,12,36,0,5.578639876097441,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9300,B0,12,12,6,0,0.14764804276637733,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9300,A6,12,0,36,0,5.578639876097441,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A0,6,6,8,0,0.2003703338559717,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A1,8,8,8,0,8.30361383385025,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A2,8,8,8,0,0.3231963759753853,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A3,11,11,48,0,1.2940827917773277,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A4,8,8,8,0,8.30361383385025,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A5,13,13,48,0,9.397326291771606,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9300,B0,13,13,8,0,0.20298412605188787,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9300,A6,13,0,48,0,9.397326291771606,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A0,6,6,8,0,0.19731995929032564,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A1,8,8,8,0,8.836322417482734,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A2,8,8,8,0,0.317222835496068,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A3,11,11,48,0,1.29412325238809,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A4,8,8,8,0,8.836322417482734,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A5,13,13,48,0,9.933125710580498,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9300,B0,13,13,8,0,0.20196362608112395,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9300,A6,13,0,48,0,9.933125710580498,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A0,5,5,6,0,0.14728412381373346,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A1,7,7,6,0,5.069649165961891,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A2,7,7,6,0,0.23825741512700915,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A3,10,10,36,0,0.9673241639975458,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A4,7,7,6,0,5.069649165961891,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A5,12,12,36,0,5.889689206145704,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9301,B0,12,12,6,0,0.14994016382843256,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9301,A6,12,0,36,0,5.889689206145704,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A0,5,5,6,0,0.1465075828600675,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A1,7,7,6,0,4.776316958013922,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A2,7,7,6,0,0.23325204197317362,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A3,10,10,36,0,0.966276666847989,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A4,7,7,6,0,4.776316958013922,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A5,12,12,36,0,5.5960860420018435,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9301,B0,12,12,6,0,0.1506445831619203,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9301,A6,12,0,36,0,5.5960860420018435,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A0,6,6,8,0,0.18975441623479128,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A1,8,8,8,0,7.67322037415579,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A2,8,8,8,0,0.48758550034835935,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A3,11,11,48,0,1.5144711672328413,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A4,8,8,8,0,7.67322037415579,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A5,13,13,48,0,8.99793712515384,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9301,B0,13,13,8,0,0.19297649804502726,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9301,A6,13,0,48,0,8.99793712515384,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A0,6,6,8,0,0.20916700013913214,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A1,8,8,8,0,7.951851665973663,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A2,8,8,8,0,0.32658612518571317,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A3,11,11,48,0,1.2929472501855344,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A4,8,8,8,0,7.951851665973663,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A5,13,13,48,0,9.035631916020066,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9301,B0,13,13,8,0,0.21537345880642533,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9301,A6,13,0,48,0,9.035631916020066,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A0,5,5,6,0,0.14302462502382696,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A1,7,7,6,0,5.109426708193496,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A2,7,7,6,0,0.23820833303034306,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A3,10,10,36,0,0.9807417083065957,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A4,7,7,6,0,5.109426708193496,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A5,12,12,36,0,5.947143791476265,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9302,B0,12,12,6,0,0.14579054177738726,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9302,A6,12,0,36,0,5.947143791476265,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A0,5,5,6,0,0.14324825000949204,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A1,7,7,6,0,5.053258166881278,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A2,7,7,6,0,0.2453380001243204,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A3,10,10,36,0,0.9643242913298309,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A4,7,7,6,0,5.053258166881278,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A5,12,12,36,0,5.874334208201617,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9302,B0,12,12,6,0,0.1474529169499874,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9302,A6,12,0,36,0,5.874334208201617,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A0,6,6,8,0,0.19293141830712557,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A1,8,8,8,0,7.192473876988515,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A2,8,8,8,0,0.3050267524085939,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A3,11,11,48,0,1.2675226274877787,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A4,8,8,8,0,7.192473876988515,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A5,13,13,48,0,8.267065086169168,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9302,B0,13,13,8,0,0.1957095847465098,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9302,A6,13,0,48,0,8.267065086169168,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A0,6,6,8,0,0.19426883291453123,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A1,8,8,8,0,8.603711541974917,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A2,8,8,8,0,0.311246998840943,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A3,11,11,48,0,1.277518498711288,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A4,8,8,8,0,8.603711541974917,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A5,13,13,48,0,9.686961207771674,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9302,B0,13,13,8,0,0.19886137498542666,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9302,A6,13,0,48,0,9.686961207771674,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A0,5,5,6,0,0.14666841574944556,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A1,7,7,6,0,4.14740216685459,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A2,7,7,6,0,0.23175474908202887,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A3,10,10,36,0,0.9509136674460024,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A4,7,7,6,0,4.14740216685459,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A5,12,12,36,0,4.951647418551147,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9303,B0,12,12,6,0,0.14943091571331024,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9303,A6,12,0,36,0,4.951647418551147,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A0,5,5,6,0,0.14461762481369078,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A1,7,7,6,0,4.631707499735057,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A2,7,7,6,0,0.23158029187470675,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A3,10,10,36,0,0.9559918337035924,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A4,7,7,6,0,4.631707499735057,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A5,12,12,36,0,5.443081708624959,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9303,B0,12,12,6,0,0.14899529330432415,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9303,A6,12,0,36,0,5.443081708624959,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A0,6,6,8,0,0.19280370813794434,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A1,8,8,8,0,6.9654847083147615,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A2,8,8,8,0,0.31197062390856445,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A3,11,11,48,0,1.2704857068601996,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A4,8,8,8,0,6.9654847083147615,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A5,13,13,48,0,8.043166707037017,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9303,B0,13,13,8,0,0.19552983320318162,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9303,A6,13,0,48,0,8.043166707037017,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A0,6,6,8,0,0.19540599989704788,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A1,8,8,8,0,7.464421874843538,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A2,8,8,8,0,0.32515920884907246,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A3,11,11,48,0,1.2875757089350373,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A4,8,8,8,0,7.464421874843538,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A5,13,13,48,0,8.556591583881527,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9303,B0,13,13,8,0,0.2007057077717036,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9303,A6,13,0,48,0,8.556591583881527,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A0,5,5,6,0,0.14136808412149549,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A1,7,7,6,0,4.8981515830382705,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A2,7,7,6,0,0.22534129209816456,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A3,10,10,36,0,0.9420014170464128,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A4,7,7,6,0,4.8981515830382705,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A5,12,12,36,0,5.698784915963188,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9304,B0,12,12,6,0,0.14401008398272097,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9304,A6,12,0,36,0,5.698784915963188,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A0,5,5,6,0,0.14355112495832145,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A1,7,7,6,0,5.252718208823353,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A2,7,7,6,0,0.23102133278734982,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A3,10,10,36,0,0.9598934575915337,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A4,7,7,6,0,5.252718208823353,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A5,12,12,36,0,6.069060541456565,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9304,B0,12,12,6,0,0.1477019591256976,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9304,A6,12,0,36,0,6.069060541456565,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A0,6,6,8,0,0.19045479083433747,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A1,8,8,8,0,7.800108749652281,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A2,8,8,8,0,0.3072948327753693,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A3,11,11,48,0,1.269167373655364,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A4,8,8,8,0,7.800108749652281,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A5,13,13,48,0,8.878821332473308,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9304,B0,13,13,8,0,0.19336379156447947,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9304,A6,13,0,48,0,8.878821332473308,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A0,6,6,8,0,0.1938083760906011,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A1,8,8,8,0,8.794071208918467,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A2,8,8,8,0,0.3172158352099359,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A3,11,11,48,0,1.4818443353287876,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A4,8,8,8,0,8.794071208918467,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A5,13,13,48,0,10.082107168156654,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9304,B0,13,13,8,0,0.19866425078362226,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9304,A6,13,0,48,0,10.082107168156654,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A0,5,5,6,0,0.143316957866773,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A1,7,7,6,0,4.991315250052139,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A2,7,7,6,0,0.2292964579537511,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A3,10,10,36,0,0.9497607499361038,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A4,7,7,6,0,4.991315250052139,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A5,12,12,36,0,5.79775904212147,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9305,B0,12,12,6,0,0.14594895532354712,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9305,A6,12,0,36,0,5.79775904212147,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A0,5,5,6,0,0.14266429212875664,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A1,7,7,6,0,4.893615459091961,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A2,7,7,6,0,0.23161187605001032,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A3,10,10,36,0,0.9604564183391631,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A4,7,7,6,0,4.893615459091961,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A5,12,12,36,0,5.711407585302368,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9305,B0,12,12,6,0,0.14700570818968117,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9305,A6,12,0,36,0,5.711407585302368,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A0,6,6,8,0,0.1958126660902053,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A1,8,8,8,0,7.738010791130364,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A2,8,8,8,0,0.3134493331890553,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A3,11,11,48,0,1.2791581253986806,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A4,8,8,8,0,7.738010791130364,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A5,13,13,48,0,8.82135625043884,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9305,B0,13,13,8,0,0.19857071014121175,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9305,A6,13,0,48,0,8.82135625043884,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A0,6,6,8,0,0.19472408294677734,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A1,8,8,8,0,9.1886439579539,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A2,8,8,8,0,0.3416144158691168,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A3,11,11,48,0,1.348744373768568,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A4,8,8,8,0,9.1886439579539,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A5,13,13,48,0,10.34266424877569,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9305,B0,13,13,8,0,0.20076937624253333,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9305,A6,13,0,48,0,10.34266424877569,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A0,5,5,6,0,0.1463838331401348,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A1,7,7,6,0,4.797519458224997,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A2,7,7,6,0,0.23128800024278462,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A3,10,10,36,0,0.9567188343498856,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A4,7,7,6,0,4.797519458224997,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A5,12,12,36,0,5.607854459434748,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9306,B0,12,12,6,0,0.14903291803784668,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9306,A6,12,0,36,0,5.607854459434748,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A0,5,5,6,0,0.14248945796862245,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A1,7,7,6,0,4.645140415756032,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A2,7,7,6,0,0.22923579206690192,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A3,10,10,36,0,0.9669814601074904,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A4,7,7,6,0,4.645140415756032,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A5,12,12,36,0,5.4696324178949,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9306,B0,12,12,6,0,0.1465678766835481,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9306,A6,12,0,36,0,5.4696324178949,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A0,6,6,8,0,0.18974912399426103,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A1,8,8,8,0,7.225544041255489,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A2,8,8,8,0,0.3033353320788592,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A3,11,11,48,0,1.2667808742262423,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A4,8,8,8,0,7.225544041255489,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A5,13,13,48,0,8.30257579148747,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9306,B0,13,13,8,0,0.19244591589085758,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9306,A6,13,0,48,0,8.30257579148747,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A0,6,6,8,0,0.19572954182513058,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A1,8,8,8,0,8.72890195902437,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A2,8,8,8,0,0.315848957747221,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A3,11,11,48,0,1.2834029996301979,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A4,8,8,8,0,8.72890195902437,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A5,13,13,48,0,9.816575416829437,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9306,B0,13,13,8,0,0.20039000012911856,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9306,A6,13,0,48,0,9.816575416829437,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A0,5,5,6,0,0.1460352090653032,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A1,7,7,6,0,5.0721632917411625,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A2,7,7,6,0,0.23005154286511242,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A3,10,10,36,0,0.9543915020767599,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A4,7,7,6,0,5.0721632917411625,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A5,12,12,36,0,5.880519584752619,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9307,B0,12,12,6,0,0.1486481260508299,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9307,A6,12,0,36,0,5.880519584752619,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A0,5,5,6,0,0.14632433303631842,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A1,7,7,6,0,5.3689569579437375,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A2,7,7,6,0,0.2352213750127703,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A3,10,10,36,0,0.9634042512625456,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A4,7,7,6,0,5.3689569579437375,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A5,12,12,36,0,6.186036876169965,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9307,B0,12,12,6,0,0.15089108399115503,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9307,A6,12,0,36,0,6.186036876169965,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A0,6,6,8,0,0.19970970787107944,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A1,8,8,8,0,7.891832582652569,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A2,8,8,8,0,0.31373966694809496,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A3,11,11,48,0,1.2803625417873263,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A4,8,8,8,0,7.891832582652569,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A5,13,13,48,0,8.972485416568816,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9307,B0,13,13,8,0,0.20268745766952634,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9307,A6,13,0,48,0,8.972485416568816,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A0,6,6,8,0,0.19433908280916512,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A1,8,8,8,0,7.3833191657904536,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A2,8,8,8,0,0.31901254085823894,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A3,11,11,48,0,1.293852707836777,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A4,8,8,8,0,7.3833191657904536,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A5,13,13,48,0,8.482832790818065,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9307,B0,13,13,8,0,0.19897191668860614,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9307,A6,13,0,48,0,8.482832790818065,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A0,5,5,6,0,0.14756566798314452,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A1,7,7,6,0,5.203716543037444,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A2,7,7,6,0,0.23226233501918614,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A3,10,10,36,0,0.9707730431109667,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A4,7,7,6,0,5.203716543037444,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A5,12,12,36,0,6.0269239181652665,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9308,B0,12,12,6,0,0.15020833536982536,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9308,A6,12,0,36,0,6.0269239181652665,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A0,5,5,6,0,0.1422952499706298,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A1,7,7,6,0,4.780475332867354,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A2,7,7,6,0,0.2286903338972479,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A3,10,10,36,0,0.9672476656269282,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A4,7,7,6,0,4.780475332867354,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A5,12,12,36,0,5.6054277485236526,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9308,B0,12,12,6,0,0.14691725000739098,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9308,A6,12,0,36,0,5.6054277485236526,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A0,6,6,8,0,0.19130458403378725,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A1,8,8,8,0,7.946665124967694,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A2,8,8,8,0,0.31332741724327207,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A3,11,11,48,0,1.3109003761783242,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A4,8,8,8,0,7.946665124967694,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A5,13,13,48,0,9.066260917112231,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9308,B0,13,13,8,0,0.1945325005799532,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9308,A6,13,0,48,0,9.066260917112231,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A0,6,6,8,0,0.19718262506648898,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A1,8,8,8,0,8.821901374030858,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A2,8,8,8,0,0.31854408304207027,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A3,11,11,48,0,1.3015005819033831,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A4,8,8,8,0,8.821901374030858,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A5,13,13,48,0,9.926219330867752,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9308,B0,13,13,8,0,0.20147833367809653,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9308,A6,13,0,48,0,9.926219330867752,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A0,5,5,6,0,0.15438979188911617,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A1,7,7,6,0,5.035530624911189,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A2,7,7,6,0,0.24125979212112725,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A3,10,10,36,0,0.9714858741499484,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A4,7,7,6,0,5.035530624911189,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A5,12,12,36,0,5.852626707172021,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9309,B0,12,12,6,0,0.15685175103135407,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9309,A6,12,0,36,0,5.852626707172021,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A0,5,5,6,0,0.14192241593264043,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A1,7,7,6,0,5.1700242490042,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A2,7,7,6,0,0.2312704569194466,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A3,10,10,36,0,0.9739510407671332,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A4,7,7,6,0,5.1700242490042,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A5,12,12,36,0,6.002052873838693,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W64_S9309,B0,12,12,6,0,0.1466384178493172,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W64_S9309,A6,12,0,36,0,6.002052873838693,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A0,6,6,8,0,0.18998758308589458,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A1,8,8,8,0,8.00316224899143,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A2,8,8,8,0,0.30240625119768083,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A3,11,11,48,0,1.2809552499093115,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A4,8,8,8,0,8.00316224899143,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A5,13,13,48,0,9.094129915814847,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9309,B0,13,13,8,0,0.19287662557326257,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9309,A6,13,0,48,0,9.094129915814847,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A0,6,6,8,0,0.19082095799967647,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A1,8,8,8,0,8.70979541586712,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A2,8,8,8,0,0.30827520810998976,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A3,11,11,48,0,1.3173263329081237,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A4,8,8,8,0,8.70979541586712,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A5,13,13,48,0,9.836300790775567,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W64_S9309,B0,13,13,8,0,0.1962589139584452,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W64_S9309,A6,13,0,48,0,9.836300790775567,True,False,False,A6 uses test and has no validation-selection budget

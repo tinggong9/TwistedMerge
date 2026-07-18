@@ -13,6 +13,9 @@ Do not paste a broad performance claim from this audit.
 - Pure gauge loses to official C2M3 by `0.0087`.
 - Existing improved selector loses to greedy soup by `0.0024` on average.
 - `19/20` selector choices are soup-based.
+- In the fresh 10-group, 40-setting attribution study, A5 loses to the exactly candidate-count- and selector-evaluation-matched ordinary B0 control by `0.001865` (95% group-bootstrap CI `[-0.002578, -0.001215]`).
+- A5 selects a TwistedMerge-specific candidate in `65%` of settings, but the conditional mean gain over A0 is `-0.001758`.
+- The diagnostic-only A4 rule ties A1 on all 40 settings and does not reduce regret.
 - All four requested biomedical gates remain closed, and inferred methods are not on a measured quality-cost Pareto frontier.
 
 ## Allowed official-baseline wording
@@ -23,7 +26,8 @@ Use "adapter-assisted official core" for Git Re-Basin, C2M3, and TIES. Do not ca
 
 - Remove broad SOTA or universal superiority language.
 - Do not say the pure gauge beats official C2M3.
-- Do not attribute the selector result to residual geometry before attribution closes.
+- Do not attribute the selector result to residual geometry; the completed attribution phase is negative.
+- Do not describe A5 as improving a budget-matched ordinary selector on the new checkpoint groups.
 - Do not call natural residuals Brauer or period-index classes.
 
 ## Paper placement
@@ -31,11 +35,13 @@ Use "adapter-assisted official core" for Git Re-Basin, C2M3, and TIES. Do not ca
 - Current official-core comparison: appendix or narrowly scoped baseline section.
 - Controlled obstruction mechanisms: main theory/controlled evidence, with capacity labels.
 - Current CIFAR and biomedical outcomes: appendix or negative-results note.
-- Selector attribution, BatchNorm-aware ResNet-18, and harmful-merge prediction: unresolved experiments.
+- Fresh selector attribution: negative-results note or appendix; it should qualify the historical official-core comparison.
+- BatchNorm-aware ResNet-18 and harmful-merge prediction: unresolved experiments.
 
 ## Claim-to-artifact map
 
 - Official comparisons: `reports/csv/post_iclr_official_baseline_summary.csv`.
 - Selector composition and greedy boundary: `reports/csv/external_baseline_comparison.csv` and its summary.
+- Fresh selector attribution: `reports/post_iclr_v2/selector_attribution/report.md`, `paired.csv`, `selection_counts.csv`, and `budget_audit.csv`.
 - Controlled lift: `reports/csv/controlled_twisted_overlap_summary.csv`.
 - Biomedical boundaries: `reports/spatial_output_program/` claim and Pareto CSVs.

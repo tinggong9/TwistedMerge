@@ -1,0 +1,8 @@
+comparison,method,baseline,n_exact_settings,n_training_groups,paired_mean_accuracy_delta,paired_accuracy_delta_ci_low,paired_accuracy_delta_ci_high,paired_mean_loss_delta,wins,ties,losses,paired_effect_size_dz,bootstrap_unit
+A5_minus_A0,A5,A0,40,10,-0.0018649999999999945,-0.0026224999999999972,-0.0011799374999999866,0.03229150820261134,7,18,15,-0.5088704720246033,independent training-group seed; N and width settings averaged within seed
+A5_minus_A1,A5,A1,40,10,-0.0008774999999999922,-0.0013900624999999885,-0.00037749999999999443,0.012142752159592651,7,23,10,-0.3556709927329873,independent training-group seed; N and width settings averaged within seed
+A5_minus_A2,A5,A2,40,10,-0.0018649999999999945,-0.002605062500000007,-0.001187437499999986,0.03229150820261134,7,18,15,-0.5088704720246033,independent training-group seed; N and width settings averaged within seed
+A5_minus_A3,A5,A3,40,10,-0.0007225000000000009,-0.001460000000000003,-0.00010749999999999927,0.016871410001569054,1,35,4,-0.2778689380069195,independent training-group seed; N and width settings averaged within seed
+A5_minus_A4,A5,A4,40,10,-0.0008774999999999922,-0.0013949999999999852,-0.00038749999999999874,0.012142752159592651,7,23,10,-0.3556709927329873,independent training-group seed; N and width settings averaged within seed
+A5_minus_B0,A5,B0,40,10,-0.0018649999999999945,-0.0025775625000000017,-0.0012149999999999828,0.03229150820261134,7,18,15,-0.5088704720246033,independent training-group seed; N and width settings averaged within seed
+A4_minus_A1_same_pool_diagnostic_rule,A4,A1,40,10,0.0,0.0,0.0,nan,0,40,0,nan,independent training-group seed; N and width settings averaged within seed

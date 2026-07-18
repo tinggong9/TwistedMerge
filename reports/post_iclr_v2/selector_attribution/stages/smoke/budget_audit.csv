@@ -1,0 +1,9 @@
+setting_id,selector,candidate_pool_size,selection_validation_evals,generation_validation_evals,hyperparameter_configurations,candidate_generation_merge_seconds,same_pool_size_as_a5,same_selection_validation_evals_as_a5,generation_compute_exactly_matched_to_a5,budget_note
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A0,5,5,6,0,0.016453040996566415,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A1,7,7,6,0,5.032321541104466,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A2,7,7,6,0,0.049155748914927244,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A3,10,10,36,0,0.13813770678825676,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A4,7,7,6,0,5.032321541104466,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A5,12,12,36,0,5.154006206896156,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,B0,12,12,6,0,0.01886312267743051,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A6,12,0,36,0,5.154006206896156,True,False,False,A6 uses test and has no validation-selection budget

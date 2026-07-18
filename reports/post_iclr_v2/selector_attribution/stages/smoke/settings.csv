@@ -1,0 +1,2 @@
+setting_id,seed,n_models,width,sync_disagreement,diagnostic_threshold,train_size,validation_size,test_size,training_seconds,candidate_count,failed_candidates,split_sha256
+post_iclr_v2_mnist_mlp_N3_W32_S9100,9100,3,32,0.2013888888888889,0.0,410,102,512,0.19811854208819568,19,0,61d3bbd8efaa7f7ceaac974f813f71e01897873b749dff48046709a4fd1c6181

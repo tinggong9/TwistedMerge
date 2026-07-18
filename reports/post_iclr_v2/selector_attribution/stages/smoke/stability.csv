@@ -1,0 +1,7 @@
+setting_id,selector,resample_choices,modal_fraction,unique_choices
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A0,"[""greedy_soup"", ""individual_1""]",0.5,2
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A1,"[""official_c2m3"", ""official_c2m3""]",1.0,1
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A2,"[""greedy_soup"", ""permutation_gauge_merge""]",0.5,2
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A3,"[""monomial_gauge_soup"", ""permutation_gauge_merge""]",0.5,2
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A4,"[""greedy_soup"", ""individual_1""]",0.5,2
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A5,"[""official_c2m3"", ""official_c2m3""]",1.0,1

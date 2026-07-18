@@ -1,0 +1,9 @@
+selector,selector_label,n_exact_settings,n_training_groups,failed_runs,mean_test_accuracy,median_test_accuracy,std_test_accuracy,se_test_accuracy,mean_test_loss,mean_regret_vs_greedy_soup,mean_regret_vs_oracle,worst_setting_accuracy,tm_specific_selection_frequency,validation_test_best_agreement,mean_stability_modal_fraction,deployable
+A0,ordinary greedy baseline,1,1,0,0.14453125,0.14453125,nan,nan,2.2172643556259573,0.0,0.181640625,0.14453125,0.0,0.0,0.5,True
+A1,official-synchronization pool,1,1,0,0.326171875,0.326171875,nan,nan,2.2421506685204804,-0.181640625,0.0,0.326171875,0.0,1.0,1.0,True
+A2,gauge-only augmentation,1,1,0,0.267578125,0.267578125,nan,nan,2.2433287010062486,-0.123046875,0.05859375,0.267578125,1.0,0.0,0.5,True
+A3,gauge plus soup augmentation,1,1,0,0.259765625,0.259765625,nan,nan,2.2212360484991223,-0.115234375,0.06640625,0.259765625,1.0,0.0,0.5,True
+A4,diagnostic-only augmentation,1,1,0,0.14453125,0.14453125,nan,nan,2.2172643556259573,0.0,0.181640625,0.14453125,0.0,0.0,0.5,True
+A5,full TwistedMerge selector,1,1,0,0.326171875,0.326171875,nan,nan,2.2421506685204804,-0.181640625,0.0,0.326171875,0.0,1.0,1.0,True
+B0,budget-matched ordinary soup control,1,1,0,0.236328125,0.236328125,nan,nan,2.262498462572694,-0.091796875,0.08984375,0.236328125,0.0,0.0,nan,True
+A6,test oracle upper bound,1,1,0,0.326171875,0.326171875,nan,nan,2.2421506685204804,-0.181640625,0.0,0.326171875,0.0,1.0,nan,False

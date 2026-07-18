@@ -1,0 +1,47 @@
+{
+  "diagnostic_threshold": 0.22743055555555555,
+  "frozen_after_stage": "pilot",
+  "frozen_at_git_commit": "7384a5290fd59dca439e059010cacc8ae1712100",
+  "pilot_seeds": [
+    9100,
+    9101
+  ],
+  "protocol": {
+    "a4_rule": "if synchronization disagreement exceeds pilot median, use A0; otherwise use A1",
+    "a5_lift_policy": "exclude: no certified natural-MNIST lift in current claim ledger",
+    "augmentation": "none",
+    "batch_size": 128,
+    "bootstrap_unit": "independent training-group seed",
+    "confirmatory_seeds": [
+      9300,
+      9301,
+      9302,
+      9303,
+      9304,
+      9305,
+      9306,
+      9307,
+      9308,
+      9309
+    ],
+    "dataset_seed": 8128,
+    "epochs": 3,
+    "lr": 0.001,
+    "max_test_samples": 0,
+    "max_train_samples": 5000,
+    "model_counts": [
+      3,
+      4
+    ],
+    "optimizer": "adam",
+    "phase": "selector_attribution",
+    "selection_tie_break": "validation accuracy descending, validation loss ascending, stable candidate name",
+    "test_policy": "freeze A0-A5/B0 choices before first test evaluation; A6 only is test-selected",
+    "val_fraction": 0.2,
+    "widths": [
+      32,
+      64
+    ]
+  },
+  "threshold_source": "median synchronization disagreement across pilot settings; no test metric used"
+}

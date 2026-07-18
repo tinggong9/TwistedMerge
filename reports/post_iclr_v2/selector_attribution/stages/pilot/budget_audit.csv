@@ -1,0 +1,33 @@
+setting_id,selector,candidate_pool_size,selection_validation_evals,generation_validation_evals,hyperparameter_configurations,candidate_generation_merge_seconds,same_pool_size_as_a5,same_selection_validation_evals_as_a5,generation_compute_exactly_matched_to_a5,budget_note
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A0,5,5,6,0,0.06389937386848032,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A1,7,7,6,0,5.60636141593568,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A2,7,7,6,0,0.14995883288793266,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A3,10,10,36,0,0.4409869147930294,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A4,7,7,6,0,5.60636141593568,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A5,12,12,36,0,5.983448956860229,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9100,B0,12,12,6,0,0.06617341469973326,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9100,A6,12,0,36,0,5.983448956860229,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A0,6,6,8,0,0.07643458410166204,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A1,8,8,8,0,6.423593709245324,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A2,8,8,8,0,0.19068404310382903,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A3,11,11,48,0,0.5763090013060719,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A4,8,8,8,0,6.423593709245324,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A5,13,13,48,0,6.923468126449734,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9100,B0,13,13,8,0,0.07883041887544096,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9100,A6,13,0,48,0,6.923468126449734,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A0,5,5,6,0,0.05987158324569464,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A1,7,7,6,0,3.915221458300948,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A2,7,7,6,0,0.14444433338940144,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A3,10,10,36,0,0.43956358334980905,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A4,7,7,6,0,3.915221458300948,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A5,12,12,36,0,4.294913458405063,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N3_W32_S9101,B0,12,12,6,0,0.06210179044865072,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N3_W32_S9101,A6,12,0,36,0,4.294913458405063,True,False,False,A6 uses test and has no validation-selection budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A0,6,6,8,0,0.0770117910578847,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A1,8,8,8,0,6.554977541090921,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A2,8,8,8,0,0.19256433309055865,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A3,11,11,48,0,0.5967078739777207,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A4,8,8,8,0,6.554977541090921,False,False,False,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A5,13,13,48,0,7.074673624010757,True,True,True,native variant budget
+post_iclr_v2_mnist_mlp_N4_W32_S9101,B0,13,13,8,0,0.07958941510878503,True,True,False,exact candidate-count and selector-evaluation match; generation kernels differ and are reported
+post_iclr_v2_mnist_mlp_N4_W32_S9101,A6,13,0,48,0,7.074673624010757,True,False,False,A6 uses test and has no validation-selection budget
