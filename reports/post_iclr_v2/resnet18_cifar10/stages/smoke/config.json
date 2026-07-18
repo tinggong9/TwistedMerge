@@ -1,0 +1,68 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/post_iclr_resnet18_cifar10.py --stage smoke --seeds 25104 --checkpoint-root checkpoints/post_iclr_resnet18_cifar10_v2",
+  "dataset_archive": {
+    "archive": "/Users/tinggong/Documents/Codex/2026-07-17/files-mentioned-by-the-user-you/work/TwistedMerge-post-iclr/data/cifar-10-python.tar.gz",
+    "bytes": 170498071,
+    "exists": true,
+    "sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce"
+  },
+  "device": "mps",
+  "environment": {
+    "packages": {
+      "matplotlib": "3.11.0",
+      "numpy": "2.5.0",
+      "pandas": "3.0.4",
+      "torch": "2.12.1",
+      "torchvision": "0.27.1"
+    },
+    "platform": "macOS-26.0.1-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]"
+  },
+  "gates": {
+    "mean": 0.92,
+    "minimum": 0.9,
+    "standard_deviation": 0.015
+  },
+  "git_commit_at_execution": "dadb4e9449f49777e5e012f90f9aa8f02893983e",
+  "git_worktree_dirty_at_execution": true,
+  "loader_metadata": {
+    "augmentation": "RandomCrop(32,padding=4) + RandomHorizontalFlip",
+    "dataset": "CIFAR-10 train partition",
+    "normalization_mean": [
+      0.4914,
+      0.4822,
+      0.4465
+    ],
+    "normalization_std": [
+      0.247,
+      0.2435,
+      0.2616
+    ],
+    "split_seed": 24680,
+    "test_partition_loaded": false,
+    "training_examples": 2048,
+    "training_validation_overlap": 0,
+    "validation_examples": 512
+  },
+  "phase": "resnet18_cifar10",
+  "recipe": {
+    "batch_size": 128,
+    "channels_last": false,
+    "epochs": 1,
+    "label_smoothing": 0.0,
+    "learning_rate": 0.1,
+    "momentum": 0.9,
+    "num_workers": 2,
+    "split_seed": 24680,
+    "validation_size": 5000,
+    "warmup_epochs": 0,
+    "weight_decay": 0.0005
+  },
+  "seeds": [
+    25104
+  ],
+  "stage": "smoke",
+  "test_partition_loaded": false,
+  "train_limit": 2048,
+  "validation_limit": 512
+}

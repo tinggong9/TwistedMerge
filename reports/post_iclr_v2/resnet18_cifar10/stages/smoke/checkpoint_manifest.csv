@@ -1,0 +1,3 @@
+path,bytes,sha256
+checkpoints/post_iclr_resnet18_cifar10_v2/smoke/seed_25104/best.pt,44770763,a64bc901c50b9cc8f92a4544d751f3123fb62b8e4b84fa9d99928b7303cf4c58
+checkpoints/post_iclr_resnet18_cifar10_v2/smoke/seed_25104/last.pt,89487695,0f055ecc1150da50d33dfb344f727415c297d1deaf8ace6e1d8146ffd139e376

@@ -1,0 +1,2 @@
+seed,validation_accuracy,validation_nll,validation_ece,validation_brier,validation_worst_class_accuracy,best_epoch,training_examples,validation_examples,test_evaluations
+25104,0.103515625,861.95751953125,0.8708598613739014,1.7624468803405762,0.0,1,2048,512,0

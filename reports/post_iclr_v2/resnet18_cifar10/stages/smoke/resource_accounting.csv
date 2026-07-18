@@ -1,0 +1,2 @@
+seed,parameter_count,training_seconds_this_invocation,recorded_training_seconds_all_epochs,recorded_validation_seconds_all_epochs,peak_rss_mb,checkpoint_bytes,inference_multiplier,branches,validation_evaluations,test_evaluations,device,best_checkpoint
+25104,11173962,4.8307070839218795,9.824426415842026,4.904960833955556,863.578125,44770763,1.0,1,1,0,mps,checkpoints/post_iclr_resnet18_cifar10_v2/smoke/seed_25104/best.pt

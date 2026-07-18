@@ -9,7 +9,7 @@ This namespace contains post-ICLR v2 audits and new gated experiments. It does n
 - Selector-attribution verdict: enriched-pool selection; no TwistedMerge-specific algorithmic gain established.
 - BatchNorm-aware gauge: complete; compatible ResNet-18 BasicBlock permutations and frozen-evaluation affine compensations are supported within the preregistered float32 tolerances.
 - BatchNorm boundary: running-statistics-only scaling is nonexact, and arbitrary channelwise positive scaling is not a train-mode exact gauge.
-- ResNet-18 CIFAR-10: BatchNorm exactness gate opened; performance experiment still awaits base-quality preregistration and training.
+- ResNet-18 CIFAR-10: real-data pipeline and resumable smoke complete; BatchNorm exactness gate opened; the validation-only base-quality pilot remains pending about 18.13 measured local compute hours.
 - Later planted, prediction, selector, and biomedical phases: gated.
 
 ## Files
@@ -20,6 +20,7 @@ This namespace contains post-ICLR v2 audits and new gated experiments. It does n
 - `journal_evidence_matrix.csv`
 - `selector_attribution/`
 - `batchnorm_gauge/`
+- `resnet18_cifar10/`
 - `proposed_claim_update.md`
 - `paper_editor_evidence_brief.md`
 

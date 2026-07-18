@@ -1,0 +1,14 @@
+{
+  "completed_models": 1,
+  "expected_models": 1,
+  "gate_interpretable": false,
+  "mean_gate": 0.92,
+  "minimum_gate": 0.9,
+  "stage": "smoke",
+  "standard_deviation_gate": 0.015,
+  "status": "smoke_only",
+  "test_evaluations": 0,
+  "validation_accuracy_mean": 0.103515625,
+  "validation_accuracy_min": 0.103515625,
+  "validation_accuracy_std": 0.0
+}

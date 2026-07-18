@@ -1,0 +1,6 @@
+probe,seed,device,batch_size,training_examples,validation_examples,training_seconds,validation_seconds,peak_rss_mb,test_evaluations,outcome
+contiguous_mps_subset,25104,mps,128,2048,512,9.824426415842026,4.904960833955556,1136.671875,0,completed
+contiguous_mps_large_batch_subset,25101,mps,512,2048,512,10.91246529109776,8.991529334103689,1136.8125,0,no_throughput_gain
+contiguous_cpu_large_batch_subset,25102,cpu,512,2048,512,44.177906665951014,8.138116375077516,1934.109375,0,about_four_times_slower_than_mps
+contiguous_mps_full_epoch,25105,mps,128,45000,5000,135.64933941699564,9.366290749982,1138.109375,0,completed
+channels_last_mps_subset,25103,mps,128,2048,512,,,1136.0,0,backward_stride_runtime_error
