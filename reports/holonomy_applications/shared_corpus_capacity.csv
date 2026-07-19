@@ -1,0 +1,6 @@
+evidence_label,mode,corpus_seed,charts,adapter_rank,active_parameters_per_chart,stored_bytes_all_charts,branch_count,encoder_parameter_count_frozen_shared,training_seconds_all_charts,feature_extraction_seconds_shared
+natural_measured,confirmatory,0,8,4,1162,37184,8,11176512,0.8566781249828637,17.035267084138468
+natural_measured,confirmatory,1,8,4,1162,37184,8,11176512,0.7978861250448972,17.035267084138468
+natural_measured,confirmatory,2,8,4,1162,37184,8,11176512,0.8167195420246571,17.035267084138468
+natural_measured,confirmatory,3,8,4,1162,37184,8,11176512,0.7961894168984145,17.035267084138468
+natural_measured,confirmatory,4,8,4,1162,37184,8,11176512,0.8279035000596195,17.035267084138468
