@@ -1,0 +1,5 @@
+evidence_label,mode,corpus_seed,transition_method,feature_dimension,directed_edges,triangles,tetrahedra,bootstrap_samples,new_trainable_parameters,new_adapter_training,test_labels_accessed
+natural_measured,smoke,0,weight_based,64,56,56,70,4,0,False,False
+natural_measured,smoke,0,activation_procrustes,64,56,56,70,4,0,False,False
+natural_measured,smoke,0,low_rank_subspace,64,56,56,70,4,0,False,False
+natural_measured,smoke,0,joint_weight_activation,64,56,56,70,4,0,False,False

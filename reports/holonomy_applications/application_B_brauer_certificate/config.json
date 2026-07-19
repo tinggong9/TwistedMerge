@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "evidence_label": "natural_measured",
+  "max_root_order": 6,
+  "thresholds": {
+    "strict": {
+      "centrality": 0.01,
+      "root_residual": 0.01,
+      "bootstrap_instability": 0.01,
+      "cocycle": 0.01,
+      "coboundary_trivial": 0.01,
+      "gauge_invariance": 0.0001
+    },
+    "medium": {
+      "centrality": 0.05,
+      "root_residual": 0.05,
+      "bootstrap_instability": 0.05,
+      "cocycle": 0.05,
+      "coboundary_trivial": 0.05,
+      "gauge_invariance": 0.001
+    },
+    "loose": {
+      "centrality": 0.1,
+      "root_residual": 0.1,
+      "bootstrap_instability": 0.1,
+      "cocycle": 0.1,
+      "coboundary_trivial": 0.1,
+      "gauge_invariance": 0.01
+    }
+  },
+  "smoke": {
+    "bootstrap_samples": 4
+  },
+  "confirmatory": {
+    "bootstrap_samples": 20
+  }
+}

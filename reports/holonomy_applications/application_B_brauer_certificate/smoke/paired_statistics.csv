@@ -1,0 +1,2 @@
+evidence_label,mode,comparison,metric,n_independent_seeds,mean_delta,ci_low,ci_high,wins,ties,losses
+natural_measured,smoke,activation_procrustes_minus_weight_based,mean_centrality_residual,1,0.4595064746454488,0.4595064746454488,0.4595064746454488,1,0,0
