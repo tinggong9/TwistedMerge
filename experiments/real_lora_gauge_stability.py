@@ -768,6 +768,7 @@ def main() -> None:
         gates = phase_a_gates(runs, preservation, PILOT_GROUPS)
         write_evidence_bundle(runs, preservation, failures, gates, "pilot", command, args.scrambles)
         copy_stage_evidence("pilot")
+        artifact_manifest(OUTPUT_ROOT).to_csv(OUTPUT_ROOT / "artifact_manifest.csv", index=False)
     else:
         pilot_config_path = OUTPUT_ROOT / "pilot" / "config.json"
         if not pilot_config_path.is_file():
@@ -787,6 +788,7 @@ def main() -> None:
         gates = phase_a_gates(runs, preservation, (*PILOT_GROUPS, *CONFIRMATION_GROUPS))
         write_evidence_bundle(runs, preservation, failures, gates, "confirmatory", command, args.scrambles)
         copy_stage_evidence("confirmatory")
+        artifact_manifest(OUTPUT_ROOT).to_csv(OUTPUT_ROOT / "artifact_manifest.csv", index=False)
     print(
         json.dumps(
             {
