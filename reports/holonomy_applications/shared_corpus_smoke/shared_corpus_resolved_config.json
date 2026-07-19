@@ -1,0 +1,147 @@
+{
+  "adapter_rank": 4,
+  "artifact_dir": "/Users/tinggong/Documents/Codex/2026-07-19/holonomy-applications/work/TwistedMerge-holonomy-applications/reports/tmp/holonomy_applications/shared_corpus_smoke",
+  "chart_names": [
+    "rotation_0",
+    "rotation_90",
+    "rotation_180",
+    "rotation_270",
+    "reflection_rotation_0",
+    "reflection_rotation_90",
+    "reflection_rotation_180",
+    "reflection_rotation_270"
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/holonomy_shared_corpus.py --mode smoke --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --device auto",
+  "config_sha256": "cf071362d1fbed0bf2a5bb989a78cc6ce1f7326685aac72dc23b4defee03a593",
+  "corpus_quality_gate_passed": true,
+  "d4_multiplication_table": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    [
+      1,
+      2,
+      3,
+      0,
+      5,
+      6,
+      7,
+      4
+    ],
+    [
+      2,
+      3,
+      0,
+      1,
+      6,
+      7,
+      4,
+      5
+    ],
+    [
+      3,
+      0,
+      1,
+      2,
+      7,
+      4,
+      5,
+      6
+    ],
+    [
+      4,
+      7,
+      6,
+      5,
+      0,
+      3,
+      2,
+      1
+    ],
+    [
+      5,
+      4,
+      7,
+      6,
+      1,
+      0,
+      3,
+      2
+    ],
+    [
+      6,
+      5,
+      4,
+      7,
+      2,
+      1,
+      0,
+      3
+    ],
+    [
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ]
+  ],
+  "data_dir": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+  "dataset_archive_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/cifar-10-python.tar.gz",
+  "dataset_archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "device": "mps",
+  "encoder_weight_path": "/Users/tinggong/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth",
+  "encoder_weights": "IMAGENET1K_V1",
+  "encoder_weights_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "evidence_label": "natural_measured",
+  "execution_commit": "0ed4ce086d104369233f1e585264c761e5baa202",
+  "expected_adapter_count": 8,
+  "failure_count": 0,
+  "feature_cache_path": "/Users/tinggong/Documents/Codex/2026-07-19/holonomy-applications/work/TwistedMerge-holonomy-applications/reports/tmp/holonomy_applications/shared_corpus_smoke/projected_features.pt",
+  "feature_cache_sha256": "0dd028484af6064d274eff3940e19fc1f69213bffeeebdb46c374bb1d7e1e698",
+  "feature_content_sha256": "679351272123aa03379c19ef09e678b5d6736eab3353ba8e2c6efc66f4c9d572",
+  "feature_dim": 64,
+  "feature_extraction_seconds": 2.5885442921426147,
+  "inverse_charts": [
+    0,
+    3,
+    2,
+    1,
+    4,
+    5,
+    6,
+    7
+  ],
+  "mean_validation_accuracy": 0.177734375,
+  "minimum_validation_accuracy": 0.078125,
+  "mode": "smoke",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "schema_version": 1,
+  "seeds": [
+    0
+  ],
+  "source_sha256": "618a4f5ce68c64035e766c05ada5796b7ce3bc2e5a101b79bed98dc830a68dde",
+  "split_sizes": {
+    "adapter_train": 128,
+    "overlap_fit": 64,
+    "overlap_validation": 64,
+    "test": 128,
+    "validation": 64
+  },
+  "successful_adapter_count": 8,
+  "test_labels_used_during_corpus_construction": false,
+  "torch_version": "2.12.1",
+  "torchvision_version": "0.27.1",
+  "total_seconds": 4.271959250094369,
+  "validation_label_permutation_guard_passed": true
+}

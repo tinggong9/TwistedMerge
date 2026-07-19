@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "evidence_label": "natural_measured",
+  "split_seed": 7192026,
+  "training_seed_base": 731000,
+  "adapter": {
+    "feature_dim": 64,
+    "rank": 4,
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001
+  },
+  "smoke": {
+    "seeds": [0],
+    "split_sizes": {
+      "adapter_train": 128,
+      "overlap_fit": 64,
+      "overlap_validation": 64,
+      "validation": 64,
+      "test": 128
+    },
+    "encoder_batch_size": 64,
+    "adapter_batch_size": 64,
+    "epochs": 4,
+    "patience": 2,
+    "minimum_mean_validation_accuracy": 0.10,
+    "minimum_worst_validation_accuracy": 0.05
+  },
+  "confirmatory": {
+    "seeds": [0, 1, 2, 3, 4],
+    "split_sizes": {
+      "adapter_train": 2500,
+      "overlap_fit": 512,
+      "overlap_validation": 512,
+      "validation": 512,
+      "test": 1000
+    },
+    "encoder_batch_size": 128,
+    "adapter_batch_size": 256,
+    "epochs": 80,
+    "patience": 8,
+    "minimum_mean_validation_accuracy": 0.35,
+    "minimum_worst_validation_accuracy": 0.25
+  }
+}

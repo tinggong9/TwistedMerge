@@ -1,0 +1,2 @@
+evidence_label,mode,corpus_seed,charts,adapter_rank,active_parameters_per_chart,stored_bytes_all_charts,branch_count,encoder_parameter_count_frozen_shared,training_seconds_all_charts,feature_extraction_seconds_shared
+natural_measured,smoke,0,8,4,1162,37184,8,11176512,0.07194979209452868,2.5885442921426147
