@@ -526,7 +526,8 @@ def artifact_row(kind: str, path: Path, seed: int | str, node: str = "") -> dict
     }
 
 
-def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[str, list[dict[str, object]]]:
+def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[str, object]:
+    analysis_started = time.perf_counter()
     seed = int(context["seed"])
     representations_by_split = context["representations"]
     edges = relevant_edges()
@@ -767,6 +768,7 @@ def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[s
         "selected": selected,
         "selected_validation": selected_validation,
         "selected_test": selected_test,
+        "transport_analysis_seconds": float(time.perf_counter() - analysis_started),
         "transport_artifact": artifact_row("transport_matrix_bundle", matrix_path, seed),
     }
 
@@ -991,6 +993,12 @@ def merge_context(
             model = methods.get(method)
             trainable = 2 * 64 * 4 + 10 * 64 + 10 if model is not None else 2 * (2 * 64 * 4 + 10 * 64 + 10)
             stored = state_bytes(model) if model is not None else state_bytes(left) + state_bytes(right)
+            transport_dependent = method in {
+                "pairwise_reference_alignment",
+                "ordinary_global_synchronization",
+                "cycle_aware_synchronization",
+                "fallback_only_policy",
+            }
             capacity_rows.append(
                 {
                     "seed": seed,
@@ -1001,7 +1009,12 @@ def merge_context(
                     "branch_count": branch_count,
                     "inference_multiplier": float(branch_count),
                     "stored_bytes": stored,
-                    "transport_fit_cost_seconds": 0.0,
+                    "transport_fit_cost_seconds": (
+                        float(transport["transport_analysis_seconds"]) / len(branch_pairs())
+                        if transport_dependent
+                        else 0.0
+                    ),
+                    "transport_analysis_seconds_shared_seed": float(transport["transport_analysis_seconds"]),
                     "synchronization_cost_seconds": (
                         cycle_sync_seconds if method == "cycle_aware_synchronization" else ordinary_sync_seconds if method == "ordinary_global_synchronization" else 0.0
                     ),
@@ -1614,6 +1627,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         **FROZEN_CONFIG,
         "mode": args.mode,
         "executed_seeds": seeds,
+        "aggregate_seeds": [0, 1, 2, 3, 4] if args.mode == "confirmatory" else [0, 1, 2],
         "command": command,
         "execution_commit": git_output("rev-parse", "HEAD"),
         "source_sha256": sha256_file(Path(__file__)),
