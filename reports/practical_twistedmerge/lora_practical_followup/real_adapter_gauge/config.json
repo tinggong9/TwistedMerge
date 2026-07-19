@@ -1,0 +1,64 @@
+{
+  "adapter_rank": 4,
+  "adapters_per_group": 8,
+  "all_phase_a_gates_passed": true,
+  "bootstrap_resamples": 4000,
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/real_lora_gauge_stability.py --stage pilot --scrambles 20 --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data",
+  "condition_limits": {
+    "dense": 30.0,
+    "ill_conditioned": 100000000.0,
+    "orthogonal": 1.0,
+    "positive_diagonal": 8.0
+  },
+  "execution_commit": "54f8575ded6be0f4a4fb73c3f81ade2419317376",
+  "gates": {
+    "at_least_three_independent_groups": true,
+    "every_primary_scramble_preserves_individual_adapters": true,
+    "global_synchronization_invariant_in_every_group": true,
+    "global_synchronization_substantially_more_stable_than_naive": true,
+    "global_synchronization_validation_noninferior_to_unscrambled": true,
+    "naive_factor_average_representation_dependent_in_every_group": true,
+    "same_rank_cap_for_compared_methods": true
+  },
+  "gauge_families": [
+    "orthogonal",
+    "positive_diagonal",
+    "dense",
+    "ill_conditioned"
+  ],
+  "independent_training_groups": [
+    0,
+    1,
+    2
+  ],
+  "methods": [
+    "naive_factor_average",
+    "full_delta_svd",
+    "canonical_svd_factor_average",
+    "pairwise_reference_alignment",
+    "global_synchronization",
+    "cycle_aware_alignment",
+    "oracle_alignment"
+  ],
+  "numpy": "2.5.0",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "preservation_delta_tolerance": 1e-08,
+  "preservation_logit_tolerance": 1e-07,
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "scrambles_per_family": 20,
+  "source_corpus_commit": "9c91bc707d1f44beb36fe0fdce43af9ce1be79ed",
+  "source_hashes": {
+    "experiments/real_lora_gauge_stability.py": "159d22f241a0a5f57d9f1c5071b1c01f0c7990e025814b52e02175592698be8b",
+    "src/lora_gauge_alignment.py": "9709aa7817d2cbc07d0850bc09611b8d6a8bc7cc40af01a5c6722b56fe2ad9a6",
+    "src/lora_gauge_practical.py": "aa20714d132610fb13768af999dc441e11b8f1713e7aeab2cb328b4b4864a4fc",
+    "tests/test_real_lora_gauge_stability.py": "cb39d27ff66a5128e486c2609986863630d213ab946880227a3bc81e7d919355"
+  },
+  "stability_tolerance": 1e-06,
+  "stage": "pilot",
+  "statistical_unit": "independent_adapter_training_group; scrambles averaged within group",
+  "test_labels_used_for_selection": false,
+  "torch": "2.12.1",
+  "training_commit": "4f0a08c9b7b4b0ead2e1450a9fdf57b8149d41b2",
+  "validation_noninferiority_margin": 0.01,
+  "worktree_dirty_during_execution": true
+}
