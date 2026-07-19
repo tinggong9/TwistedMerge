@@ -1,0 +1,77 @@
+{
+  "adapter_count": 4,
+  "adapter_provenance": "four planted shared-B rank-3 effective updates; no training",
+  "adapter_rank": 3,
+  "all_smoke_gates_passed": true,
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/lora_gauge_invariant_merging.py --mode smoke --seed 20260719 --scrambles 20",
+  "condition_number_targets": {
+    "dense": 30.0,
+    "ill_conditioned": 10000000000.0,
+    "orthogonal": 1.0,
+    "positive_diagonal": 8.0
+  },
+  "dataset_identifier": "synthetic_gaussian_features_with_planted_task_teachers",
+  "dataset_revision": "generated_by_seed",
+  "device": "macOS-26.0.1-arm64-arm-64bit",
+  "execution_commit": "4852fa491ea5e066b4501a912dc4edc048c50250",
+  "experiment_id": "PTM-A2",
+  "external_license_dependency": false,
+  "failures": [],
+  "fixture_hashes": {
+    "adapter_deltas": "71b4220b1ad44e77ef33fd029f921c70ab7bab1c7b4b470678016ecec3e7138b",
+    "base": "2ece36c4f6471a9683c557a5c22d618359c21dc3883839e73e7804989f070f6c",
+    "test_features": "b7f553aff6684add573e5bee8764eac8cc09ef8143b501168caf48f47ec3b520",
+    "test_labels": "ed89c36ad3389671f2fcb655054c65ba2854ad646493b954fcddb2576745665d",
+    "validation_features": "9ce17a8a0889ee6f48a1a8a959fd1670b12c834bf73d6bbe13dbd89b07f18a7e",
+    "validation_labels": "0f8bf462b834f8cc576e2008cfa8856b364e45e8fc93f1bcb24c629a29752ef2"
+  },
+  "gates": {
+    "cycle_aware_method_abstains_on_injected_inconsistency": true,
+    "effective_delta_baselines_are_representation_stable": true,
+    "exact_transition_cycles_close": true,
+    "naive_factor_average_is_representation_dependent": true,
+    "twenty_scrambles_per_family": true,
+    "twistedmerge_methods_are_representation_stable": true,
+    "well_conditioned_gauges_preserve_effective_updates": true,
+    "well_conditioned_gauges_preserve_predictions": true
+  },
+  "gauge_families": [
+    "orthogonal",
+    "positive_diagonal",
+    "dense",
+    "ill_conditioned"
+  ],
+  "independent_training_groups": 1,
+  "invariance_tolerance": 1e-08,
+  "machine": "arm64",
+  "model_identifier": "synthetic_linear_base",
+  "model_revision": "generated_by_seed",
+  "packages": {
+    "matplotlib": "3.11.0",
+    "numpy": "2.5.0",
+    "pandas": "3.0.4",
+    "pytest": "9.1.1"
+  },
+  "preservation_tolerance": 1e-10,
+  "python": "3.12.13",
+  "recorded_boundary_alignment_failure_count": 40,
+  "recorded_boundary_alignment_failures": [
+    "LinAlgError:synchronization produced a singular alignment map",
+    "ValueError:alignment map must be finite and invertible"
+  ],
+  "recorded_primary_alignment_failure_count": 0,
+  "scrambles_per_family": 20,
+  "seed": 20260719,
+  "source_hashes": {
+    "experiments/lora_gauge_invariant_merging.py": "5389b54506a48f7cac57ad82db4792a0b8e371fb333bb64c1fa91a6c061ad7aa",
+    "src/lora_cycle_diagnostics.py": "3926c11552b6a4dbd56baee1d5bce5e00b4c310b7bad41c483bdb1271d061471",
+    "src/lora_gauge_alignment.py": "9709aa7817d2cbc07d0850bc09611b8d6a8bc7cc40af01a5c6722b56fe2ad9a6",
+    "tests/test_lora_gauge_alignment.py": "311020aa963475c0e8af157b88cb7cfbe9fc726403a5ff54ab61472b89b4f9d5",
+    "tests/test_lora_gauge_invariance.py": "44c625dacd0dd360f560552de199446eb19c8b06d2a870ddc17c67055deef61d"
+  },
+  "stage": "controlled_smoke",
+  "statistical_boundary": "no bootstrap CI: scrambles are dependent representations of one fixed group",
+  "test_labels_used_for_selection": false,
+  "validation_evaluations_per_method": 0,
+  "worktree_dirty_during_execution": true
+}

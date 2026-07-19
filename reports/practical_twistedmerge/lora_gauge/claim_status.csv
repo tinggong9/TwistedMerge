@@ -1,0 +1,5 @@
+claim,supported,scope
+controlled_well_conditioned_twistedmerge_lora_invariance,True,one planted shared-B rank-3 adapter group; dependent scrambles
+naive_factor_merge_representation_dependence,True,controlled non-orthogonal gauges in one synthetic adapter group
+real_adapter_performance_gain,False,not tested; prior real-adapter gate remains negative
+natural_brauer_or_period_index_obstruction,False,forbidden extrapolation from controlled cycle diagnostics

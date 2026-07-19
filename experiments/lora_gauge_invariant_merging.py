@@ -1097,6 +1097,16 @@ def run_smoke(seed: int, scrambles: int, output_dir: Path) -> dict[str, object]:
             "test_features": sha256_bytes(fixture.test_x.tobytes()),
             "test_labels": sha256_bytes(fixture.test_labels.tobytes()),
         },
+        "source_hashes": {
+            str(path.relative_to(ROOT)): sha256_file(path)
+            for path in (
+                Path(__file__),
+                ROOT / "src" / "lora_gauge_alignment.py",
+                ROOT / "src" / "lora_cycle_diagnostics.py",
+                ROOT / "tests" / "test_lora_gauge_alignment.py",
+                ROOT / "tests" / "test_lora_gauge_invariance.py",
+            )
+        },
         "gates": gates,
         "all_smoke_gates_passed": all(gates.values()),
         "failures": [] if all(gates.values()) else [name for name, passed in gates.items() if not passed],
@@ -1114,7 +1124,11 @@ def run_smoke(seed: int, scrambles: int, output_dir: Path) -> dict[str, object]:
     hash_targets = [*paths.values(), *plot_paths, latex_path, report_path, config_path]
     hash_path = output_dir / "artifact_hashes.csv"
     with hash_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["path", "sha256", "bytes"])
+        writer = csv.DictWriter(
+            handle,
+            fieldnames=["path", "sha256", "bytes"],
+            lineterminator="\n",
+        )
         writer.writeheader()
         for path in sorted(hash_targets):
             writer.writerow(

@@ -1,0 +1,2 @@
+decision,reason,max_cycle_frobenius_defect,max_cycle_spectral_defect,max_transition_condition_number,output_rank,relative_delta_error_vs_full_delta_svd
+fallback_full_delta_svd,cycle_defect,0.20207259421636947,0.35000000000000075,1.3500000000000014,3,0.0
