@@ -19,3 +19,13 @@ Mode: **confirmatory**. Gate status: `{'H1': False, 'H2': False, 'H3': False, 'H
 - Double seed/family/loop holdout flags: `True`.
 - Failure rows: `0`.
 - No manuscript, LaTeX, bibliography, protected worktree, or prior evidence artifact was modified.
+
+## Final repository verification
+
+- Confirmatory evidence commit: `1e23e83`.
+- Required root deliverables: `21 / 21` present.
+- Artifact manifest: `320` rows and `315,089,617` referenced bytes verified for path, size, and SHA-256.
+- Focused lineage and reused-module boundary: `22 passed`.
+- Repository-wide nonhanging suite: `544 passed, 1 deselected, 5 subtests passed` in `29.57s`.
+- The deselected closure test is the pre-existing `tests/test_block_gauge_branch_closure.py::BlockGaugeBranchClosureTests::test_smoke_closure_outputs_and_threshold_columns`, previously observed to hang in its experiment subprocess; it was not changed by this work.
+- The main checkout and the completed holonomy, protected LoRA-gauge, and earlier practical worktrees remained clean.
