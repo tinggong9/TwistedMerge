@@ -1,0 +1,26 @@
+Case: period2_index2
+Detected obstruction type: controlled central projective
+Estimated period: 2
+Estimated index/minimal capacity: 2
+Current adapter rank: 4
+Coherent ordinary merge possible: no under the controlled carrier
+Recommended minimum rank or branch count: 2
+Certificate confidence: controlled exact structure; practical-superiority gate failed
+
+Case: period2_index4
+Detected obstruction type: controlled central projective
+Estimated period: 2
+Estimated index/minimal capacity: 4
+Current adapter rank: 4
+Coherent ordinary merge possible: no under the controlled carrier
+Recommended minimum rank or branch count: 4
+Certificate confidence: controlled exact structure; practical-superiority gate failed
+
+Case: period3_index3
+Detected obstruction type: controlled central projective
+Estimated period: 3
+Estimated index/minimal capacity: 3
+Current adapter rank: 4
+Coherent ordinary merge possible: no under the controlled carrier
+Recommended minimum rank or branch count: 3
+Certificate confidence: controlled exact structure; practical-superiority gate failed

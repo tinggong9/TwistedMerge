@@ -503,6 +503,8 @@ Evidence label: `controlled_on_real_features`. The experiment uses the same froz
 
 The controlled layer verifies that complete projective blocks restore exact relations and preserve actual classifier logits. However, matched generic unitary carriers recover the same real-task predictions without waiting for the projective index. Therefore the structural threshold does not translate into a uniquely useful capacity recommendation on this task.
 
+Several index-insufficient truncations also match or exceed the ensemble's classification accuracy while failing the exact relation/unitarity gate. Accuracy alone therefore does not identify the period-index threshold; the observed minimum is a controlled structural definition, not an independently emerging task threshold.
+
 ## Boundary
 
 The positive part, if any, is controlled algebra tied to real frozen features and actual logits. It is not evidence of a natural Brauer-like obstruction. A practical period-index claim requires superiority over matched generic capacity; that gate {'passed' if beats_generic else 'failed'}.

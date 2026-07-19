@@ -1,0 +1,5 @@
+claim_id,status,gate_passed,safe_wording
+controlled_period_index_structural_threshold,supported_controlled,True,"In the controlled carrier layer, structural-plus-task success matches index divisibility across preregistered capacities."
+predicted_minimum_capacity,supported_controlled,True,The controlled index equals the minimum structurally coherent capacity on the real-feature task.
+threshold_beats_parameter_matched_generic_capacity,negative,False,The predicted-index lift does not outperform matched generic unitary capacity.
+practical_period_index_capacity_planner,negative,False,The controlled structural threshold does not establish a practically superior capacity planner.

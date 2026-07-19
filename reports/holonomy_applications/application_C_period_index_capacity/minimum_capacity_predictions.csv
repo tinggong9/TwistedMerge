@@ -1,0 +1,16 @@
+evidence_label,mode,corpus_seed,case_name,predicted_index,observed_minimum_successful_capacity,prediction_correct
+controlled_on_real_features,confirmatory,0,period2_index2,2,2,True
+controlled_on_real_features,confirmatory,0,period2_index4,4,4,True
+controlled_on_real_features,confirmatory,0,period3_index3,3,3,True
+controlled_on_real_features,confirmatory,1,period2_index2,2,2,True
+controlled_on_real_features,confirmatory,1,period2_index4,4,4,True
+controlled_on_real_features,confirmatory,1,period3_index3,3,3,True
+controlled_on_real_features,confirmatory,2,period2_index2,2,2,True
+controlled_on_real_features,confirmatory,2,period2_index4,4,4,True
+controlled_on_real_features,confirmatory,2,period3_index3,3,3,True
+controlled_on_real_features,confirmatory,3,period2_index2,2,2,True
+controlled_on_real_features,confirmatory,3,period2_index4,4,4,True
+controlled_on_real_features,confirmatory,3,period3_index3,3,3,True
+controlled_on_real_features,confirmatory,4,period2_index2,2,2,True
+controlled_on_real_features,confirmatory,4,period2_index4,4,4,True
+controlled_on_real_features,confirmatory,4,period3_index3,3,3,True
