@@ -431,6 +431,7 @@ def main() -> None:
     coverage_frame = pd.DataFrame(coverage_rows)
     calibration_frame = pd.DataFrame(calibration_rows)
     metrics_frame.to_csv(output_dir / "metrics.csv", index=False)
+    metrics_frame.to_csv(output_dir / "runs.csv", index=False)
     predictions_frame.to_csv(output_dir / "predictions.csv", index=False)
     folds_frame.to_csv(output_dir / "fold_assignments.csv", index=False)
     coefficients_frame.to_csv(output_dir / "coefficients.csv", index=False)
@@ -627,6 +628,7 @@ The mixed A-C rows may show descriptive improvement, but the only allowed applic
     committed = [
         output_dir / "dataset.csv",
         output_dir / "metrics.csv",
+        output_dir / "runs.csv",
         output_dir / "predictions.csv",
         output_dir / "fold_assignments.csv",
         output_dir / "coefficients.csv",

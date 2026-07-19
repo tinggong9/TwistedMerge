@@ -429,6 +429,7 @@ def main() -> None:
     gauges.to_csv(output_dir / "gauge_invariance_checks.csv", index=False)
     coboundaries.to_csv(output_dir / "coboundary_checks.csv", index=False)
     classifications.to_csv(output_dir / "candidate_classifications.csv", index=False)
+    classifications.to_csv(output_dir / "runs.csv", index=False)
     sensitivity.to_csv(output_dir / "threshold_sensitivity.csv", index=False)
     pd.DataFrame(capacity_rows).to_csv(output_dir / "capacity_audit.csv", index=False)
     pd.DataFrame(failures, columns=("mode", "corpus_seed", "stage", "error_type", "message")).to_csv(
@@ -500,6 +501,7 @@ def main() -> None:
         output_dir / "gauge_invariance_checks.csv",
         output_dir / "coboundary_checks.csv",
         output_dir / "candidate_classifications.csv",
+        output_dir / "runs.csv",
         output_dir / "threshold_sensitivity.csv",
         output_dir / "capacity_audit.csv",
         output_dir / "paired_statistics.csv",
