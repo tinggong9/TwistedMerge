@@ -4,7 +4,7 @@ Mode: **pilot**. Gate status: `{'H1': False, 'H2': False, 'H3': False, 'H4': Fal
 
 1. **Were stable nonidentity loop holonomies observed?** No; 0 loop/layer rows passed the frozen stability definition.
 2. **Were any independent loop holonomies noncommuting?** No; 0 commutator rows passed the frozen interval threshold.
-3. **Did holonomy correlate with task-order dependence?** No confirmatory incremental association passed H1.
+3. **Did holonomy correlate with task-order dependence?** No admissible H1 association passed. The standardized numerical coefficient is retained, but the relevant loop distances were only 2.054e-14 to 6.229e-14 and no stable nonidentity order loop was observed.
 4. **Did holonomy add information beyond pairwise drift?** No.
 5. **Did holonomy predict harmful branch merges?** No held-out H2 improvement was established; 0 harmful raw merge rows were observed.
 6. **Did cycle-aware correction improve merging?** No paired seed-level H3 improvement was established.

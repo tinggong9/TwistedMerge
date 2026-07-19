@@ -7,6 +7,11 @@
     "rank": 4,
     "weight_decay": 0.0001
   },
+  "aggregate_seeds": [
+    0,
+    1,
+    2
+  ],
   "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/model_lineage_holonomy.py --mode pilot --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --device auto",
   "cycle_policy": {
     "abstention_loop_ci_width": 0.35,
@@ -24,7 +29,7 @@
     1,
     2
   ],
-  "execution_commit": "ed9b85c61c812bd8c936a3791c884dc1e67d7ed7",
+  "execution_commit": "77a98052c6fc5e31415697230df5445998565ef1",
   "extension_seeds": [
     3,
     4
@@ -71,7 +76,7 @@
   "seed_bootstrap_samples": 2000,
   "source_commit": "9c91bc707d1f44beb36fe0fdce43af9ce1be79ed",
   "source_feature_cache_sha256": "05f156ed107cfb131c8018a55ee557b93a22fde9f84f37e954fa584d1502a8ed",
-  "source_sha256": "6c294e66d6652b9b27beab10c090d9bc5eb420320521969be80fc438f62091ec",
+  "source_sha256": "36b734251712f05577f2086f1981ab25ee58d752735be219e9f06cf6bb5d0aae",
   "split_manifest_sha256": "03b0435aa5667dfcc8dbdb70596498d3434842b8a4bb0129832a0769077f7bbe",
   "split_seed": 7192026,
   "split_sizes": {

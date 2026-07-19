@@ -14,6 +14,7 @@ Mode: **pilot**. Decision: **no preregistered gate passed**.
 - Cycle-policy actions: `{'fallback:validation_selected_interpolation': 8, 'fallback:pairwise_reference_alignment': 1}`
 - Failures: 0
 - Gates: `{'H1': False, 'H2': False, 'H3': False, 'H4': False}`
+- H1 numerical diagnostic: penultimate loop distances range from `2.054e-14` to `6.229e-14`; stable order-loop seeds `0`.
 
 All transition estimators were selected by unlabeled transport-validation residual. Application test logits were saved and hashed before labels were loaded in each execution phase. Seeds are the inferential unit.
 
