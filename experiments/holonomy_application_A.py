@@ -819,6 +819,23 @@ def write_outputs(
     )
     nontrivial = max_holonomy >= float(config["gates"]["nontrivial_holonomy_distance"])
     noncommuting = mean_commutator >= float(config["gates"]["noncommuting_commutator_distance"])
+    selected_method_counts = runs.groupby("selected_transition_method")["corpus_seed"].nunique().to_dict()
+    activation_transition_rows = transitions[
+        transitions["transition_method"] == "activation_procrustes"
+    ]
+    activation_loop_rows = loops[
+        (loops["transition_method"] == "activation_procrustes")
+        & (loops["loop_name"] != "rotation_reflection_commutator")
+    ]
+    activation_heldout_residual = float(
+        activation_transition_rows["heldout_overlap_residual"].mean()
+    )
+    activation_bootstrap_instability = float(
+        activation_transition_rows["bootstrap_instability_mean"].mean()
+    )
+    activation_max_loop = float(
+        activation_loop_rows.groupby("corpus_seed")["identity_distance"].max().mean()
+    )
     prediction_sample_adequate = independent_seeds >= 10
     application_gate = structured_beats_controls or worst_improves
     claim_rows = [
@@ -925,7 +942,11 @@ This phase loaded the exact shared feature cache and adapter checkpoints and ver
 - Mean rotation/reflection loop-commutator distance: `{mean_commutator:.6f}`.
 - Nonidentity holonomy threshold passed: `{nontrivial}`.
 - Noncommuting-holonomy threshold passed: `{noncommuting}`.
+- Held-out selection counts by transition estimator: `{selected_method_counts}`.
+- Activation-Procrustes mean held-out residual / bootstrap instability / per-seed maximum loop distance: `{activation_heldout_residual:.6f}` / `{activation_bootstrap_instability:.6f}` / `{activation_max_loop:.6f}`.
 - These are feature-space loop operators. They are not central, projective, or Brauer-class claims.
+
+The held-out residual selected the weight-derived map in every seed. Because that map is constructed as `A_j pinv(A_i)`, its near-coboundary loop closure is expected and is not evidence that activation-derived natural holonomy vanished. Activation-derived maps did have nonidentity loops, but their worse held-out fit and high bootstrap instability prevent a stable nonabelian application claim.
 
 ## Fusion result
 

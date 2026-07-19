@@ -1,0 +1,6 @@
+claim_id,status,safe_wording,gate_passed
+measured_nonidentity_holonomy,negative,Measured loop products remain near identity under the preregistered threshold.,False
+measured_noncommuting_holonomy,negative,No stable noncommuting loop signal passed the threshold.,False
+holonomy_predicts_harm_beyond_pairwise_fit,inadequate_sample,5 independent corpus seed(s) are insufficient for a held-out incremental-prediction claim.,False
+structured_invariant_pooling_beats_matched_controls,negative,Orbit invariant pooling did not beat every preregistered matched control.,False
+worst_view_improvement_without_material_mean_loss,negative,The preregistered worst-view benefit gate did not pass.,False
