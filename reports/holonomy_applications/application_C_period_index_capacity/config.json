@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "evidence_label": "controlled_on_real_features",
+  "cases": {
+    "period2_index2": {
+      "period": 2,
+      "index": 2,
+      "capacities": [1, 2, 3, 4]
+    },
+    "period2_index4": {
+      "period": 2,
+      "index": 4,
+      "capacities": [1, 2, 3, 4, 6, 8]
+    },
+    "period3_index3": {
+      "period": 3,
+      "index": 3,
+      "capacities": [1, 2, 3, 4, 6]
+    }
+  },
+  "methods": [
+    "ordinary_same_capacity",
+    "coherent_projective_lift",
+    "parameter_matched_generic_unitary",
+    "random_branch_control",
+    "wrong_cocycle_control",
+    "wrong_projective_representation",
+    "ensemble_upper_bound",
+    "oracle_coherent_lift"
+  ],
+  "gates": {
+    "structural_residual": 0.00001,
+    "accuracy_gap_from_ensemble": 0.005,
+    "improvement_over_ordinary": 0.005,
+    "improvement_over_generic": 0.005
+  },
+  "smoke": {
+    "statistic_bootstrap_samples": 200
+  },
+  "confirmatory": {
+    "statistic_bootstrap_samples": 4000
+  }
+}

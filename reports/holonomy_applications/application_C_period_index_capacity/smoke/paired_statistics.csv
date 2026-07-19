@@ -1,0 +1,13 @@
+evidence_label,mode,case_name,candidate_capacity,comparison,n_independent_seeds,mean_accuracy_delta,ci_low,ci_high,wins,ties,losses
+controlled_on_real_features,smoke,period2_index2,2,coherent_projective_lift_minus_ordinary_same_capacity,1,0.0859375,0.0859375,0.0859375,1,0,0
+controlled_on_real_features,smoke,period2_index2,2,coherent_projective_lift_minus_parameter_matched_generic_unitary,1,0.0,0.0,0.0,0,1,0
+controlled_on_real_features,smoke,period2_index2,2,coherent_projective_lift_minus_random_branch_control,1,0.1171875,0.1171875,0.1171875,1,0,0
+controlled_on_real_features,smoke,period2_index2,2,coherent_projective_lift_minus_wrong_cocycle_control,1,0.171875,0.171875,0.171875,1,0,0
+controlled_on_real_features,smoke,period2_index4,4,coherent_projective_lift_minus_ordinary_same_capacity,1,0.0703125,0.0703125,0.0703125,1,0,0
+controlled_on_real_features,smoke,period2_index4,4,coherent_projective_lift_minus_parameter_matched_generic_unitary,1,0.0,0.0,0.0,0,1,0
+controlled_on_real_features,smoke,period2_index4,4,coherent_projective_lift_minus_random_branch_control,1,0.078125,0.078125,0.078125,1,0,0
+controlled_on_real_features,smoke,period2_index4,4,coherent_projective_lift_minus_wrong_cocycle_control,1,0.1484375,0.1484375,0.1484375,1,0,0
+controlled_on_real_features,smoke,period3_index3,3,coherent_projective_lift_minus_ordinary_same_capacity,1,-0.015625,-0.015625,-0.015625,0,0,1
+controlled_on_real_features,smoke,period3_index3,3,coherent_projective_lift_minus_parameter_matched_generic_unitary,1,0.0,0.0,0.0,0,1,0
+controlled_on_real_features,smoke,period3_index3,3,coherent_projective_lift_minus_random_branch_control,1,0.1171875,0.1171875,0.1171875,1,0,0
+controlled_on_real_features,smoke,period3_index3,3,coherent_projective_lift_minus_wrong_cocycle_control,1,0.0546875,0.0546875,0.0546875,1,0,0
