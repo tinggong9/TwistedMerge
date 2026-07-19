@@ -1,0 +1,5 @@
+stage,group_seed,family,maximum_individual_relative_delta_error,maximum_individual_logit_error,maximum_individual_prediction_disagreement,maximum_individual_validation_accuracy_change,accepted_scramble
+smoke,0,orthogonal,2.0441946648560613e-16,7.105427357601002e-15,0.0,0.0,True
+smoke,0,positive_diagonal,8.333723803105313e-17,5.329070518200751e-15,0.0,0.0,True
+smoke,0,dense,1.0209716977503539e-15,1.021405182655144e-14,0.0,0.0,True
+smoke,0,ill_conditioned,2.3217093725994115e-09,2.982412183882843e-08,0.0,0.0,True

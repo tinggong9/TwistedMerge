@@ -1,0 +1,9 @@
+{
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/real_lora_gauge_stability.py --stage smoke --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data",
+  "execution_commit": "3bae23d7fd88bb21dc4cee462d3e1b42357c5db5",
+  "primary_preservation_passed": true,
+  "source_corpus_commit": "9c91bc707d1f44beb36fe0fdce43af9ce1be79ed",
+  "stage": "smoke",
+  "test_labels_accessed": false,
+  "worktree_dirty_during_execution": true
+}
