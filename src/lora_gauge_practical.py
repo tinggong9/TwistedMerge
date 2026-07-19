@@ -77,7 +77,7 @@ def orthogonal_transitions(factors: Sequence[Factor]) -> tuple[list[Factor], dic
     for source in range(len(whitened)):
         for target in range(len(whitened)):
             transitions[(source, target)] = (
-                np.eye(rank)
+                np.eye(rank, dtype=whitened[0][0].dtype)
                 if source == target
                 else orthogonal_transition(whitened[source], whitened[target])
             )
@@ -109,7 +109,10 @@ def reference_aligned_factors(factors: Sequence[Factor], reference: int = 0) -> 
     """Whiten and align every factor directly to one reference."""
 
     whitened, transitions = orthogonal_transitions(factors)
-    maps = [transitions[(index, reference)] for index in range(len(whitened))]
+    maps = [
+        transitions[(index, reference)].astype(whitened[index][0].dtype, copy=False)
+        for index in range(len(whitened))
+    ]
     aligned = [align_factor(factor, matrix) for factor, matrix in zip(whitened, maps)]
     cycle_frobenius, cycle_spectral = cycle_defects(transitions, len(factors))
     return aligned, cycle_frobenius, cycle_spectral
@@ -120,7 +123,12 @@ def globally_aligned_factors(factors: Sequence[Factor], anchor: int = 0) -> tupl
 
     whitened, transitions = orthogonal_transitions(factors)
     rank = validate_factor(*whitened[0])[1]
-    maps = synchronize_transitions(transitions, len(whitened), rank, anchor=anchor)
+    maps = [
+        matrix.astype(whitened[index][0].dtype, copy=False)
+        for index, matrix in enumerate(
+            synchronize_transitions(transitions, len(whitened), rank, anchor=anchor)
+        )
+    ]
     aligned = [align_factor(factor, matrix) for factor, matrix in zip(whitened, maps)]
     cycle_frobenius, cycle_spectral = cycle_defects(transitions, len(factors))
     return aligned, cycle_frobenius, cycle_spectral
