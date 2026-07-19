@@ -1,0 +1,4 @@
+claim_id,status,gate_passed,safe_wording
+holonomy_projective_features_add_value,smoke_only,False,Full holonomy/projective features do not pass the incremental-value gate over pairwise-plus-sync features.
+holonomy_aware_auditing_improves_merge_abstain,smoke_only,False,The bounded linter does not establish improved merge/abstain decisions.
+recommended_capacity_accuracy,controlled_only,True,Controlled recommended-capacity accuracy is 1.000; it is inherited from Application C and is not a natural prediction claim.

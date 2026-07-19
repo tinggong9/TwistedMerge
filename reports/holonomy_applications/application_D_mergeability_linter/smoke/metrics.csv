@@ -1,0 +1,12 @@
+evidence_label,mode,outcome,feature_set,status,rows,positive_examples,negative_examples,independent_seeds
+diagnostic_only,smoke,ordinary_fusion_harmful,pairwise_residual_only,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,parameter_distance_only,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,prediction_disagreement_only,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,pairwise_plus_ordinary_sync,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,holonomy_features,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,full_holonomy_projective,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,ordinary_fusion_harmful,oracle_structural_labels,inadequate_sample,136,68,68,1
+diagnostic_only,smoke,gauge_sync_sufficient,full_holonomy_projective,inadequate_sample,136,16,120,1
+diagnostic_only,smoke,branch_lift_beneficial,full_holonomy_projective,inadequate_sample,136,80,56,1
+diagnostic_only,smoke,projective_rank_expansion_required,full_holonomy_projective,inadequate_sample,136,72,64,1
+diagnostic_only,smoke,abstention_recommended,full_holonomy_projective,inadequate_sample,136,69,67,1

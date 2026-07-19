@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "evidence_label": "diagnostic_only",
+  "harm_margin": 0.01,
+  "benefit_margin": 0.005,
+  "minimum_positive_examples": 10,
+  "minimum_negative_examples": 10,
+  "minimum_independent_seeds": 3,
+  "feature_sets": {
+    "pairwise_residual_only": [
+      "mean_heldout_pairwise_residual"
+    ],
+    "parameter_distance_only": [
+      "mean_parameter_distance"
+    ],
+    "prediction_disagreement_only": [
+      "ordinary_prediction_disagreement"
+    ],
+    "pairwise_plus_ordinary_sync": [
+      "mean_heldout_pairwise_residual",
+      "mean_inverse_consistency_residual",
+      "global_synchronization_residual",
+      "ordinary_prediction_disagreement",
+      "mean_parameter_distance"
+    ],
+    "holonomy_features": [
+      "mean_heldout_pairwise_residual",
+      "mean_inverse_consistency_residual",
+      "global_synchronization_residual",
+      "ordinary_prediction_disagreement",
+      "mean_parameter_distance",
+      "max_loop_holonomy_norm",
+      "loop_commutator_norm",
+      "mean_loop_spectral_radius",
+      "mean_loop_absolute_phase"
+    ],
+    "full_holonomy_projective": [
+      "mean_heldout_pairwise_residual",
+      "mean_inverse_consistency_residual",
+      "global_synchronization_residual",
+      "ordinary_prediction_disagreement",
+      "mean_parameter_distance",
+      "max_loop_holonomy_norm",
+      "loop_commutator_norm",
+      "mean_loop_spectral_radius",
+      "mean_loop_absolute_phase",
+      "centrality_residual",
+      "torsion_confidence",
+      "cocycle_residual",
+      "coboundary_residual",
+      "bootstrap_stability",
+      "estimated_period",
+      "estimated_index",
+      "candidate_capacity",
+      "controlled_structural_residual"
+    ],
+    "oracle_structural_labels": [
+      "capacity_divisible_by_index",
+      "controlled_projective_indicator",
+      "natural_connection_trivial_indicator",
+      "fusion_parameter_multiplier"
+    ]
+  },
+  "primary_baseline": "pairwise_plus_ordinary_sync",
+  "primary_model": "full_holonomy_projective",
+  "gate": {
+    "minimum_auroc_delta": 0.0,
+    "minimum_auprc_delta": 0.0,
+    "maximum_brier_increase": 0.0
+  },
+  "smoke": {
+    "bootstrap_samples": 200
+  },
+  "confirmatory": {
+    "bootstrap_samples": 4000
+  }
+}
