@@ -1299,7 +1299,7 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
             "ci_low": float(np.quantile(coefficient_array, 0.025)),
             "ci_high": float(np.quantile(coefficient_array, 0.975)),
             "independent_seeds": len(order_seeds),
-            "status": "evaluated",
+            "status": "evaluated_pending_stable_loop_requirement",
         }
     )
 
@@ -1330,7 +1330,18 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
             "status": "evaluated_corrections" if deltas_by_seed else "not_estimable_no_cycle_corrections",
         }
     )
-    h1 = paired[-2]["ci_low"] > 0 or paired[-2]["ci_high"] < 0
+    h1_row = paired[-2]
+    h1_raw_association = h1_row["ci_low"] > 0 or h1_row["ci_high"] < 0
+    stable_loop_seed_count = order[order["loop_stable_nonidentity"].astype(bool)]["seed"].nunique()
+    h1 = bool(h1_raw_association and stable_loop_seed_count >= 2)
+    h1_row["status"] = (
+        "passed_repeated_stable_loop_requirement"
+        if h1
+        else "failed_no_repeated_stable_nonidentity_loop"
+        if stable_loop_seed_count < 2
+        else "failed_incremental_association_interval"
+    )
+    h1_row["qualifying_seed_count"] = int(stable_loop_seed_count)
     h2_rows = paired[:2]
     h2 = any(row["ci_low"] > 0 for row in h2_rows)
     h3 = bool(len(deltas_by_seed) >= 2 and h3_low > 0)
@@ -1468,6 +1479,7 @@ Mode: **{mode}**. Decision: **{decision} passed**.
 - Cycle-policy actions: `{action_counts}`
 - Failures: {len(failures)}
 - Gates: `{gates}`
+- H1 numerical diagnostic: penultimate loop distances range from `{order['loop_identity_distance'].min():.3e}` to `{order['loop_identity_distance'].max():.3e}`; stable order-loop seeds `{order[order['loop_stable_nonidentity'].astype(bool)]['seed'].nunique()}`.
 
 All transition estimators were selected by unlabeled transport-validation residual. Application test logits were saved and hashed before labels were loaded in each execution phase. Seeds are the inferential unit.
 
@@ -1506,7 +1518,7 @@ Mode: **{mode}**. Gate status: `{gates}`.
 
 1. **Were stable nonidentity loop holonomies observed?** {'Yes' if stable_loops else 'No'}; {stable_loops} loop/layer rows passed the frozen stability definition.
 2. **Were any independent loop holonomies noncommuting?** {'Yes' if stable_commutators else 'No'}; {stable_commutators} commutator rows passed the frozen interval threshold.
-3. **Did holonomy correlate with task-order dependence?** {'Yes, under H1.' if gates['H1'] else 'No confirmatory incremental association passed H1.'}
+3. **Did holonomy correlate with task-order dependence?** {'Yes, under H1.' if gates['H1'] else f'No admissible H1 association passed. The standardized numerical coefficient is retained, but the relevant loop distances were only {order["loop_identity_distance"].min():.3e} to {order["loop_identity_distance"].max():.3e} and no stable nonidentity order loop was observed.'}
 4. **Did holonomy add information beyond pairwise drift?** {'Yes, under a frozen held-out gate.' if gates['H1'] or gates['H2'] else 'No.'}
 5. **Did holonomy predict harmful branch merges?** {'Yes, H2 passed.' if gates['H2'] else f'No held-out H2 improvement was established; {harmful_count} harmful raw merge rows were observed.'}
 6. **Did cycle-aware correction improve merging?** {'Yes, H3 passed.' if gates['H3'] else 'No paired seed-level H3 improvement was established.'}
