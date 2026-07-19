@@ -449,18 +449,38 @@ def main() -> None:
     full_name = str(config["primary_model"])
     paired_rows = []
     gate_passed = False
+    mixed_scope_gate = False
+    natural_scope_gate = False
     key_baseline = ("ordinary_fusion_harmful", baseline_name)
     key_full = ("ordinary_fusion_harmful", full_name)
     if key_baseline in probabilities_by_key and key_full in probabilities_by_key:
-        paired_rows = grouped_metric_bootstrap(
+        paired_rows = [
+            {"scope": "all_accumulated_rows", **row}
+            for row in grouped_metric_bootstrap(
             dataset["ordinary_fusion_harmful"].to_numpy(dtype=int),
             probabilities_by_key[key_baseline],
             probabilities_by_key[key_full],
             cells,
             int(config[args.mode]["bootstrap_samples"]),
             1110000,
-        )
-        paired_lookup = {row["metric"]: row for row in paired_rows}
+            )
+        ]
+        natural_mask = dataset["setting_family"].eq("natural_application_A").to_numpy()
+        natural_rows = [
+            {"scope": "natural_application_A_only", **row}
+            for row in grouped_metric_bootstrap(
+                dataset.loc[natural_mask, "ordinary_fusion_harmful"].to_numpy(dtype=int),
+                probabilities_by_key[key_baseline][natural_mask],
+                probabilities_by_key[key_full][natural_mask],
+                cells[natural_mask],
+                int(config[args.mode]["bootstrap_samples"]),
+                1110001,
+            )
+        ]
+        paired_rows.extend(natural_rows)
+        paired_lookup = {
+            row["metric"]: row for row in paired_rows if row["scope"] == "all_accumulated_rows"
+        }
         discrimination = (
             float(paired_lookup["auroc"]["ci_low"]) > float(config["gate"]["minimum_auroc_delta"])
             or float(paired_lookup["auprc"]["ci_low"]) > float(config["gate"]["minimum_auprc_delta"])
@@ -468,7 +488,24 @@ def main() -> None:
         calibration = float(paired_lookup["brier_delta"]["ci_high"]) <= float(
             config["gate"]["maximum_brier_increase"]
         )
-        gate_passed = args.mode == "confirmatory" and discrimination and calibration
+        mixed_scope_gate = discrimination and calibration
+        natural_lookup = {row["metric"]: row for row in natural_rows}
+        natural_discrimination = (
+            float(natural_lookup["auroc"]["ci_low"])
+            > float(config["gate"]["minimum_auroc_delta"])
+            or float(natural_lookup["auprc"]["ci_low"])
+            > float(config["gate"]["minimum_auprc_delta"])
+        )
+        natural_calibration = float(natural_lookup["brier_delta"]["ci_high"]) <= float(
+            config["gate"]["maximum_brier_increase"]
+        )
+        natural_scope_gate = natural_discrimination and natural_calibration
+        require_natural = bool(config["gate"]["require_natural_family_discrimination_gain"])
+        gate_passed = (
+            args.mode == "confirmatory"
+            and mixed_scope_gate
+            and (natural_scope_gate or not require_natural)
+        )
     pd.DataFrame(paired_rows).to_csv(output_dir / "paired_statistics.csv", index=False)
 
     recommended_capacity_accuracy = float(
@@ -577,11 +614,13 @@ The linter uses only accumulated A-C outputs plus shared adapter checkpoint meta
 
 - Baseline: `{baseline_name}`.
 - Full diagnostic: `{full_name}`.
-- Incremental discrimination/calibration gate: `{gate_passed}`.
+- Mixed natural-plus-controlled discrimination/calibration gate: `{mixed_scope_gate}`.
+- Natural-family discrimination/calibration gate: `{natural_scope_gate}`.
+- Final incremental-value gate (requires the natural-family gate): `{gate_passed}`.
 
 {primary_metrics.to_csv(index=False)}
 
-The only allowed positive claim would require holonomy/projective features to improve double-held-out discrimination without worsening Brier score. That gate {'passed' if gate_passed else 'did not pass'}. Controlled capacity labels remain separate from natural mergeability evidence.
+The mixed A-C rows may show descriptive improvement, but the only allowed application claim additionally requires within-natural-family discrimination gain. That conservative gate {'passed' if gate_passed else 'did not pass'}. Controlled capacity labels remain separate from natural mergeability evidence and cannot create a natural mergeability claim by separating the two evidence regimes.
 """
     (output_dir / "report.md").write_text(report, encoding="utf-8")
 

@@ -66,7 +66,8 @@
   "gate": {
     "minimum_auroc_delta": 0.0,
     "minimum_auprc_delta": 0.0,
-    "maximum_brier_increase": 0.0
+    "maximum_brier_increase": 0.0,
+    "require_natural_family_discrimination_gain": true
   },
   "smoke": {
     "bootstrap_samples": 200
