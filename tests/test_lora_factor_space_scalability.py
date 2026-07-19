@@ -117,16 +117,27 @@ def test_benchmark_gate_uses_dense_counts_and_grouped_memory():
         dense_count = 0 if method in FACTOR_SPACE_METHODS else 1
         run_rows.append({"method": method, "dense_effective_update_allocations": dense_count})
         correctness_rows.append({"method": method, "gauge_invariance_probe_error": 1e-6, "output_rank": 4, "rank": 4})
-        memory_rows.append(
-            {
-                "dimension_m": 4096,
-                "rank": 4,
-                "adapter_count": 4,
-                "method": method,
-                "temporary_allocation_bytes_analytical": 10 if method == "global_synchronization" else 100,
-            }
-        )
-        timing_rows.append({"method": method})
+        for rank in (4, 8, 16, 32):
+            for adapter_count in (4, 8, 16):
+                memory_rows.append(
+                    {
+                        "dimension_m": 4096,
+                        "rank": rank,
+                        "adapter_count": adapter_count,
+                        "method": method,
+                        "temporary_allocation_bytes_analytical": 10 if method == "global_synchronization" else 100,
+                        "incremental_peak_rss_bytes": 10 if method == "global_synchronization" else 100,
+                    }
+                )
+                timing_rows.append(
+                    {
+                        "dimension_m": 4096,
+                        "rank": rank,
+                        "adapter_count": adapter_count,
+                        "method": method,
+                        "median_wall_seconds": 0.1 if method == "global_synchronization" else 1.0,
+                    }
+                )
     gates = benchmark_gates(
         pd.DataFrame(run_rows),
         pd.DataFrame(timing_rows),

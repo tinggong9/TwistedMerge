@@ -591,16 +591,54 @@ def benchmark_gates(
     crossover = None
     if len(crossover_index):
         crossover = min(crossover_index, key=lambda value: (value[0], value[1], value[2]))
+    measured_memory = memory.pivot_table(
+        index=["dimension_m", "rank", "adapter_count"],
+        columns="method",
+        values="incremental_peak_rss_bytes",
+    )
+    measured_ratios = (
+        measured_memory["global_synchronization"]
+        / measured_memory["dense_deterministic_truncated_svd"].replace(0, np.nan)
+    ).dropna()
+    uniform_measured_dimension = None
+    for dimension in sorted(set(index[0] for index in measured_ratios.index)):
+        dimension_values = measured_ratios[
+            [index[0] == dimension for index in measured_ratios.index]
+        ]
+        if len(dimension_values) == len(RANKS) * len(ADAPTER_COUNTS) and bool((dimension_values < 1.0).all()):
+            uniform_measured_dimension = int(dimension)
+            break
+    measured_advantage = uniform_measured_dimension is not None
+    timing_table = timing.pivot_table(
+        index=["dimension_m", "rank", "adapter_count"],
+        columns="method",
+        values="median_wall_seconds",
+    )
+    timing_ratios = (
+        timing_table["global_synchronization"]
+        / timing_table["dense_deterministic_truncated_svd"]
+    ).dropna()
+    largest_dimension_ratios = timing_ratios[
+        [index[0] == max(DIMENSIONS) for index in timing_ratios.index]
+    ]
     return {
         "twisted_factor_methods_avoid_dense_materialization": no_dense,
         "twisted_factor_methods_gauge_invariant": invariant,
         "same_output_rank": same_rank,
         "substantially_lower_analytical_temporary_memory": substantial,
-        "positive_scalability_gate": no_dense and invariant and substantial,
+        "uniform_measured_peak_memory_advantage": measured_advantage,
+        "positive_scalability_gate": no_dense and invariant and substantial and measured_advantage,
         "crossover_dimension": int(crossover[0]) if crossover else None,
         "crossover_rank": int(crossover[1]) if crossover else None,
         "crossover_adapter_count": int(crossover[2]) if crossover else None,
         "minimum_observed_memory_ratio": float(ratios.min()) if len(ratios) else None,
+        "minimum_measured_incremental_peak_rss_ratio": float(measured_ratios.min()) if len(measured_ratios) else None,
+        "measured_half_memory_cases": int((measured_ratios <= 0.5).sum()),
+        "measured_case_count": int(len(measured_ratios)),
+        "uniform_measured_advantage_dimension": uniform_measured_dimension,
+        "largest_dimension_faster_case_count": int((largest_dimension_ratios < 1.0).sum()),
+        "largest_dimension_case_count": int(len(largest_dimension_ratios)),
+        "largest_dimension_median_runtime_ratio": float(largest_dimension_ratios.median()),
     }
 
 
@@ -739,6 +777,9 @@ Decision: **{'positive factor-space scalability result' if gates['positive_scala
 - Gauge-invariance probe gate: `{gates['twisted_factor_methods_gauge_invariant']}` at tolerance `{GAUGE_INVARIANCE_TOLERANCE:.1e}`.
 - Minimum analytical temporary-memory ratio, global synchronization versus deterministic dense SVD: `{gates['minimum_observed_memory_ratio']:.6g}`.
 - First recorded half-memory crossover: dimension `{gates['crossover_dimension']}`, rank `{gates['crossover_rank']}`, adapters `{gates['crossover_adapter_count']}`.
+- Global synchronization used lower measured incremental peak RSS in every rank/count case beginning at dimension `{gates['uniform_measured_advantage_dimension']}`.
+- Measured half-memory cases: `{gates['measured_half_memory_cases']}` / `{gates['measured_case_count']}`; minimum measured incremental-RSS ratio: `{gates['minimum_measured_incremental_peak_rss_ratio']:.6g}`.
+- At dimension `{max(DIMENSIONS)}`, global synchronization was faster in `{gates['largest_dimension_faster_case_count']}` / `{gates['largest_dimension_case_count']}` rank/count cases; its median runtime ratio versus deterministic dense SVD was `{gates['largest_dimension_median_runtime_ratio']:.6g}`. This is not a uniform runtime-superiority claim.
 - Dense deterministic temporary memory range: `{dense_memory.min() / 1024**2:.3f}` to `{dense_memory.max() / 1024**2:.3f}` MiB.
 - Global synchronization temporary memory range: `{global_memory.min() / 1024**2:.3f}` to `{global_memory.max() / 1024**2:.3f}` MiB.
 - Failures/timeouts: {len(failures)}.

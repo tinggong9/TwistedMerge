@@ -1,0 +1,13 @@
+\begin{tabular}{lrrrr}
+\toprule
+method & median_wall_seconds & incremental_peak_rss_bytes & temporary_allocation_bytes_analytical & dense_effective_update_allocations \\
+\midrule
+canonical_factor_space & 0.00778825 & 3883008 & 2109440 & 0 \\
+cycle_aware_alignment & 0.00978267 & 19873792 & 2113536 & 0 \\
+dense_deterministic_truncated_svd & 0.0614808 & 54214656 & 68157440 & 1 \\
+dense_randomized_svd & 0.0446408 & 72302592 & 68157440 & 1 \\
+global_synchronization & 0.00968725 & 11845632 & 2113536 & 0 \\
+naive_factor_average & 0.000203042 & 1032192 & 524288 & 0 \\
+pairwise_reference_alignment & 0.00818554 & 5668864 & 2113536 & 0 \\
+\bottomrule
+\end{tabular}

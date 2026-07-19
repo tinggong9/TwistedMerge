@@ -1,0 +1,77 @@
+{
+  "adapter_counts": [
+    4,
+    8,
+    16
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/lora_factor_space_scalability.py --repeats 3 --worker-timeout 90 --seed 20260719",
+  "dimensions": [
+    768,
+    1024,
+    2048,
+    4096
+  ],
+  "execution_commit": "7905d552c1665bf91be609c8cc5209b82be978bd",
+  "gates": {
+    "crossover_adapter_count": 4,
+    "crossover_dimension": 768,
+    "crossover_rank": 4,
+    "largest_dimension_case_count": 12,
+    "largest_dimension_faster_case_count": 10,
+    "largest_dimension_median_runtime_ratio": 0.22064160795192472,
+    "measured_case_count": 48,
+    "measured_half_memory_cases": 24,
+    "minimum_measured_incremental_peak_rss_ratio": 0.031270500765361905,
+    "minimum_observed_memory_ratio": 0.0077370897683397685,
+    "positive_scalability_gate": true,
+    "same_output_rank": true,
+    "substantially_lower_analytical_temporary_memory": true,
+    "twisted_factor_methods_avoid_dense_materialization": true,
+    "twisted_factor_methods_gauge_invariant": true,
+    "uniform_measured_advantage_dimension": 4096,
+    "uniform_measured_peak_memory_advantage": true
+  },
+  "methods": [
+    "naive_factor_average",
+    "dense_deterministic_truncated_svd",
+    "dense_randomized_svd",
+    "canonical_factor_space",
+    "pairwise_reference_alignment",
+    "global_synchronization",
+    "cycle_aware_alignment"
+  ],
+  "numpy": "2.5.0",
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "precision": "float32",
+  "process_isolated": true,
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "ranks": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "seed": 20260719,
+  "source_corpus_commit": "9c91bc707d1f44beb36fe0fdce43af9ce1be79ed",
+  "source_hashes": {
+    "experiments/lora_factor_space_scalability.py": "c35b0428f25e3bf2c1084cb149f8da2cf0615b27cd0f6c01189554a16de355d8",
+    "src/lora_gauge_practical.py": "27f24813557f32d31f06c3d2e54bc6921e52129f18a45b76c0b13fa4e4da7eb6",
+    "tests/test_lora_factor_space_scalability.py": "6c5c1355ab45a71e56299822447e2d8470cb55078ba2578f003b843f4951f8bc"
+  },
+  "systems_fixture_not_performance_evidence": true,
+  "test_labels_used": false,
+  "timed_repeats": 3,
+  "trained_factor_statistics": {
+    "source_adapter_count": 40,
+    "source_rank": 4,
+    "trained_a_mean": 0.0012194682334687457,
+    "trained_a_rms": 0.13989446707793488,
+    "trained_a_std": 0.1398891518890831,
+    "trained_b_mean": 0.0010236898700256348,
+    "trained_b_rms": 0.2385688232335921,
+    "trained_b_std": 0.2385666269160691
+  },
+  "warmups": 1,
+  "worker_timeout_seconds": 90,
+  "worktree_dirty_during_execution": true
+}
