@@ -704,6 +704,11 @@ def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[s
             loop_products_by_layer[(layer, loop_name)] = product
             loop_bootstrap_products[(layer, loop_name)] = test_products
         names = list(loop_definitions())
+        layer_loop_rows = {
+            row["loop_name"]: row
+            for row in loop_rows
+            if row["seed"] == seed and row["layer"] == layer
+        }
         for left_index, left_name in enumerate(names):
             for right_name in names[left_index + 1 :]:
                 left_product = loop_products_by_layer[(layer, left_name)]
@@ -719,6 +724,27 @@ def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[s
                     ]
                 )
                 low, high = np.quantile(bootstrap_values, (0.025, 0.975))
+                left_quality = layer_loop_rows[left_name]
+                right_quality = layer_loop_rows[right_name]
+                edge_quality_passed = bool(
+                    max(
+                        left_quality["maximum_edge_validation_residual"],
+                        right_quality["maximum_edge_validation_residual"],
+                    )
+                    <= 0.35
+                    and max(
+                        left_quality["maximum_edge_condition_number"],
+                        right_quality["maximum_edge_condition_number"],
+                    )
+                    <= 1e4
+                    and max(
+                        left_quality["transport_test_bootstrap_ci_high"]
+                        - left_quality["transport_test_bootstrap_ci_low"],
+                        right_quality["transport_test_bootstrap_ci_high"]
+                        - right_quality["transport_test_bootstrap_ci_low"],
+                    )
+                    <= 0.15
+                )
                 commutator_rows.append(
                     {
                         "seed": seed,
@@ -729,7 +755,8 @@ def analyze_transports(context: dict[str, object], artifact_dir: Path) -> dict[s
                         "bootstrap_mean": float(bootstrap_values.mean()),
                         "bootstrap_ci_low": float(low),
                         "bootstrap_ci_high": float(high),
-                        "stable_noncommuting": bool(low > 0.03),
+                        "edge_quality_passed": edge_quality_passed,
+                        "stable_noncommuting": bool(low > 0.03 and edge_quality_passed),
                     }
                 )
     return {
@@ -1248,6 +1275,7 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
                 "ci_low": float(np.quantile(values_array, 0.025)) if len(values_array) else float("nan"),
                 "ci_high": float(np.quantile(values_array, 0.975)) if len(values_array) else float("nan"),
                 "independent_seeds": len(seed_values),
+                "status": "evaluated" if len(values_array) else "not_estimable_single_outcome_class",
             }
         )
 
@@ -1271,17 +1299,27 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
             "ci_low": float(np.quantile(coefficient_array, 0.025)),
             "ci_high": float(np.quantile(coefficient_array, 0.975)),
             "independent_seeds": len(order_seeds),
+            "status": "evaluated",
         }
     )
 
     ordinary = merges[merges["method"] == "ordinary_global_synchronization"]
     cycle = merges[merges["method"] == "cycle_aware_synchronization"]
     joined = ordinary.merge(cycle, on=["seed", "branch_family"], suffixes=("_ordinary", "_cycle"))
-    deltas_by_seed = joined.groupby("seed").apply(
-        lambda frame: float((frame["mean_accuracy_cycle"] - frame["mean_accuracy_ordinary"]).mean()),
-        include_groups=False,
-    ).to_dict()
-    h3_mean, h3_low, h3_high = seed_bootstrap_interval(deltas_by_seed, samples=2000, seed=2003)
+    corrected = joined[joined["cycle_action_cycle"] == "correct"]
+    deltas_by_seed = (
+        corrected.groupby("seed").apply(
+            lambda frame: float((frame["mean_accuracy_cycle"] - frame["mean_accuracy_ordinary"]).mean()),
+            include_groups=False,
+        ).to_dict()
+        if len(corrected)
+        else {}
+    )
+    h3_mean, h3_low, h3_high = (
+        seed_bootstrap_interval(deltas_by_seed, samples=2000, seed=2003)
+        if deltas_by_seed
+        else (float("nan"), float("nan"), float("nan"))
+    )
     paired.append(
         {
             "comparison": "H3_cycle_aware_minus_ordinary_sync_mean_accuracy",
@@ -1289,12 +1327,13 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
             "ci_low": h3_low,
             "ci_high": h3_high,
             "independent_seeds": len(deltas_by_seed),
+            "status": "evaluated_corrections" if deltas_by_seed else "not_estimable_no_cycle_corrections",
         }
     )
     h1 = paired[-2]["ci_low"] > 0 or paired[-2]["ci_high"] < 0
     h2_rows = paired[:2]
     h2 = any(row["ci_low"] > 0 for row in h2_rows)
-    h3 = h3_low > 0
+    h3 = bool(len(deltas_by_seed) >= 2 and h3_low > 0)
     raw_rows = merges[merges["method"] == "raw_parameter_average"]
     cycle_rows = merges[merges["method"] == "cycle_aware_synchronization"]
     h4_join = raw_rows.merge(
@@ -1307,7 +1346,10 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
         & h4_join["loop_stable_nonidentity"].astype(bool)
         & h4_join["ordinary_raw_harmful"].astype(bool)
         & (
-            (h4_join["mean_accuracy_cycle"] > h4_join["mean_accuracy_raw"])
+            (
+                (h4_join["cycle_action_cycle"] == "correct")
+                & (h4_join["mean_accuracy_cycle"] > h4_join["mean_accuracy_raw"])
+            )
             | h4_join["cycle_action_cycle"].str.startswith("abstain")
         )
     ]
@@ -1319,6 +1361,7 @@ def prediction_analysis(order: pd.DataFrame, merges: pd.DataFrame) -> tuple[pd.D
             "ci_low": float(h4_qualifying["seed"].nunique()),
             "ci_high": float(raw_rows["seed"].nunique()),
             "independent_seeds": raw_rows["seed"].nunique(),
+            "status": "evaluated",
         }
     )
     return pd.DataFrame(rows), pd.DataFrame(paired), {"H1": bool(h1), "H2": bool(h2), "H3": bool(h3), "H4": bool(h4)}
@@ -1405,6 +1448,9 @@ def write_reports(
     stable_commutators = int(commutators["stable_noncommuting"].astype(bool).sum())
     cycle_rows = merges[merges["method"] == "cycle_aware_synchronization"]
     action_counts = cycle_rows["cycle_action"].value_counts().to_dict()
+    harmful_count = int(
+        merges[merges["method"] == "raw_parameter_average"]["ordinary_raw_harmful"].astype(bool).sum()
+    )
     decision = "positive gate" if any(gates.values()) else "no preregistered gate"
     report = f"""# Model-lineage holonomy report
 
@@ -1418,6 +1464,7 @@ Mode: **{mode}**. Decision: **{decision} passed**.
 - Checkpoints: {len(lineage)}
 - Stable nonidentity loop/layer rows: {stable_loops} / {len(loops)}
 - Stable noncommutator rows: {stable_commutators} / {len(commutators)}
+- Harmful raw branch merges: {harmful_count} / {len(cycle_rows)}
 - Cycle-policy actions: `{action_counts}`
 - Failures: {len(failures)}
 - Gates: `{gates}`
@@ -1452,7 +1499,7 @@ Mode: **{mode}**. Gate status: `{gates}`.
 2. **Were any independent loop holonomies noncommuting?** {'Yes' if stable_commutators else 'No'}; {stable_commutators} commutator rows passed the frozen interval threshold.
 3. **Did holonomy correlate with task-order dependence?** {'Yes, under H1.' if gates['H1'] else 'No confirmatory incremental association passed H1.'}
 4. **Did holonomy add information beyond pairwise drift?** {'Yes, under a frozen held-out gate.' if gates['H1'] or gates['H2'] else 'No.'}
-5. **Did holonomy predict harmful branch merges?** {'Yes, H2 passed.' if gates['H2'] else 'No held-out H2 improvement was established.'}
+5. **Did holonomy predict harmful branch merges?** {'Yes, H2 passed.' if gates['H2'] else f'No held-out H2 improvement was established; {harmful_count} harmful raw merge rows were observed.'}
 6. **Did cycle-aware correction improve merging?** {'Yes, H3 passed.' if gates['H3'] else 'No paired seed-level H3 improvement was established.'}
 7. **Did conservative abstention reduce regret?** {'A repeated H4 conflict class passed.' if gates['H4'] else 'No repeated H4 conflict class was established.'}
 8. **Which layers carried the strongest stable signal?** {strongest_layer(loops)}.
@@ -1489,6 +1536,10 @@ Mode: **{mode}**. Gate status: `{gates}`.
 
 
 def strongest_layer(loops: pd.DataFrame) -> str:
+    stable = loops[loops["stable_nonidentity"].astype(bool)]
+    if stable.empty:
+        raw = loops.groupby("layer")["identity_distance"].mean().sort_values(ascending=False)
+        return f"No layer passed the stability gate; `{raw.index[0]}` had the largest raw distance ({raw.iloc[0]:.4f}) but is not a stable signal"
     summary = loops.groupby("layer")["identity_distance"].mean().sort_values(ascending=False)
     return f"`{summary.index[0]}` had the largest mean identity distance ({summary.iloc[0]:.4f}); stability gates remain controlling"
 
