@@ -601,7 +601,7 @@ def analyze_seed(
         router,
         random_permutation,
     )
-    logits_path = output_dir / "artifacts" / f"candidate_logits_seed_{seed}.npz"
+    logits_path = ARTIFACT_ROOT / f"application_A_{mode}" / f"candidate_logits_seed_{seed}.npz"
     logits_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         logits_path,
@@ -837,7 +837,7 @@ def write_outputs(
         {
             "claim_id": "holonomy_predicts_harm_beyond_pairwise_fit",
             "status": "inadequate_sample" if not prediction_sample_adequate else "not_supported",
-            "safe_wording": f"{independent_seeds} independent corpus seeds are insufficient for a held-out incremental-prediction claim.",
+            "safe_wording": f"{independent_seeds} independent corpus seed(s) are insufficient for a held-out incremental-prediction claim.",
             "gate_passed": False,
         },
         {
