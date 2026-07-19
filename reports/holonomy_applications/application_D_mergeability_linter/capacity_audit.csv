@@ -1,0 +1,11 @@
+outcome,feature_set,features,logistic_parameters,folds,training_rows_min,training_rows_max,new_model_corpus
+ordinary_fusion_harmful,pairwise_residual_only,1,2,20,352,480,False
+ordinary_fusion_harmful,parameter_distance_only,1,2,20,352,480,False
+ordinary_fusion_harmful,prediction_disagreement_only,1,2,20,352,480,False
+ordinary_fusion_harmful,pairwise_plus_ordinary_sync,5,6,20,352,480,False
+ordinary_fusion_harmful,holonomy_features,9,10,20,352,480,False
+ordinary_fusion_harmful,full_holonomy_projective,18,19,20,352,480,False
+ordinary_fusion_harmful,oracle_structural_labels,4,5,20,352,480,False
+branch_lift_beneficial,full_holonomy_projective,18,19,20,352,480,False
+projective_rank_expansion_required,full_holonomy_projective,18,19,20,352,480,False
+abstention_recommended,full_holonomy_projective,18,19,20,352,480,False

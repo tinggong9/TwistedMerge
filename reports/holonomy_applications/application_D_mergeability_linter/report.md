@@ -1,0 +1,44 @@
+# Application D: Holonomy-Aware Mergeability Linter
+
+Decision: **no incremental holonomy/projective value**.
+
+## Commands
+
+Smoke: `/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/holonomy_application_D.py --mode smoke`
+
+Confirmatory: `/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/holonomy_application_D.py --mode confirmatory`
+
+Executed: `/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/holonomy_application_D.py --mode confirmatory`
+
+## Leakage and model boundary
+
+The linter uses only accumulated A-C outputs plus shared adapter checkpoint metadata. It creates no new image/model corpus. Every prediction is double held out: the test observation's corpus seed and its entire setting family are both absent from training. The model class is logistic regression for every feature set; no tree or boosted fallback was tried after seeing results.
+
+## Data and outcomes
+
+- Observation rows: 680.
+- Independent corpus seeds: 5.
+- Seed-family cells: 20.
+- Setting families: ['natural_application_A', 'period2_index2', 'period2_index4', 'period3_index3'].
+- Outcome counts: `{'ordinary_fusion_harmful': 369.0, 'gauge_sync_sufficient': 0.0, 'branch_lift_beneficial': 528.0, 'projective_rank_expansion_required': 360.0, 'abstention_recommended': 379.0}`.
+- Recommended-capacity accuracy inherited from controlled Application C: `1.000`.
+
+## Primary result
+
+- Baseline: `pairwise_plus_ordinary_sync`.
+- Full diagnostic: `full_holonomy_projective`.
+- Mixed natural-plus-controlled discrimination/calibration gate: `True`.
+- Natural-family discrimination/calibration gate: `False`.
+- Final incremental-value gate (requires the natural-family gate): `False`.
+
+evidence_label,mode,outcome,feature_set,status,rows,positive_examples,negative_examples,independent_seeds,independent_seed_family_cells,auroc,auprc,brier,ece,accuracy,harmful_avoidance,false_lift_rate,missed_lift_rate,regret_vs_oracle_action
+diagnostic_only,confirmatory,ordinary_fusion_harmful,pairwise_residual_only,evaluated_double_holdout,680,369,311,5,20.0,0.49710698071610937,0.5314718368405056,0.25196103272325093,0.05365514312290848,0.5220588235294118,0.6124661246612466,0.5852090032154341,0.3875338753387534,0.4779411764705882
+diagnostic_only,confirmatory,ordinary_fusion_harmful,parameter_distance_only,evaluated_double_holdout,680,369,311,5,20.0,0.49801322772070167,0.5321866014060237,0.250284449029648,0.03918694160956082,0.5073529411764706,0.5013550135501355,0.4855305466237942,0.4986449864498645,0.49264705882352944
+diagnostic_only,confirmatory,ordinary_fusion_harmful,prediction_disagreement_only,evaluated_double_holdout,680,369,311,5,20.0,0.7111032685889559,0.8477826670368529,0.20489072028615124,0.28514082315309247,0.7823529411764706,0.6612466124661247,0.07395498392282958,0.33875338753387535,0.21764705882352942
+diagnostic_only,confirmatory,ordinary_fusion_harmful,pairwise_plus_ordinary_sync,evaluated_double_holdout,680,369,311,5,20.0,0.7161399105952474,0.8421423322796162,0.21040345573321684,0.22354405063941507,0.7529411764705882,0.6585365853658537,0.13504823151125403,0.34146341463414637,0.24705882352941178
+diagnostic_only,confirmatory,ordinary_fusion_harmful,holonomy_features,evaluated_double_holdout,680,369,311,5,20.0,0.7118003816694115,0.84639970285681,0.2054640461355074,0.2837021620439472,0.7838235294117647,0.6639566395663956,0.07395498392282958,0.33604336043360433,0.2161764705882353
+diagnostic_only,confirmatory,ordinary_fusion_harmful,full_holonomy_projective,evaluated_double_holdout,680,369,311,5,20.0,0.8151561097604545,0.8873308392206376,0.16466320741374954,0.1280319201513722,0.7867647058823529,0.6775067750677507,0.08360128617363344,0.3224932249322493,0.21323529411764708
+diagnostic_only,confirmatory,ordinary_fusion_harmful,oracle_structural_labels,evaluated_double_holdout,680,369,311,5,20.0,0.5514818009916435,0.6361776966388223,0.2542092053198947,0.09679828112106612,0.5102941176470588,0.11382113821138211,0.01929260450160772,0.8861788617886179,0.4897058823529412
+
+
+The mixed A-C rows may show descriptive improvement, but the only allowed application claim additionally requires within-natural-family discrimination gain. That conservative gate did not pass. Controlled capacity labels remain separate from natural mergeability evidence and cannot create a natural mergeability claim by separating the two evidence regimes.

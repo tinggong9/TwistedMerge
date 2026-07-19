@@ -1,0 +1,6 @@
+outcome,positive_examples,positive_fraction
+ordinary_fusion_harmful,369.0,0.5426470588235294
+gauge_sync_sufficient,0.0,0.0
+branch_lift_beneficial,528.0,0.7764705882352941
+projective_rank_expansion_required,360.0,0.5294117647058824
+abstention_recommended,379.0,0.5573529411764706
