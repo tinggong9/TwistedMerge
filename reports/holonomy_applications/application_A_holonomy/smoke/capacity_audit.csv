@@ -1,0 +1,17 @@
+evidence_label,mode,corpus_seed,method,active_parameters,stored_bytes,branch_count,inference_multiplier,fusion_parameters,parameter_multiplier_vs_single,fusion_latency_ms_for_complete_test_tensor,shared_frozen_encoder_parameters,transition_feature_dimension
+natural_measured,smoke,0,best_individual_adapter,1162,4648,1,1.0,0,1.0,0.007709022611379623,11176512,64
+natural_measured,smoke,0,raw_parameter_average,1162,4648,1,1.0,0,1.0,0.13149995356798172,11176512,64
+natural_measured,smoke,0,pairwise_reference_alignment,9296,168256,8,8.0,0,8.0,0.05916692316532135,11176512,64
+natural_measured,smoke,0,global_c2m3_synchronization,9946,170856,8,8.0,650,8.559380378657487,0.07025012746453285,11176512,64
+natural_measured,smoke,0,graph_synchronized_adapter_merge,9296,168256,8,8.0,0,8.0,0.15533296391367912,11176512,64
+natural_measured,smoke,0,regular_d4_branch_invariant_pooling,9296,37184,8,8.0,0,8.0,0.24425005540251732,11176512,64
+natural_measured,smoke,0,orbit_branch_invariant_pooling,9296,168256,8,8.0,0,8.0,1.0823749471455812,11176512,64
+natural_measured,smoke,0,generic_mixture_of_experts,9296,37184,8,8.0,0,8.0,0.6738749798387289,11176512,64
+natural_measured,smoke,0,learned_router,9432,37728,8,8.0,136,8.117039586919105,0.9669158607721329,11176512,64
+natural_measured,smoke,0,d4_test_time_augmentation,1162,4648,8,8.0,0,1.0,0.001250067725777626,11176512,64
+natural_measured,smoke,0,random_branch_count_matched_control,9296,37184,8,8.0,0,8.0,0.21641701459884644,11176512,64
+natural_measured,smoke,0,wrong_group_action_control,9296,37184,8,8.0,0,8.0,0.18550013191998005,11176512,64
+natural_measured,smoke,0,wrong_multiplication_order_control,9296,37184,8,8.0,0,8.0,0.2202501054853201,11176512,64
+natural_measured,smoke,0,prediction_ensemble_upper_bound,9296,37184,8,8.0,0,8.0,0.028790906071662903,11176512,64
+natural_measured,smoke,0,oracle_chart_aware_fusion,1162,37184,1,1.0,0,1.0,0.01758313737809658,11176512,64
+natural_measured,smoke,0,parameter_matched_generic_concat_head,14426,57704,8,8.0,5130,12.414802065404475,0.14429190196096897,11176512,64

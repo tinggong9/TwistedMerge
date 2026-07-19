@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "evidence_label": "natural_measured",
+  "transition_methods": [
+    "weight_based",
+    "activation_procrustes",
+    "low_rank_subspace",
+    "joint_weight_activation"
+  ],
+  "low_rank_transition_rank": 8,
+  "loops": {
+    "triangle_rotation": [0, 1, 2, 0],
+    "triangle_reflection": [0, 4, 5, 0],
+    "rotation_cycle": [0, 1, 2, 3, 0],
+    "reflection_rotation_cycle": [0, 4, 1, 5, 0]
+  },
+  "smoke": {
+    "bootstrap_samples": 4,
+    "head_epochs": 12,
+    "router_epochs": 12,
+    "statistic_bootstrap_samples": 200
+  },
+  "confirmatory": {
+    "bootstrap_samples": 20,
+    "head_epochs": 80,
+    "router_epochs": 80,
+    "statistic_bootstrap_samples": 4000
+  },
+  "gates": {
+    "paired_accuracy_ci_low": 0.0,
+    "worst_view_mean_loss_tolerance": 0.005,
+    "nontrivial_holonomy_distance": 0.05,
+    "noncommuting_commutator_distance": 0.02
+  }
+}
