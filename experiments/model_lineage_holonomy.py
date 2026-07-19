@@ -1486,11 +1486,20 @@ These are natural learning-path representation loops, not Brauer classes or topo
         + "\nNo loop is called a Brauer class, and controlled projective evidence is not used to validate this natural application.\n"
     )
     (output_dir / "negative_results.md").write_text(negative, encoding="utf-8")
-    strongest = (
-        "At least one preregistered gate passed; only the exact passing gate and its five-seed interval may be stated."
-        if any(gates.values())
-        else "Different learning orders produced measurable terminal differences, but holonomy supplied no reliable incremental predictive or corrective value beyond pairwise diagnostics."
-    )
+    if mode == "pilot":
+        strongest = "No main-paper claim is available from the three-seed pilot; complete the frozen two-seed extension without broadening the design."
+        stopping_answer = "No. Complete seeds 3-4 as preregistered, but do not add another dataset, corruption, backbone, predictor, or cycle estimator."
+    else:
+        strongest = (
+            "At least one preregistered gate passed; only the exact passing gate and its five-seed interval may be stated."
+            if any(gates.values())
+            else "Different learning orders produced measurable terminal differences, but holonomy supplied no reliable incremental predictive or corrective value beyond pairwise diagnostics."
+        )
+        stopping_answer = (
+            "No only for the exact passing gate, without broadening scope."
+            if any(gates.values())
+            else "Yes. The preregistered stopping rule applies."
+        )
     assessment = f"""# Final assessment: model-lineage holonomy
 
 Mode: **{mode}**. Gate status: `{gates}`.
@@ -1504,7 +1513,7 @@ Mode: **{mode}**. Gate status: `{gates}`.
 7. **Did conservative abstention reduce regret?** {'A repeated H4 conflict class passed.' if gates['H4'] else 'No repeated H4 conflict class was established.'}
 8. **Which layers carried the strongest stable signal?** {strongest_layer(loops)}.
 9. **What is the strongest main-paper claim?** {strongest}
-10. **Should holonomy application experiments stop?** {'No only for the exact passing gate, without broadening scope.' if any(gates.values()) else 'Yes. The preregistered stopping rule applies.'}
+10. **Should holonomy application experiments stop?** {stopping_answer}
 
 ## Integrity
 
