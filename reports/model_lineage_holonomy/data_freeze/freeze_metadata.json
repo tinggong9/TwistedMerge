@@ -1,0 +1,31 @@
+{
+  "created_at_utc": "2026-07-20T04:18:22.847173+00:00",
+  "entry_count": 348,
+  "evidence_label": "natural_model_lineage",
+  "execution_commit": "6764fc2077a5685decafdbdc3179867f4ad016f9",
+  "experiment": "model_lineage_holonomy",
+  "freeze_id": "tm-mlh-v1-c9fd5ae1094b8859",
+  "payload_policy": "large payloads remain outside Git and are bound by SHA-256",
+  "referenced_bytes": 730167637,
+  "schema_version": 1,
+  "scientific_gate_status": {
+    "H1": false,
+    "H2": false,
+    "H3": false,
+    "H4": false
+  },
+  "scope_counts": {
+    "control_record": 1,
+    "execution_environment": 13,
+    "experiment_evidence": 318,
+    "raw_input": 10,
+    "source_corpus": 6
+  },
+  "source_branch": "codex/model-lineage-holonomy",
+  "source_snapshot_commit": "f95a30b9553775bdc976df81d4f62e2ee5d18183",
+  "storage_class_counts": {
+    "external_input": 16,
+    "git_tracked": 71,
+    "ignored_local": 261
+  }
+}
