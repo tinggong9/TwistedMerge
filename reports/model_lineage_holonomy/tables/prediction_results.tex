@@ -1,0 +1,20 @@
+\begin{tabular}{llrrrrrrrrrrrrrr}
+\toprule
+prediction_task & feature_set & rows & independent_seeds & auroc & auprc & brier & ece & accuracy & harmful_merge_avoidance & merge_abstain_regret & spearman_order_sensitivity & double_holdout_folds & all_seed_exclusions_passed & all_family_exclusions_passed & all_loop_exclusions_passed \\
+\midrule
+harmful_merge & parameter_distance_only & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & parameter_distance_only & 45 & 5 & NaN & NaN & 0.0001 & NaN & NaN & NaN & NaN & 0.9047 & 45 & True & True & True \\
+harmful_merge & prediction_disagreement_only & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & prediction_disagreement_only & 45 & 5 & NaN & NaN & 0.0002 & NaN & NaN & NaN & NaN & 0.8982 & 45 & True & True & True \\
+harmful_merge & pairwise_transport_residuals_only & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & pairwise_transport_residuals_only & 45 & 5 & NaN & NaN & 0.0010 & NaN & NaN & NaN & NaN & -0.0569 & 45 & True & True & True \\
+harmful_merge & pairwise_plus_inverse_consistency & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & pairwise_plus_inverse_consistency & 45 & 5 & NaN & NaN & 0.0009 & NaN & NaN & NaN & NaN & 0.0360 & 45 & True & True & True \\
+harmful_merge & loop_holonomy_features & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & loop_holonomy_features & 45 & 5 & NaN & NaN & 0.0010 & NaN & NaN & NaN & NaN & -0.2316 & 45 & True & True & True \\
+harmful_merge & pairwise_plus_holonomy & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & pairwise_plus_holonomy & 45 & 5 & NaN & NaN & 0.0010 & NaN & NaN & NaN & NaN & 0.1192 & 45 & True & True & True \\
+harmful_merge & all_features & 15 & 5 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0020 & NaN & 15 & True & True & True \\
+order_sensitivity & all_features & 45 & 5 & NaN & NaN & 0.0002 & NaN & NaN & NaN & NaN & 0.8777 & 45 & True & True & True \\
+\bottomrule
+\end{tabular}

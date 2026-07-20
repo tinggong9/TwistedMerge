@@ -1,0 +1,15 @@
+prediction_task,feature_set,rows,independent_seeds,auroc,auprc,brier,ece,accuracy,harmful_merge_avoidance,merge_abstain_regret,spearman_order_sensitivity,double_holdout_folds,all_seed_exclusions_passed,all_family_exclusions_passed,all_loop_exclusions_passed
+harmful_merge,parameter_distance_only,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,parameter_distance_only,27,3,,,0.00011279438022213006,,,,,0.9316239316239315,27,True,True,True
+harmful_merge,prediction_disagreement_only,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,prediction_disagreement_only,27,3,,,0.00014169473177887482,,,,,0.9297924297924297,27,True,True,True
+harmful_merge,pairwise_transport_residuals_only,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,pairwise_transport_residuals_only,27,3,,,0.0009663709812737475,,,,,0.115995115995116,27,True,True,True
+harmful_merge,pairwise_plus_inverse_consistency,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,pairwise_plus_inverse_consistency,27,3,,,0.0009676787327337258,,,,,0.10989010989010989,27,True,True,True
+harmful_merge,loop_holonomy_features,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,loop_holonomy_features,27,3,,,0.0010995947551607353,,,,,-0.21916971916971917,27,True,True,True
+harmful_merge,pairwise_plus_holonomy,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,pairwise_plus_holonomy,27,3,,,0.003771115527096185,,,,,0.2399267399267399,27,True,True,True
+harmful_merge,all_features,9,3,,,0.0,0.0,1.0,,0.002111113733715481,,9,True,True,True
+order_sensitivity,all_features,27,3,,,0.000376781528612187,,,,,0.8748473748473748,27,True,True,True

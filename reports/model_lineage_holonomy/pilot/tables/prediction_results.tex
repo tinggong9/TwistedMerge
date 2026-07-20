@@ -1,0 +1,20 @@
+\begin{tabular}{llrrrrrrrrrrrrrr}
+\toprule
+prediction_task & feature_set & rows & independent_seeds & auroc & auprc & brier & ece & accuracy & harmful_merge_avoidance & merge_abstain_regret & spearman_order_sensitivity & double_holdout_folds & all_seed_exclusions_passed & all_family_exclusions_passed & all_loop_exclusions_passed \\
+\midrule
+harmful_merge & parameter_distance_only & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & parameter_distance_only & 27 & 3 & NaN & NaN & 0.0001 & NaN & NaN & NaN & NaN & 0.9316 & 27 & True & True & True \\
+harmful_merge & prediction_disagreement_only & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & prediction_disagreement_only & 27 & 3 & NaN & NaN & 0.0001 & NaN & NaN & NaN & NaN & 0.9298 & 27 & True & True & True \\
+harmful_merge & pairwise_transport_residuals_only & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & pairwise_transport_residuals_only & 27 & 3 & NaN & NaN & 0.0010 & NaN & NaN & NaN & NaN & 0.1160 & 27 & True & True & True \\
+harmful_merge & pairwise_plus_inverse_consistency & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & pairwise_plus_inverse_consistency & 27 & 3 & NaN & NaN & 0.0010 & NaN & NaN & NaN & NaN & 0.1099 & 27 & True & True & True \\
+harmful_merge & loop_holonomy_features & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & loop_holonomy_features & 27 & 3 & NaN & NaN & 0.0011 & NaN & NaN & NaN & NaN & -0.2192 & 27 & True & True & True \\
+harmful_merge & pairwise_plus_holonomy & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & pairwise_plus_holonomy & 27 & 3 & NaN & NaN & 0.0038 & NaN & NaN & NaN & NaN & 0.2399 & 27 & True & True & True \\
+harmful_merge & all_features & 9 & 3 & NaN & NaN & 0.0000 & 0.0000 & 1.0000 & NaN & 0.0021 & NaN & 9 & True & True & True \\
+order_sensitivity & all_features & 27 & 3 & NaN & NaN & 0.0004 & NaN & NaN & NaN & NaN & 0.8748 & 27 & True & True & True \\
+\bottomrule
+\end{tabular}

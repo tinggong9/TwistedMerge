@@ -1,0 +1,6 @@
+comparison,mean_delta,ci_low,ci_high,independent_seeds,status,qualifying_seed_count
+H2_auroc_pairwise_plus_holonomy_minus_pairwise_only,,,,3,not_estimable_single_outcome_class,
+H2_auprc_pairwise_plus_holonomy_minus_pairwise_only,,,,3,not_estimable_single_outcome_class,
+H1_incremental_loop_identity_coefficient_controlling_pairwise_drift,0.0028119286994708766,-0.0031855552611416986,0.005988531141652728,3,failed_no_repeated_stable_nonidentity_loop,0.0
+H3_cycle_aware_minus_ordinary_sync_mean_accuracy,,,,0,not_estimable_no_cycle_corrections,
+H4_repeated_conflict_detection,0.0,0.0,3.0,3,evaluated,

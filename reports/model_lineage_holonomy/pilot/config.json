@@ -1,0 +1,132 @@
+{
+  "adaptation": {
+    "batch_size": 256,
+    "epochs_per_edge": 12,
+    "feature_dim": 64,
+    "learning_rate": 0.003,
+    "rank": 4,
+    "weight_decay": 0.0001
+  },
+  "aggregate_seeds": [
+    0,
+    1,
+    2
+  ],
+  "command": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python experiments/model_lineage_holonomy.py --mode pilot --data-dir /Users/tinggong/Documents/GitHub/TwistedMerge/data --device auto",
+  "cycle_policy": {
+    "abstention_loop_ci_width": 0.35,
+    "abstention_sync_residual": 0.35,
+    "correction_sync_residual": 0.2
+  },
+  "dataset_archive_path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data/cifar-10-python.tar.gz",
+  "dataset_archive_sha256": "6d958be074577803d12ecdefd02955f39262c83c16fe9348329d7fe0b5c001ce",
+  "device": "mps",
+  "encoder_weights_path": "/Users/tinggong/.cache/torch/hub/checkpoints/resnet18-f37072fd.pth",
+  "encoder_weights_sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec",
+  "evidence_label": "natural_model_lineage",
+  "executed_seeds": [
+    0,
+    1,
+    2
+  ],
+  "execution_commit": "77a98052c6fc5e31415697230df5445998565ef1",
+  "extension_seeds": [
+    3,
+    4
+  ],
+  "feature_cache_path": "/Users/tinggong/Documents/Codex/2026-07-20/model-lineage-holonomy/work/TwistedMerge-model-lineage-holonomy/reports/tmp/model_lineage_holonomy/shared_corrupted_features.pt",
+  "feature_cache_reused": true,
+  "feature_cache_sha256": "11a47c60cc74b743519f32e70ce0bf3ed2f76d8fa7b29efa889812e5849a6b0a",
+  "feature_extraction_seconds": 0.0,
+  "harmful_merge": {
+    "mean_margin": 0.01,
+    "worst_domain_margin": 0.02
+  },
+  "interpolation_grid": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "mode": "pilot",
+  "numpy": "2.5.0",
+  "physical_memory_bytes": 8589934592,
+  "pilot_seeds": [
+    0,
+    1,
+    2
+  ],
+  "platform": "macOS-26.0.1-arm64-arm-64bit",
+  "python": "3.12.13 (main, Mar  3 2026, 15:35:03) [Clang 21.1.4 ]",
+  "representation_layers": {
+    "adapter": 64,
+    "early": 32,
+    "late": 64,
+    "mid": 32,
+    "penultimate": 64
+  },
+  "schema_version": 1,
+  "seed_bootstrap_samples": 2000,
+  "source_commit": "9c91bc707d1f44beb36fe0fdce43af9ce1be79ed",
+  "source_feature_cache_sha256": "05f156ed107cfb131c8018a55ee557b93a22fde9f84f37e954fa584d1502a8ed",
+  "source_sha256": "36b734251712f05577f2086f1981ab25ee58d752735be219e9f06cf6bb5d0aae",
+  "split_manifest_sha256": "03b0435aa5667dfcc8dbdb70596498d3434842b8a4bb0129832a0769077f7bbe",
+  "split_seed": 7192026,
+  "split_sizes": {
+    "adaptation_train": 2500,
+    "application_test": 1000,
+    "model_validation": 512,
+    "transport_fit": 384,
+    "transport_test": 384,
+    "transport_validation": 384
+  },
+  "stable_loop": {
+    "commutator_ci_low": 0.03,
+    "identity_ci_low": 0.05,
+    "maximum_ci_width": 0.15,
+    "maximum_condition_number": 10000.0,
+    "maximum_edge_validation_residual": 0.35
+  },
+  "tasks": {
+    "A": {
+      "identity_seed_base": 42101,
+      "kind": "gaussian_noise",
+      "sigma": 0.15
+    },
+    "B": {
+      "kernel": 5,
+      "kind": "gaussian_blur",
+      "sigma": 1.0
+    },
+    "C": {
+      "contrast": 1.35,
+      "kind": "color_contrast",
+      "rgb_offset": [
+        0.04,
+        -0.02,
+        0.0
+      ],
+      "rgb_scale": [
+        1.1,
+        0.9,
+        1.0
+      ]
+    }
+  },
+  "torch": "2.12.1",
+  "torchvision": "0.27.1",
+  "transition_bootstrap_samples": 100,
+  "transition_methods": [
+    "orthogonal_procrustes",
+    "ridge_linear",
+    "low_rank_residual",
+    "whitened_cca"
+  ]
+}
