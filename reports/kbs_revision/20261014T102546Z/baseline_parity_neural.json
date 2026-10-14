@@ -1,0 +1,850 @@
+{
+  "compact_dense_effective_delta_max_absolute_error": 3.8077180297690916e-16,
+  "external_definitions": {
+    "manifest_sha256": "cafa1ee44cae52763d999268d86891a41f9e9585bc7eef973b9b385e29bfe234",
+    "methods": [
+      {
+        "candidate_pool": "One fixed merge_method/density/scaling/output-rank specification; no validation search in wrapper; zero validation queries.",
+        "commit": "baa35e85768b8841820d35edc3e41b25304248c5",
+        "cost_semantics": "All basis fits, coordinate merging and optional compression occur inside wrapper and belong to candidate generation; model load/inference external. No zero-workspace or neural speed claim.",
+        "definition": "Per-layer dense effective deltas horizontally concatenated; SVD in float64; singular values >1e-5 retained; U,s,Vh converted float32; sV task blocks flattened globally across sorted layers; TIES merge then U reconstruction. Matches pinned official SVDMerger (concat_across_output=True), without DARE/other parameters.",
+        "density_semantics": "Inclusive kthvalue magnitude threshold d-floor(d*density); ties and threshold retain possibly more than requested density. No trim at density=1. Zero elected signs filled by majority elected-coordinate sign, then source >0/else<0 selection.",
+        "full_model_runner_status": "not_run",
+        "id": "knots",
+        "input_semantics": "Common base/layer, real ordinary LoRA, output-by-input effective update scale_i*B_i@A_i; biases/heads/DoRA/quantization excluded.",
+        "integration_status": "reviewed_tensor_adaptation_independently_fixture_tested",
+        "license": "MIT",
+        "license_sha256": "c73fa719d4730c6614fb7423659144f57d28a5b358b7ba1e7d41cfaed62bddd7",
+        "original_config_sha256": "a2c3d5463b51c59b140d3e217fccea05855fe3698f54ecf1ed7319ab9470bba5",
+        "output_rank": "rank=None retains supported left basis width (capacity, possibly above numerical rank). Explicit rank adds SVD compression and is labeled adaptation. Output parameter count is B.numel()+A.numel(); unit output scale.",
+        "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/0d4f8a5109c5083b5307fcd0bddae7a7-Abstract-Conference.html",
+        "reference_execution": "Exact upstream apply_svd, ties_masking and masked_merge excerpts; orchestration uses two or more layer matrices and global flattening; no model runner.",
+        "repository": "gstoica27/KnOTS",
+        "scope": "Official language config uses alpha/r=1, common scaling=.5 and topK=100. Nonunit adapter scale handling is explicit extension. SVD threshold is absolute, not relative; no stability guarantee near cutoff.",
+        "source_files": [
+          {
+            "excerpt_sha256": "d50af5dcd244b88e66b29b3227761e63c3da06da3def75d60d1d94a843694ccd",
+            "original_file_sha256": "12d32c867cb7826cb182ea5a8e60e77f602e76a98a232e915539e3ecd2a336c4",
+            "path": "task_merger.py",
+            "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+            "source_url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/task_merger.py",
+            "symbols": [
+              "SVDMerger.variable_extend_dim",
+              "SVDMerger.dict_of_concat_matrices",
+              "SVDMerger.apply_svd"
+            ]
+          },
+          {
+            "excerpt_sha256": "529d1009b0cf83ff363017842fc76fec9af1736337fe4f85f8aad850b367ddae",
+            "original_file_sha256": "28313b39a5b20c73e74bba255ee2ac4ff21d65ba34c5dec877ba0ea65aade88c",
+            "path": "masking_ops.py",
+            "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+            "source_url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/masking_ops.py",
+            "symbols": [
+              "topk_values_mask",
+              "resolve_zero_signs",
+              "resolve_sign",
+              "ties_masking",
+              "chunked_disjoint_mean",
+              "chunked_sum",
+              "masked_merge"
+            ]
+          }
+        ],
+        "source_url": "https://github.com/gstoica27/KnOTS/tree/baa35e85768b8841820d35edc3e41b25304248c5",
+        "weight_semantics": "Default task weights all one; separate common scaling multiplier. Upstream uses weights[0] for all tasks. official_equal rejects heterogeneous weights. corrected_per_task explicitly changes upstream weighting: apply individual weights after masks/signs, disjoint mean counts nonzero weighted retained entries; no normalization."
+      },
+      {
+        "candidate_pool": "One fixed merge_method/density/scaling/output-rank specification; no validation search in wrapper; zero validation queries.",
+        "commit": "c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0",
+        "cost_semantics": "All basis fits, coordinate merging and optional compression occur inside wrapper and belong to candidate generation; model load/inference external. No zero-workspace or neural speed claim.",
+        "definition": "Independent SVDs of horizontally stacked B and vertically stacked A give reference bases. Core_i=scale_i*(U_B.T@B_i)@(A_i@V_A); nonlinear per-layer TIES on cores; reconstruct U_B@merged_core@V_A.T. Matches pinned MatrixPerLayerMerger merge_space=core, merge_method=ties; optimized projection independently checked against upstream per-task four-SVD core construction.",
+        "density_semantics": "Inclusive kthvalue magnitude threshold d-floor(d*density); ties and threshold retain possibly more than requested density. No trim at density=1. Zero elected signs filled by majority elected-coordinate sign, then source >0/else<0 selection.",
+        "full_model_runner_status": "not_run",
+        "id": "core_space",
+        "input_semantics": "Common base/layer, real ordinary LoRA, output-by-input effective update scale_i*B_i@A_i; biases/heads/DoRA/quantization excluded.",
+        "integration_status": "reviewed_tensor_adaptation_independently_fixture_tested",
+        "license": "Apache-2.0",
+        "license_sha256": "4197e22b0601b2d2cee6b98a0284fdd531b9ba5b24536a8ef40ee62eca6e1494",
+        "output_rank": "rank=None retains supported left basis width (capacity, possibly above numerical rank). Explicit rank adds SVD compression and is labeled adaptation. Output parameter count is B.numel()+A.numel(); unit output scale.",
+        "paper_url": "https://arxiv.org/html/2509.17786v4",
+        "reference_execution": "Exact upstream get_core_matrices four-SVD alignment and merging_functions.ties_merging snippets; no model runner.",
+        "repository": "apanariello4/core-space-merging",
+        "scope": "Source default language config is full-space Task Arithmetic, so this is explicitly configured core-space TIES variant, not that default. Basis computed from unscaled raw factors; scales applied to task cores. Nonlinear coordinate merge can change under nonorthogonal gauge transformations; no gauge-invariance claim.",
+        "source_files": [
+          {
+            "excerpt_sha256": "8eaaa3e2f67b3b5189f769452083269b1a1f643cefe3173ae97bcfe4d402edf2",
+            "original_file_sha256": "61f253d8e0c2e5c343723b62421bca3da84e3c163cfff1d787c1fff9842274db",
+            "path": "task_merger.py",
+            "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+            "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/task_merger.py",
+            "symbols": [
+              "MatrixPerLayerMerger.get_core_matrices"
+            ]
+          },
+          {
+            "excerpt_sha256": "c25ba15d9bfa17c750f7fcd1350fe14cf09b6ef256a30cb2ec732fccc3b95f1a",
+            "original_file_sha256": "95cda1f2b0635c9d450db9f5af1b79a54be2ec485471ea14ba055f2e3a23727b",
+            "path": "masking_ops.py",
+            "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+            "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/masking_ops.py",
+            "symbols": [
+              "chunked_sum"
+            ]
+          },
+          {
+            "excerpt_sha256": "9542000b79006581d72536ec184084baebd64b80bbaa591db53087f6603a0074",
+            "original_file_sha256": "41e03c0b0b00571e92e2fd9f10b38f1d53956fe15415c5b8bcb09a08f01c1d22",
+            "path": "merging_functions.py",
+            "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+            "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/merging_functions.py",
+            "symbols": [
+              "topk_values_mask",
+              "resolve_zero_signs",
+              "disjoint_merge",
+              "resolve_sign",
+              "ties_merging"
+            ]
+          }
+        ],
+        "source_url": "https://github.com/apanariello4/core-space-merging/tree/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0",
+        "weight_semantics": "Default task weights all one; separate common scaling multiplier. Upstream uses weights[0] for all tasks. official_equal rejects heterogeneous weights. corrected_per_task explicitly changes upstream weighting: apply individual weights after masks/signs, disjoint mean counts nonzero weighted retained entries; no normalization."
+      }
+    ]
+  },
+  "external_fixture_parity": {
+    "checks": [
+      {
+        "name": "knots_global_ties_density_1.0_layer0.q_proj",
+        "official_tensor_kernel": true,
+        "output_factor_rank": 6,
+        "passed": true,
+        "relative_error": 0.0,
+        "tolerance": 2e-06
+      },
+      {
+        "name": "knots_global_ties_density_1.0_layer1.o_proj",
+        "official_tensor_kernel": true,
+        "output_factor_rank": 6,
+        "passed": true,
+        "relative_error": 0.0,
+        "tolerance": 2e-06
+      },
+      {
+        "name": "core_ties_density_1.0_layer0.q_proj",
+        "official_tensor_kernel": true,
+        "passed": true,
+        "relative_error": 3.6657674821246735e-16,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "core_ties_density_1.0_layer1.o_proj",
+        "official_tensor_kernel": true,
+        "passed": true,
+        "relative_error": 3.592203868811855e-16,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "knots_global_ties_density_0.5_layer0.q_proj",
+        "official_tensor_kernel": true,
+        "output_factor_rank": 6,
+        "passed": true,
+        "relative_error": 0.0,
+        "tolerance": 2e-06
+      },
+      {
+        "name": "knots_global_ties_density_0.5_layer1.o_proj",
+        "official_tensor_kernel": true,
+        "output_factor_rank": 6,
+        "passed": true,
+        "relative_error": 0.0,
+        "tolerance": 2e-06
+      },
+      {
+        "name": "core_ties_density_0.5_layer0.q_proj",
+        "official_tensor_kernel": true,
+        "passed": true,
+        "relative_error": 4.0466709135485017e-16,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "core_ties_density_0.5_layer1.o_proj",
+        "official_tensor_kernel": true,
+        "passed": true,
+        "relative_error": 3.6449707228201633e-16,
+        "tolerance": 1e-10
+      },
+      {
+        "name": "knots_corrected_weighted_sum",
+        "official_tensor_kernel": false,
+        "passed": true,
+        "relative_error": 8.768825513412679e-08,
+        "tolerance": 2e-06
+      },
+      {
+        "capacity_adaptation": true,
+        "name": "knots_explicit_rank_compression",
+        "official_tensor_kernel": false,
+        "output_factor_rank": 2,
+        "passed": true,
+        "relative_error": 0.0,
+        "tolerance": 2e-06
+      },
+      {
+        "name": "core_space_corrected_weighted_sum",
+        "official_tensor_kernel": false,
+        "passed": true,
+        "relative_error": 1.0802579394479172e-15,
+        "tolerance": 1e-10
+      },
+      {
+        "capacity_adaptation": true,
+        "name": "core_space_explicit_rank_compression",
+        "official_tensor_kernel": false,
+        "output_factor_rank": 2,
+        "passed": true,
+        "relative_error": 9.507431243924497e-16,
+        "tolerance": 1e-10
+      }
+    ],
+    "full_upstream_model_runner": "not_run",
+    "limitation": "Independent parity against exact reviewed upstream tensor excerpts; no pretrained weights, training, task accuracy or full external repository runner execution.",
+    "neural_evaluation": "not_run",
+    "passed": true,
+    "sources": {
+      "manifest_sha256": "cafa1ee44cae52763d999268d86891a41f9e9585bc7eef973b9b385e29bfe234",
+      "methods": [
+        {
+          "candidate_pool": "One fixed merge_method/density/scaling/output-rank specification; no validation search in wrapper; zero validation queries.",
+          "commit": "baa35e85768b8841820d35edc3e41b25304248c5",
+          "cost_semantics": "All basis fits, coordinate merging and optional compression occur inside wrapper and belong to candidate generation; model load/inference external. No zero-workspace or neural speed claim.",
+          "definition": "Per-layer dense effective deltas horizontally concatenated; SVD in float64; singular values >1e-5 retained; U,s,Vh converted float32; sV task blocks flattened globally across sorted layers; TIES merge then U reconstruction. Matches pinned official SVDMerger (concat_across_output=True), without DARE/other parameters.",
+          "density_semantics": "Inclusive kthvalue magnitude threshold d-floor(d*density); ties and threshold retain possibly more than requested density. No trim at density=1. Zero elected signs filled by majority elected-coordinate sign, then source >0/else<0 selection.",
+          "full_model_runner_status": "not_run",
+          "id": "knots",
+          "input_semantics": "Common base/layer, real ordinary LoRA, output-by-input effective update scale_i*B_i@A_i; biases/heads/DoRA/quantization excluded.",
+          "integration_status": "reviewed_tensor_adaptation_independently_fixture_tested",
+          "license": "MIT",
+          "license_sha256": "c73fa719d4730c6614fb7423659144f57d28a5b358b7ba1e7d41cfaed62bddd7",
+          "original_config_sha256": "a2c3d5463b51c59b140d3e217fccea05855fe3698f54ecf1ed7319ab9470bba5",
+          "output_rank": "rank=None retains supported left basis width (capacity, possibly above numerical rank). Explicit rank adds SVD compression and is labeled adaptation. Output parameter count is B.numel()+A.numel(); unit output scale.",
+          "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/0d4f8a5109c5083b5307fcd0bddae7a7-Abstract-Conference.html",
+          "reference_execution": "Exact upstream apply_svd, ties_masking and masked_merge excerpts; orchestration uses two or more layer matrices and global flattening; no model runner.",
+          "repository": "gstoica27/KnOTS",
+          "scope": "Official language config uses alpha/r=1, common scaling=.5 and topK=100. Nonunit adapter scale handling is explicit extension. SVD threshold is absolute, not relative; no stability guarantee near cutoff.",
+          "source_files": [
+            {
+              "excerpt_sha256": "d50af5dcd244b88e66b29b3227761e63c3da06da3def75d60d1d94a843694ccd",
+              "original_file_sha256": "12d32c867cb7826cb182ea5a8e60e77f602e76a98a232e915539e3ecd2a336c4",
+              "path": "task_merger.py",
+              "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+              "source_url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/task_merger.py",
+              "symbols": [
+                "SVDMerger.variable_extend_dim",
+                "SVDMerger.dict_of_concat_matrices",
+                "SVDMerger.apply_svd"
+              ]
+            },
+            {
+              "excerpt_sha256": "529d1009b0cf83ff363017842fc76fec9af1736337fe4f85f8aad850b367ddae",
+              "original_file_sha256": "28313b39a5b20c73e74bba255ee2ac4ff21d65ba34c5dec877ba0ea65aade88c",
+              "path": "masking_ops.py",
+              "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+              "source_url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/masking_ops.py",
+              "symbols": [
+                "topk_values_mask",
+                "resolve_zero_signs",
+                "resolve_sign",
+                "ties_masking",
+                "chunked_disjoint_mean",
+                "chunked_sum",
+                "masked_merge"
+              ]
+            }
+          ],
+          "source_url": "https://github.com/gstoica27/KnOTS/tree/baa35e85768b8841820d35edc3e41b25304248c5",
+          "weight_semantics": "Default task weights all one; separate common scaling multiplier. Upstream uses weights[0] for all tasks. official_equal rejects heterogeneous weights. corrected_per_task explicitly changes upstream weighting: apply individual weights after masks/signs, disjoint mean counts nonzero weighted retained entries; no normalization."
+        },
+        {
+          "candidate_pool": "One fixed merge_method/density/scaling/output-rank specification; no validation search in wrapper; zero validation queries.",
+          "commit": "c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0",
+          "cost_semantics": "All basis fits, coordinate merging and optional compression occur inside wrapper and belong to candidate generation; model load/inference external. No zero-workspace or neural speed claim.",
+          "definition": "Independent SVDs of horizontally stacked B and vertically stacked A give reference bases. Core_i=scale_i*(U_B.T@B_i)@(A_i@V_A); nonlinear per-layer TIES on cores; reconstruct U_B@merged_core@V_A.T. Matches pinned MatrixPerLayerMerger merge_space=core, merge_method=ties; optimized projection independently checked against upstream per-task four-SVD core construction.",
+          "density_semantics": "Inclusive kthvalue magnitude threshold d-floor(d*density); ties and threshold retain possibly more than requested density. No trim at density=1. Zero elected signs filled by majority elected-coordinate sign, then source >0/else<0 selection.",
+          "full_model_runner_status": "not_run",
+          "id": "core_space",
+          "input_semantics": "Common base/layer, real ordinary LoRA, output-by-input effective update scale_i*B_i@A_i; biases/heads/DoRA/quantization excluded.",
+          "integration_status": "reviewed_tensor_adaptation_independently_fixture_tested",
+          "license": "Apache-2.0",
+          "license_sha256": "4197e22b0601b2d2cee6b98a0284fdd531b9ba5b24536a8ef40ee62eca6e1494",
+          "output_rank": "rank=None retains supported left basis width (capacity, possibly above numerical rank). Explicit rank adds SVD compression and is labeled adaptation. Output parameter count is B.numel()+A.numel(); unit output scale.",
+          "paper_url": "https://arxiv.org/html/2509.17786v4",
+          "reference_execution": "Exact upstream get_core_matrices four-SVD alignment and merging_functions.ties_merging snippets; no model runner.",
+          "repository": "apanariello4/core-space-merging",
+          "scope": "Source default language config is full-space Task Arithmetic, so this is explicitly configured core-space TIES variant, not that default. Basis computed from unscaled raw factors; scales applied to task cores. Nonlinear coordinate merge can change under nonorthogonal gauge transformations; no gauge-invariance claim.",
+          "source_files": [
+            {
+              "excerpt_sha256": "8eaaa3e2f67b3b5189f769452083269b1a1f643cefe3173ae97bcfe4d402edf2",
+              "original_file_sha256": "61f253d8e0c2e5c343723b62421bca3da84e3c163cfff1d787c1fff9842274db",
+              "path": "task_merger.py",
+              "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+              "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/task_merger.py",
+              "symbols": [
+                "MatrixPerLayerMerger.get_core_matrices"
+              ]
+            },
+            {
+              "excerpt_sha256": "c25ba15d9bfa17c750f7fcd1350fe14cf09b6ef256a30cb2ec732fccc3b95f1a",
+              "original_file_sha256": "95cda1f2b0635c9d450db9f5af1b79a54be2ec485471ea14ba055f2e3a23727b",
+              "path": "masking_ops.py",
+              "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+              "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/masking_ops.py",
+              "symbols": [
+                "chunked_sum"
+              ]
+            },
+            {
+              "excerpt_sha256": "9542000b79006581d72536ec184084baebd64b80bbaa591db53087f6603a0074",
+              "original_file_sha256": "41e03c0b0b00571e92e2fd9f10b38f1d53956fe15415c5b8bcb09a08f01c1d22",
+              "path": "merging_functions.py",
+              "review": "Read complete selected tensor function bodies and dependencies; no imports, loads, model attachment, filesystem/network operations. Function text is exact AST source extraction; no algorithm rewrites.",
+              "source_url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/merging_functions.py",
+              "symbols": [
+                "topk_values_mask",
+                "resolve_zero_signs",
+                "disjoint_merge",
+                "resolve_sign",
+                "ties_merging"
+              ]
+            }
+          ],
+          "source_url": "https://github.com/apanariello4/core-space-merging/tree/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0",
+          "weight_semantics": "Default task weights all one; separate common scaling multiplier. Upstream uses weights[0] for all tasks. official_equal rejects heterogeneous weights. corrected_per_task explicitly changes upstream weighting: apply individual weights after masks/signs, disjoint mean counts nonzero weighted retained entries; no normalization."
+        }
+      ]
+    },
+    "status": "software_only_cpu_fixture",
+    "stress_panel": [
+      {
+        "gauge_condition_number_planned": 1.0,
+        "gauge_preservation_relative_error": 1.9253990891974256e-16,
+        "linear_roundtrip_relative_error": 9.293070670259536e-08,
+        "method": "knots",
+        "passed": false,
+        "routine_passed": true,
+        "routine_tolerance": 2e-06,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float32_after_float64_svd"
+      },
+      {
+        "gauge_condition_number_planned": 1.0,
+        "gauge_preservation_relative_error": 1.9253990891974256e-16,
+        "linear_roundtrip_relative_error": 1.165580723011463e-15,
+        "method": "core_space",
+        "nonlinear_official_kernel_relative_error": 4.817816198006403e-16,
+        "nonlinear_official_kernel_strict_passed": true,
+        "passed": true,
+        "routine_passed": true,
+        "routine_tolerance": 1e-10,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "passed",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float64"
+      },
+      {
+        "gauge_condition_number_planned": 10000.0,
+        "gauge_preservation_relative_error": 5.496019865322592e-13,
+        "linear_roundtrip_relative_error": 9.293067454873601e-08,
+        "method": "knots",
+        "passed": false,
+        "routine_passed": true,
+        "routine_tolerance": 2e-06,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float32_after_float64_svd"
+      },
+      {
+        "gauge_condition_number_planned": 10000.0,
+        "gauge_preservation_relative_error": 5.496019865322592e-13,
+        "linear_roundtrip_relative_error": 1.2107738961893766e-12,
+        "method": "core_space",
+        "nonlinear_official_kernel_relative_error": 5.996310724196116e-13,
+        "nonlinear_official_kernel_strict_passed": true,
+        "passed": true,
+        "routine_passed": true,
+        "routine_tolerance": 1e-10,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "passed",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float64"
+      },
+      {
+        "gauge_condition_number_planned": 100000000.0,
+        "gauge_preservation_relative_error": 7.1204148264792484e-09,
+        "linear_roundtrip_relative_error": 8.645329303091594e-08,
+        "method": "knots",
+        "passed": false,
+        "routine_passed": true,
+        "routine_tolerance": 2e-06,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float32_after_float64_svd"
+      },
+      {
+        "gauge_condition_number_planned": 100000000.0,
+        "gauge_preservation_relative_error": 7.1204148264792484e-09,
+        "linear_roundtrip_relative_error": 9.125105186310265e-09,
+        "method": "core_space",
+        "nonlinear_official_kernel_relative_error": 6.937430452358652e-09,
+        "nonlinear_official_kernel_strict_passed": false,
+        "passed": false,
+        "routine_passed": false,
+        "routine_tolerance": 1e-10,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float64"
+      },
+      {
+        "gauge_condition_number_planned": 1000000000000.0,
+        "gauge_preservation_relative_error": 8.339710957215403e-05,
+        "linear_roundtrip_relative_error": 1.0379118214275968e-07,
+        "method": "knots",
+        "passed": false,
+        "routine_passed": true,
+        "routine_tolerance": 2e-06,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float32_after_float64_svd"
+      },
+      {
+        "gauge_condition_number_planned": 1000000000000.0,
+        "gauge_preservation_relative_error": 8.339710957215403e-05,
+        "linear_roundtrip_relative_error": 9.042412220827792e-05,
+        "method": "core_space",
+        "nonlinear_official_kernel_relative_error": 8.960209370912894e-05,
+        "nonlinear_official_kernel_strict_passed": false,
+        "passed": false,
+        "routine_passed": false,
+        "routine_tolerance": 1e-10,
+        "scope": "controlled CPU conditioning stress; no neural or nonlinear gauge-invariance claim",
+        "status": "failed_strict_parity",
+        "strict_tolerance": 1e-10,
+        "working_precision": "float64"
+      }
+    ]
+  },
+  "methods": {
+    "compact_qr_svd": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0013967080012662336,
+      "compression": "compact_qr_svd",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "compact_qr_svd",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "core_space": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0019632499970612116,
+      "compression": "post-merge rank compression adaptation",
+      "deployment_model_count": 1,
+      "effective_density": 0.5,
+      "external_weight_semantics": "official_equal",
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "core_space",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "dare_ties": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.004916791003779508,
+      "compression": "effective delta SVD after tensor kernel",
+      "deployment_model_count": 1,
+      "effective_density": 0.5,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "dare_ties",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": 0,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "dense_reference_svd": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0008925000001909211,
+      "compression": "dense_reference_svd",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "dense_reference_svd",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "exact_concatenation": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0006159999975352548,
+      "compression": "rank-sum exact capacity",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 8688,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "exact_concatenation",
+      "output_parameters": 2048,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 8,
+        "base_model.model.model.layers.0.self_attn.o_proj": 8,
+        "base_model.model.model.layers.0.self_attn.q_proj": 8,
+        "base_model.model.model.layers.0.self_attn.v_proj": 8,
+        "base_model.model.model.layers.1.self_attn.k_proj": 8,
+        "base_model.model.model.layers.1.self_attn.o_proj": 8,
+        "base_model.model.model.layers.1.self_attn.q_proj": 8,
+        "base_model.model.model.layers.1.self_attn.v_proj": 8
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "global_synchronization": {
+      "alignment_fitting_seconds": 0.005529749993002042,
+      "candidate_generation_seconds": 0.0,
+      "compression": "global_synchronization",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "global_synchronization",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "knots": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0024522500025341287,
+      "compression": "post-merge rank compression adaptation",
+      "deployment_model_count": 1,
+      "effective_density": 1.0,
+      "external_weight_semantics": "official_equal",
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "knots",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "naive_factor_average": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0007537499986938201,
+      "compression": "naive_factor_average",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "naive_factor_average",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "pairwise_alignment": {
+      "alignment_fitting_seconds": 0.011492625002574641,
+      "candidate_generation_seconds": 0.0,
+      "compression": "pairwise_alignment",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "pairwise_alignment",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "task_arithmetic": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0009686670018709265,
+      "compression": "effective delta SVD after tensor kernel",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "task_arithmetic",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    "ties": {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.006582458001503255,
+      "compression": "effective delta SVD after tensor kernel",
+      "deployment_model_count": 1,
+      "effective_density": 0.5,
+      "external_weight_semantics": null,
+      "full_model_parameter_count": 7152,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "ties",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    }
+  },
+  "real_qwen_status": "not_run",
+  "safe_reload_logits_max_absolute_error": 0.0,
+  "same_seed_factor_max_absolute_error": 0.0,
+  "scope": "trained random two-block Qwen interface/forward tests; not modern-scale efficacy",
+  "shared_head_preserved": true,
+  "source_commit": "b9b7af024c08e5566baea1cbfb562cf05eff27c1",
+  "source_hashes": {
+    "configs/kbs_revision/README.md": "a117478f5efe9fcfaf00405283ae70bc3528d4f3ca8944777a0fb76040016d3a",
+    "configs/kbs_revision/budget.yaml": "1a5dff52369136dff202bddf80f0a62a4f961ce7b16f039eeeccda5fe3f0b1e8",
+    "configs/kbs_revision/external_parity_sources.json": "cafa1ee44cae52763d999268d86891a41f9e9585bc7eef973b9b385e29bfe234",
+    "configs/kbs_revision/external_sources.json": "3e77ce75b2ade0356cb949fb9e9da72f4294e009bdd5e38f39f880275a4b4186",
+    "configs/kbs_revision/next_pilot.yaml": "fd16a082b6b59f6fc2c9b8fb16cf32ad97e10a58647a722d968165e3bc9aabf1",
+    "configs/kbs_revision/pilot.yaml": "63ba54ad76035f852ccd48878f4ae26a358cea3f9096d331c13816f0ce51fec8",
+    "experiments/kbs_revision.py": "8de5646afaf8ee4a36132e5d2fd0b095acfa2354715dca7f17353b8db09dbbd2",
+    "src/kbs_revision/__init__.py": "bb69b3ea2a80512d10513c50564ac7c8bb16b1545778690504dcd925ea2d560a",
+    "src/kbs_revision/evidence_inventory.py": "4c9ac7d21d6f80ef9290fd36ab7b06e7c3ea01635f36a267347398cccc1290c9",
+    "src/kbs_revision/external_methods.py": "bf146b678f949cc9c93eab0e73639c6821d084be9218203fd444d617f6e02c47",
+    "src/kbs_revision/finite_certificates.py": "0f379404c357bf3a801b4bd492acd623f743bb64dd302ad65e7b6fe7eab9be69",
+    "src/kbs_revision/language_backend.py": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+    "src/kbs_revision/merge_baselines.py": "eba6e516fdd6315616e7362ab49af9e6c96a05b8198bc2cd2b0ac7c1b91bd9c7",
+    "src/kbs_revision/neural_driver.py": "12b5b25a653e06b4ca118a7f8859690e211cc1d8bd47e967e8a720885ed38ea9",
+    "src/kbs_revision/neural_reporting.py": "42558b48e3238c6a96eed81a89b59f0b3f44fb3033d946b8d4a6635f83783864",
+    "src/kbs_revision/neural_runner.py": "98daa3345965c1497230f81d01626bac069ff4c7cfc0c05c00dd796bcfe7cdbb",
+    "src/kbs_revision/policies.py": "c8d13b998b855602e7d44f92dfe504a85006922aa26ba544f7389946c34bea3a",
+    "src/kbs_revision/protocol.py": "20803a7aa4f86ec3d3610371a83415101512d6123bbf1d51e8064d1158e90013",
+    "src/kbs_revision/provenance.py": "4e5e8d675cdc8a23c14617887a7257c55bed92e61da1ad0ca73bc53de60d6739",
+    "src/kbs_revision/reporting.py": "9a67dad0344144b9d48d5dea8bffb3a15d9216fa1c5ed332c5f17afc10ffcb16",
+    "src/kbs_revision/resource_guard.py": "e306a9183c430e554c2529bc9af135d0a50c766c217c35cd0e24ea58399b5a3f",
+    "src/kbs_revision/task_data.py": "e657dd56ab848a9995d11990f27765dede97ade2587b27fd1ec042919d85e71d",
+    "tests/test_kbs_revision_baselines.py": "a3f0d630cd2daee9e2dbadf297233c5375d8edb36c21b4b1b9032627c50a2634",
+    "tests/test_kbs_revision_certificates.py": "2680c6e5a0b3eb8d2ce0c124878f585444e85cedd15d9fa1bfec3105ee9eff19",
+    "tests/test_kbs_revision_external_methods.py": "75e5768e183cb6fd2a531857b97d42b3bdc2851ae8919e0e1f18a8f1aebeac39",
+    "tests/test_kbs_revision_integration.py": "026060a56a571141057e20b37b9ae663895abdc406f2d330ae346195702bbf6a",
+    "tests/test_kbs_revision_inventory.py": "fa5ad0345efa67445862a097da1194a689c3ce5d96a446e7d7bde44f3125917c",
+    "tests/test_kbs_revision_language_backend.py": "1c5b0297961045b62b125921957db77f9677d9983b8fd24cd13481a807d7a2b9",
+    "tests/test_kbs_revision_neural_runner.py": "e3b4983b29d3e88a62924394d42915e62209d61946cf6464071e0aca3a4c00b8",
+    "tests/test_kbs_revision_protocol.py": "f85e4f6654ddbeb1cdff4be83321f10ec21d7fe6ee12bd0614e0675198a9792b",
+    "tests/test_kbs_revision_reporting.py": "b508e60610cdd83e86781c69b7ec9c1cac92eb2896c6be5c7043c859585cd37e",
+    "tests/test_kbs_revision_resources.py": "bcec994e9064493f16cf03ab476255ef7cc9165d464b425ead1e34ce19bee870",
+    "tests/test_kbs_revision_task_data.py": "5729af5603b6be908a86dd15f0486c2962b5ef76d2fa76c974fbea9e2a93eb0d"
+  },
+  "status": "software_only",
+  "trained_fixture_target_modules": 8
+}

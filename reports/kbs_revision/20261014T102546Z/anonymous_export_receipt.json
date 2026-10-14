@@ -1,0 +1,16 @@
+{
+  "anonymization": "direct paths, author names/URLs and local Git identities removed; third-party pins preserved",
+  "author_revision_aliases": {
+    "7a0620bb19dffba97012350b6ffd20684bcbe220": "author-revision-5",
+    "84193833c0c420023fd2e7f6ae43fe6af4b94bcc": "author-revision-4",
+    "9dbae746495a91f0c331139e39a012097ac7b0d7": "author-revision-2",
+    "b0e1ac47e4b0d7c559f37ba8bc3634ba18f3ca1c": "author-revision-6",
+    "b9b7af024c08e5566baea1cbfb562cf05eff27c1": "author-revision-3",
+    "dd0aac53862a8015e353ec6c0e76e1fd0b4dfd2b": "author-revision-1"
+  },
+  "bytes": 257217,
+  "checkpoint_weights_included": false,
+  "file": "TwistedMerge_backend_anonymous_review.tar.gz",
+  "files": 122,
+  "sha256": "4fde0c561c09ea0a38d64c59a7f989481a129b03245dab6345bdd9c198178cb4"
+}

@@ -1,0 +1,164 @@
+{
+  "version": "1.0",
+  "truncation": null,
+  "padding": null,
+  "added_tokens": [
+    {
+      "id": 0,
+      "content": "[PAD]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 1,
+      "content": "[BOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 2,
+      "content": "[EOS]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    },
+    {
+      "id": 3,
+      "content": "[UNK]",
+      "single_word": false,
+      "lstrip": false,
+      "rstrip": false,
+      "normalized": false,
+      "special": true
+    }
+  ],
+  "normalizer": null,
+  "pre_tokenizer": {
+    "type": "Whitespace"
+  },
+  "post_processor": {
+    "type": "TemplateProcessing",
+    "single": [
+      {
+        "Sequence": {
+          "id": "A",
+          "type_id": 0
+        }
+      }
+    ],
+    "pair": [
+      {
+        "Sequence": {
+          "id": "A",
+          "type_id": 0
+        }
+      },
+      {
+        "Sequence": {
+          "id": "B",
+          "type_id": 1
+        }
+      }
+    ],
+    "special_tokens": {}
+  },
+  "decoder": null,
+  "model": {
+    "type": "WordLevel",
+    "vocab": {
+      "[PAD]": 0,
+      "[BOS]": 1,
+      "[EOS]": 2,
+      "[UNK]": 3,
+      "#": 4,
+      "####": 5,
+      ",": 6,
+      ".": 7,
+      "1": 8,
+      "11": 9,
+      "13": 10,
+      "2": 11,
+      "3": 12,
+      "4": 13,
+      "5": 14,
+      "6": 15,
+      "7": 16,
+      "8": 17,
+      ":": 18,
+      "?": 19,
+      "A": 20,
+      "Add": 21,
+      "Answer": 22,
+      "B": 23,
+      "Balance": 24,
+      "C": 25,
+      "Carry": 26,
+      "Choose": 27,
+      "D": 28,
+      "Does": 29,
+      "Goal": 30,
+      "How": 31,
+      "Passage": 32,
+      "Place": 33,
+      "Question": 34,
+      "Solve": 35,
+      "The": 36,
+      "Which": 37,
+      "a": 38,
+      "after": 39,
+      "answer": 40,
+      "are": 41,
+      "basket": 42,
+      "best": 43,
+      "birch": 44,
+      "blue": 45,
+      "box": 46,
+      "by": 47,
+      "can": 48,
+      "container": 49,
+      "contains": 50,
+      "coral": 51,
+      "correct": 52,
+      "dahlia": 53,
+      "elm": 54,
+      "fern": 55,
+      "final": 56,
+      "granite": 57,
+      "hold": 58,
+      "holds": 59,
+      "in": 60,
+      "it": 61,
+      "label": 62,
+      "loose": 63,
+      "many": 64,
+      "no": 65,
+      "numerical": 66,
+      "object": 67,
+      "of": 68,
+      "on": 69,
+      "option": 70,
+      "or": 71,
+      "ray": 72,
+      "safely": 73,
+      "solution": 74,
+      "step": 75,
+      "stones": 76,
+      "sturdy": 77,
+      "sunlight": 78,
+      "the": 79,
+      "then": 80,
+      "thread": 81,
+      "write": 82,
+      "yes": 83
+    },
+    "unk_token": "[UNK]"
+  }
+}

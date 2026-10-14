@@ -1,0 +1,47 @@
+{
+  "alpha": 4,
+  "architecture": "Qwen2ForCausalLM",
+  "base_model_id": "software-only/random-Qwen2-two-block",
+  "base_revision": "9dbae746495a91f0c331139e39a012097ac7b0d7",
+  "dropout": 0,
+  "files": {
+    "adapter_config.json": "4b1e3925aa0a21bea852e594ac2f60375d1fffba9caca7113328faed66f27087",
+    "adapter_model.safetensors": "e7ae8bdc9007911d0fd7f69382a141d7f992ac5542612c483d897af67455f839"
+  },
+  "group_id": "software-only-group-1-repeat",
+  "head_convention": "shared_frozen_causal_lm_head",
+  "license": "CC0-1.0 (locally generated random fixture weights)",
+  "license_reviewed": true,
+  "rank": 2,
+  "software_only": true,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "task_id": "BoolQ",
+  "tokenizer_sha256": "6a13dd37f4508ee45320d010c4f7a337ea64782939977422f36900941e30b2bf",
+  "training": {
+    "backend_source_sha256": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+    "base_parameter_sha256": "18b981f71cc5578fb59a4f91170d7b1fd3f16a7c96432df74ae11121817075ce",
+    "batch_size": 1,
+    "common_base_unchanged": true,
+    "learning_rate": 0.02,
+    "losses": [
+      4.416722297668457,
+      4.374839782714844,
+      4.2775492668151855,
+      4.203473091125488
+    ],
+    "model_loading_seconds": 0.008352916003786959,
+    "record_ids": [
+      "fixture-1"
+    ],
+    "records_sha256": "b76f3855302b4af4eda2c5bd348820633cc05befb94d9bbce7d334f3cc6accf8",
+    "steps": 4,
+    "training_seconds": 0.009100499999476597
+  },
+  "training_seed": 301,
+  "use_rslora": false
+}

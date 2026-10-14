@@ -1,0 +1,7 @@
+cpu_verification_seconds: 1800
+software_integration_cpu_seconds: 300
+new_disk_bytes: 200000000
+accelerator_hours_allocated_this_run: 0
+paid_compute_authorized: false
+network_model_downloads_authorized_this_run: false
+reason: user requested resource conservation and knows of no available GPU host

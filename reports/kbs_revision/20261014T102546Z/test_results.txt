@@ -1,0 +1,27 @@
+........................................................................ [ 40%]
+........................................................................ [ 80%]
+...................................                                      [100%]
+=============================== warnings summary ===============================
+tests/test_kbs_revision_baselines.py::test_profiler_and_actual_dispatch_shapes_show_no_ambient_output
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/torch/profiler/profiler.py:272: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+    _warn_once(
+
+tests/test_kbs_revision_integration.py::test_four_task_trained_pipeline_and_resume_without_research_claim
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/peft/mapping_func.py:78: UserWarning: The PEFT config's `base_model_name_or_path` was renamed from 'software-only/random-Qwen2-two-block' to '/private/var/folders/kx/32ztcvf17xbfc_2gj5y4pmcw0000gn/T/pytest-of-tinggong/pytest-25/test_four_task_trained_pipelin0/backend_fixture/tiny_base'. Please ensure that the correct base model is loaded when loading this checkpoint.
+    warnings.warn(
+
+tests/test_kbs_revision_integration.py::test_four_task_trained_pipeline_and_resume_without_research_claim
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/peft/mapping_func.py:78: UserWarning: The PEFT config's `base_model_name_or_path` was renamed from 'software-only/random-Qwen2-two-block' to '/private/var/folders/kx/32ztcvf17xbfc_2gj5y4pmcw0000gn/T/pytest-of-tinggong/pytest-25/test_four_task_trained_pipelin0/software_cohort/base'. Please ensure that the correct base model is loaded when loading this checkpoint.
+    warnings.warn(
+
+tests/test_kbs_revision_language_backend.py::test_local_base_has_two_real_qwen_blocks_and_roundtripped_wordlevel
+tests/test_kbs_revision_language_backend.py::test_same_seed_training_is_exact_and_preserves_caller_rng
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/peft/mapping_func.py:78: UserWarning: The PEFT config's `base_model_name_or_path` was renamed from 'software-only/random-Qwen2-two-block' to '/private/var/folders/kx/32ztcvf17xbfc_2gj5y4pmcw0000gn/T/pytest-of-tinggong/pytest-25/kbs-real-transformer0/base'. Please ensure that the correct base model is loaded when loading this checkpoint.
+    warnings.warn(
+
+tests/test_kbs_revision_language_backend.py::test_real_end_to_end_software_smoke_is_honestly_labeled
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/peft/mapping_func.py:78: UserWarning: The PEFT config's `base_model_name_or_path` was renamed from 'software-only/random-Qwen2-two-block' to '/private/var/folders/kx/32ztcvf17xbfc_2gj5y4pmcw0000gn/T/pytest-of-tinggong/pytest-25/test_real_end_to_end_software_0/smoke/tiny_base'. Please ensure that the correct base model is loaded when loading this checkpoint.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+179 passed, 6 warnings in 13.82s

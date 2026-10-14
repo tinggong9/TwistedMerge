@@ -1,0 +1,47 @@
+{
+  "alpha": 4,
+  "architecture": "Qwen2ForCausalLM",
+  "base_model_id": "software-only/random-Qwen2-two-block",
+  "base_revision": "84193833c0c420023fd2e7f6ae43fe6af4b94bcc",
+  "dropout": 0,
+  "files": {
+    "adapter_config.json": "532dfec3410246ae7e2ec299870f4191230222e1da95a341ac7b1c8637f4091e",
+    "adapter_model.safetensors": "6808f10c45b4bae0fb73456a2ce01d2278a9ea4e800cf9e9a2cf662b31d20877"
+  },
+  "group_id": "software-only-cohort-1",
+  "head_convention": "shared_frozen_causal_lm_head",
+  "license": "CC0-1.0 (locally generated random fixture weights)",
+  "license_reviewed": true,
+  "rank": 2,
+  "software_only": true,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "task_id": "ARC-Challenge",
+  "tokenizer_sha256": "d819751c8a05876b3d44b3701be1bf8fb32eb0155629223e8eba348055c0efaa",
+  "training": {
+    "backend_source_sha256": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+    "base_parameter_sha256": "985a4019d9c58282be29a32fbffc42c95b58517b111315577356889e03123fa2",
+    "batch_size": 1,
+    "common_base_unchanged": true,
+    "learning_rate": 0.02,
+    "losses": [
+      4.523430824279785,
+      4.5116753578186035,
+      4.481343746185303,
+      4.4177446365356445
+    ],
+    "model_loading_seconds": 0.008664166998642031,
+    "record_ids": [
+      "fixture-5"
+    ],
+    "records_sha256": "94c77a7895f6c89c452657cd48bad9f51c4383ae8e822bc04d78647826285630",
+    "steps": 4,
+    "training_seconds": 0.009156832995358855
+  },
+  "training_seed": 901,
+  "use_rslora": false
+}

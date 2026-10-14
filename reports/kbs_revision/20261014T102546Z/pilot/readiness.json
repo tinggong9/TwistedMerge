@@ -1,0 +1,111 @@
+{
+  "blockers": [
+    "base model unavailable locally",
+    "missing actual seven-role split manifest",
+    "missing validated model/tokenizer manifest",
+    "no compatible multilayer trained adapters",
+    "unresolved baseline: base",
+    "unresolved baseline: compact_qr_svd",
+    "unresolved baseline: core_space",
+    "unresolved baseline: dare_ties",
+    "unresolved baseline: dense_reference_svd",
+    "unresolved baseline: exact_concatenation",
+    "unresolved baseline: global_synchronization",
+    "unresolved baseline: knots",
+    "unresolved baseline: naive_factor_average",
+    "unresolved baseline: pairwise_alignment",
+    "unresolved baseline: specialists",
+    "unresolved baseline: task_arithmetic",
+    "unresolved baseline: ties"
+  ],
+  "config": {
+    "adapter_ranks": [
+      8,
+      16
+    ],
+    "adapters": [],
+    "backend": "modern_language_v1",
+    "baselines": {},
+    "candidate_methods": [
+      "compact_qr_svd",
+      "dense_reference_svd",
+      "exact_concatenation",
+      "task_arithmetic",
+      "ties",
+      "dare_ties",
+      "naive_factor_average",
+      "pairwise_alignment",
+      "global_synchronization",
+      "knots",
+      "core_space"
+    ],
+    "endpoints": {
+      "claim_noninferiority": false,
+      "efficacy": "paired macro bounded task-error difference P4-P0 and P4-P1 on original factors",
+      "efficiency": "complete loading, preparation, merging and selection costs; inference separately",
+      "multiplicity": "Holm familywise alpha=0.05",
+      "noninferiority_justification": null,
+      "primary_comparisons": [
+        "P4-P0",
+        "P4-P1"
+      ],
+      "statistical_unit": "independently trained group; no software fixtures count",
+      "task_losses": {
+        "ARC-Challenge": "1-accuracy",
+        "BoolQ": "1-accuracy",
+        "GSM8K": "1-exact-match",
+        "PIQA": "1-accuracy"
+      },
+      "task_weights": {
+        "ARC-Challenge": 0.25,
+        "BoolQ": 0.25,
+        "GSM8K": 0.25,
+        "PIQA": 0.25
+      }
+    },
+    "episodes": [],
+    "fallback": "compact_qr_svd",
+    "groups": 1,
+    "model": {
+      "id": "Qwen/Qwen2.5-1.5B",
+      "license": "Apache-2.0",
+      "license_reviewed": true,
+      "local_path": null,
+      "revision": "8faed761d45a263340a0528343f099c05c9a4323"
+    },
+    "model_manifest_path": null,
+    "phase": "pilot",
+    "policies": [
+      "P0",
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "resource_limits": {
+      "cpu_seconds": 1800,
+      "disk_bytes": 200000000,
+      "note": "stricter current local cap following user request to conserve resources; no suitable GPU was supplied",
+      "pilot_accelerator_hours": 8,
+      "total_accelerator_hours": 48
+    },
+    "split_manifest_path": null,
+    "splits": {},
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "tasks": [
+      "BoolQ",
+      "PIQA",
+      "ARC-Challenge",
+      "GSM8K"
+    ],
+    "test_access": false
+  },
+  "final_test_accessed": false,
+  "phase": "blocked",
+  "training_executed": false
+}

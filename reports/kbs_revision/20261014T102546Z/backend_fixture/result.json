@@ -1,0 +1,484 @@
+{
+  "accelerator_hours": 0,
+  "adapter_manifests": [
+    {
+      "alpha": 4,
+      "architecture": "Qwen2ForCausalLM",
+      "base_model_id": "software-only/random-Qwen2-two-block",
+      "base_revision": "9dbae746495a91f0c331139e39a012097ac7b0d7",
+      "dropout": 0,
+      "files": {
+        "adapter_config.json": "4b1e3925aa0a21bea852e594ac2f60375d1fffba9caca7113328faed66f27087",
+        "adapter_model.safetensors": "e7ae8bdc9007911d0fd7f69382a141d7f992ac5542612c483d897af67455f839"
+      },
+      "group_id": "software-only-group-1",
+      "head_convention": "shared_frozen_causal_lm_head",
+      "license": "CC0-1.0 (locally generated random fixture weights)",
+      "license_reviewed": true,
+      "rank": 2,
+      "software_only": true,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "task_id": "BoolQ",
+      "tokenizer_sha256": "6a13dd37f4508ee45320d010c4f7a337ea64782939977422f36900941e30b2bf",
+      "training": {
+        "backend_source_sha256": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+        "base_parameter_sha256": "18b981f71cc5578fb59a4f91170d7b1fd3f16a7c96432df74ae11121817075ce",
+        "batch_size": 1,
+        "common_base_unchanged": true,
+        "learning_rate": 0.02,
+        "losses": [
+          4.416722297668457,
+          4.374839782714844,
+          4.2775492668151855,
+          4.203473091125488
+        ],
+        "model_loading_seconds": 0.017337749995931517,
+        "record_ids": [
+          "fixture-1"
+        ],
+        "records_sha256": "b76f3855302b4af4eda2c5bd348820633cc05befb94d9bbce7d334f3cc6accf8",
+        "steps": 4,
+        "training_seconds": 0.052516125004331116
+      },
+      "training_seed": 301,
+      "use_rslora": false
+    },
+    {
+      "alpha": 4,
+      "architecture": "Qwen2ForCausalLM",
+      "base_model_id": "software-only/random-Qwen2-two-block",
+      "base_revision": "9dbae746495a91f0c331139e39a012097ac7b0d7",
+      "dropout": 0,
+      "files": {
+        "adapter_config.json": "4b1e3925aa0a21bea852e594ac2f60375d1fffba9caca7113328faed66f27087",
+        "adapter_model.safetensors": "ff43079423962cdfec02bc020705266bfd582438d511f488cbd0d8941fdd9f1f"
+      },
+      "group_id": "software-only-group-2",
+      "head_convention": "shared_frozen_causal_lm_head",
+      "license": "CC0-1.0 (locally generated random fixture weights)",
+      "license_reviewed": true,
+      "rank": 2,
+      "software_only": true,
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "task_id": "BoolQ",
+      "tokenizer_sha256": "6a13dd37f4508ee45320d010c4f7a337ea64782939977422f36900941e30b2bf",
+      "training": {
+        "backend_source_sha256": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+        "base_parameter_sha256": "18b981f71cc5578fb59a4f91170d7b1fd3f16a7c96432df74ae11121817075ce",
+        "batch_size": 1,
+        "common_base_unchanged": true,
+        "learning_rate": 0.02,
+        "losses": [
+          4.416722297668457,
+          4.397846221923828,
+          4.357570648193359,
+          4.283115386962891
+        ],
+        "model_loading_seconds": 0.008123125000565778,
+        "record_ids": [
+          "fixture-1"
+        ],
+        "records_sha256": "b76f3855302b4af4eda2c5bd348820633cc05befb94d9bbce7d334f3cc6accf8",
+        "steps": 4,
+        "training_seconds": 0.009233625001797918
+      },
+      "training_seed": 302,
+      "use_rslora": false
+    }
+  ],
+  "baseline_capacity": [
+    {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.006877917003293987,
+      "compression": "compact_qr_svd",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "compact_qr_svd",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.4,
+        0.6
+      ]
+    },
+    {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.0007271249996847473,
+      "compression": "dense_reference_svd",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "dense_reference_svd",
+      "output_parameters": 512,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 2,
+        "base_model.model.model.layers.0.self_attn.o_proj": 2,
+        "base_model.model.model.layers.0.self_attn.q_proj": 2,
+        "base_model.model.model.layers.0.self_attn.v_proj": 2,
+        "base_model.model.model.layers.1.self_attn.k_proj": 2,
+        "base_model.model.model.layers.1.self_attn.o_proj": 2,
+        "base_model.model.model.layers.1.self_attn.q_proj": 2,
+        "base_model.model.model.layers.1.self_attn.v_proj": 2
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.4,
+        0.6
+      ]
+    },
+    {
+      "alignment_fitting_seconds": 0.0,
+      "candidate_generation_seconds": 0.00021266599651426077,
+      "compression": "rank-sum exact capacity",
+      "deployment_model_count": 1,
+      "effective_density": null,
+      "external_weight_semantics": null,
+      "inference_latency_multiplier": null,
+      "input_module_count": 8,
+      "method": "exact_concatenation",
+      "output_parameters": 1024,
+      "output_ranks": {
+        "base_model.model.model.layers.0.self_attn.k_proj": 4,
+        "base_model.model.model.layers.0.self_attn.o_proj": 4,
+        "base_model.model.model.layers.0.self_attn.q_proj": 4,
+        "base_model.model.model.layers.0.self_attn.v_proj": 4,
+        "base_model.model.model.layers.1.self_attn.k_proj": 4,
+        "base_model.model.model.layers.1.self_attn.o_proj": 4,
+        "base_model.model.model.layers.1.self_attn.q_proj": 4,
+        "base_model.model.model.layers.1.self_attn.v_proj": 4
+      },
+      "requested_output_rank": 2,
+      "seed": null,
+      "timer_scope": "all layers, including factor validation; alignment stage includes whitening, synchronization, factor averaging",
+      "weight_semantics": "verbatim explicit weights; equal average default except PEFT TIES/DARE and external KnOTS/Core Space default ones",
+      "weights": [
+        0.4,
+        0.6
+      ]
+    }
+  ],
+  "compact_dense_effective_delta_max_absolute_error": 3.8077180297690916e-16,
+  "device": "cpu",
+  "exact_weighted_delta_max_absolute_error": 1.3877787807814457e-17,
+  "final_test_accessed": false,
+  "gpu_peak_allocated_bytes": null,
+  "gpu_peak_reserved_bytes": null,
+  "host_peak_rss_bytes": 445595648,
+  "independent_research_training_groups": 0,
+  "merged_scored_predictions": {
+    "accuracy": 0.25,
+    "bounded_loss": 0.75,
+    "deployment_model_count": 1,
+    "inference_latency_multiplier": null,
+    "inference_seconds": 0.06666087499615969,
+    "rows": [
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": [
+          -4.443063259124756,
+          -4.413738250732422
+        ],
+        "correct": false,
+        "example_id": "fixture-3",
+        "inference_seconds": 0.0018019999988609925,
+        "prediction": "B",
+        "score": 0.0,
+        "task_id": "ARC-Challenge"
+      },
+      {
+        "bounded_loss": 0.0,
+        "bounded_task_error": 0.0,
+        "choice_loglikelihoods": [
+          -4.289443492889404,
+          -4.079348087310791
+        ],
+        "correct": true,
+        "example_id": "fixture-6",
+        "inference_seconds": 0.0016435829966212623,
+        "prediction": "yes",
+        "score": 1.0,
+        "task_id": "BoolQ"
+      },
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": null,
+        "correct": false,
+        "example_id": "fixture-3",
+        "inference_seconds": 0.06122366600175155,
+        "prediction": ": : : : : : : : : : : : 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3",
+        "score": 0.0,
+        "task_id": "GSM8K"
+      },
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": [
+          -4.573615550994873,
+          -4.52113151550293
+        ],
+        "correct": false,
+        "example_id": "fixture-1",
+        "inference_seconds": 0.0018065839976770803,
+        "prediction": "2",
+        "score": 0.0,
+        "task_id": "PIQA"
+      }
+    ],
+    "scoring": "sum full independently tokenized leading-space completion causal loglikelihood; no length normalization; deterministic greedy GSM8K"
+  },
+  "model": "random two-block Qwen2ForCausalLM with locally generated WordLevel tokenizer",
+  "model_manifest": {
+    "architecture": "Qwen2ForCausalLM",
+    "files": {
+      "config.json": "1da990c4f8cadd74b8af475519db658a1144c7497b0e4a051869b71a969a0dd9",
+      "generation_config.json": "0a59fddfd13832953b2e2d138960c82c742523804801a2d5cf7dd5ea5b42a417",
+      "model.safetensors": "47bf8b8b6417d3eb38d6466016c246d1d01b2e4f140e372ccb50de6aebccf2b8"
+    },
+    "head_convention": "shared_frozen_causal_lm_head",
+    "license": "CC0-1.0 (locally generated random fixture weights)",
+    "license_reviewed": true,
+    "model_id": "software-only/random-Qwen2-two-block",
+    "revision": "9dbae746495a91f0c331139e39a012097ac7b0d7",
+    "software_only": true,
+    "tokenizer_files": {
+      "tokenizer.json": "4208da29486156ad9249f58d60edfcf056d2157136d2fa6fdae503ee753d8da7",
+      "tokenizer_config.json": "0faecb102b2782924ac9312986d64ef59bb57d3ee9b4a8c3bbf03f2e56b438b4"
+    }
+  },
+  "multilayer_target_count": 8,
+  "ordinary_base_scored_predictions": {
+    "accuracy": 0.25,
+    "bounded_loss": 0.75,
+    "deployment_model_count": 1,
+    "inference_latency_multiplier": null,
+    "inference_seconds": 0.06119400000170572,
+    "rows": [
+      {
+        "bounded_loss": 0.0,
+        "bounded_task_error": 0.0,
+        "choice_loglikelihoods": [
+          -4.449035167694092,
+          -4.460144996643066
+        ],
+        "correct": true,
+        "example_id": "fixture-3",
+        "inference_seconds": 0.002412667003227398,
+        "prediction": "A",
+        "score": 1.0,
+        "task_id": "ARC-Challenge"
+      },
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": [
+          -4.359013557434082,
+          -4.452721118927002
+        ],
+        "correct": false,
+        "example_id": "fixture-6",
+        "inference_seconds": 0.0013312079972820356,
+        "prediction": "no",
+        "score": 0.0,
+        "task_id": "BoolQ"
+      },
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": null,
+        "correct": false,
+        "example_id": "fixture-3",
+        "inference_seconds": 0.05592525000247406,
+        "prediction": ": : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : : :",
+        "score": 0.0,
+        "task_id": "GSM8K"
+      },
+      {
+        "bounded_loss": 1.0,
+        "bounded_task_error": 1.0,
+        "choice_loglikelihoods": [
+          -4.481545448303223,
+          -4.44527006149292
+        ],
+        "correct": false,
+        "example_id": "fixture-1",
+        "inference_seconds": 0.001411833000020124,
+        "prediction": "2",
+        "score": 0.0,
+        "task_id": "PIQA"
+      }
+    ],
+    "scoring": "sum full independently tokenized leading-space completion causal loglikelihood; no length normalization; deterministic greedy GSM8K"
+  },
+  "ordinary_specialist_scored_predictions": [
+    {
+      "accuracy": 0.25,
+      "bounded_loss": 0.75,
+      "deployment_model_count": 1,
+      "inference_latency_multiplier": null,
+      "inference_seconds": 0.06759562499792082,
+      "rows": [
+        {
+          "bounded_loss": 1.0,
+          "bounded_task_error": 1.0,
+          "choice_loglikelihoods": [
+            -4.358849048614502,
+            -4.294053554534912
+          ],
+          "correct": false,
+          "example_id": "fixture-3",
+          "inference_seconds": 0.0016266669990727678,
+          "prediction": "B",
+          "score": 0.0,
+          "task_id": "ARC-Challenge"
+        },
+        {
+          "bounded_loss": 0.0,
+          "bounded_task_error": 0.0,
+          "choice_loglikelihoods": [
+            -4.309154987335205,
+            -4.042326927185059
+          ],
+          "correct": true,
+          "example_id": "fixture-6",
+          "inference_seconds": 0.0015187089957180433,
+          "prediction": "yes",
+          "score": 1.0,
+          "task_id": "BoolQ"
+        },
+        {
+          "bounded_loss": 1.0,
+          "bounded_task_error": 1.0,
+          "choice_loglikelihoods": null,
+          "correct": false,
+          "example_id": "fixture-3",
+          "inference_seconds": 0.06239683299645549,
+          "prediction": "yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes yes in in in in in in in in in in in in in in in in in in",
+          "score": 0.0,
+          "task_id": "GSM8K"
+        },
+        {
+          "bounded_loss": 1.0,
+          "bounded_task_error": 1.0,
+          "choice_loglikelihoods": [
+            -4.523665428161621,
+            -4.503353595733643
+          ],
+          "correct": false,
+          "example_id": "fixture-1",
+          "inference_seconds": 0.0018087499993271194,
+          "prediction": "2",
+          "score": 0.0,
+          "task_id": "PIQA"
+        }
+      ],
+      "scoring": "sum full independently tokenized leading-space completion causal loglikelihood; no length normalization; deterministic greedy GSM8K"
+    },
+    {
+      "accuracy": 0.5,
+      "bounded_loss": 0.5,
+      "deployment_model_count": 1,
+      "inference_latency_multiplier": null,
+      "inference_seconds": 0.06635620899760397,
+      "rows": [
+        {
+          "bounded_loss": 0.0,
+          "bounded_task_error": 0.0,
+          "choice_loglikelihoods": [
+            -4.4414167404174805,
+            -4.444693565368652
+          ],
+          "correct": true,
+          "example_id": "fixture-3",
+          "inference_seconds": 0.0017027919966494665,
+          "prediction": "A",
+          "score": 1.0,
+          "task_id": "ARC-Challenge"
+        },
+        {
+          "bounded_loss": 0.0,
+          "bounded_task_error": 0.0,
+          "choice_loglikelihoods": [
+            -4.27993631362915,
+            -4.087200164794922
+          ],
+          "correct": true,
+          "example_id": "fixture-6",
+          "inference_seconds": 0.0015751249957247637,
+          "prediction": "yes",
+          "score": 1.0,
+          "task_id": "BoolQ"
+        },
+        {
+          "bounded_loss": 1.0,
+          "bounded_task_error": 1.0,
+          "choice_loglikelihoods": null,
+          "correct": false,
+          "example_id": "fixture-3",
+          "inference_seconds": 0.061096417004591785,
+          "prediction": "C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C C 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3",
+          "score": 0.0,
+          "task_id": "GSM8K"
+        },
+        {
+          "bounded_loss": 1.0,
+          "bounded_task_error": 1.0,
+          "choice_loglikelihoods": [
+            -4.573824882507324,
+            -4.5197062492370605
+          ],
+          "correct": false,
+          "example_id": "fixture-1",
+          "inference_seconds": 0.0017341249986202456,
+          "prediction": "2",
+          "score": 0.0,
+          "task_id": "PIQA"
+        }
+      ],
+      "scoring": "sum full independently tokenized leading-space completion causal loglikelihood; no length normalization; deterministic greedy GSM8K"
+    }
+  ],
+  "passed": true,
+  "predictions_deterministic": true,
+  "safe_reload_logits_max_absolute_error": 0.0,
+  "same_seed_factor_max_absolute_error": 0.0,
+  "scope": "software exercise only; fixture task accuracy is not neural decision-utility evidence",
+  "selection_policy_outcome_status": "not_run_software_loading_training_inference_smoke_only",
+  "shared_head_preserved": true,
+  "status": "software_only",
+  "threads": 2,
+  "training_steps_per_adapter": 4,
+  "wall_seconds": 4.268263291000039
+}

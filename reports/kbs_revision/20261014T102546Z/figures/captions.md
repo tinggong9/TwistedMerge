@@ -1,0 +1,1 @@
+Software-only generated two-block Qwen cohort: one integration episode, four invented task schemas, zero independent research groups; no uncertainty interval. Stage sums include all candidate/reference work. Real performance-cost, risk-coverage and paired-policy research figures are blocked.

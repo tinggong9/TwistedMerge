@@ -1,0 +1,14 @@
+- Initial checkout main at dd0aac53862a8015e353ec6c0e76e1fd0b4dfd2b was clean.
+- User reports no known GPU/checkpoint host and asks to conserve resources.
+- Focused regression command: .venv/bin/python -m pytest -q tests/test_kbs_revision_*.py tests/test_lora_gauge_alignment.py tests/test_lora_factor_space_scalability.py tests/test_real_lora_gauge_stability.py tests/test_twistedmerge_hodge_lr.py tests/test_holonomy_brauer_certificate.py; 179 passed in 13.82s.
+- Earlier integration development run completed on generated fixtures; final source run below uses a fresh directory.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "backend-smoke", "--out", "reports/kbs_revision/20261014T102546Z"]
+- Software-only two-block backend and four-task candidate/policy panel executed; no research test evaluation.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "pilot", "--config", "configs/kbs_revision/next_pilot.yaml", "--out", "reports/kbs_revision/20261014T102546Z"]
+- Language pilot readiness failed (17 explicit blockers); no test data accessed.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "report", "--out", "reports/kbs_revision/20261014T102546Z"]
+- Reports/tables/figures exported from measured CPU and historical records only.
+- Real pilot readiness exit2: model/cohort/data/resource dependencies remain blocked; no research test access.
+- New report generated and stage plot inspected visually.
+- Anonymous review package verified against exported SHA256 and scanned for direct author paths/names; weights omitted.
+- Old evidence artifact hashes verified unchanged.
