@@ -1,0 +1,10 @@
+cpu_verification_seconds: 7200
+cpu_worker_threads: 2
+new_disk_bytes: 2000000000
+gpu_pilot_accelerator_hours_cap: 8
+gpu_campaign_accelerator_hours_cap: 48
+accelerator_hours_allocated_this_run: 0
+reason: CPU verification and provenance phase; compatible language checkpoints, backend and splits unavailable
+paid_compute_authorized: false
+model_uploads_authorized: false
+remote_push_authorized: false

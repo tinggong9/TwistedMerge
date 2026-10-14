@@ -1,0 +1,8 @@
+{
+  "package": "reproducibility.tar.gz",
+  "sha256": "3f21a101b6d0b19d84f71ce036c023e88aa67a96e3c575008ef31e497ae55d14",
+  "bytes": 741705,
+  "export": "Private paths sanitized; public author/repository identity retained; original provenance preserved in author master",
+  "credentials_included": false,
+  "checkpoint_weights_included": false
+}

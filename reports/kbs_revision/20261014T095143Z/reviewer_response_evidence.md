@@ -1,0 +1,14 @@
+# Reviewer evidence
+
+| Criticism | Status | Evidence | Remaining boundary |
+| --- | --- | --- | --- |
+| Effective update/scaling baseline correctness | addressed | baseline_parity.json; profile dispatch and measured identities | limited to tested algebra fixtures |
+| Edge-realizable finite certificate and simply-connected no-go | addressed | algebraic_checks.json | constant-edge model only |
+| Coefficient/Hodge/exact-versus-approximate discipline | addressed | algebraic_checks.json; protocol/policy tests | general mu_n unimplemented |
+| Historical attribution and provenance | partially addressed | inventory.json; claim_ledger.json | dirty source snapshots and missing historical checkpoints disclosed |
+| Strong external literature comparators | partially addressed | inventory.json external pinned sources | official model runs/parity integrations blocked |
+| Useful structural decision advantage | negative result | legacy selector and diagnostic source rows | legacy image studies only; no new neural evidence |
+| Modern multilayer language experiment | blocked | pilot/readiness.json | model/cohort/backend/splits/parity/resources unresolved |
+| Complete neural policy cost and sequential savings | blocked | costs.csv CPU layer fixtures only | model/policy/inference costs unmeasured |
+| Neural gate ablations and confidence calibration | blocked | gate_ablation_controls.json controlled only | no independent language episodes or calibrated thresholds |
+| Reproducibility package | partially addressed | manifest.csv; environment.lock.txt; source/tests | optional sanitized export; no neural resume backend |

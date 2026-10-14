@@ -1,0 +1,10468 @@
+[
+  {
+    "all_prerequisites_pass": false,
+    "canonical_face_truth": "zero; not an inverse-consistent transport-class certificate",
+    "changed_directed_edge": [
+      1,
+      0
+    ],
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            -1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            -1,
+            1,
+            -1,
+            1
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ]
+    },
+    "construction_type": "stored_edge_transition_error",
+    "control_id": "independently_fitted_reverse",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_projected_cochain_trivial": true,
+    "exact_underlying_transition_class_trivial": null,
+    "failed_gates": [
+      "inverse_consistency"
+    ],
+    "inapplicable": false,
+    "inverse_residual": 0.7071067811865475,
+    "minimum_rounding_margin": 2.0,
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": true,
+      "closure": true,
+      "coefficient_identification": true,
+      "inverse_consistency": false,
+      "projection_fidelity": true,
+      "topology": true,
+      "uncertainty_margin": true
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.0,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 0.0,
+    "raw_centrality_residual": 0.0,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "source_construction": "flat full tetrahedron",
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      }
+    ],
+    "target_gate": "inverse_consistency",
+    "task_metric_measured": false,
+    "uncertified": true
+  },
+  {
+    "actual_coefficient_theory": "mu2",
+    "all_prerequisites_pass": false,
+    "claimed_coefficient_theory": "mu3",
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            1,
+            0
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            0,
+            1,
+            6
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            2,
+            8
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            6,
+            8
+          ],
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            1,
+            2,
+            7
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            1,
+            6,
+            7
+          ],
+          [
+            2,
+            3,
+            5
+          ],
+          [
+            2,
+            7,
+            8
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            5,
+            6
+          ],
+          [
+            3,
+            6,
+            7
+          ],
+          [
+            4,
+            5,
+            8
+          ],
+          [
+            4,
+            7,
+            8
+          ],
+          [
+            5,
+            6,
+            8
+          ]
+        ]
+      ]
+    },
+    "construction_type": "stored_edge_transition_error",
+    "control_id": "wrong_coefficient_mu3",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_mu2_ground_truth_trivial": false,
+    "exact_projected_cochain_trivial": false,
+    "exact_underlying_transition_class_trivial": null,
+    "failed_gates": [
+      "coefficient_identification"
+    ],
+    "inapplicable": true,
+    "inverse_residual": 0.0,
+    "minimum_rounding_margin": 2.0,
+    "mu3_power_identity_failures": [
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 0.0,
+        "distance_to_plus_identity": 2.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ]
+      }
+    ],
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": true,
+      "closure": true,
+      "coefficient_identification": false,
+      "inverse_consistency": true,
+      "projection_fidelity": true,
+      "topology": true,
+      "uncertainty_margin": true
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "mu2_exponent": 1
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.23570226039551584,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 0.0,
+    "raw_centrality_residual": 0.0,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 0.0,
+        "distance_to_plus_identity": 2.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "requested_coefficient_theory_implemented": false,
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 0,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            -1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 8,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 7
+      }
+    ],
+    "target_gate": "coefficient_identification",
+    "task_metric_measured": false,
+    "torus_metadata": {
+      "X": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "Z": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          -1
+        ]
+      ],
+      "coordinates": [
+        {
+          "vertex": 0,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "vertex": 1,
+          "x": 1,
+          "y": 0
+        },
+        {
+          "vertex": 2,
+          "x": 2,
+          "y": 0
+        },
+        {
+          "vertex": 3,
+          "x": 0,
+          "y": 1
+        },
+        {
+          "vertex": 4,
+          "x": 1,
+          "y": 1
+        },
+        {
+          "vertex": 5,
+          "x": 2,
+          "y": 1
+        },
+        {
+          "vertex": 6,
+          "x": 0,
+          "y": 2
+        },
+        {
+          "vertex": 7,
+          "x": 1,
+          "y": 2
+        },
+        {
+          "vertex": 8,
+          "x": 2,
+          "y": 2
+        }
+      ],
+      "diagonal_convention": "horizontal then vertical: g_pd = g_hd @ g_ph",
+      "native_edges": [
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 0,
+          "target": 1
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 0,
+          "target": 3
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 0,
+          "target": 4
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 1,
+          "target": 2
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 1,
+          "target": 4
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 1,
+          "target": 5
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 2,
+          "target": 0
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 2,
+          "target": 5
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 2,
+          "target": 3
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 3,
+          "target": 4
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 3,
+          "target": 6
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 3,
+          "target": 7
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 4,
+          "target": 5
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 4,
+          "target": 7
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 4,
+          "target": 8
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 5,
+          "target": 3
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 5,
+          "target": 8
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 5,
+          "target": 6
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 6,
+          "target": 7
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "source": 6,
+          "target": 0
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "source": 6,
+          "target": 1
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source": 7,
+          "target": 8
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "source": 7,
+          "target": 1
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "source": 7,
+          "target": 2
+        },
+        {
+          "kind": "horizontal",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 8,
+          "target": 6
+        },
+        {
+          "kind": "vertical",
+          "matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              -1
+            ]
+          ],
+          "source": 8,
+          "target": 2
+        },
+        {
+          "kind": "diagonal_horizontal_then_vertical",
+          "matrix": [
+            [
+              0,
+              1
+            ],
+            [
+              -1,
+              0
+            ]
+          ],
+          "reverse_matrix": [
+            [
+              0,
+              -1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "source": 8,
+          "target": 0
+        }
+      ],
+      "oriented_grid_faces": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          0,
+          4,
+          3
+        ],
+        [
+          1,
+          2,
+          5
+        ],
+        [
+          1,
+          5,
+          4
+        ],
+        [
+          2,
+          0,
+          3
+        ],
+        [
+          2,
+          3,
+          5
+        ],
+        [
+          3,
+          4,
+          7
+        ],
+        [
+          3,
+          7,
+          6
+        ],
+        [
+          4,
+          5,
+          8
+        ],
+        [
+          4,
+          8,
+          7
+        ],
+        [
+          5,
+          3,
+          6
+        ],
+        [
+          5,
+          6,
+          8
+        ],
+        [
+          6,
+          7,
+          1
+        ],
+        [
+          6,
+          1,
+          0
+        ],
+        [
+          7,
+          8,
+          2
+        ],
+        [
+          7,
+          2,
+          1
+        ],
+        [
+          8,
+          6,
+          0
+        ],
+        [
+          8,
+          0,
+          2
+        ]
+      ],
+      "size": 3,
+      "transport_convention": "column vectors; loop i-j-k-i = g_ki @ g_jk @ g_ij",
+      "trivial_control": false
+    },
+    "uncertified": false
+  },
+  {
+    "all_prerequisites_pass": false,
+    "central_model_exists_for_raw_edges": false,
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            -1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            -1,
+            1,
+            -1,
+            1
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ]
+    },
+    "construction_type": "stored_edge_transition_error",
+    "control_id": "noncentral_face_products",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_projected_cochain_trivial": true,
+    "exact_underlying_transition_class_trivial": null,
+    "failed_gates": [
+      "projection_fidelity",
+      "centrality"
+    ],
+    "inapplicable": false,
+    "inverse_residual": 0.0,
+    "minimum_rounding_margin": 1.035276180410083,
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": false,
+      "closure": true,
+      "coefficient_identification": true,
+      "inverse_consistency": true,
+      "projection_fidelity": false,
+      "topology": true,
+      "uncertainty_margin": true
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.0,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 1.414213562373095,
+    "raw_centrality_residual": 1.414213562373095,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 1.414213562373095,
+        "distance_to_minus_identity": 2.449489742783178,
+        "distance_to_plus_identity": 1.414213562373095,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 1.414213562373095,
+        "distance_to_minus_identity": 2.449489742783178,
+        "distance_to_plus_identity": 1.414213562373095,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            -2
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      }
+    ],
+    "target_gate": "centrality",
+    "task_metric_measured": false,
+    "uncertified": true
+  },
+  {
+    "all_prerequisites_pass": false,
+    "central_model_exists_for_raw_edges": false,
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            -1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            -1,
+            1,
+            -1,
+            1
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ]
+    },
+    "construction_type": "stored_edge_transition_error",
+    "control_id": "projection_trap",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_projected_cochain_trivial": true,
+    "exact_underlying_transition_class_trivial": null,
+    "failed_gates": [
+      "projection_fidelity",
+      "centrality",
+      "uncertainty_margin"
+    ],
+    "inapplicable": false,
+    "inverse_residual": 0.0,
+    "minimum_rounding_margin": 0.0,
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": false,
+      "closure": true,
+      "coefficient_identification": true,
+      "inverse_consistency": true,
+      "projection_fidelity": false,
+      "topology": true,
+      "uncertainty_margin": false
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.0,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 1.414213562373095,
+    "projection_warning": "projected centrality zero does not validate raw transitions",
+    "raw_centrality_residual": 1.0,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 1.0,
+        "distance_to_minus_identity": 1.414213562373095,
+        "distance_to_plus_identity": 1.414213562373095,
+        "face": [
+          0,
+          1,
+          2
+        ],
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 1.0,
+        "distance_to_minus_identity": 1.414213562373095,
+        "distance_to_plus_identity": 1.414213562373095,
+        "face": [
+          0,
+          1,
+          3
+        ],
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      }
+    ],
+    "target_gate": "projection_fidelity",
+    "task_metric_measured": false,
+    "uncertified": true
+  },
+  {
+    "all_prerequisites_pass": false,
+    "application_grounded_overlap_model": false,
+    "common_coordinate_model": false,
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            1,
+            0
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            0,
+            1,
+            6
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            2,
+            8
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            6,
+            8
+          ],
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            1,
+            2,
+            7
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            1,
+            6,
+            7
+          ],
+          [
+            2,
+            3,
+            5
+          ],
+          [
+            2,
+            7,
+            8
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            5,
+            6
+          ],
+          [
+            3,
+            6,
+            7
+          ],
+          [
+            4,
+            5,
+            8
+          ],
+          [
+            4,
+            7,
+            8
+          ],
+          [
+            5,
+            6,
+            8
+          ]
+        ]
+      ]
+    },
+    "construction_type": "incompatible_context_coordinate_models",
+    "control_id": "incoherent_coordinate_context",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_projected_cochain_trivial": false,
+    "exact_underlying_transition_class_trivial": null,
+    "failed_gates": [
+      "topology"
+    ],
+    "inapplicable": true,
+    "inverse_residual": 0.0,
+    "measured_shared_edge_dimension_mismatch": true,
+    "minimum_rounding_margin": 2.0,
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": true,
+      "closure": true,
+      "coefficient_identification": true,
+      "inverse_consistency": true,
+      "projection_fidelity": true,
+      "topology": false,
+      "uncertainty_margin": true
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "mu2_exponent": 1
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.23570226039551584,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 0.0,
+    "raw_centrality_residual": 0.0,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 0.0,
+        "distance_to_plus_identity": 2.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "shared_edge_contexts": [
+      {
+        "context": "chart_2d",
+        "dimension": 2,
+        "edge": [
+          0,
+          1
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "context": "chart_3d",
+        "dimension": 3,
+        "edge": [
+          0,
+          1
+        ],
+        "matrix": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 0,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            -1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 8,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 7
+      }
+    ],
+    "target_gate": "topology",
+    "task_metric_measured": false,
+    "uncertified": false
+  },
+  {
+    "all_prerequisites_pass": false,
+    "certified_error_radius": 1.0,
+    "coefficient_minimum_separation": 2.0,
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            -1,
+            0,
+            1,
+            0
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ],
+          [
+            2,
+            8
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            5
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            3,
+            7
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            4,
+            7
+          ],
+          [
+            4,
+            8
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            6,
+            8
+          ],
+          [
+            7,
+            8
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            4
+          ],
+          [
+            0,
+            1,
+            6
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            2,
+            8
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            6,
+            8
+          ],
+          [
+            1,
+            2,
+            5
+          ],
+          [
+            1,
+            2,
+            7
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            1,
+            6,
+            7
+          ],
+          [
+            2,
+            3,
+            5
+          ],
+          [
+            2,
+            7,
+            8
+          ],
+          [
+            3,
+            4,
+            7
+          ],
+          [
+            3,
+            5,
+            6
+          ],
+          [
+            3,
+            6,
+            7
+          ],
+          [
+            4,
+            5,
+            8
+          ],
+          [
+            4,
+            7,
+            8
+          ],
+          [
+            5,
+            6,
+            8
+          ]
+        ]
+      ]
+    },
+    "construction_type": "insufficient_estimator_error_bound",
+    "control_id": "uncertified_radius",
+    "exact_ground_truth_scope": "underlying admissible transition class only when stated; projected cochain truth separate",
+    "exact_latent_finite_model_known_by_construction": true,
+    "exact_projected_cochain_trivial": false,
+    "exact_underlying_transition_class_trivial": false,
+    "failed_gates": [
+      "uncertainty_margin"
+    ],
+    "half_separation_margin": 1.0,
+    "inapplicable": false,
+    "inverse_residual": 0.0,
+    "minimum_rounding_margin": 2.0,
+    "neural_training_performed": false,
+    "prerequisite_flags": {
+      "centrality": true,
+      "closure": true,
+      "coefficient_identification": true,
+      "inverse_consistency": true,
+      "projection_fidelity": true,
+      "topology": true,
+      "uncertainty_margin": false
+    },
+    "projected_centrality_residual": 0.0,
+    "projected_closed_f2": true,
+    "projected_cochain": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "projected_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "mu2_exponent": 1
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      },
+      {
+        "centrality_residual": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "mu2_exponent": 0
+      }
+    ],
+    "projected_real_cochain_distance": 0.23570226039551584,
+    "projected_real_distance_scope": "real-vector metric diagnostic, not a torsion certificate",
+    "projection_fidelity_residual": 0.0,
+    "radius_evidence_type": "supplied valid but non-sharp bound; not a measured neural error",
+    "raw_centrality_residual": 0.0,
+    "raw_face_residuals": [
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          1,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          2,
+          3
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 0.0,
+        "distance_to_plus_identity": 2.0,
+        "face": [
+          0,
+          2,
+          8
+        ],
+        "matrix": [
+          [
+            -1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          3,
+          4
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          0,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          2,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          4,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          1,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          3,
+          5
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          2,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          4,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          5,
+          6
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          3,
+          6,
+          7
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          5,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          4,
+          7,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "centrality_residual": 0.0,
+        "distance_to_minus_identity": 2.0,
+        "distance_to_plus_identity": 0.0,
+        "face": [
+          5,
+          6,
+          8
+        ],
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "status": "controlled_algebraic",
+    "stored_edges": [
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 0,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 0,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            0,
+            -1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 0,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 1,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 1,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 2,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 2,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 2,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 3,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 3,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 4,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 5,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 5,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 6,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 6,
+        "target": 7
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 6,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 1
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 7,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 3
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 7,
+        "target": 8
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            -1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 0
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            -1
+          ]
+        ],
+        "source": 8,
+        "target": 2
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 4
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 5
+      },
+      {
+        "matrix": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "source": 8,
+        "target": 6
+      },
+      {
+        "matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "source": 8,
+        "target": 7
+      }
+    ],
+    "target_gate": "uncertainty_margin",
+    "task_metric_measured": false,
+    "uncertified": true,
+    "underlying_truth_known_by_construction_does_not_certify_estimator": true
+  },
+  {
+    "all_prerequisites_pass": false,
+    "closure_f2": [
+      1
+    ],
+    "closure_integer": [
+      -1
+    ],
+    "closure_residual_norm": 1.0,
+    "construction": {
+      "signed_coboundaries": [
+        [
+          [
+            -1,
+            1,
+            0,
+            0
+          ],
+          [
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            -1,
+            1,
+            0
+          ],
+          [
+            0,
+            -1,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            -1,
+            0,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            -1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            -1,
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            0,
+            0,
+            1,
+            -1,
+            1
+          ]
+        ],
+        [
+          [
+            -1,
+            1,
+            -1,
+            1
+          ]
+        ],
+        []
+      ],
+      "simplices_by_degree": [
+        [
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            1,
+            2,
+            3
+          ]
+        ],
+        [
+          [
+            0,
+            1,
+            2,
+            3
+          ]
+        ]
+      ]
+    },
+    "construction_type": "input_cochain_error",
+    "control_id": "filled_tetrahedron_input_cochain_error",
+    "edge_realizability_asserted": false,
+    "exact_ground_truth_scope": "nonclosed input cochain has no H2 class",
+    "exact_input_cochain_closed": false,
+    "exact_underlying_transition_class_trivial": null,
+    "face_input_cochain": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "failed_gates": [
+      "closure"
+    ],
+    "hodge_real_coexact_energy": 0.25,
+    "hodge_real_distance_squared": 0.24999999999999994,
+    "hodge_real_harmonic_energy": 2.619264724366641e-32,
+    "inapplicable": false,
+    "inverse_residual": null,
+    "neural_training_performed": false,
+    "populated_K3": true,
+    "prerequisite_flags": {
+      "centrality": true,
+      "closure": false,
+      "coefficient_identification": true,
+      "inverse_consistency": true,
+      "projection_fidelity": true,
+      "topology": true,
+      "uncertainty_margin": true
+    },
+    "prerequisite_scope": "all gates except closure are held fixed as valid rule inputs; no underlying G-edge certificate",
+    "projected_centrality_residual": null,
+    "projection_fidelity_residual": null,
+    "raw_centrality_residual": null,
+    "signed_delta2": [
+      [
+        -1,
+        1,
+        -1,
+        1
+      ]
+    ],
+    "status": "controlled_algebraic",
+    "target_gate": "closure",
+    "task_metric_measured": false,
+    "uncertified": true
+  }
+]

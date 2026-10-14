@@ -1,0 +1,9 @@
+........................................................................ [ 91%]
+.......                                                                  [100%]
+=============================== warnings summary ===============================
+tests/test_kbs_revision_baselines.py::test_profiler_and_actual_dispatch_shapes_show_no_ambient_output
+  /Users/tinggong/Documents/GitHub/TwistedMerge/.venv/lib/python3.12/site-packages/torch/profiler/profiler.py:272: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+    _warn_once(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+79 passed, 1 warning in 5.69s

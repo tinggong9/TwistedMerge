@@ -1,0 +1,1 @@
+CPU stage costs: random-factor fixtures on pinned Qwen architecture shapes, three isolated repeats per shape/method, medians with no inferential CI; zero independent neural training groups. Includes cold process and warmup costs. Performance-cost, risk-coverage and new paired-policy plots are blocked because no held-out language outcomes exist.

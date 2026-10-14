@@ -1,0 +1,2146 @@
+{
+  "allocation_profiles": [
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "ambient_shape_output_count": 0,
+      "device": "cpu",
+      "limitation": "Torch-dispatched tensor outputs are instrumented; opaque LAPACK workspace is not a Torch tensor shape",
+      "observed_tensor_outputs": [
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.cat.default",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.cat.default",
+          "shape": [
+            12,
+            1536
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.transpose.int",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.transpose.int",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.mm.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 96,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            4
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.sqrt.default",
+          "shape": [
+            4
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            12,
+            4
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mm.default",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            1536,
+            4
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.unsqueeze.default",
+          "shape": [
+            4,
+            1
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            4,
+            12
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.transpose.int",
+          "shape": [
+            12,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mm.default",
+          "shape": [
+            4,
+            1536
+          ]
+        }
+      ],
+      "output_rank": 4,
+      "passed": true,
+      "profiler_kernels": [
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 785.3900000000003,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 485.14999999999964,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 142352
+        },
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 267.65800000000036,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 250.94999999999982,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 142352
+        },
+        {
+          "cpu_memory_usage_bytes": 1152,
+          "cpu_time_us": 36.082000000000335,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 1152,
+          "cpu_time_us": 23.166000000000167,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 1152
+        },
+        {
+          "cpu_memory_usage_bytes": 2400,
+          "cpu_time_us": 453.1929999999993,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [],
+            [],
+            []
+          ],
+          "operator": "aten::_linalg_svd",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 2400,
+          "cpu_time_us": 410.2359999999999,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [],
+            [],
+            []
+          ],
+          "operator": "aten::_linalg_svd",
+          "self_cpu_memory_usage_bytes": 1244
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 40.2480000000005,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 32.832000000000335,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 49152
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 10.416000000000167,
+          "input_shapes": [
+            [
+              4,
+              12
+            ],
+            [
+              12,
+              1536
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 4.833000000000538,
+          "input_shapes": [
+            [
+              4,
+              12
+            ],
+            [
+              12,
+              1536
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 49152
+        }
+      ],
+      "scope": "total input rank strictly smaller than both ambient dimensions; saturated cores have no ambient-memory guarantee",
+      "status": "controlled_algebraic",
+      "total_input_rank": 12
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "ambient_shape_output_count": 0,
+      "device": "cpu",
+      "limitation": "Torch-dispatched tensor outputs are instrumented; opaque LAPACK workspace is not a Torch tensor shape",
+      "observed_tensor_outputs": [
+        {
+          "bytes": 35840,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 286720,
+          "operator": "aten.abs.default",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 286720,
+          "operator": "aten.abs.default",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 286720,
+          "operator": "aten.abs.default",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 35840,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.eq.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.abs.default",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.ne.Scalar",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 6144,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 1,
+          "operator": "aten.all.default",
+          "shape": []
+        },
+        {
+          "bytes": 860160,
+          "operator": "aten.cat.default",
+          "shape": [
+            8960,
+            12
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            1536
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.cat.default",
+          "shape": [
+            12,
+            1536
+          ]
+        },
+        {
+          "bytes": 860160,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            8960,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.transpose.int",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            1536,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.linalg_qr.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.transpose.int",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten.mm.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 96,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12
+          ]
+        },
+        {
+          "bytes": 1152,
+          "operator": "aten._linalg_svd.default",
+          "shape": [
+            12,
+            12
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            4
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.sqrt.default",
+          "shape": [
+            4
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            12,
+            4
+          ]
+        },
+        {
+          "bytes": 286720,
+          "operator": "aten.mm.default",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 286720,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            8960,
+            4
+          ]
+        },
+        {
+          "bytes": 32,
+          "operator": "aten.unsqueeze.default",
+          "shape": [
+            4,
+            1
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.slice.Tensor",
+          "shape": [
+            4,
+            12
+          ]
+        },
+        {
+          "bytes": 384,
+          "operator": "aten.mul.Tensor",
+          "shape": [
+            4,
+            12
+          ]
+        },
+        {
+          "bytes": 147456,
+          "operator": "aten.transpose.int",
+          "shape": [
+            12,
+            1536
+          ]
+        },
+        {
+          "bytes": 49152,
+          "operator": "aten.mm.default",
+          "shape": [
+            4,
+            1536
+          ]
+        }
+      ],
+      "output_rank": 4,
+      "passed": true,
+      "profiler_kernels": [
+        {
+          "cpu_memory_usage_bytes": 861312,
+          "cpu_time_us": 1141.105,
+          "input_shapes": [
+            [
+              8960,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 861312,
+          "cpu_time_us": 1115.6029999999998,
+          "input_shapes": [
+            [
+              8960,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 855056
+        },
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 221.34500000000025,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 148608,
+          "cpu_time_us": 204.51099999999997,
+          "input_shapes": [
+            [
+              1536,
+              12
+            ],
+            []
+          ],
+          "operator": "aten::linalg_qr",
+          "self_cpu_memory_usage_bytes": 142352
+        },
+        {
+          "cpu_memory_usage_bytes": 1152,
+          "cpu_time_us": 14.541999999999916,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 1152,
+          "cpu_time_us": 6.75,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [
+              12,
+              12
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 1152
+        },
+        {
+          "cpu_memory_usage_bytes": 2400,
+          "cpu_time_us": 87.04599999999982,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [],
+            [],
+            []
+          ],
+          "operator": "aten::_linalg_svd",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 2400,
+          "cpu_time_us": 73.92099999999982,
+          "input_shapes": [
+            [
+              12,
+              12
+            ],
+            [],
+            [],
+            []
+          ],
+          "operator": "aten::_linalg_svd",
+          "self_cpu_memory_usage_bytes": 1244
+        },
+        {
+          "cpu_memory_usage_bytes": 286720,
+          "cpu_time_us": 103.17200000000003,
+          "input_shapes": [
+            [
+              8960,
+              12
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 286720,
+          "cpu_time_us": 95.88000000000011,
+          "input_shapes": [
+            [
+              8960,
+              12
+            ],
+            [
+              12,
+              4
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 286720
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 15.250999999999749,
+          "input_shapes": [
+            [
+              4,
+              12
+            ],
+            [
+              12,
+              1536
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 0
+        },
+        {
+          "cpu_memory_usage_bytes": 49152,
+          "cpu_time_us": 9.416999999999916,
+          "input_shapes": [
+            [
+              4,
+              12
+            ],
+            [
+              12,
+              1536
+            ]
+          ],
+          "operator": "aten::mm",
+          "self_cpu_memory_usage_bytes": 49152
+        }
+      ],
+      "scope": "total input rank strictly smaller than both ambient dimensions; saturated cores have no ambient-memory guarantee",
+      "status": "controlled_algebraic",
+      "total_input_rank": 12
+    }
+  ],
+  "repeats": 3,
+  "rows": [
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199917568,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0015845840025576763,
+      "full_process_wall_seconds": 0.7408307919977233,
+      "incremental_highwater_rss_bytes": 4571136,
+      "merge_seconds": 0.0004796249995706603,
+      "method": "naive_factor_average",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 204488704,
+      "randomized_order": 0,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0012274580003577285,
+      "worker_body_seconds": 0.003298875002656132
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199507968,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.000578582999878563,
+      "full_process_wall_seconds": 0.769261582994659,
+      "incremental_highwater_rss_bytes": 1966080,
+      "merge_seconds": 0.00011770800483645871,
+      "method": "exact_rank_sum",
+      "output_parameters": 36864,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 201474048,
+      "randomized_order": 1,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0002940829945146106,
+      "worker_body_seconds": 0.000996915994619485
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199671808,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0016173749972949736,
+      "full_process_wall_seconds": 0.7469915420006146,
+      "incremental_highwater_rss_bytes": 6651904,
+      "merge_seconds": 0.001674582999839913,
+      "method": "compact_qr_svd",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 206323712,
+      "randomized_order": 2,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.003351500003191177,
+      "worker_body_seconds": 0.0066501250039436854
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199655424,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0005782500011264347,
+      "full_process_wall_seconds": 0.7334550420055166,
+      "incremental_highwater_rss_bytes": 3653632,
+      "merge_seconds": 0.0006367919995682314,
+      "method": "compact_qr_svd",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203309056,
+      "randomized_order": 3,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.001047999998263549,
+      "worker_body_seconds": 0.0022691670019412413
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199639040,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0015232499936246313,
+      "full_process_wall_seconds": 0.7501547499996377,
+      "incremental_highwater_rss_bytes": 6078464,
+      "merge_seconds": 0.0027332079989719205,
+      "method": "global",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 205717504,
+      "randomized_order": 4,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.004883624998910818,
+      "worker_body_seconds": 0.009145249998255167
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199376896,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0015680829965276644,
+      "full_process_wall_seconds": 0.7771022919987445,
+      "incremental_highwater_rss_bytes": 5931008,
+      "merge_seconds": 0.0029643750021932647,
+      "method": "global",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 205307904,
+      "randomized_order": 5,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.004711667002993636,
+      "worker_body_seconds": 0.009250916999008041
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199426048,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.001909999999043066,
+      "full_process_wall_seconds": 0.775821499999438,
+      "incremental_highwater_rss_bytes": 6684672,
+      "merge_seconds": 0.0018385000003036112,
+      "method": "compact_qr_svd",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 206110720,
+      "randomized_order": 6,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0033130419978988357,
+      "worker_body_seconds": 0.007068667000567075
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199278592,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0005842499958816916,
+      "full_process_wall_seconds": 0.7518088750002789,
+      "incremental_highwater_rss_bytes": 2031616,
+      "merge_seconds": 0.00011862500105053186,
+      "method": "naive_factor_average",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 201310208,
+      "randomized_order": 7,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0003014579997397959,
+      "worker_body_seconds": 0.0010099999999511056
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199852032,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0006170419947011396,
+      "full_process_wall_seconds": 0.759551041002851,
+      "incremental_highwater_rss_bytes": 3325952,
+      "merge_seconds": 0.0017333329960820265,
+      "method": "global",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203177984,
+      "randomized_order": 8,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0037570419954136014,
+      "worker_body_seconds": 0.0061121249964344315
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199540736,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0006139999968581833,
+      "full_process_wall_seconds": 0.7762450840018573,
+      "incremental_highwater_rss_bytes": 2031616,
+      "merge_seconds": 0.0001265419996343553,
+      "method": "naive_factor_average",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 201572352,
+      "randomized_order": 9,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0003617910042521544,
+      "worker_body_seconds": 0.0011081249976996332
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199720960,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0005632079992210492,
+      "full_process_wall_seconds": 0.7455876669991994,
+      "incremental_highwater_rss_bytes": 3227648,
+      "merge_seconds": 0.001388500000757631,
+      "method": "global",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 202948608,
+      "randomized_order": 10,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0033899580012075603,
+      "worker_body_seconds": 0.005346332996850833
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199458816,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.000574500001675915,
+      "full_process_wall_seconds": 0.7479870000024675,
+      "incremental_highwater_rss_bytes": 2015232,
+      "merge_seconds": 0.000127875006000977,
+      "method": "naive_factor_average",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 201474048,
+      "randomized_order": 11,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0003299169984529726,
+      "worker_body_seconds": 0.0010383330009062774
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199737344,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.000566458998946473,
+      "full_process_wall_seconds": 0.7527189169995836,
+      "incremental_highwater_rss_bytes": 1916928,
+      "merge_seconds": 0.00011258300219196826,
+      "method": "exact_rank_sum",
+      "output_parameters": 36864,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 201654272,
+      "randomized_order": 12,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.00030379099916899577,
+      "worker_body_seconds": 0.0009894999966491014
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199671808,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0016249170002993196,
+      "full_process_wall_seconds": 0.7630660829963745,
+      "incremental_highwater_rss_bytes": 3571712,
+      "merge_seconds": 0.00041799999598879367,
+      "method": "exact_rank_sum",
+      "output_parameters": 125952,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 203243520,
+      "randomized_order": 13,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0007718330016359687,
+      "worker_body_seconds": 0.002821333000611048
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199557120,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0015922500024316832,
+      "full_process_wall_seconds": 0.7324575000020559,
+      "incremental_highwater_rss_bytes": 3538944,
+      "merge_seconds": 0.0004230409977026284,
+      "method": "exact_rank_sum",
+      "output_parameters": 125952,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 203096064,
+      "randomized_order": 14,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0007620830001542345,
+      "worker_body_seconds": 0.002783583004202228
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199458816,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.001509250003437046,
+      "full_process_wall_seconds": 0.7450278329997673,
+      "incremental_highwater_rss_bytes": 6651904,
+      "merge_seconds": 0.0017307079979218543,
+      "method": "compact_qr_svd",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 206110720,
+      "randomized_order": 15,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0023958749952726066,
+      "worker_body_seconds": 0.0056397920052404515
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 178487296,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0007945839970489033,
+      "full_process_wall_seconds": 1.425631666003028,
+      "incremental_highwater_rss_bytes": 0,
+      "merge_seconds": 0.00011829200229840353,
+      "method": "exact_rank_sum",
+      "output_parameters": 36864,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 178487296,
+      "randomized_order": 16,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0006527919977088459,
+      "worker_body_seconds": 0.0015728750004200265
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199737344,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.001602791999175679,
+      "full_process_wall_seconds": 0.7936514579996583,
+      "incremental_highwater_rss_bytes": 3932160,
+      "merge_seconds": 0.000353082999936305,
+      "method": "naive_factor_average",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203669504,
+      "randomized_order": 17,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.000744791999750305,
+      "worker_body_seconds": 0.002707667001232039
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199344128,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0016744590029702522,
+      "full_process_wall_seconds": 0.8498018329992192,
+      "incremental_highwater_rss_bytes": 6111232,
+      "merge_seconds": 0.002798417001031339,
+      "method": "global",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 205455360,
+      "randomized_order": 18,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.005007957995985635,
+      "worker_body_seconds": 0.009486500006460119
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199442432,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0006382080027833581,
+      "full_process_wall_seconds": 0.8244412089989055,
+      "incremental_highwater_rss_bytes": 3686400,
+      "merge_seconds": 0.0006349999966914766,
+      "method": "compact_qr_svd",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203128832,
+      "randomized_order": 19,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.001179165999928955,
+      "worker_body_seconds": 0.002456667003571056
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199278592,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "naive_factor_average",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0016869580067577772,
+      "full_process_wall_seconds": 0.8022017080002115,
+      "incremental_highwater_rss_bytes": 3981312,
+      "merge_seconds": 0.00035724999906960875,
+      "method": "naive_factor_average",
+      "output_parameters": 41984,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203259904,
+      "randomized_order": 20,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0007744579997961409,
+      "worker_body_seconds": 0.0028252080010133795
+    },
+    {
+      "ambient_shape": [
+        8960,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199589888,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "exact_rank_sum",
+        "8960",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.001556541996251326,
+      "full_process_wall_seconds": 0.7695647910004482,
+      "incremental_highwater_rss_bytes": 3555328,
+      "merge_seconds": 0.000513040999067016,
+      "method": "exact_rank_sum",
+      "output_parameters": 125952,
+      "output_rank": 12,
+      "peak_process_rss_bytes": 203145216,
+      "randomized_order": 21,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 0,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.000861624997924082,
+      "worker_body_seconds": 0.00293970899656415
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 187711488,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "global",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0007836670047254302,
+      "full_process_wall_seconds": 0.8705763329999172,
+      "incremental_highwater_rss_bytes": 1851392,
+      "merge_seconds": 0.0016357499989680946,
+      "method": "global",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 189562880,
+      "randomized_order": 22,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 2,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.00478925000061281,
+      "worker_body_seconds": 0.007214582998130936
+    },
+    {
+      "ambient_shape": [
+        1536,
+        1536
+      ],
+      "baseline_peak_rss_bytes": 199589888,
+      "command": [
+        "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+        "-m",
+        "src.kbs_revision.merge_baselines",
+        "--timing-worker",
+        "compact_qr_svd",
+        "1536",
+        "1536"
+      ],
+      "device": "cpu",
+      "dtype": "float64",
+      "fixture_seconds": 0.0006677919955109246,
+      "full_process_wall_seconds": 0.8049051669950131,
+      "incremental_highwater_rss_bytes": 3702784,
+      "merge_seconds": 0.0006305830029305071,
+      "method": "compact_qr_svd",
+      "output_parameters": 12288,
+      "output_rank": 4,
+      "peak_process_rss_bytes": 203292672,
+      "randomized_order": 23,
+      "ranks": [
+        4,
+        4,
+        4
+      ],
+      "repeat": 1,
+      "status": "controlled_algebraic",
+      "threads": 2,
+      "warmup_seconds": 0.0011226660062675364,
+      "worker_body_seconds": 0.0024250419955933467
+    }
+  ],
+  "rss_definition": "process ru_maxrss; incremental highwater difference from post-Torch-import baseline; includes warmup; may be zero because prior runtime allocation set the highwater",
+  "scope": "CPU random-factor algebra systems smoke; includes cold runtime/import/process overhead; no GPU, model-loading, inference, or modern-model speedup claim",
+  "seed": 719,
+  "shape_source": {
+    "dense_reference": "only small correctness/timing fixtures; not allocated for architecture-shaped panel",
+    "model": "Qwen/Qwen2.5-1.5B",
+    "revision": "8faed761d45a263340a0528343f099c05c9a4323",
+    "shapes": {
+      "mlp_up_projection": [
+        8960,
+        1536
+      ],
+      "square_attention_output": [
+        1536,
+        1536
+      ]
+    },
+    "trained_factors": false
+  },
+  "status": "controlled_algebraic",
+  "timing_definition": "one warmup then one measured merge per fresh process; merge_seconds includes validation, update materialization where required, whitening, alignment, synchronization, compression; warmup includes method imports; fixture, warmup, worker-body, full process costs reported separately; TIES/DARE return dense updates without rank compression"
+}

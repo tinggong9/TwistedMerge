@@ -1,0 +1,11 @@
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "inventory", "--out", "reports/kbs_revision/20261014T095143Z"]
+- Inventory completed; model files and pickled checkpoints were not executed.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "verify", "--out", "reports/kbs_revision/20261014T095143Z"]
+- CPU algebra and baseline parity executed. Gate-rule fixtures carry no neural task metrics.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "pilot", "--config", "configs/kbs_revision/pilot.yaml", "--out", "reports/kbs_revision/20261014T095143Z"]
+- Language pilot readiness failed (25 explicit blockers); no test data accessed.
+- Command: ["/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python", "experiments/kbs_revision.py", "report", "--out", "reports/kbs_revision/20261014T095143Z"]
+- Reports/tables/figures exported from measured CPU and historical records only.
+- Focused tests: .venv/bin/python -m pytest -q tests/test_kbs_revision_baselines.py tests/test_kbs_revision_certificates.py tests/test_kbs_revision_inventory.py tests/test_kbs_revision_protocol.py tests/test_kbs_revision_reporting.py tests/test_lora_gauge_alignment.py tests/test_lora_factor_space_scalability.py tests/test_real_lora_gauge_stability.py tests/test_twistedmerge_hodge_lr.py tests/test_holonomy_brauer_certificate.py; 79 passed.
+- Earlier test invocation included nonexistent test_brauer_cocycle_fit.py, exited 4 without running tests; corrected to discovered test_holonomy_brauer_certificate.py.
+- Plot inspected visually; readable labels and complete CPU stage legend.

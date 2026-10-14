@@ -1,0 +1,7 @@
+{
+  "device": "cpu",
+  "gpu_seconds": 0,
+  "phase": "controlled_algebraic",
+  "scope": "CPU correctness and rule fixtures only; excludes preceding inventory, tests and reporting",
+  "wall_seconds": 38.535338417001185
+}
