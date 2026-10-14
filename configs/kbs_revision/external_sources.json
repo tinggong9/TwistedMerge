@@ -1,0 +1,554 @@
+{
+  "access_mode": "Unauthenticated read-only metadata and source text; no model downloads or execution",
+  "checked_utc": "2026-10-14T09:59:14.091404+00:00",
+  "literature_sources": [
+    {
+      "browser_access": "accessible",
+      "title": "KnOTS ICLR 2025",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/0d4f8a5109c5083b5307fcd0bddae7a7-Abstract-Conference.html"
+    },
+    {
+      "browser_access": "accessible",
+      "title": "Core Space NeurIPS 2025, arXiv v4",
+      "url": "https://arxiv.org/abs/2509.17786v4"
+    },
+    {
+      "browser_access": "accessible",
+      "operator_warning": "Factorwise linear/TIES names do not imply effective-update Task Arithmetic/TIES parity.",
+      "title": "PEFT merging documentation",
+      "url": "https://huggingface.co/blog/peft_merging"
+    },
+    {
+      "browser_access": "challenge_blocked; repository README/source accessible",
+      "title": "Beyond Pairwise Hodge",
+      "url": "https://openreview.net/forum?id=5IsDyRzKks"
+    },
+    {
+      "browser_access": "accessible",
+      "title": "Learn then Test",
+      "url": "https://arxiv.org/abs/2110.01052"
+    },
+    {
+      "browser_access": "blocked_internal_error",
+      "title": "KBS author guide",
+      "url": "https://www.sciencedirect.com/journal/knowledge-based-systems/publish/guide-for-authors"
+    }
+  ],
+  "models": [
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/meta-llama/Meta-Llama-3-8B",
+      "available_files": [
+        ".gitattributes",
+        "LICENSE",
+        "README.md",
+        "USE_POLICY.md",
+        "config.json",
+        "generation_config.json",
+        "model-00001-of-00004.safetensors",
+        "model-00002-of-00004.safetensors",
+        "model-00003-of-00004.safetensors",
+        "model-00004-of-00004.safetensors",
+        "model.safetensors.index.json",
+        "original/consolidated.00.pth",
+        "original/params.json",
+        "original/tokenizer.model",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ],
+      "gated": "manual",
+      "license": "llama3",
+      "model_id": "meta-llama/Meta-Llama-3-8B",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "8cde5ca8380496c9a6cc7ef3a8b46a0372a1d920",
+      "url": "https://huggingface.co/meta-llama/Meta-Llama-3-8B",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/Qwen/Qwen2.5-1.5B",
+      "available_files": [
+        ".gitattributes",
+        "LICENSE",
+        "README.md",
+        "config.json",
+        "generation_config.json",
+        "merges.txt",
+        "model.safetensors",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "vocab.json"
+      ],
+      "config": {
+        "architectures": [
+          "Qwen2ForCausalLM"
+        ],
+        "attention_dropout": 0.0,
+        "bos_token_id": 151643,
+        "eos_token_id": 151643,
+        "hidden_act": "silu",
+        "hidden_size": 1536,
+        "initializer_range": 0.02,
+        "intermediate_size": 8960,
+        "max_position_embeddings": 131072,
+        "max_window_layers": 28,
+        "model_type": "qwen2",
+        "num_attention_heads": 12,
+        "num_hidden_layers": 28,
+        "num_key_value_heads": 2,
+        "rms_norm_eps": 1e-06,
+        "rope_theta": 1000000.0,
+        "sliding_window": 131072,
+        "tie_word_embeddings": true,
+        "torch_dtype": "bfloat16",
+        "transformers_version": "4.40.1",
+        "use_cache": true,
+        "use_mrope": false,
+        "use_sliding_window": false,
+        "vocab_size": 151936
+      },
+      "config_sha256": "0e8c8aa86468aba09c9d32157ff4bc2301c7e6c50e4398960425b2ea71e66f77",
+      "config_url": "https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/8faed761d45a263340a0528343f099c05c9a4323/config.json",
+      "gated": false,
+      "license": "apache-2.0",
+      "model_id": "Qwen/Qwen2.5-1.5B",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "8faed761d45a263340a0528343f099c05c9a4323",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_snli",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_snli/resolve/10335f51d913b376b81f07bd9a17f38fc73727cf/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_snli",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "10335f51d913b376b81f07bd9a17f38fc73727cf",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_snli",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_mnli",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_mnli/resolve/962c70ebc7382f07093b5e3c965d755b89ded6d6/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_mnli",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "962c70ebc7382f07093b5e3c965d755b89ded6d6",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_mnli",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_sick",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_sick/resolve/89a35afd6570e3666875923f6444a91028198783/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_sick",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "89a35afd6570e3666875923f6444a91028198783",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_sick",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_qnli",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_qnli/resolve/52af9dacf2f707228fe4124790ab8e0cbf2161ea/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_qnli",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "52af9dacf2f707228fe4124790ab8e0cbf2161ea",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_qnli",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_rte",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_rte/resolve/9bc8e2e5482b0047ee66a12aad442f76440a8ad3/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_rte",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "9bc8e2e5482b0047ee66a12aad442f76440a8ad3",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_rte",
+      "weights_downloaded": false
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://huggingface.co/api/models/hoffman-lab/KnOTS-Llama3_8B_lora_R16_scitail",
+      "available_files": [
+        ".gitattributes",
+        "README.md",
+        "adapter_config.json",
+        "adapter_model.bin"
+      ],
+      "config": {
+        "base_model_name_or_path": "meta-llama/Meta-Llama-3-8B",
+        "bias": "none",
+        "fan_in_fan_out": false,
+        "inference_mode": true,
+        "init_lora_weights": true,
+        "lora_alpha": 16,
+        "lora_dropout": 0.1,
+        "modules_to_save": null,
+        "peft_type": "LORA",
+        "r": 16,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "task_type": "SEQ_CLS"
+      },
+      "config_sha256": "0fdce029725f239b70af2430fa95cadfb5c0b9b7a35f59b13857af224b2ea310",
+      "config_url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_scitail/resolve/698204c50d50b90b25d85e2db7ffdef5da03b75a/adapter_config.json",
+      "gated": false,
+      "license": null,
+      "limitation": "One released cohort, no independent training-seed provenance; adapter card license unspecified; only pickle adapter weights listed; classifier/head/tokenizer conventions require explicit parity review.",
+      "model_id": "hoffman-lab/KnOTS-Llama3_8B_lora_R16_scitail",
+      "private": false,
+      "remote_code_executed": false,
+      "revision": "698204c50d50b90b25d85e2db7ffdef5da03b75a",
+      "url": "https://huggingface.co/hoffman-lab/KnOTS-Llama3_8B_lora_R16_scitail",
+      "weights_downloaded": false
+    }
+  ],
+  "official_language_setup": {
+    "base_model": "meta-llama/Meta-Llama-3-8B",
+    "core_space_language_config_default": "full-space task vectors, not automatically core-space TIES",
+    "lora_alpha": 16,
+    "lora_dropout": 0.1,
+    "rank": 16,
+    "reason": "Base license/access and adapter licenses/head provenance unresolved; no compatible local cached cohort or official parity run.",
+    "status": "blocked",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "tasks": [
+      "snli",
+      "mnli",
+      "sick",
+      "qnli",
+      "rte",
+      "scitail"
+    ]
+  },
+  "repositories": [
+    {
+      "api_accessible": true,
+      "api_url": "https://api.github.com/repos/gstoica27/KnOTS",
+      "commit": "baa35e85768b8841820d35edc3e41b25304248c5",
+      "commit_api_url": "https://api.github.com/repos/gstoica27/KnOTS/commits?per_page=1",
+      "configuration_paths": [
+        "configs/8vision_train.py",
+        "configs/README.md",
+        "configs/__init__.py",
+        "configs/llama8B_r16_dare_ties.py",
+        "configs/llama8B_r16_knots_dare_ties.py",
+        "configs/llama8B_r16_knots_ties.py",
+        "configs/llama8B_r16_ties.py",
+        "configs/llama8B_r16_tv.py",
+        "configs/vitB_r16_dare_ties.py",
+        "configs/vitB_r16_knots_dare_ties.py",
+        "configs/vitB_r16_knots_ties.py",
+        "configs/vitB_r16_ties.py",
+        "configs/vitB_r16_tv.py",
+        "configs/vitL_r16_dare_ties.py",
+        "configs/vitL_r16_knots_dare_ties.py",
+        "configs/vitL_r16_knots_ties.py",
+        "configs/vitL_r16_ties.py",
+        "configs/vitL_r16_tv.py"
+      ],
+      "integration_status": "not_integrated",
+      "license": "MIT",
+      "limitation": "Source/configuration review only; no official execution or parity-tested adaptation is claimed.",
+      "remote_code_executed": false,
+      "repository": "gstoica27/KnOTS",
+      "reviewed_source_files": [
+        {
+          "accessible": true,
+          "bytes": 1070,
+          "path": "LICENSE",
+          "sha256": "c73fa719d4730c6614fb7423659144f57d28a5b358b7ba1e7d41cfaed62bddd7",
+          "url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/LICENSE"
+        },
+        {
+          "accessible": true,
+          "bytes": 2614,
+          "path": "configs/llama8B_r16_knots_ties.py",
+          "sha256": "a2c3d5463b51c59b140d3e217fccea05855fe3698f54ecf1ed7319ab9470bba5",
+          "url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/configs/llama8B_r16_knots_ties.py"
+        },
+        {
+          "accessible": true,
+          "bytes": 6288,
+          "path": "training_scripts/nli_training.py",
+          "sha256": "607761e22e26ff2797b65c0a8b2c41c1e8381929d37d0d9c4b134aead4a87a15",
+          "url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/training_scripts/nli_training.py"
+        },
+        {
+          "accessible": true,
+          "bytes": 19726,
+          "path": "task_merger.py",
+          "sha256": "12d32c867cb7826cb182ea5a8e60e77f602e76a98a232e915539e3ecd2a336c4",
+          "url": "https://raw.githubusercontent.com/gstoica27/KnOTS/baa35e85768b8841820d35edc3e41b25304248c5/task_merger.py"
+        }
+      ],
+      "url": "https://github.com/gstoica27/KnOTS"
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://api.github.com/repos/apanariello4/core-space-merging",
+      "commit": "c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0",
+      "commit_api_url": "https://api.github.com/repos/apanariello4/core-space-merging/commits?per_page=1",
+      "configuration_paths": [
+        "configs/8vision_train.py",
+        "configs/README.md",
+        "configs/__init__.py",
+        "configs/llama8B_r16_tv.py",
+        "configs/vitB_r16_core_tsv.py",
+        "configs/vitB_r16_full_dare_ties.py",
+        "configs/vitB_r16_knots_ties_iso.py",
+        "configs/vitB_r16_linearsearch_universal.py"
+      ],
+      "integration_status": "not_integrated",
+      "license": "Apache-2.0",
+      "limitation": "Source/configuration review only; no official execution or parity-tested adaptation is claimed.",
+      "remote_code_executed": false,
+      "repository": "apanariello4/core-space-merging",
+      "reviewed_source_files": [
+        {
+          "accessible": true,
+          "bytes": 11326,
+          "path": "LICENSE",
+          "sha256": "4197e22b0601b2d2cee6b98a0284fdd531b9ba5b24536a8ef40ee62eca6e1494",
+          "url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/LICENSE"
+        },
+        {
+          "accessible": true,
+          "bytes": 2390,
+          "path": "configs/llama8B_r16_tv.py",
+          "sha256": "f53f65776c423c1611bf88eafcf2123b86c1b4cbbf9561c62797bad3813d39fd",
+          "url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/configs/llama8B_r16_tv.py"
+        },
+        {
+          "accessible": true,
+          "bytes": 32431,
+          "path": "task_merger.py",
+          "sha256": "61f253d8e0c2e5c343723b62421bca3da84e3c163cfff1d787c1fff9842274db",
+          "url": "https://raw.githubusercontent.com/apanariello4/core-space-merging/c8c0f69dd4587eaefce61414dc6ac26ee5ad31f0/task_merger.py"
+        }
+      ],
+      "url": "https://github.com/apanariello4/core-space-merging"
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://api.github.com/repos/ContinuumCoder/Higher-Order-Model-Merge",
+      "commit": "fa714082b3d46a803df03e362dd09dc97cb1a425",
+      "commit_api_url": "https://api.github.com/repos/ContinuumCoder/Higher-Order-Model-Merge/commits?per_page=1",
+      "configuration_paths": [],
+      "integration_status": "not_integrated",
+      "license": null,
+      "limitation": "Source/configuration review only; no official execution or parity-tested adaptation is claimed.",
+      "remote_code_executed": false,
+      "repository": "ContinuumCoder/Higher-Order-Model-Merge",
+      "reviewed_source_files": [
+        {
+          "accessible": true,
+          "bytes": 3415,
+          "path": "README.md",
+          "sha256": "30aed42e38d0bf836364b7b2899027cd3b8b5c559d7da9828510d59547ea55ba",
+          "url": "https://raw.githubusercontent.com/ContinuumCoder/Higher-Order-Model-Merge/fa714082b3d46a803df03e362dd09dc97cb1a425/README.md"
+        },
+        {
+          "accessible": true,
+          "bytes": 13434,
+          "path": "src/topology/hodge.py",
+          "sha256": "138180620dfec0fd6cb2a49b88bca112737ce9f95e2087b752a80225fb8435ce",
+          "url": "https://raw.githubusercontent.com/ContinuumCoder/Higher-Order-Model-Merge/fa714082b3d46a803df03e362dd09dc97cb1a425/src/topology/hodge.py"
+        }
+      ],
+      "url": "https://github.com/ContinuumCoder/Higher-Order-Model-Merge"
+    },
+    {
+      "api_accessible": true,
+      "api_url": "https://api.github.com/repos/huggingface/peft",
+      "commit": "20f82b52cb690b249cb90cbab43af49d005ab510",
+      "commit_api_url": "https://api.github.com/repos/huggingface/peft/commits?per_page=1",
+      "configuration_paths": [],
+      "integration_status": "not_integrated",
+      "license": "Apache-2.0",
+      "limitation": "Source/configuration review only; no official execution or parity-tested adaptation is claimed.",
+      "remote_code_executed": false,
+      "repository": "huggingface/peft",
+      "reviewed_source_files": [
+        {
+          "accessible": true,
+          "bytes": 11357,
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "url": "https://raw.githubusercontent.com/huggingface/peft/20f82b52cb690b249cb90cbab43af49d005ab510/LICENSE"
+        },
+        {
+          "accessible": true,
+          "bytes": 68467,
+          "path": "src/peft/tuners/lora/model.py",
+          "sha256": "3c3cba3e4ef89966e2116c1b999acc7df537a64bf63421adaa4d040dc47d0072",
+          "url": "https://raw.githubusercontent.com/huggingface/peft/20f82b52cb690b249cb90cbab43af49d005ab510/src/peft/tuners/lora/model.py"
+        }
+      ],
+      "url": "https://github.com/huggingface/peft"
+    }
+  ]
+}
