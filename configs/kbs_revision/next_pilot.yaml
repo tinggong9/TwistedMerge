@@ -1,0 +1,38 @@
+phase: pilot
+backend: modern_language_v1
+model:
+  id: Qwen/Qwen2.5-1.5B
+  revision: 8faed761d45a263340a0528343f099c05c9a4323
+  local_path: null
+  license: Apache-2.0
+  license_reviewed: true
+model_manifest_path: null
+split_manifest_path: null
+tasks: [BoolQ, PIQA, ARC-Challenge, GSM8K]
+adapter_ranks: [8, 16]
+target_modules: [q_proj, k_proj, v_proj, o_proj]
+groups: 1
+adapters: []
+episodes: []
+splits: {}
+resource_limits:
+  cpu_seconds: 1800
+  pilot_accelerator_hours: 8
+  total_accelerator_hours: 48
+  disk_bytes: 200000000
+  note: stricter current local cap following user request to conserve resources; no suitable GPU was supplied
+endpoints:
+  efficacy: paired macro bounded task-error difference P4-P0 and P4-P1 on original factors
+  efficiency: complete loading, preparation, merging and selection costs; inference separately
+  task_losses: {BoolQ: 1-accuracy, PIQA: 1-accuracy, ARC-Challenge: 1-accuracy, GSM8K: 1-exact-match}
+  task_weights: {BoolQ: 0.25, PIQA: 0.25, ARC-Challenge: 0.25, GSM8K: 0.25}
+  primary_comparisons: [P4-P0, P4-P1]
+  multiplicity: Holm familywise alpha=0.05
+  statistical_unit: independently trained group; no software fixtures count
+  claim_noninferiority: false
+  noninferiority_justification: null
+baselines: {}
+candidate_methods: [compact_qr_svd, dense_reference_svd, exact_concatenation, task_arithmetic, ties, dare_ties, naive_factor_average, pairwise_alignment, global_synchronization, knots, core_space]
+fallback: compact_qr_svd
+policies: [P0, P1, P2, P3, P4]
+test_access: false

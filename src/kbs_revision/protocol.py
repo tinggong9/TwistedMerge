@@ -12,7 +12,7 @@ ROLES = ("train", "pilot", "D_K", "D_align", "D_cert", "D_select", "D_test")
 METHODS = ("base", "specialists", "task_arithmetic", "compact_qr_svd", "dense_reference_svd",
            "exact_concatenation", "naive_factor_average", "pairwise_alignment", "global_synchronization",
            "ties", "dare_ties", "knots", "core_space")
-IMPLEMENTED_NEURAL_BACKENDS = frozenset()
+IMPLEMENTED_NEURAL_BACKENDS = frozenset({"modern_language_v1"})
 
 
 def canonical_bytes(value):
@@ -83,9 +83,11 @@ def readiness_errors(config, root):
         errors.append("model license not recorded/reviewed")
     endpoints = config.get("endpoints", {})
     for field in ("efficacy", "efficiency", "task_losses", "task_weights", "primary_comparisons",
-                  "multiplicity", "statistical_unit", "noninferiority_justification"):
+                  "multiplicity", "statistical_unit"):
         if not endpoints.get(field):
             errors.append(f"missing primary analysis definition: {field}")
+    if endpoints.get("claim_noninferiority") and not endpoints.get("noninferiority_justification"):
+        errors.append("noninferiority claim lacks a task-specific justification")
     tasks = config.get("tasks", [])
     weights = endpoints.get("task_weights", {})
     if len(tasks) < 4 or set(weights) != set(tasks) or any(w != 1 / len(tasks) for w in weights.values()):
@@ -104,12 +106,40 @@ def readiness_errors(config, root):
             errors.append(f"unresolved baseline: {method}")
     if config.get("backend") not in IMPLEMENTED_NEURAL_BACKENDS:
         errors.append("no implemented modern language execution backend")
-    adapters = config.get("adapters", [])
+    if config.get("backend") == "modern_language_v1":
+        model_manifest_path = config.get("model_manifest_path")
+        if not model_manifest_path or not (Path(root) / model_manifest_path).is_file():
+            errors.append("missing validated model/tokenizer manifest")
+        else:
+            try:
+                from .language_backend import validate_base_manifest
+                value = json.loads((Path(root) / model_manifest_path).read_text())
+                validate_base_manifest(Path(root) / model["local_path"], value)
+            except (ValueError, KeyError, TypeError, OSError) as error:
+                errors.append(f"invalid model manifest: {error}")
+        split_manifest_path = config.get("split_manifest_path")
+        if not split_manifest_path or not (Path(root) / split_manifest_path).is_file():
+            errors.append("missing actual seven-role split manifest")
+        else:
+            from .task_data import validate_split_manifest
+            errors += validate_split_manifest(Path(root) / split_manifest_path)
+            manifest_data = json.loads((Path(root) / split_manifest_path).read_text())
+            if manifest_data.get("not_benchmark_evidence"):
+                errors.append("software-only splits cannot enter the real language protocol")
+    adapters = config.get("adapters", []) or [spec for episode in config.get("episodes", []) for spec in episode.get("adapters", [])]
     if not adapters:
         errors.append("no compatible multilayer trained adapters")
     groups = set()
     for adapter in adapters:
         groups.add(adapter.get("group_id"))
+        if config.get("backend") == "modern_language_v1":
+            try:
+                from .language_backend import validate_adapter_manifest
+                base_manifest = json.loads((Path(root) / config["model_manifest_path"]).read_text())
+                validate_adapter_manifest(Path(root) / adapter["path"], adapter, base_manifest)
+            except (ValueError, KeyError, TypeError, OSError) as error:
+                errors.append(f"invalid compatible adapter: {error}")
+            continue
         for field in ("group_id", "training_seed", "task_id", "base_model_revision", "rank", "scale",
                       "target_modules", "orientation", "tokenizer_revision", "head_convention"):
             if adapter.get(field) is None:
@@ -121,7 +151,19 @@ def readiness_errors(config, root):
             errors.append("missing/hash-mismatched trained adapter")
     if config.get("phase") == "confirmatory" and (None in groups or len(groups) < 5):
         errors.append("confirmatory inference requires at least five independent training groups")
-    errors += split_errors(config.get("splits", {}), root)
+    if config.get("backend") != "modern_language_v1":
+        errors += split_errors(config.get("splits", {}), root)
+    else:
+        from .resource_guard import preflight
+        errors += preflight(config, root)
+    if config.get("phase") == "confirmatory":
+        decision = config.get("pilot_decision_path")
+        if not decision or not (Path(root) / decision).is_file():
+            errors.append("confirmatory protocol requires a real pilot GO receipt")
+        else:
+            result = json.loads((Path(root) / decision).read_text())
+            if result.get("decision") != "GO" or result.get("software_only") is not False:
+                errors.append("software-only or non-GO pilot cannot authorize confirmatory protocol")
     return sorted(set(errors))
 
 
@@ -135,7 +177,13 @@ def freeze(config, root, out):
     # Exclusive creation makes preregistration immutable.
     with (out / "preregistration.yaml").open("xb") as handle:
         handle.write(encoded)  # JSON is also valid YAML.
-    (out / "preregistration.sha256").write_text(hashlib.sha256(encoded).hexdigest() + "\n")
+    with (out / "preregistration.sha256").open("x") as handle:
+        handle.write(hashlib.sha256(encoded).hexdigest() + "\n")
+    if config.get("phase") == "confirmatory":
+        from .neural_runner import atomic_json, source_fingerprint
+        atomic_json(out / "freeze_manifest.json", {"config_sha256": digest(config), "source_hashes": source_fingerprint(root),
+            "pilot_decision": "GO", "software_only": False,
+            "pilot_decision_sha256": file_hash(Path(root) / config["pilot_decision_path"])})
 
 
 def check_frozen(config_path, out):

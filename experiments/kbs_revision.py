@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """KBS revision verification, readiness audit and immutable reporting CLI.
 
-The initial implementation executes CPU algebra and historical reanalysis.
-Modern language training/evaluation is explicitly blocked, never simulated.
+Executes CPU algebra, safe local multilayer language training/evaluation, and
+readiness checks. Tiny software fixtures are distinct from research pilots.
 """
 from __future__ import annotations
 
@@ -64,13 +64,25 @@ def verify_command(out):
     log(out, "CPU algebra and baseline parity executed. Gate-rule fixtures carry no neural task metrics.")
 
 
-def pilot_command(out, config_path):
+def pilot_command(out, config_path, *, resume=False):
     config = load_config(config_path)
     errors = readiness_errors(config, ROOT)
     if not errors:
-        raise ValueError("modern language backend must be implemented before pilot execution")
-    write_once(out / "pilot" / "readiness.json", {"phase": "blocked", "config": config,
-               "blockers": errors, "training_executed": False, "final_test_accessed": False})
+        from src.kbs_revision.neural_runner import execute_config
+        results = execute_config(config, out / "pilot" / "episodes", root=ROOT, resume=resume)
+        if not (out / "pilot" / "results.json").exists():
+            write_once(out / "pilot" / "results.json", results)
+        elif not resume:
+            raise FileExistsError("pilot results already exist")
+        log(out, "Real local language pilot completed; final test was not evaluated.")
+        return 0
+    value = {"phase": "blocked", "config": config, "blockers": errors, "training_executed": False, "final_test_accessed": False}
+    existing = out / "pilot" / "readiness.json"
+    if existing.exists() and resume:
+        if json.loads(existing.read_text()) != value:
+            raise ValueError("readiness/configuration changed; use a fresh run")
+    else:
+        write_once(existing, value)
     log(out, f"Language pilot readiness failed ({len(errors)} explicit blockers); no test data accessed.")
     return 2
 
@@ -90,7 +102,10 @@ def flatten(value, prefix=""):
 
 
 def report_command(out):
-    from src.kbs_revision.reporting import report
+    if (out / "software_integration.json").is_file():
+        from src.kbs_revision.neural_reporting import report
+    else:
+        from src.kbs_revision.reporting import report
     report(ROOT, out)
     log(out, "Reports/tables/figures exported from measured CPU and historical records only.")
     manifest(out)
@@ -98,7 +113,7 @@ def report_command(out):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("inventory", "verify", "pilot", "freeze", "run", "report"))
+    parser.add_argument("command", choices=("inventory", "verify", "pilot", "freeze", "run", "report", "backend-smoke", "prepare-splits", "train-cohort"))
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--resume", action="store_true")
@@ -109,7 +124,7 @@ def main(argv=None):
                           "readiness_errors": readiness_errors(load_config(args.config), ROOT) if args.config else [],
                           "writes": False}, indent=2))
         return 0
-    if args.command in ("pilot", "freeze", "run") and args.config is None:
+    if args.command in ("pilot", "freeze", "run", "prepare-splits", "train-cohort") and args.config is None:
         parser.error("this command requires --config")
     out = args.out.resolve()
     if args.command == "inventory" and out.exists() and any(out.iterdir()):
@@ -125,7 +140,7 @@ def main(argv=None):
             parser.error("create budget.yaml before verification")
         verify_command(out)
     elif args.command == "pilot":
-        return pilot_command(out, args.config)
+        return pilot_command(out, args.config, resume=args.resume)
     elif args.command == "freeze":
         freeze(load_config(args.config), ROOT, out)
     elif args.command == "run":
@@ -133,8 +148,18 @@ def main(argv=None):
         errors = readiness_errors(config, ROOT)
         if errors:
             raise ValueError("run blocked: " + "; ".join(errors))
-        # A matching hash alone is not evidence that evaluation executed.
-        raise ValueError("modern language execution backend unavailable; no completion artifact written")
+        from src.kbs_revision.neural_runner import execute_config
+        execute_config(config, out, root=ROOT, resume=args.resume)
+    elif args.command == "backend-smoke":
+        from src.kbs_revision.neural_driver import software_smoke
+        software_smoke(out, ROOT)
+        log(out, "Software-only two-block backend and four-task candidate/policy panel executed; no research test evaluation.")
+    elif args.command == "prepare-splits":
+        from src.kbs_revision.neural_driver import prepare_local_splits
+        prepare_local_splits(args.config, out / "splits", ROOT)
+    elif args.command == "train-cohort":
+        from src.kbs_revision.neural_driver import train_cohort
+        train_cohort(args.config, out / "cohort", ROOT)
     elif args.command == "report":
         report_command(out)
     return 0
