@@ -1,0 +1,67 @@
+{
+  "adapter_factor_hashes": [
+    [
+      "3fa4afc3a68b57aa73c85b6df682a5677e019bf79451b6eef14a5ea2b3d19b17",
+      "dd82939a65c60bd768fd25d98a47ca246cd1a7bfa01d1e758d46f5af573bafb8",
+      "ae2dde9db1b5e41cbd7849edcc5e7cf3679fb602cf1390da212966363656a11d",
+      "de2ff36272f956113dcadb01d2ec41706eecf3d0390a9c8c136203b2249470c4"
+    ],
+    [
+      "484db865a482ec2cf12ca5176815823aaa057857cdc3673c5864582a735b4cd9",
+      "86d5690b2f030579005b5c64f2693a7eb63354140a1a69e5001a1cbcc272588b",
+      "b1ca589694def24faa260a8c03a0a6d3d0792153c3bf4fe3fe79f38749a76336",
+      "5a88ed2898580a276014f66a02f39eba304a0054f1462d38936f681a582b9d62"
+    ]
+  ],
+  "adapter_parameters_per_specialist": 1024,
+  "base_clean_pilot_accuracy": 0.9299999999999999,
+  "base_initialization_seed": 1202,
+  "base_parameters": 13130,
+  "base_pilot_macro_loss": 0.24749999999999997,
+  "base_shuffle_seed": 1212,
+  "base_state_sha256": "c9dc6941a1c457d265fbe8dee230d4234fd2d42e0b803d9fa87bd433655d2067",
+  "cohort_adapter_parameters": 4096,
+  "compact_dense_relative_delta_error": 1.480410652853755e-15,
+  "frozen_base_head_verified": true,
+  "group": 1202,
+  "merge_and_inference_dtype": "float64",
+  "merged_full_parameters": 14154,
+  "model_path": "weights/1202.npz",
+  "model_sha256": "db4827f35b2977d6444c326738e8d30a8fc19448232cd5ba8280fa8cc4c340ed",
+  "phase": "fixed_evaluation",
+  "reload_max_logit_error": 0.0,
+  "specialist_quality_on_pilot": [
+    {
+      "base_accuracy": 0.9299999999999999,
+      "domain": "clean",
+      "gain": 0.020000000000000018,
+      "specialist_accuracy": 0.95
+    },
+    {
+      "base_accuracy": 0.42000000000000004,
+      "domain": "translate",
+      "gain": 0.31999999999999995,
+      "specialist_accuracy": 0.74
+    },
+    {
+      "base_accuracy": 0.9,
+      "domain": "noise",
+      "gain": 0.029999999999999916,
+      "specialist_accuracy": 0.9299999999999999
+    },
+    {
+      "base_accuracy": 0.76,
+      "domain": "occlusion",
+      "gain": 0.16000000000000003,
+      "specialist_accuracy": 0.92
+    }
+  ],
+  "specialist_seeds": {
+    "clean": 120200,
+    "noise": 120202,
+    "occlusion": 120203,
+    "translate": 120201
+  },
+  "training_dtype": "float32",
+  "training_seconds": 0.4485680420038989
+}

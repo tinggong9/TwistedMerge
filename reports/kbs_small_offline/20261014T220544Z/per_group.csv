@@ -1,0 +1,7 @@
+group,phase,role,P0_loss,P1_loss,P4_loss,P4_minus_P0,P4_minus_P1,P0_action,P1_action,P4_action,P4_changed_vs_P0,P4_changed_vs_P1,P4_prediction_disagreement_vs_P0,P4_prediction_disagreement_vs_P1,P4_useful_vs_P0,P4_useful_vs_P1,P4_status,neural_exact_trivial,hodge_control
+1101,pilot,pilot,0.23249999999999998,0.23249999999999998,0.23249999999999998,0.0,0.0,compact,compact,compact,False,False,0.0,0.0,False,False,inapplicable,False,inapplicable
+1102,pilot,pilot,0.18749999999999997,0.19000000000000003,0.18749999999999997,0.0,-0.0025000000000000577,compact,naive,compact,False,True,0.0,0.06,False,True,inapplicable,False,inapplicable
+1201,fixed_evaluation,D_test,0.18566775244299674,0.20928338762214987,0.18566775244299674,0.0,-0.023615635179153133,compact,global,compact,False,True,0.0,0.09364820846905537,False,True,inapplicable,False,inapplicable
+1202,fixed_evaluation,D_test,0.20521172638436483,0.20521172638436483,0.20521172638436483,0.0,0.0,compact,compact,compact,False,False,0.0,0.0,False,False,inapplicable,False,inapplicable
+1203,fixed_evaluation,D_test,0.17915309446254074,0.18485342019543977,0.17915309446254074,0.0,-0.005700325732899025,compact,naive,compact,False,True,0.0,0.04315960912052117,False,True,inapplicable,False,inapplicable
+1204,fixed_evaluation,D_test,0.18403908794788276,0.18403908794788276,0.18403908794788276,0.0,0.0,compact,compact,compact,False,False,0.0,0.0,False,False,inapplicable,False,inapplicable

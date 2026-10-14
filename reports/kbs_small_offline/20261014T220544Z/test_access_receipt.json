@@ -1,0 +1,8 @@
+{
+  "actions_sha256": "6698e9538d204a3aafa998219dd0acfdccc8f03e3400b5f3ef4eb552994626b0",
+  "protocol_sha256": "8af997a178e1989709382d0d61e2643eb7f7d7d253584afa6efff3cd1a4270e2",
+  "selection_role": "D_select",
+  "single_unseal": true,
+  "test_used_for_selection": false,
+  "unsealed_utc": "2026-10-14T22:05:51.106962+00:00"
+}

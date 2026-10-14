@@ -1,0 +1,54 @@
+{
+  "P4_changed_predictions_vs_P1": 2,
+  "P4_changed_vs_P0": 0,
+  "P4_changed_vs_P1": 2,
+  "P4_useful_vs_P0": 0,
+  "P4_useful_vs_P1": 2,
+  "abstention": {
+    "eligible": 0,
+    "inapplicable": 4,
+    "neural_exact_trivial": 0,
+    "nontrivial_on_K": 0,
+    "not_certified": 4,
+    "repairable_within_tolerance": 0
+  },
+  "formal_complex_h2": 0,
+  "network_requests": 0,
+  "neural_central_certificate_identified": false,
+  "pilot_groups": 2,
+  "post_pilot_heldout_groups": 4,
+  "pretrained_weights_used": false,
+  "primary_estimates": {
+    "P4_minus_P0": {
+      "descriptive_percentile_bootstrap_95": [
+        0.0,
+        0.0
+      ],
+      "formal_significance": false,
+      "group_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean": 0.0,
+      "n_independent_training_seeds": 4
+    },
+    "P4_minus_P1": {
+      "descriptive_percentile_bootstrap_95": [
+        -0.01771172638436485,
+        0.0
+      ],
+      "formal_significance": false,
+      "group_values": [
+        -0.023615635179153133,
+        0.0,
+        -0.005700325732899025,
+        0.0
+      ],
+      "mean": -0.0073289902280130395,
+      "n_independent_training_seeds": 4
+    }
+  },
+  "status": "REDIRECT"
+}

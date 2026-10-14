@@ -1,0 +1,12 @@
+{
+  "canonical_report_directory": "reports/kbs_small_offline/20261014T220544Z",
+  "exit_code": 0,
+  "extra_runs_after_test_inspection": 0,
+  "invocation": ".venv/bin/python experiments/kbs_small_offline.py --out reports/kbs_small_offline/20261014T190000Z",
+  "network_requests": 0,
+  "new_research_runs": 1,
+  "pilot_groups": 2,
+  "post_pilot_groups": 4,
+  "report_directory_correction": "Initial nominal directory label differed from measured UTC; renamed after completion to actual launch 2026-10-14 22:05:44 UTC. Contents/frozen protocol/weights unchanged by rename.",
+  "source_commit": "c0c637b"
+}

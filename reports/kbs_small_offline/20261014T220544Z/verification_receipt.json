@@ -1,0 +1,41 @@
+{
+  "1797_disjoint_original_ids_and_seven_role_hashes_match": true,
+  "32_heldout_policy_actions_match_pretest_locks": true,
+  "P4_genuine_early_exit_verified": true,
+  "absolute_peak_rss_below_1GiB": true,
+  "artifact_bytes_before_verification_manifest": 655481,
+  "final_artifact_bytes_including_local_ignored_weights_before_manifest": 660379,
+  "fixed_heldout_training_groups": 4,
+  "formal_significance_claim": false,
+  "heldout_macro_losses_recomputed_from_raw_rows": true,
+  "independent_datasets": 1,
+  "independent_read_only_review": "PASS",
+  "new_research_invocations": 1,
+  "new_test_results": "16 passed in2.95s",
+  "pilot_groups": 2,
+  "prior_evidence": [
+    {
+      "all_unchanged": true,
+      "files": 34,
+      "run": "20261014T095143Z"
+    },
+    {
+      "all_unchanged": true,
+      "files": 95,
+      "run": "20261014T102546Z"
+    },
+    {
+      "all_unchanged": true,
+      "files": 20,
+      "run": "20261014T175957Z"
+    }
+  ],
+  "resource_caps_satisfied": true,
+  "safe_numeric_model_file_hashes_match": true,
+  "source_commit": "c0c637b1a755277852fa01aef05e092c51cd5137",
+  "source_hashes_and_frozen_protocol_actions_match": true,
+  "startup_baseline_is_high_water_not_instantaneous_RSS": true,
+  "status": "PASS",
+  "utc": "2026-10-14T22:08:31.002372+00:00",
+  "weights_excluded_from_commit": true
+}

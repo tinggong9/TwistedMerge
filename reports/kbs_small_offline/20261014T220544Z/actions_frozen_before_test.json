@@ -1,0 +1,36 @@
+{
+  "actions": {
+    "1201": {
+      "P0": "compact",
+      "P1": "global",
+      "P2": "global",
+      "P4": "compact"
+    },
+    "1202": {
+      "P0": "compact",
+      "P1": "compact",
+      "P2": "compact",
+      "P4": "compact"
+    },
+    "1203": {
+      "P0": "compact",
+      "P1": "naive",
+      "P2": "naive",
+      "P4": "compact"
+    },
+    "1204": {
+      "P0": "compact",
+      "P1": "compact",
+      "P2": "compact",
+      "P4": "compact"
+    }
+  },
+  "models": {
+    "1201": "a0f8614af4f5a3e4fc1f6a4ef0dd71b812f47af50f05c30809a4242450566276",
+    "1202": "db4827f35b2977d6444c326738e8d30a8fc19448232cd5ba8280fa8cc4c340ed",
+    "1203": "247a05a638ed474dfd5c963108910a47d86a135c9b4f5bcb635ecea6fc3d6b75",
+    "1204": "5b9c482bbd66c85e3d727f5a8868d0d4917b580f1ef7867e93d2b872520eda0c"
+  },
+  "protocol_sha256": "8af997a178e1989709382d0d61e2643eb7f7d7d253584afa6efff3cd1a4270e2",
+  "test_accessed": false
+}

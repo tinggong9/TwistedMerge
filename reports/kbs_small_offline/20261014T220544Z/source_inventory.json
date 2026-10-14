@@ -1,0 +1,42 @@
+{
+  "cross_role_exact_image_duplicates": [],
+  "cross_role_original_id_overlap": 0,
+  "dataset_fetch_calls": 0,
+  "duplicate_original_image_pairs": [],
+  "entry_commit": "c0c637b1a755277852fa01aef05e092c51cd5137",
+  "existing_report_scope": "large pretrained campaign remains out of scope; prior evidence unchanged",
+  "network_requests": 0,
+  "pretrained_artifacts_loaded": 0,
+  "required_prior_report_sha256": {
+    "reports/kbs_revision/20261014T102546Z/claims.md": "bccdbb83d7235f9c1a9662a8d0c8bbc268d11ed628063a73e985da150a8cef7f",
+    "reports/kbs_revision/20261014T175957Z/arxiv_v2_evidence_map.md": "5f6655233c88452c4596433279484f5ff3e3a0ea99d92269daae3380be5cac75",
+    "reports/kbs_revision/20261014T175957Z/resource_readiness.md": "5a7174db53e58092cb8ad0173e3a970e943471cfa11161dff2ca260046a24347"
+  },
+  "reused": [
+    "src/kbs_revision/merge_baselines.py",
+    "src/lora_gauge_practical.py",
+    "src/lora_gauge_alignment.py"
+  ],
+  "reviewed_existing_script_sha256": {
+    "experiments/lora_holonomy_merging.py": "97bb9fb4c04c0ff97d0c7a7a62fae7eb2c92169ba30f26b6f3a53c514c1f454c",
+    "experiments/matched_selector_budget_benchmark.py": "d1b95f7d5391199b05365775f612686e9a864d91041155dfb4f0a66f3c85947e",
+    "experiments/real_lora_gauge_stability.py": "94451ddfd2cd19bf4bf51e3b79d523b0338754880df1a0bfffe174cc969ef672"
+  },
+  "reviewed_existing_scripts": [
+    "experiments/real_lora_gauge_stability.py",
+    "experiments/lora_holonomy_merging.py",
+    "experiments/matched_selector_budget_benchmark.py"
+  ],
+  "source_hashes": {
+    "experiments/kbs_small_offline.py": "3550f596afc23fe45b3130e6b7ee4cd6e04b9868c27724102259777d6e76c90b",
+    "src/kbs_revision/merge_baselines.py": "eba6e516fdd6315616e7362ab49af9e6c96a05b8198bc2cd2b0ac7c1b91bd9c7",
+    "src/kbs_small_offline.py": "3c534e26fc600bdcde007e0b09b1ae296a3fc2789f20fc11b8954f2ee306a955",
+    "src/lora_gauge_alignment.py": "9709aa7817d2cbc07d0850bc09611b8d6a8bc7cc40af01a5c6722b56fe2ad9a6",
+    "src/lora_gauge_practical.py": "27f24813557f32d31f06c3d2e54bc6921e52129f18a45b76c0b13fa4e4da7eb6",
+    "tests/test_kbs_small_offline.py": "caa4499ad239a7018c4d8b9cf89b2bad88972240f66bc1db27ed040a1aa8908a"
+  },
+  "user_brief": {
+    "path": "/Users/tinggong/Downloads/TwistedMerge_Codex_Offline_Small_Model_Next_Step.md",
+    "sha256": "c33f1db243a6efb4c4cd382693258707c54d3e1a2f396947df59f2f26aa8903f"
+  }
+}

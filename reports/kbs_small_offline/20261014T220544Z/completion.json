@@ -1,0 +1,15 @@
+{
+  "network_requests": 0,
+  "paid_spend": 0,
+  "resource_receipt": {
+    "artifact_bytes": 648131,
+    "available_host_ram_bytes": 1239744512,
+    "incremental_peak_rss_bytes": 10813440,
+    "peak_process_rss_bytes": 389529600,
+    "stage": "complete",
+    "startup_peak_rss_bytes": 378716160,
+    "wall_seconds": 7.392719166004099
+  },
+  "source_hashes_unchanged": true,
+  "status": "REDIRECT"
+}

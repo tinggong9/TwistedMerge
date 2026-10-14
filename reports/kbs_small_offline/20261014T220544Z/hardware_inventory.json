@@ -1,0 +1,9 @@
+{
+  "accelerator_compute_hours": 0,
+  "device_used": "cpu",
+  "host_total_ram_bytes": 8589934592,
+  "python_executable": "/Users/tinggong/Documents/GitHub/TwistedMerge/.venv/bin/python",
+  "scope": "Post-execution host identity snapshot; startup availability and measured process resources are in environment.json/completion.json.",
+  "sysctl": "hw.model: MacBookPro17,1\nhw.memsize: 8589934592\nhw.logicalcpu: 8\nmachdep.cpu.brand_string: Apple M1\n",
+  "utc": "2026-10-14T22:09:26.543687+00:00"
+}
