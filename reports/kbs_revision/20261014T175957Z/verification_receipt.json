@@ -1,0 +1,31 @@
+{
+  "all_json_parse": true,
+  "blocked_and_final_test_status_consistent": true,
+  "existing_evidence": [
+    {
+      "all_match": true,
+      "files_verified": 34,
+      "manifest_sha256": "bd3d566af11e2538627930be24669f740dd93fcb1b9b1ec1ea23e37662cccc33",
+      "run": "20261014T095143Z"
+    },
+    {
+      "all_match": true,
+      "files_verified": 95,
+      "manifest_sha256": "41f6ef00937a4357e99121a9493950ea7e836bc2047e70d5edf7a2c3189cab81",
+      "run": "20261014T102546Z"
+    }
+  ],
+  "factor_storage_arithmetic_consistent": true,
+  "four_tasks_seven_roles_explicitly_blocked": true,
+  "independent_read_only_review": "PASS after separating structural inapplicability from pilot admission blockers",
+  "new_neural_or_synthetic_runs": 0,
+  "public_metadata_hashes_and_lengths_match": true,
+  "regression_tests_repeated": false,
+  "relative_report_links_resolve": true,
+  "scope": "Report integrity, source preservation and metadata consistency only; no experiment or regression suite repeated.",
+  "source_and_reviewed_input_hashes_match": true,
+  "status": "PASS",
+  "tracked_source_manuscripts_old_reports_unchanged": true,
+  "utc": "2026-10-14T18:04:25.422768+00:00",
+  "validation_method": "Python JSON/CSV/hash/relative-link/status/arithmetic checks and git diff --exit-code 358f1cf; existing manifest bytes hashed without task record parsing."
+}

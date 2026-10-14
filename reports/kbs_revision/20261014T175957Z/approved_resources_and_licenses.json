@@ -1,0 +1,59 @@
+{
+  "approved_actions_current": [
+    "read-only local feasibility/source audit",
+    "small public metadata lookup",
+    "write readiness/provenance reports",
+    "local Git commit"
+  ],
+  "authorization_basis": [
+    "User asks to execute this brief and commit.",
+    "User knows of no GPU/checkpoint host and asks to limit resources.",
+    "Brief requires STOP if prerequisites are missing."
+  ],
+  "compute": {
+    "configured_8h_pilot_48h_campaign_are_authorization": false,
+    "gpu_hours_authorized_now": 0,
+    "neural_training_steps_authorized_now": 0,
+    "paid_compute_authorized": false
+  },
+  "licenses": {
+    "Core Space": {
+      "identifier": "Apache-2.0",
+      "review_state": "existing pinned tensor-source audit"
+    },
+    "KnOTS": {
+      "identifier": "MIT",
+      "review_state": "existing pinned tensor-source audit"
+    },
+    "Qwen/Qwen2.5-1.5B": {
+      "identifier": "Apache-2.0",
+      "public_license_text": "public_metadata/LICENSE",
+      "review_state": "public license identifier/text checked; absent local artifacts remain unverified"
+    },
+    "real_adapters": {
+      "reason": "No compatible real cohort or adapter license/provenance supplied.",
+      "status": "BLOCKED"
+    },
+    "real_datasets": {
+      "reason": "No licensed local task records or per-source license manifest supplied.",
+      "status": "BLOCKED"
+    }
+  },
+  "not_authorized": [
+    "large model/dataset download",
+    "paid services or provisioning",
+    "GPU campaign",
+    "gated license acceptance",
+    "model/data upload",
+    "remote push",
+    "arXiv/manuscript modification"
+  ],
+  "status": "BLOCKED",
+  "storage": {
+    "cap_is_conservative_plan_not_hardware_capacity": true,
+    "existing_project_work_root": "/Users/tinggong/Documents/Codex/2026-10-14/ru/work/resource_readiness",
+    "new_disk_bytes_ceiling_retained": 200000000,
+    "new_storage_mounts_approved": [],
+    "writable_report_root": "/Users/tinggong/Documents/GitHub/TwistedMerge/reports/kbs_revision/20261014T175957Z"
+  }
+}

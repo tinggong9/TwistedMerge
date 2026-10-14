@@ -1,0 +1,58 @@
+{
+  "code_hashes": {
+    "configs/kbs_revision/README.md": "a117478f5efe9fcfaf00405283ae70bc3528d4f3ca8944777a0fb76040016d3a",
+    "configs/kbs_revision/budget.yaml": "1a5dff52369136dff202bddf80f0a62a4f961ce7b16f039eeeccda5fe3f0b1e8",
+    "configs/kbs_revision/external_parity_sources.json": "cafa1ee44cae52763d999268d86891a41f9e9585bc7eef973b9b385e29bfe234",
+    "configs/kbs_revision/external_sources.json": "3e77ce75b2ade0356cb949fb9e9da72f4294e009bdd5e38f39f880275a4b4186",
+    "configs/kbs_revision/next_pilot.yaml": "fd16a082b6b59f6fc2c9b8fb16cf32ad97e10a58647a722d968165e3bc9aabf1",
+    "configs/kbs_revision/pilot.yaml": "63ba54ad76035f852ccd48878f4ae26a358cea3f9096d331c13816f0ce51fec8",
+    "experiments/kbs_revision.py": "8de5646afaf8ee4a36132e5d2fd0b095acfa2354715dca7f17353b8db09dbbd2",
+    "src/kbs_revision/__init__.py": "bb69b3ea2a80512d10513c50564ac7c8bb16b1545778690504dcd925ea2d560a",
+    "src/kbs_revision/evidence_inventory.py": "4c9ac7d21d6f80ef9290fd36ab7b06e7c3ea01635f36a267347398cccc1290c9",
+    "src/kbs_revision/external_methods.py": "bf146b678f949cc9c93eab0e73639c6821d084be9218203fd444d617f6e02c47",
+    "src/kbs_revision/finite_certificates.py": "0f379404c357bf3a801b4bd492acd623f743bb64dd302ad65e7b6fe7eab9be69",
+    "src/kbs_revision/language_backend.py": "757be3c599862cb49ae335f1bdb262d2c403ddf6e740e58c7de0e7f3a63f12b3",
+    "src/kbs_revision/merge_baselines.py": "eba6e516fdd6315616e7362ab49af9e6c96a05b8198bc2cd2b0ac7c1b91bd9c7",
+    "src/kbs_revision/neural_driver.py": "12b5b25a653e06b4ca118a7f8859690e211cc1d8bd47e967e8a720885ed38ea9",
+    "src/kbs_revision/neural_reporting.py": "42558b48e3238c6a96eed81a89b59f0b3f44fb3033d946b8d4a6635f83783864",
+    "src/kbs_revision/neural_runner.py": "98daa3345965c1497230f81d01626bac069ff4c7cfc0c05c00dd796bcfe7cdbb",
+    "src/kbs_revision/policies.py": "c8d13b998b855602e7d44f92dfe504a85006922aa26ba544f7389946c34bea3a",
+    "src/kbs_revision/protocol.py": "20803a7aa4f86ec3d3610371a83415101512d6123bbf1d51e8064d1158e90013",
+    "src/kbs_revision/provenance.py": "4e5e8d675cdc8a23c14617887a7257c55bed92e61da1ad0ca73bc53de60d6739",
+    "src/kbs_revision/reporting.py": "9a67dad0344144b9d48d5dea8bffb3a15d9216fa1c5ed332c5f17afc10ffcb16",
+    "src/kbs_revision/resource_guard.py": "e306a9183c430e554c2529bc9af135d0a50c766c217c35cd0e24ea58399b5a3f",
+    "src/kbs_revision/task_data.py": "e657dd56ab848a9995d11990f27765dede97ade2587b27fd1ec042919d85e71d",
+    "tests/test_kbs_revision_baselines.py": "a3f0d630cd2daee9e2dbadf297233c5375d8edb36c21b4b1b9032627c50a2634",
+    "tests/test_kbs_revision_certificates.py": "2680c6e5a0b3eb8d2ce0c124878f585444e85cedd15d9fa1bfec3105ee9eff19",
+    "tests/test_kbs_revision_external_methods.py": "75e5768e183cb6fd2a531857b97d42b3bdc2851ae8919e0e1f18a8f1aebeac39",
+    "tests/test_kbs_revision_integration.py": "026060a56a571141057e20b37b9ae663895abdc406f2d330ae346195702bbf6a",
+    "tests/test_kbs_revision_inventory.py": "fa5ad0345efa67445862a097da1194a689c3ce5d96a446e7d7bde44f3125917c",
+    "tests/test_kbs_revision_language_backend.py": "1c5b0297961045b62b125921957db77f9677d9983b8fd24cd13481a807d7a2b9",
+    "tests/test_kbs_revision_neural_runner.py": "e3b4983b29d3e88a62924394d42915e62209d61946cf6464071e0aca3a4c00b8",
+    "tests/test_kbs_revision_protocol.py": "f85e4f6654ddbeb1cdff4be83321f10ec21d7fe6ee12bd0614e0675198a9792b",
+    "tests/test_kbs_revision_reporting.py": "b508e60610cdd83e86781c69b7ec9c1cac92eb2896c6be5c7043c859585cd37e",
+    "tests/test_kbs_revision_resources.py": "bcec994e9064493f16cf03ab476255ef7cc9165d464b425ead1e34ce19bee870",
+    "tests/test_kbs_revision_task_data.py": "5729af5603b6be908a86dd15f0486c2962b5ef76d2fa76c974fbea9e2a93eb0d"
+  },
+  "existing_evidence_manifests": {
+    "reports/kbs_revision/20261014T095143Z/manifest.csv": "bd3d566af11e2538627930be24669f740dd93fcb1b9b1ec1ea23e37662cccc33",
+    "reports/kbs_revision/20261014T102546Z/manifest.csv": "41f6ef00937a4357e99121a9493950ea7e836bc2047e70d5edf7a2c3189cab81"
+  },
+  "reviewed_input_hashes": {
+    "configs/kbs_revision/README.md": "a117478f5efe9fcfaf00405283ae70bc3528d4f3ca8944777a0fb76040016d3a",
+    "configs/kbs_revision/next_pilot.yaml": "fd16a082b6b59f6fc2c9b8fb16cf32ad97e10a58647a722d968165e3bc9aabf1",
+    "reports/kbs_revision/20261014T095143Z/claims.md": "996f7ffa6a0acbc51026e78b3da1c073725a7e8f84cfe951e76bc89c77b90420",
+    "reports/kbs_revision/20261014T102546Z/execution_summary.md": "bb6dac3482b80c82cb29d7aca2b2bb6544b98fe0215b83ec634d3e60f7f9fe2a",
+    "reports/kbs_revision/20261014T102546Z/external_method_parity.md": "40cfe9322da7f4f3c0bfd4a85d2677ab887b3fc96379b31b51d1428889c07e5d",
+    "reports/kbs_revision/20261014T102546Z/pilot/readiness.json": "eda08e84dd259bba084dd32600621580e2d2080ac644be96bb30831772fc565c",
+    "reports/kbs_revision/20261014T102546Z/pilot_decision.md": "b5e7782e37793a4453fdd09cdccc27a2e9c22cd53c527e9aa3fa56ecb3e5f440",
+    "reports/kbs_revision/20261014T102546Z/primary_policy_summary.md": "fb925b63edf84fae5ce478175b1ae32c7b07048b4e3afe8a7b378dd05d743333",
+    "reports/kbs_revision/20261014T102546Z/readiness_diagnosis.md": "725dac32d6438245af52d901a5d2c579b444a9b6b90cfc17360c9388604a7323",
+    "reports/kbs_revision/20261014T102546Z/test_results.txt": "7729f8d0cc4099c7ea00668e2fdcdc52c2612a3a58ee44196e33664338b9c7a6"
+  },
+  "source_commit": "358f1cf570d73b74464608a5c31e730a209931cf",
+  "user_brief": {
+    "path": "/Users/tinggong/Downloads/TwistedMerge_Codex_Next_Step_after_358f1cf.md",
+    "sha256": "61d18ae5e305d0da90e8493e707aa5f3c6a9e9401628c5fa89bd9564a07d8670"
+  }
+}

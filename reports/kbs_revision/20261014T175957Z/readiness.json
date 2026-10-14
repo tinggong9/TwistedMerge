@@ -1,0 +1,53 @@
+{
+  "additional_admission_blockers": [
+    "No authorized target with measured feasible memory/storage for real Qwen training/inference.",
+    "Real dataset and adapter licenses/provenance unresolved.",
+    "No approved fixed real-data training recipe or specialist quality criteria."
+  ],
+  "all_baseline_definitions_unresolved": [
+    "base",
+    "specialists",
+    "task_arithmetic",
+    "compact_qr_svd",
+    "dense_reference_svd",
+    "exact_concatenation",
+    "naive_factor_average",
+    "pairwise_alignment",
+    "global_synchronization",
+    "ties",
+    "dare_ties",
+    "knots",
+    "core_space"
+  ],
+  "configuration": "configs/kbs_revision/next_pilot.yaml",
+  "configuration_sha256": "fd16a082b6b59f6fc2c9b8fb16cf32ad97e10a58647a722d968165e3bc9aabf1",
+  "confirmatory_run_executed": false,
+  "existing_readiness_validator_errors": [
+    "base model unavailable locally",
+    "missing actual seven-role split manifest",
+    "missing validated model/tokenizer manifest",
+    "no compatible multilayer trained adapters",
+    "unresolved baseline: base",
+    "unresolved baseline: compact_qr_svd",
+    "unresolved baseline: core_space",
+    "unresolved baseline: dare_ties",
+    "unresolved baseline: dense_reference_svd",
+    "unresolved baseline: exact_concatenation",
+    "unresolved baseline: global_synchronization",
+    "unresolved baseline: knots",
+    "unresolved baseline: naive_factor_average",
+    "unresolved baseline: pairwise_alignment",
+    "unresolved baseline: specialists",
+    "unresolved baseline: task_arithmetic",
+    "unresolved baseline: ties"
+  ],
+  "final_test_accessed": false,
+  "frozen_go_created": false,
+  "neural_training_executed": false,
+  "new_synthetic_experiments_executed": false,
+  "real_pilot_executed": false,
+  "regression_suite_repeated": false,
+  "source_commit": "358f1cf570d73b74464608a5c31e730a209931cf",
+  "status": "BLOCKED",
+  "structural_branch_status": "inapplicable/uncertified; no independently justified neural coefficient/confidence model. This limitation does not itself forbid a pilot with explicit abstention."
+}

@@ -1,0 +1,38 @@
+{
+  "accelerator_requirement": "Enough measured free device and host memory for the existing unquantized float32/bfloat16 Qwen/PEFT backend. 24 GB is only a planning preference; no minimum training VRAM is established.",
+  "authorized_accelerator_hours_now": 0,
+  "backend": "train-cohort",
+  "base_loading_files_storage_bytes": 3098955511,
+  "base_plus_four_fp32_factor_storage_bytes_lower_bound": 3133820663,
+  "campaign_accelerator_hours_ceiling_planning_only": 48,
+  "factor_storage_bytes_four_fp32_adapters_lower_bound": 34865152,
+  "gpu_hours_estimated": null,
+  "gpu_memory_requirement_measured": null,
+  "groups": 1,
+  "measurement_plan": "On an already authorized compatible accelerator, measure loading and a bounded real-data step before the full cohort; approve the fixed recipe and measured cost allocation first.",
+  "monetary_cost_estimated": null,
+  "per_adapter_factor_parameters": 2179072,
+  "proposed_pilot_accelerator_hours_ceiling": 8,
+  "rank": 8,
+  "secondary_rank16_authorized": false,
+  "specialists": 4,
+  "status": "PROPOSED_NOT_AUTHORIZED_NOT_RUN",
+  "storage_exclusions": [
+    "safetensors headers",
+    "licenses and provenance",
+    "real records and split copies",
+    "logs",
+    "candidate outputs",
+    "temporary writes",
+    "optimizer/training checkpoints"
+  ],
+  "storage_request": "An approved existing read-only model mount avoids a new model copy; otherwise authorize at least the calculated base/factor lower bound plus a measured data/output/temp allowance in a resolved plan.",
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "training_recipe": "Unresolved pending real data and pilot review: fixed record IDs/counts, task seeds, steps, learning rate, alpha/dropout, token lengths and specialist-quality admission. Existing backend is batch-one AdamW; do not use the software fixture recipe.",
+  "training_steps_now": 0
+}

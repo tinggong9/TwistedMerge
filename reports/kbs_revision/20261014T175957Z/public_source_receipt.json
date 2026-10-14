@@ -1,0 +1,24 @@
+{
+  "access": "unauthenticated bounded public metadata only; no model download or terms acceptance",
+  "retrieved_utc": "2026-10-14T17:59:58.952264+00:00",
+  "sources": [
+    {
+      "bytes": 1214,
+      "path": "public_metadata/qwen_file_tree.json",
+      "sha256": "379ae50387c66b6151073370967e7231fda491f4e90b7a3e783c7ec22c92435d",
+      "url": "https://huggingface.co/api/models/Qwen/Qwen2.5-1.5B/tree/8faed761d45a263340a0528343f099c05c9a4323?recursive=false&expand=false"
+    },
+    {
+      "bytes": 684,
+      "path": "public_metadata/config.json",
+      "sha256": "0e8c8aa86468aba09c9d32157ff4bc2301c7e6c50e4398960425b2ea71e66f77",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/8faed761d45a263340a0528343f099c05c9a4323/config.json"
+    },
+    {
+      "bytes": 11343,
+      "path": "public_metadata/LICENSE",
+      "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B/resolve/8faed761d45a263340a0528343f099c05c9a4323/LICENSE"
+    }
+  ]
+}

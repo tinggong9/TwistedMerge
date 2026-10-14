@@ -1,0 +1,84 @@
+{
+  "final_test_accessed": false,
+  "next_operation": "prepare-splits only after licensed native task records, source hashes, official split lineage, counts, seeds, and prompt/scoring protocol are reviewed. No synthetic replacements created.",
+  "status": "BLOCKED",
+  "tasks": {
+    "ARC-Challenge": {
+      "dataset_revision": null,
+      "exact_leakage": "not_run_missing_records",
+      "license_reviewed": false,
+      "local_records": null,
+      "near_duplicates": "not_run_missing_records",
+      "prompt_answer_contamination": "not_run_missing_records",
+      "split_manifests": {
+        "D_K": null,
+        "D_align": null,
+        "D_cert": null,
+        "D_select": null,
+        "D_test": null,
+        "pilot": null,
+        "train": null
+      },
+      "stable_record_ids": "not_auditable_missing_records",
+      "status": "BLOCKED"
+    },
+    "BoolQ": {
+      "dataset_revision": null,
+      "exact_leakage": "not_run_missing_records",
+      "license_reviewed": false,
+      "local_records": null,
+      "near_duplicates": "not_run_missing_records",
+      "prompt_answer_contamination": "not_run_missing_records",
+      "split_manifests": {
+        "D_K": null,
+        "D_align": null,
+        "D_cert": null,
+        "D_select": null,
+        "D_test": null,
+        "pilot": null,
+        "train": null
+      },
+      "stable_record_ids": "not_auditable_missing_records",
+      "status": "BLOCKED"
+    },
+    "GSM8K": {
+      "dataset_revision": null,
+      "exact_leakage": "not_run_missing_records",
+      "license_reviewed": false,
+      "local_records": null,
+      "near_duplicates": "not_run_missing_records",
+      "prompt_answer_contamination": "not_run_missing_records",
+      "split_manifests": {
+        "D_K": null,
+        "D_align": null,
+        "D_cert": null,
+        "D_select": null,
+        "D_test": null,
+        "pilot": null,
+        "train": null
+      },
+      "stable_record_ids": "not_auditable_missing_records",
+      "status": "BLOCKED"
+    },
+    "PIQA": {
+      "dataset_revision": null,
+      "exact_leakage": "not_run_missing_records",
+      "license_reviewed": false,
+      "local_records": null,
+      "near_duplicates": "not_run_missing_records",
+      "prompt_answer_contamination": "not_run_missing_records",
+      "split_manifests": {
+        "D_K": null,
+        "D_align": null,
+        "D_cert": null,
+        "D_select": null,
+        "D_test": null,
+        "pilot": null,
+        "train": null
+      },
+      "stable_record_ids": "not_auditable_missing_records",
+      "status": "BLOCKED"
+    }
+  },
+  "test_access": false
+}

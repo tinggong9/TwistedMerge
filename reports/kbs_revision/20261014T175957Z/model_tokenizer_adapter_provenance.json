@@ -1,0 +1,72 @@
+{
+  "adapters": [],
+  "independent_training_groups": 0,
+  "known_existing_cohort": {
+    "eligible_for_real_pilot": false,
+    "path": "../20261014T102546Z/model_and_adapter_manifest.json",
+    "status": "software_only"
+  },
+  "local_weight_sha256_verified": false,
+  "model_manifest_path": null,
+  "remote_file_metadata": {
+    "config.json": {
+      "oid": "169d606d5cf502a5628a52381586679a6d0caaab",
+      "path": "config.json",
+      "size": 684,
+      "type": "file"
+    },
+    "generation_config.json": {
+      "oid": "cbbb3133034e192527e5321b4c679154e4819ab8",
+      "path": "generation_config.json",
+      "size": 138,
+      "type": "file"
+    },
+    "merges.txt": {
+      "oid": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+      "path": "merges.txt",
+      "size": 1671839,
+      "type": "file"
+    },
+    "model.safetensors": {
+      "lfs": {
+        "oid": "a961db72e75d52b18e6b0c9d379e51a26973b233385e0e127fdda7d648aec796",
+        "pointerSize": 135,
+        "size": 3087467144
+      },
+      "oid": "de4b04359b427ed291b005f62b749531d45e3e5f",
+      "path": "model.safetensors",
+      "size": 3087467144,
+      "type": "file",
+      "xetHash": "8bff19ad30d83352b41b698b3a39904f966f62029771306387e57cb4b2664073"
+    },
+    "tokenizer.json": {
+      "oid": "443909a61d429dff23010e5bddd28ff530edda00",
+      "path": "tokenizer.json",
+      "size": 7031645,
+      "type": "file"
+    },
+    "tokenizer_config.json": {
+      "oid": "ba7e4c5637b9732dadcd66286ce48334e8b31e9e",
+      "path": "tokenizer_config.json",
+      "size": 7228,
+      "type": "file"
+    },
+    "vocab.json": {
+      "oid": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "path": "vocab.json",
+      "size": 2776833,
+      "type": "file"
+    }
+  },
+  "required_model": {
+    "id": "Qwen/Qwen2.5-1.5B",
+    "license": "Apache-2.0",
+    "license_reviewed": true,
+    "local_path": null,
+    "revision": "8faed761d45a263340a0528343f099c05c9a4323"
+  },
+  "status": "BLOCKED",
+  "tokenizer_manifest_path": null,
+  "weight_sha256_expected_from_public_lfs": "a961db72e75d52b18e6b0c9d379e51a26973b233385e0e127fdda7d648aec796",
+  "weights_downloaded_or_loaded": false
+}

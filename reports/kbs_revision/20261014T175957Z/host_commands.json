@@ -1,0 +1,51 @@
+[
+  {
+    "argv": [
+      "sysctl",
+      "hw.model",
+      "hw.memsize",
+      "hw.logicalcpu",
+      "hw.physicalcpu",
+      "machdep.cpu.brand_string"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "hw.model: MacBookPro17,1\nhw.memsize: 8589934592\nhw.logicalcpu: 8\nhw.physicalcpu: 8\nmachdep.cpu.brand_string: Apple M1\n"
+  },
+  {
+    "argv": [
+      "vm_stat"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                3781.\nPages active:                             70808.\nPages inactive:                           64152.\nPages speculative:                         5740.\nPages throttled:                              0.\nPages wired down:                        131579.\nPages purgeable:                              2.\n\"Translation faults\":                1367278271.\nPages copy-on-write:                    9279116.\nPages zero filled:                    126862258.\nPages reactivated:                    374505018.\nPages purged:                          25875940.\nFile-backed pages:                        54832.\nAnonymous pages:                          85868.\nPages stored in compressor:             1642550.\nPages occupied by compressor:            212320.\nDecompressions:                       529885409.\nCompressions:                         557327059.\nPageins:                               58558364.\nPageouts:                                393888.\nSwapins:                               36674740.\nSwapouts:                              37803930.\n"
+  },
+  {
+    "argv": [
+      "memory_pressure",
+      "-Q"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "The system has 8589934592 (524288 pages with a page size of 16384).\nSystem-wide memory free percentage: 29%\n"
+  },
+  {
+    "argv": [
+      "df",
+      "-k",
+      "/Users/tinggong/Documents/GitHub/TwistedMerge",
+      "/Users/tinggong/Documents/Codex/2026-10-14/ru/work/resource_readiness"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 336709992  97217016    78% 2600514 972170160    0%   /System/Volumes/Data\n/dev/disk3s5   482797652 336709992  97217016    78% 2600514 972170160    0%   /System/Volumes/Data\n"
+  },
+  {
+    "argv": [
+      "mount"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "/dev/disk3s1s1 on / (apfs, sealed, local, read-only, journaled)\ndevfs on /dev (devfs, local, nobrowse)\n/dev/disk3s6 on /System/Volumes/VM (apfs, local, noexec, journaled, noatime, nobrowse)\n/dev/disk3s2 on /System/Volumes/Preboot (apfs, local, journaled, nobrowse)\n/dev/disk3s4 on /System/Volumes/Update (apfs, local, journaled, nobrowse)\n/dev/disk1s2 on /System/Volumes/xarts (apfs, local, noexec, journaled, noatime, nobrowse)\n/dev/disk1s1 on /System/Volumes/iSCPreboot (apfs, local, journaled, nobrowse)\n/dev/disk1s3 on /System/Volumes/Hardware (apfs, local, journaled, nobrowse)\n/dev/disk3s5 on /System/Volumes/Data (apfs, local, journaled, nobrowse, protect, root data)\nmap auto_home on /System/Volumes/Data/home (autofs, automounted, nobrowse)\n/dev/disk3s1 on /System/Volumes/Update/mnt1 (apfs, sealed, local, journaled, nobrowse)\n"
+  }
+]

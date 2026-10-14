@@ -1,0 +1,16 @@
+{
+  "collection_process_cpu_seconds": 0.17927900000000008,
+  "collection_wall_seconds": 1.0083565420063678,
+  "dataset_download_bytes": 0,
+  "finished_utc": "2026-10-14T17:59:58.959593+00:00",
+  "full_training_memory_peak": null,
+  "gpu_hours": 0,
+  "model_loads": 0,
+  "model_weight_download_bytes": 0,
+  "neural_compute_seconds": 0,
+  "new_synthetic_episodes": 0,
+  "paid_spend": 0,
+  "scope": "This collection process only; excludes earlier shell/UI/source inspection and later report validation/Git work.",
+  "started_utc": "2026-10-14T17:59:57.951254+00:00",
+  "stored_public_metadata_bytes": 13241
+}

@@ -1,0 +1,21 @@
+{
+  "status": "BLOCKED",
+  "known_repository_links": [
+    {
+      "path": "data",
+      "symlink": true,
+      "target": "/Volumes/My Passport for Mac/Research Archive/2026-09-30-before-Hartlieb-Pi/files/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+      "target_available": false,
+      "authorized_real_qwen_storage_established": false
+    },
+    {
+      "path": "checkpoints",
+      "symlink": true,
+      "target": "/Volumes/My Passport for Mac/Research Archive/2026-09-30-before-Hartlieb-Pi/files/Users/tinggong/Documents/GitHub/TwistedMerge/checkpoints",
+      "target_available": false,
+      "authorized_real_qwen_storage_established": false
+    }
+  ],
+  "new_mounts_provisioned": false,
+  "no_external_model_storage_supplied": true
+}

@@ -1,0 +1,100 @@
+{
+  "authorized_remote_hosts_supplied": [],
+  "candidate_weight_files_loaded": false,
+  "conclusion": "No pinned Qwen base, compatible real task cohort, or actual four-task records supplied or found in the searched locations.",
+  "directories": [
+    {
+      "depth": 1,
+      "entry_names": [
+        ".locks",
+        "CACHEDIR.TAG",
+        "datasets--MedOtter--kvasir-seg"
+      ],
+      "exists": true,
+      "path": "/Users/tinggong/.cache/huggingface/hub",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": true,
+      "path": "/Users/tinggong/.cache/huggingface/datasets",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [
+        "resnet18-f37072fd.pth"
+      ],
+      "exists": true,
+      "path": "/Users/tinggong/.cache/torch/hub/checkpoints",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Library/Caches/huggingface",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [
+        "Macintosh HD"
+      ],
+      "exists": true,
+      "path": "/Volumes",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Documents/GitHub/TwistedMerge/models",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Documents/GitHub/TwistedMerge/checkpoints",
+      "symlink": true
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Documents/GitHub/TwistedMerge/adapters",
+      "symlink": false
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Documents/GitHub/TwistedMerge/data",
+      "symlink": true
+    },
+    {
+      "depth": 1,
+      "entry_names": [],
+      "exists": false,
+      "path": "/Users/tinggong/Documents/GitHub/TwistedMerge/datasets",
+      "symlink": false
+    }
+  ],
+  "downloads_candidate_names": [],
+  "path_environment": {
+    "HF_DATASETS_CACHE": null,
+    "HF_HOME": null,
+    "HF_HUB_CACHE": null,
+    "HUGGINGFACE_HUB_CACHE": null,
+    "TORCH_HOME": null,
+    "TRANSFORMERS_CACHE": null,
+    "XDG_CACHE_HOME": null
+  },
+  "remote_host_contacted": false,
+  "repository_candidate_filenames": [],
+  "scope": "Configured paths, default cache roots, repository excluding historical/software reports and work, and Downloads names only. No exhaustive home/remote filesystem scan.",
+  "status": "BLOCKED",
+  "task_record_contents_loaded": false
+}
